@@ -9,6 +9,9 @@ public class DefaultGun : Gun
     private int damage;
     [SerializeField]
     private GameObject particle;
+    [SerializeField]
+    private GameObject critParticle;
+
 
     public override bool HipFire(Transform hitTransform)
     {
@@ -31,21 +34,25 @@ public class DefaultGun : Gun
     // Run when the gun fires
     private void OnFire(Transform hitTransform)
     {
-        if (hitTransform != null)
+        Hitbox hitbox = hitTransform.GetComponent<Hitbox>();
+        if (hitbox != null && hitbox.multiplier >= 5)
         {
-            Hitbox hitbox = hitTransform.GetComponent<Hitbox>();
-            if (hitbox != null)
-            {
-                Instantiate(particle, hitTransform.position, Quaternion.identity);
-                //Debug.Log("yes hit!");
-                hitbox.TakeHit(damage);
+            Instantiate(critParticle, hitTransform.position, Quaternion.identity);
+            Debug.Log("IT'S A CRIT!");
+            hitbox.TakeHit(damage);
 
-            }
-            else
-            {
-                //Instantiate(vfxHitRed, transform.position, Quaternion.identity);
-                Debug.Log("FUCK!");
-            }
+        }
+        else if (hitbox != null && hitbox.multiplier < 5)
+        {
+            Instantiate(particle, hitTransform.position, Quaternion.identity);
+            Debug.Log("Normal ass hit...");
+            hitbox.TakeHit(damage);
+        }
+
+        else
+        {
+            //Instantiate(vfxHitRed, transform.position, Quaternion.identity);
+            Debug.Log("FUCK!");
         }
     }
 }

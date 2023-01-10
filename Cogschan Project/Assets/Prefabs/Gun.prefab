@@ -48,3 +48,6 @@ MonoBehaviour:
   MaxReserveAmmo: 36
   ReloadTime: 1
   _fireRate: 0.5
+  damage: 0
+  particle: {fileID: 9222931191912853214, guid: a0f18980ea1bcc84a9c91285f4980d6c, type: 3}
+  critParticle: {fileID: 4030942653299727334, guid: ee09b25e4bac789479b814d405db1c25, type: 3}
