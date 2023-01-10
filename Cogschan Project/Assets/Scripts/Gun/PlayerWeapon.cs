@@ -13,6 +13,8 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] private LayerMask aimColliderLayerMask;
     [SerializeField] private Transform debugTransform;
     [SerializeField] private Gun gun;
+    [SerializeField] private Transform gunLocation; //new
+    public float forwardCameraDisplacement; //new
 
     private PlayerMovement thirdPersonController;
 
@@ -27,14 +29,29 @@ public class PlayerWeapon : MonoBehaviour
 
 
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
-        Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+
+        Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward)*forwardCameraDisplacement, Camera.main.transform.forward);
+        Debug.DrawRay(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward)*forwardCameraDisplacement, Camera.main.transform.forward, Color.green);
+
         Transform hitTransform = null;
-        if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask))
+        if (Physics.Raycast(cameraRay, out RaycastHit raycastHit, 999f, aimColliderLayerMask))
         {
             debugTransform.position = raycastHit.point;
             mouseWorldPosition = raycastHit.point;
             hitTransform = raycastHit.transform;
         }
+
+        Ray gunRay = new Ray(gunLocation.position, raycastHit.point - gunLocation.position);
+
+        //Transform hitTransform = null;
+        if (Physics.Raycast(gunRay, out raycastHit, 999f, aimColliderLayerMask))
+        {
+            debugTransform.position = raycastHit.point;
+            mouseWorldPosition = raycastHit.point;
+            hitTransform = raycastHit.transform;
+        }
+
+        Debug.DrawRay(gunLocation.position, raycastHit.point - gunLocation.position);
 
         if (PlayerInputController.Singleton.MoveState == MovementState.ADS)
         {
