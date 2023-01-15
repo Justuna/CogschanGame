@@ -12,7 +12,11 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] private float aimSensitivity;
     [SerializeField] private LayerMask aimColliderLayerMask;
     [SerializeField] private Transform debugTransform;
+    [SerializeField] private Transform originTransform;
     [SerializeField] private Gun gun;
+    [SerializeField] private Transform gunLocation; //new
+    public float forwardCameraDisplacement; //new
+    //[SerializeField] private TrailRenderer bulletTrail;
 
     private PlayerMovement thirdPersonController;
 
@@ -27,14 +31,41 @@ public class PlayerWeapon : MonoBehaviour
 
 
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
-        Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+
+        Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward)*forwardCameraDisplacement, Camera.main.transform.forward);
+        Debug.DrawRay(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward)*forwardCameraDisplacement, Camera.main.transform.forward, Color.green);
+        originTransform.position = Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward)*forwardCameraDisplacement;
+
         Transform hitTransform = null;
-        if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask))
+        if (Physics.Raycast(cameraRay, out RaycastHit raycastHit, 999f, aimColliderLayerMask))
+        {
+            debugTransform.position = raycastHit.point;
+           
+            mouseWorldPosition = raycastHit.point;
+            hitTransform = raycastHit.transform;
+        }
+
+        Ray gunRay = new Ray(gunLocation.position, raycastHit.point - gunLocation.position);
+
+        //Transform hitTransform = null;
+        if (Physics.Raycast(gunRay, out raycastHit, 999f, aimColliderLayerMask))
         {
             debugTransform.position = raycastHit.point;
             mouseWorldPosition = raycastHit.point;
             hitTransform = raycastHit.transform;
+            /*
+//trails
+            if (PlayerInputController.Singleton.ActState == ActionState.Fire)
+            {
+                TrailRenderer trail = Instantiate(bulletTrail, gunLocation.position, Quaternion.identity);
+                StartCoroutine(SpawnTrail(bulletTrail, raycastHit));
+                //Debug.Log("Ayup.");
+            }
+//
+    */
         }
+
+        Debug.DrawRay(gunLocation.position, raycastHit.point - gunLocation.position);
 
         if (PlayerInputController.Singleton.MoveState == MovementState.ADS)
         {
@@ -57,6 +88,16 @@ public class PlayerWeapon : MonoBehaviour
 
         if (PlayerInputController.Singleton.ActState == ActionState.Fire)
         {
+/*
+            //trails
+            //if (PlayerInputController.Singleton.ActState == ActionState.Fire)
+            //{
+                TrailRenderer trail = Instantiate(bulletTrail, gunLocation.position, Quaternion.identity);
+                StartCoroutine(SpawnTrail(bulletTrail, raycastHit));
+                //Debug.Log("Ayup.");
+            //}
+            //
+            */
             if (PlayerInputController.Singleton.MoveState == MovementState.ADS)
             {
                 gun.ADSFire(hitTransform);
@@ -69,4 +110,25 @@ public class PlayerWeapon : MonoBehaviour
             }
         }
     }
+/*
+    private IEnumerator SpawnTrail(TrailRenderer trail, RaycastHit raycastHit)
+    {
+        float time = 0;
+        Vector3 startPosition = trail.transform.position;
+
+        while(time < 1)
+        {
+            trail.transform.position = Vector3.Lerp(startPosition, raycastHit.point, time);
+            time += Time.deltaTime / trail.time;
+
+            yield return null;
+        }
+        trail.transform.position = raycastHit.point;
+        Debug.Log("j");
+        //Debug.Log("Nayup.");
+        
+        //Destroy(trail.gameObject, trail.time);
+        //DestroyImmediate(trail, true);
+    }
+    */
 }
