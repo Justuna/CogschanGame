@@ -163,7 +163,7 @@ public abstract class Gun : MonoBehaviour
             Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * forwardCameraDisplacement, Camera.main.transform.forward);
             if (Physics.Raycast(cameraRay, out RaycastHit raycastHit, Mathf.Infinity))
             {
-                worldAimTarget = 
+
             }
 
             worldAimTarget.y = transform.position.y;
