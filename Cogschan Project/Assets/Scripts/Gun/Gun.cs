@@ -7,6 +7,12 @@ using TMPro;
 public abstract class Gun : MonoBehaviour
 {
     /// <summary>
+    /// Whether or not the gun has infinite ammo. If true, all other ammo settings are obsolete.
+    /// </summary>
+    [SerializeField]
+    [Tooltip("Whether or not the gun has infinite ammo. If true, all other ammo settings are obsolete.")]
+    protected bool InfiniteAmmo;
+    /// <summary>
     /// The maximum ammo a gun can have in one magazine.
     /// </summary>
     [SerializeField]
@@ -27,7 +33,9 @@ public abstract class Gun : MonoBehaviour
     [SerializeField]
     [Tooltip("The amount of time between shots.")]
     protected float _fireRate;
+    [SerializeField]
     private float fireClock;
+    [SerializeField]
     private float reloadClock;
 
 
@@ -48,7 +56,7 @@ public abstract class Gun : MonoBehaviour
     /// <summary>
     /// Whether or not the gun can fire.
     /// </summary>
-    public bool CanFire => fireClock <= 0 && Ammo > 0;
+    public bool CanFire => fireClock <= 0 && (Ammo > 0 || InfiniteAmmo);
     /// <summary>
     /// Whether or not the gun is reloading.
     /// </summary>
@@ -79,11 +87,18 @@ public abstract class Gun : MonoBehaviour
         return true;
     }
     /// <summary>
-    /// Reload the gun.
+    /// Begin reloading the gun.
     /// </summary>
-    public virtual void Reload()
+    public virtual void StartReload()
     {
+        if (InfiniteAmmo) return;
         reloadClock = ReloadTime;
+    }
+    /// <summary>
+    /// Finish reloading the gun.
+    /// </summary>
+    public virtual void FinishReload()
+    {
         int neededAmmo = MaxAmmo - Ammo;
         int ammoReloaded = neededAmmo < ReserveAmmo ? neededAmmo : ReserveAmmo;
         Ammo += ammoReloaded;
@@ -111,6 +126,7 @@ public abstract class Gun : MonoBehaviour
         if (!CanFire)
             fireClock -= Time.deltaTime;
 
-        ammoText.text = $"{Ammo}|{ReserveAmmo}";
+        if (InfiniteAmmo) ammoText.text = "\u221E";
+        else ammoText.text = $"{Ammo}|{ReserveAmmo}";
     }
 }

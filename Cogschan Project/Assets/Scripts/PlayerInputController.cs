@@ -151,7 +151,7 @@ public class PlayerInputController : MonoBehaviour
         inputMappings.Enable();
         inputMappings.Movement.Run.started += _ => inputRun = true;
         inputMappings.Movement.Run.canceled += _ => inputRun = false;
-        inputMappings.Weapon.Reload.performed += _ => gun.Reload();
+        inputMappings.Weapon.Reload.performed += _ => gun.StartReload();
         inputMappings.Weapon.Shoot.started += _ => inputFire = true;
         inputMappings.Weapon.Shoot.canceled += _ => inputFire = false;
         inputMappings.Weapon.Aim.started += _ => inputAim = true;
@@ -187,7 +187,11 @@ public class PlayerInputController : MonoBehaviour
         if (gun.IsReloading)
             ActState = ActionState.Reload;
         else if (ActState == ActionState.Reload)
+        {
+            gun.FinishReload();
             ActState = ActionState.None;
+        }
+            
 
         InputMove = inputMappings.Movement.Move.ReadValue<Vector2>();
         InputLook = inputMappings.Weapon.Look.ReadValue<Vector2>();
