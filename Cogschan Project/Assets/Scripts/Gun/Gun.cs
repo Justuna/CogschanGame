@@ -1,4 +1,6 @@
 using UnityEngine;
+using StarterAssets;
+using Cinemachine;
 using TMPro;
 
 /// <summary>
@@ -6,6 +8,7 @@ using TMPro;
 /// </summary>
 public abstract class Gun : MonoBehaviour
 {
+    [Header("Generic Gun Attributes")]
     /// <summary>
     /// Whether or not the gun has infinite ammo. If true, all other ammo settings are obsolete.
     /// </summary>
@@ -34,9 +37,22 @@ public abstract class Gun : MonoBehaviour
     [Tooltip("The amount of time between shots.")]
     protected float _fireRate;
     [SerializeField]
+    [Tooltip("The camera that the ADS mode uses.")]
+    protected CinemachineVirtualCamera aimVirtualCamera;
+    [SerializeField]
+    [Tooltip("The camera sensitivity when out of ADS.")]
+    protected float normalSensitivity;
+    [SerializeField]
+    [Tooltip("The camera sensitivity when in ADS mode.")]
+    protected float aimSensitivity;
+    [SerializeField]
+    [Tooltip("How far ahead of the camera raycasts should start (to avoid obstacles).")]
+    protected float forwardCameraDisplacement;
+    private PlayerMovement thirdPersonController;
     private float fireClock;
     [SerializeField]
     private float reloadClock;
+
 
 
     private TextMeshProUGUI ammoText;
@@ -66,7 +82,7 @@ public abstract class Gun : MonoBehaviour
     /// Fire without aiming down sights. Returns false if unable to fire.
     /// </summary>
     /// <param name="hitTransform">The transform the crosshair is currently pointed at.</param>
-    public virtual bool HipFire(Transform hitTransform)
+    public virtual bool HipFire()
     {
         if (!CanFire)
             return false;
@@ -78,7 +94,7 @@ public abstract class Gun : MonoBehaviour
     /// Fire while aiming down sights. Returns false if unable to fire.
     /// </summary>
     /// <param name="hitTransform">The transform the crosshair is currently pointed at.</param>
-    public virtual bool ADSFire(Transform hitTransform)
+    public virtual bool ADSFire()
     {
         if (!CanFire)
             return false;
@@ -104,6 +120,13 @@ public abstract class Gun : MonoBehaviour
         Ammo += ammoReloaded;
         ReserveAmmo -= ammoReloaded;
     }
+    /// <summary>
+    /// Grab a reference to the player movement script.
+    /// </summary>
+    protected virtual void Awake()
+    {
+        thirdPersonController = GetComponentInParent<PlayerMovement>();
+    }
 
     /// <summary>
     /// Set the initial Ammo and ReserveAmmo counts, as well as ammoText.
@@ -118,6 +141,9 @@ public abstract class Gun : MonoBehaviour
 
     /// <summary>
     /// Check if the gun is reloading or able to fire and manage the appropiate timers. Also manages GUI.
+    /// TODO: I feel like ADS camera stuff and camera stuff in general should be with the movement controller,
+    /// but that's currently under construction, so I placed it here. Also, I feel like there's a better way
+    /// to rotate the camera than do a raycast every update?
     /// </summary>
     protected virtual void Update()
     {
@@ -125,6 +151,32 @@ public abstract class Gun : MonoBehaviour
             reloadClock -= Time.deltaTime;
         if (!CanFire)
             fireClock -= Time.deltaTime;
+
+        if (PlayerInputController.Singleton.MoveState == MovementState.ADS)
+        {
+            aimVirtualCamera.gameObject.SetActive(true);
+            thirdPersonController.SetSensitivity(aimSensitivity);
+            thirdPersonController.SetRotateOnMove(false);
+
+            Vector3 worldAimTarget = Vector3.zero;
+            Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
+            Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * forwardCameraDisplacement, Camera.main.transform.forward);
+            if (Physics.Raycast(cameraRay, out RaycastHit raycastHit, Mathf.Infinity))
+            {
+                worldAimTarget = 
+            }
+
+            worldAimTarget.y = transform.position.y;
+            Vector3 aimDirection = (worldAimTarget - transform.position).normalized;
+
+            thirdPersonController.transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 20f);
+        }
+        else
+        {
+            aimVirtualCamera.gameObject.SetActive(false);
+            thirdPersonController.SetSensitivity(normalSensitivity);
+            thirdPersonController.SetRotateOnMove(true);
+        }
 
         if (InfiniteAmmo) ammoText.text = "\u221E";
         else ammoText.text = $"{Ammo}|{ReserveAmmo}";
