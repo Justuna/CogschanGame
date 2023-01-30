@@ -40,4 +40,5 @@ MonoBehaviour:
   StartDifficulty: 0
   MaxDifficulty: 100
   Noise: 0.1
+  MinCount: 2
   MaxCount: 10

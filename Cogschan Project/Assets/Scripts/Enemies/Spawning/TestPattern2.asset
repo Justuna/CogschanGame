@@ -15,5 +15,5 @@ MonoBehaviour:
   EnemyTypes:
   - {fileID: 11400000, guid: 456530b64d2d71c4589de8020765e699, type: 2}
   - {fileID: 11400000, guid: 6551a861affba1b46bd8d2dfe59bb9bc, type: 2}
-  StartDifficulty: 0
-  MaxDifficulty: 50
+  StartDifficulty: 30
+  MaxDifficulty: 100
