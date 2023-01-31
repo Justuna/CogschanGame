@@ -44,10 +44,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8b07c0a846662748bea3569fbf35943, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InfiniteAmmo: 0
   MaxAmmo: 12
   MaxReserveAmmo: 36
   ReloadTime: 1
   _fireRate: 0.5
-  damage: 0
-  particle: {fileID: 9222931191912853214, guid: a0f18980ea1bcc84a9c91285f4980d6c, type: 3}
-  critParticle: {fileID: 4030942653299727334, guid: ee09b25e4bac789479b814d405db1c25, type: 3}
+  aimVirtualCamera: {fileID: 0}
+  normalSensitivity: 0.2
+  aimSensitivity: 0.1
+  forwardCameraDisplacement: 0.5
+  Damage: 10
+  Particle: {fileID: 9222931191912853214, guid: a0f18980ea1bcc84a9c91285f4980d6c, type: 3}
+  CritParticle: {fileID: 4030942653299727334, guid: ee09b25e4bac789479b814d405db1c25, type: 3}
+  Muzzle: {fileID: 165013744114904362}
+  AimColliderLayerMask:
+    serializedVersion: 2
+    m_Bits: 2147483647
