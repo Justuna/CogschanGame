@@ -48,6 +48,9 @@ public abstract class Gun : MonoBehaviour
     [SerializeField]
     [Tooltip("How far ahead of the camera raycasts should start (to avoid obstacles).")]
     protected float forwardCameraDisplacement;
+    [SerializeField]
+    [Tooltip("The kind of ammo this gun uses.")]
+    protected AmmoType ammoType;
     private PlayerMovement thirdPersonController;
     private float fireClock;
     private float reloadClock;
@@ -115,6 +118,21 @@ public abstract class Gun : MonoBehaviour
         int ammoReloaded = neededAmmo < ReserveAmmo ? neededAmmo : ReserveAmmo;
         Ammo += ammoReloaded;
         ReserveAmmo -= ammoReloaded;
+    }
+    /// <summary>
+    /// Add ammo clip.
+    /// </summary>
+    public virtual bool AddAmmo(AmmoType type, int amount)
+    {
+        if (InfiniteAmmo || type.Identifier != ammoType.Identifier) return false;
+
+        if (ReserveAmmo < MaxReserveAmmo)
+        {
+            ReserveAmmo = Mathf.Min(ReserveAmmo + amount, MaxReserveAmmo);
+            return true;
+        }
+
+        return false;
     }
     /// <summary>
     /// Grab a reference to the player movement script.

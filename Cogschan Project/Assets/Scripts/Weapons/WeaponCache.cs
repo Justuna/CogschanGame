@@ -19,6 +19,7 @@ public class WeaponCache : MonoBehaviour
     private int _currGunIndex = 0;
 
     public bool IsReloading => _currGun.IsReloading;
+    public bool CanFire => _currGun.CanFire;
 
     private void Awake()
     {
@@ -49,14 +50,12 @@ public class WeaponCache : MonoBehaviour
 
     public void NextWeapon()
     {
-        _currGun.gameObject.SetActive(false);
         _currGunIndex = (_currGunIndex + 1) % _cache.Count;
         SwitchWeapon();
     }
 
     public void PrevWeapon()
     {
-        _currGun.gameObject.SetActive(false);
         _currGunIndex = (_currGunIndex - 1) % _cache.Count;
         if (_currGunIndex < 0) _currGunIndex = _cache.Count + _currGunIndex;
         SwitchWeapon();
@@ -64,6 +63,8 @@ public class WeaponCache : MonoBehaviour
 
     private void SwitchWeapon()
     {
+        if (_currGun != null) _currGun.gameObject.SetActive(false);
+
         GameObject newGun = _cache[_currGunIndex];
         newGun.SetActive(true);
         _currGun = newGun.GetComponent<Gun>();
@@ -74,8 +75,30 @@ public class WeaponCache : MonoBehaviour
         GameObject gun = Instantiate(prefab, RightHand);
         _cache.Add(gun);
         gun.GetComponent<Gun>().SetAimCamera(aimVirtualCamera);
-        Debug.Log("Added " + prefab.name);
+
+        if (useImmediately)
+        {
+            _currGunIndex = _cache.Count - 1;
+            SwitchWeapon();
+        }
+        else
+        {
+            gun.SetActive(false);
+        }
 
         return gun;
+    }
+
+    public bool AddAmmo(AmmoType type, int amount)
+    {
+        foreach (GameObject gun in _cache)
+        {
+            if (gun.GetComponent<Gun>().AddAmmo(type, amount))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

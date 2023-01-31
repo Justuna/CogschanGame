@@ -206,7 +206,7 @@ public class PlayerInputController : MonoBehaviour
         Vector2 inputScroll = inputMappings.Weapon.SwitchWeapon.ReadValue<Vector2>();
         if (inputScrollTimer <= 0)
         {
-            if (inputScroll.y != 0)
+            if (inputScroll.y != 0 && ActState == ActionState.None && weapons.CanFire && !weapons.IsReloading)
             {
                 inputScrollTimer = ScrollBuffer;
                 if (inputScroll.y > 0) weapons.NextWeapon();

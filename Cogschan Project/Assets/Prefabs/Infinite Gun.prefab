@@ -53,6 +53,7 @@ MonoBehaviour:
   normalSensitivity: 0.2
   aimSensitivity: 0.1
   forwardCameraDisplacement: 0.5
+  ammoType: {fileID: 0}
   Damage: 10
   Particle: {fileID: 9222931191912853214, guid: a0f18980ea1bcc84a9c91285f4980d6c, type: 3}
   CritParticle: {fileID: 4030942653299727334, guid: ee09b25e4bac789479b814d405db1c25, type: 3}
