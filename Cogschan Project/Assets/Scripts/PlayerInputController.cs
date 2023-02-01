@@ -39,14 +39,19 @@ public class PlayerInputController : MonoBehaviour
     /// </summary>
     private ActionState _actionState;
     private CogschanInputMapping inputMappings;
+    private WeaponCache weapons;
 
     // The booleans that determine running, firing, and aiming based on inputs.
     private bool inputRun = false;
     private bool inputFire = false;
     private bool inputAim = false;
 
-    // The gun that the player is carrying.
-    private Gun gun;
+    // A float counter that determines whether or not to scroll.
+    private float inputScrollTimer = 0;
+
+    // The amount of time in seconds that the mouse wheel has to be scrolling in one direction for to count as a complete input.
+    [SerializeField]
+    private float ScrollBuffer;
 
     /// <summary>
     /// The Vector2 that determines the movement direction based on input.
@@ -145,13 +150,13 @@ public class PlayerInputController : MonoBehaviour
     private void Awake()
     {
         Singleton = this;
-        gun = GetComponentInChildren<Gun>();
+        weapons = GetComponent<WeaponCache>();
 
         inputMappings = new CogschanInputMapping();
         inputMappings.Enable();
         inputMappings.Movement.Run.started += _ => inputRun = true;
         inputMappings.Movement.Run.canceled += _ => inputRun = false;
-        inputMappings.Weapon.Reload.performed += _ => gun.Reload();
+        inputMappings.Weapon.Reload.performed += _ => weapons.StartReload();
         inputMappings.Weapon.Shoot.started += _ => inputFire = true;
         inputMappings.Weapon.Shoot.canceled += _ => inputFire = false;
         inputMappings.Weapon.Aim.started += _ => inputAim = true;
@@ -184,14 +189,31 @@ public class PlayerInputController : MonoBehaviour
         else if (MoveState == MovementState.ADS)
             MoveState = MovementState.Jog;
 
-        if (gun.IsReloading)
+        if (weapons.IsReloading)
             ActState = ActionState.Reload;
         else if (ActState == ActionState.Reload)
+        {
+            weapons.FinishReload();
             ActState = ActionState.None;
+        }
+            
 
         InputMove = inputMappings.Movement.Move.ReadValue<Vector2>();
         InputLook = inputMappings.Weapon.Look.ReadValue<Vector2>();
         InputLook = new Vector2(InputLook.x, -InputLook.y);
+        
+        
+        Vector2 inputScroll = inputMappings.Weapon.SwitchWeapon.ReadValue<Vector2>();
+        if (inputScrollTimer <= 0)
+        {
+            if (inputScroll.y != 0 && ActState == ActionState.None && weapons.CanFire && !weapons.IsReloading)
+            {
+                inputScrollTimer = ScrollBuffer;
+                if (inputScroll.y > 0) weapons.NextWeapon();
+                else weapons.PrevWeapon();
+            }
+        }
+        else inputScrollTimer -= Time.deltaTime;
     }
 
     // Enable input mappings.
