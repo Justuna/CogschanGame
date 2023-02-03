@@ -9,9 +9,6 @@ public class WeaponCache : MonoBehaviour
     private GameObject StartingGun;
     [SerializeField]
     private Transform RightHand;
-    [SerializeField]
-    [Tooltip("The camera that the ADS mode uses.")]
-    protected CinemachineVirtualCamera aimVirtualCamera;
 
     private List<GameObject> _cache = new List<GameObject>();
     private PlayerController _ctrl;
@@ -74,7 +71,6 @@ public class WeaponCache : MonoBehaviour
     {
         GameObject gun = Instantiate(prefab, RightHand);
         _cache.Add(gun);
-        _ctrl.SetAimCamera(aimVirtualCamera);
 
         if (useImmediately)
         {
