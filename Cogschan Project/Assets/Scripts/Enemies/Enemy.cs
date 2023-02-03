@@ -1,15 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Entity
 {
-    public float MaxHealth = 100;
-    public UnityEvent<GameObject> OnDeath;
     public Healthbar Healthbar;
-
-    float _health;
 
     void Awake()
     {
@@ -17,26 +12,15 @@ public class Enemy : MonoBehaviour
         Healthbar.UpdateValue(1);
     }
 
-    public void DealDamage(float amount)
+    public override void DealDamage(float amount)
     {
-        _health = Mathf.Max(_health - amount, 0);
-        Healthbar.UpdateValue(_health / MaxHealth);
-
-        if (_health == 0)
-        {
-            OnDeath.Invoke(gameObject);
-            Kill();
-        }
-    }
-
-    public void HealHealth(float amount)
-    {
-        _health = Mathf.Min(_health + amount, MaxHealth);
+        base.DealDamage(amount);
         Healthbar.UpdateValue(_health / MaxHealth);
     }
 
-    void Kill()
+    public override void HealHealth(float amount)
     {
-        Destroy(gameObject);
+        base.HealHealth(amount);
+        Healthbar.UpdateValue(_health / MaxHealth);
     }
 }

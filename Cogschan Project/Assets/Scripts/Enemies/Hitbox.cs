@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Hitbox : MonoBehaviour
 {
-    public Enemy enemy;
-    public float multiplier = 1f;
+    public Entity Entity;
+    public float Multiplier = 1f;
 
     public void TakeHit(float damage)
     {
-        enemy.DealDamage(multiplier * damage);
+        Entity.DealDamage(Multiplier * damage);
     }
 }
