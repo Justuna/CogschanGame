@@ -14,7 +14,7 @@ public class WeaponCache : MonoBehaviour
     protected CinemachineVirtualCamera aimVirtualCamera;
 
     private List<GameObject> _cache = new List<GameObject>();
-    private PlayerInputController _ctrl;
+    private PlayerController _ctrl;
     private Gun _currGun;
     private int _currGunIndex = 0;
 
@@ -23,7 +23,7 @@ public class WeaponCache : MonoBehaviour
 
     private void Awake()
     {
-        _ctrl = GetComponent<PlayerInputController>();
+        _ctrl = GetComponent<PlayerController>();
 
         GameObject startingGun = AddGun(StartingGun, true);
         _currGun = startingGun.GetComponent<Gun>();

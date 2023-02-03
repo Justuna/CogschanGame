@@ -51,7 +51,7 @@ public abstract class Gun : MonoBehaviour
     [SerializeField]
     [Tooltip("The kind of ammo this gun uses.")]
     protected AmmoType ammoType;
-    private PlayerMovement thirdPersonController;
+    private PlayerController thirdPersonController;
     private float fireClock;
     private float reloadClock;
     private TextMeshProUGUI ammoText;
@@ -139,7 +139,7 @@ public abstract class Gun : MonoBehaviour
     /// </summary>
     protected virtual void Awake()
     {
-        thirdPersonController = GetComponentInParent<PlayerMovement>();
+        thirdPersonController = GetComponentInParent<PlayerController>();
     }
 
     /// <summary>
@@ -167,7 +167,7 @@ public abstract class Gun : MonoBehaviour
         if (!CanFire)
             fireClock -= Time.deltaTime;
 
-        if (PlayerInputController.Singleton.MoveState == MovementState.ADS)
+        if (PlayerController.Singleton.MoveState == MovementState.ADS)
         {
             aimVirtualCamera.gameObject.SetActive(true);
             thirdPersonController.SetSensitivity(aimSensitivity);
@@ -197,7 +197,7 @@ public abstract class Gun : MonoBehaviour
         else ammoText.text = $"{Ammo}|{ReserveAmmo}";
     }
 
-    public void SetAimCamera (CinemachineVirtualCamera camera)
+    public void SetAimCamera(CinemachineVirtualCamera camera)
     {
         aimVirtualCamera = camera;
     }
