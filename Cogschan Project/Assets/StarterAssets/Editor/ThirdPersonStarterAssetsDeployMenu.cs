@@ -4,6 +4,7 @@ using System.Text;
 using UnityEditor;
 using UnityEngine;
 
+/* again, I broke stuff
 namespace StarterAssets
 {
     public partial class StarterAssetsDeployMenu : ScriptableObject
@@ -101,4 +102,4 @@ namespace StarterAssets
         }
 #endif
     }
-}
+} */
