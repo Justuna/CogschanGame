@@ -17944,7 +17944,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartingGun: {fileID: 165013744114904365, guid: 58108bcb8ef37144d887ab22d98d2d8e, type: 3}
   RightHand: {fileID: 3100162983899313499}
-  aimVirtualCamera: {fileID: 6603648617744939111}
 --- !u!114 &6711323755194256733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17982,7 +17981,7 @@ MonoBehaviour:
   LockCameraPosition: 0
   ScrollBuffer: 0.1
   InputJump: 0
-  aimVirtualCamera: {fileID: 0}
+  aimVirtualCamera: {fileID: 6603648617744939111}
   normalSensitivity: 0.2
   aimSensitivity: 0.1
   forwardCameraDisplacement: 1
