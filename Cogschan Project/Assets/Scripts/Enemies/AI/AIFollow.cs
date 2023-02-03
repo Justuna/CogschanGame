@@ -13,10 +13,10 @@ public class AIFollow : MonoBehaviour
     void Start()
     {
         nav = GetComponent<NavMeshAgent>();
+        currentTime = idleTime;
     }
 
-    void Update()
-    {
+    void Update(){
         nav.SetDestination(Player.position);
         Model.LookAt(new Vector3(Player.position.x, transform.position.y, Player.position.z)); 
         Model.Rotate(new Vector3(0, 180, 0));
