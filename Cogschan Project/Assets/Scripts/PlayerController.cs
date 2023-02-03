@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 #region State Enums
@@ -343,7 +344,7 @@ public class PlayerController : MonoBehaviour
             }
 
             // if we are not grounded, do not jump
-            PlayerController.Singleton.InputJump = false;
+            Singleton.InputJump = false;
         }
 
         // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
@@ -619,6 +620,21 @@ public class PlayerController : MonoBehaviour
     private void Interact() => throw new System.NotImplementedException("The method \"Interact\" is not yet implemented.");
     #endregion
 
+    [Space(10)]
+    [Header("Camera Stuff")]
+    [SerializeField]
+    [Tooltip("The camera that the ADS mode uses.")]
+    protected CinemachineVirtualCamera aimVirtualCamera;
+    [SerializeField]
+    [Tooltip("The camera sensitivity when out of ADS.")]
+    protected float normalSensitivity;
+    [SerializeField]
+    [Tooltip("The camera sensitivity when in ADS mode.")]
+    protected float aimSensitivity;
+    [SerializeField]
+    [Tooltip("How far ahead of the camera raycasts should start (to avoid obstacles).")]
+    public float forwardCameraDisplacement;
+
     private void Awake()
     {
         StarterAssetsInit();
@@ -629,5 +645,36 @@ public class PlayerController : MonoBehaviour
     {
         StarterAssetesUpdate();
         StateUpdate();
+
+        if (Singleton.MoveState == MovementState.ADS)
+        {
+            aimVirtualCamera.gameObject.SetActive(true);
+            SetSensitivity(aimSensitivity);
+            SetRotateOnMove(false);
+
+            Vector3 worldAimTarget = Vector3.zero;
+            Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
+            Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * forwardCameraDisplacement, Camera.main.transform.forward);
+            if (Physics.Raycast(cameraRay, out RaycastHit raycastHit, Mathf.Infinity))
+            {
+                worldAimTarget = raycastHit.point;
+                worldAimTarget.y = transform.position.y;
+            }
+
+            Vector3 aimDirection = (worldAimTarget - transform.position).normalized;
+
+            transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 20f);
+        }
+        else
+        {
+            aimVirtualCamera.gameObject.SetActive(false);
+            SetSensitivity(normalSensitivity);
+            SetRotateOnMove(true);
+        }
+    }
+
+    public void SetAimCamera(CinemachineVirtualCamera camera)
+    {
+        aimVirtualCamera = camera;
     }
 }

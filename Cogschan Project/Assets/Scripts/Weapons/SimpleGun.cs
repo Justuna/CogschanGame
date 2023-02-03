@@ -12,9 +12,9 @@ public class SimpleGun : Gun
     private GameObject Particle;
     [SerializeField]
     private GameObject CritParticle;
-    [SerializeField] 
+    [SerializeField]
     private Transform Muzzle;
-    [SerializeField] 
+    [SerializeField]
     private LayerMask AimColliderLayerMask;
 
 
@@ -25,7 +25,7 @@ public class SimpleGun : Gun
 
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
 
-        Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * forwardCameraDisplacement, Camera.main.transform.forward);
+        Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * thirdPersonController.forwardCameraDisplacement, Camera.main.transform.forward);
 
         Transform hitTransform = null;
         if (Physics.Raycast(cameraRay, out RaycastHit raycastHit, 999f, AimColliderLayerMask))
@@ -65,8 +65,8 @@ public class SimpleGun : Gun
 
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
 
-        Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * forwardCameraDisplacement, Camera.main.transform.forward);
-        Debug.DrawRay(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * forwardCameraDisplacement, Camera.main.transform.forward, Color.green);
+        Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * thirdPersonController.forwardCameraDisplacement, Camera.main.transform.forward);
+        Debug.DrawRay(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * thirdPersonController.forwardCameraDisplacement, Camera.main.transform.forward, Color.green);
 
         Transform hitTransform = null;
         if (Physics.Raycast(cameraRay, out RaycastHit raycastHit, 999f, AimColliderLayerMask))

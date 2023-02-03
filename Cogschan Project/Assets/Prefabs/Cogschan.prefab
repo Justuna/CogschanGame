@@ -17982,6 +17982,10 @@ MonoBehaviour:
   LockCameraPosition: 0
   ScrollBuffer: 0.1
   InputJump: 0
+  aimVirtualCamera: {fileID: 0}
+  normalSensitivity: 0.2
+  aimSensitivity: 0.1
+  forwardCameraDisplacement: 1
 --- !u!1 &8824025184588894572
 GameObject:
   m_ObjectHideFlags: 0

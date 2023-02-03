@@ -74,7 +74,7 @@ public class WeaponCache : MonoBehaviour
     {
         GameObject gun = Instantiate(prefab, RightHand);
         _cache.Add(gun);
-        gun.GetComponent<Gun>().SetAimCamera(aimVirtualCamera);
+        _ctrl.SetAimCamera(aimVirtualCamera);
 
         if (useImmediately)
         {
