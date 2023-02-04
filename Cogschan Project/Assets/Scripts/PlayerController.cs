@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
     private float _animationBlend;
     private float _targetRotation = 0.0f;
     private float _rotationVelocity;
-    private float _verticalVelocity;
+    public float _verticalVelocity;
     private float _terminalVelocity = 53.0f;
 
     // timeout deltatime
@@ -305,7 +305,7 @@ public class PlayerController : MonoBehaviour
             }
 
             // Jump
-            if (PlayerController.Singleton.InputJump && _jumpTimeoutDelta <= 0.0f)
+            if (PlayerController.Singleton.InputJump)
             {
 
                 // the square root of H * -2 * G = how much velocity needed to reach desired height

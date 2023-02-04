@@ -40,7 +40,7 @@ public class SimpleGun : Gun
             hitTransform = raycastHit.transform;
         }
 
-        Hitbox hitbox = hitTransform.GetComponent<Hitbox>();
+        Hitbox hitbox = hitTransform?.GetComponent<Hitbox>();
         if (hitbox != null && hitbox.multiplier > 1)
         {
             Instantiate(CritParticle, hitTransform.position, Quaternion.identity);

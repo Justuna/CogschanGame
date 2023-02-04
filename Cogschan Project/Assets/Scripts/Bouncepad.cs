@@ -8,8 +8,7 @@ namespace StarterAssets
         public float Bounceforce;
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log(other);
-            other.gameObject.GetComponent<PlayerMovement>()._verticalVelocity = Bounceforce;
+            other.gameObject.GetComponent<PlayerController>()._verticalVelocity = Bounceforce;
         }
     }
 }
