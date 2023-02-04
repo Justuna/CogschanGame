@@ -458,6 +458,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     [HideInInspector]
     public bool InputJump;
+    /// <summary>
+    /// Determines whether the player can used WASD to control movement.
+    /// </summary>
+    [HideInInspector]
+    public bool CanMove = true;
 
     /// <summary>
     /// The singleton instance of the <see cref="PlayerController"/>.
@@ -588,10 +593,11 @@ public class PlayerController : MonoBehaviour
             weapons.FinishReload();
             ActState = ActionState.None;
         }
-        if (ActState == ActionState.Dash && dashCoroutine is null)
-            dashCoroutine = StartCoroutine(Dash());
+        /*if (ActState == ActionState.Dash && dashCoroutine is null)
+            dashCoroutine = StartCoroutine(Dash());*/
 
-        InputMove = ActState == ActionState.Dash ? Vector2.zero : inputMappings.Movement.Move.ReadValue<Vector2>();
+        InputMove = !CanMove ? Vector2.zero : inputMappings.Movement.Move.ReadValue<Vector2>();
+
         InputLook = inputMappings.Weapon.Look.ReadValue<Vector2>();
         InputLook = new Vector2(InputLook.x, -InputLook.y);
 
@@ -628,8 +634,8 @@ public class PlayerController : MonoBehaviour
     }
 
     // TODO: Actually write these methods (maybe in a seperate script?).
-    private IEnumerator Dash()
-    {
+    private IEnumerator Dash() => throw new System.NotImplementedException("The coroutine \"Dash\" is not yet implemented.");
+    /*{
         Vector3 vel = _controller.velocity;
         vel = new Vector3(vel.x, 0, vel.z);
         if (vel == Vector3.zero)
@@ -648,7 +654,7 @@ public class PlayerController : MonoBehaviour
         }
         ActState = ActionState.None;
         dashCoroutine = null;
-    }
+    }*/
 
     private void Interact() => throw new System.NotImplementedException("The method \"Interact\" is not yet implemented.");
     #endregion
