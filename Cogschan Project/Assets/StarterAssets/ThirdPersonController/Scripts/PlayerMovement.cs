@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 /* A renamed/modified version of the default ThirdPersonController for Unity's third person template
  * Note: animations are called via the controller for both the character and capsule using animator null checks
  */
+/* I have broke many things. Don't use this script.
 
 namespace StarterAssets
 {
@@ -174,13 +175,13 @@ namespace StarterAssets
         private void CameraRotation()
         {
             // if there is an input and camera position is not fixed
-            if (PlayerInputController.Singleton.InputLook.sqrMagnitude >= _threshold && !LockCameraPosition)
+            if (PlayerController.Singleton.InputLook.sqrMagnitude >= _threshold && !LockCameraPosition)
             {
                 //Don't multiply mouse input by Time.deltaTime;
                 //float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
                 float deltaTimeMultiplier = 1.0f;
 
-                _cinemachineTargetYaw += PlayerInputController.Singleton.InputLook.x * deltaTimeMultiplier * Sensitivity;
+                _cinemachineTargetYaw += PlayerController.Singleton.InputLook.x * deltaTimeMultiplier * Sensitivity;
                 _cinemachineTargetPitch += PlayerInputController.Singleton.InputLook.y * deltaTimeMultiplier * Sensitivity;
             }
 
@@ -208,7 +209,7 @@ namespace StarterAssets
             float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
             float speedOffset = 0.1f;
-            float inputMagnitude = /*_input.analogMovement ? _input.move.magnitude : */1f;
+            float inputMagnitude = /*_input.analogMovement ? _input.move.magnitude : *//*1f;
 
             // accelerate or decelerate to target speed
             if (currentHorizontalSpeed < targetSpeed - speedOffset ||
@@ -382,4 +383,4 @@ namespace StarterAssets
             }
         }
     }
-}
+}*/
