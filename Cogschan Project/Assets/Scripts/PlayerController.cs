@@ -427,6 +427,9 @@ public class PlayerController : MonoBehaviour
     // A float counter that determines whether or not to scroll.
     private float inputScrollTimer = 0;
 
+    // The dash coroutine, if active.
+    private Coroutine dashCoroutine = null;
+
     // The amount of time in seconds that the mouse wheel has to be scrolling in one direction for to count as a complete input.
     [Space(10)]
     [Header("Input")]
@@ -552,7 +555,7 @@ public class PlayerController : MonoBehaviour
         inputMappings.Weapon.Aim.canceled += _ => inputAim = false;
         inputMappings.Movement.Jump.started += _ => { if (!inputAim) { InputJump = true; } };
         inputMappings.Movement.Jump.canceled += _ => InputJump = false;
-        inputMappings.Movement.Dash.performed += _ => ActState = ActionState.Dash;
+        inputMappings.Movement.Dash.started += _ => ActState = ActionState.Dash;
         inputMappings.Movement.Interact.performed += _ => Interact();
     }
 
@@ -585,8 +588,8 @@ public class PlayerController : MonoBehaviour
             weapons.FinishReload();
             ActState = ActionState.None;
         }
-        if (ActState == ActionState.Dash)
-            StartCoroutine(Dash());
+        if (ActState == ActionState.Dash && dashCoroutine is null)
+            dashCoroutine = StartCoroutine(Dash());
 
         InputMove = ActState == ActionState.Dash ? Vector2.zero : inputMappings.Movement.Move.ReadValue<Vector2>();
         InputLook = inputMappings.Weapon.Look.ReadValue<Vector2>();
@@ -629,11 +632,10 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 vel = _controller.velocity;
         vel = new Vector3(vel.x, 0, vel.z);
-        print(vel);
         if (vel == Vector3.zero)
         {
-            vel = Vector3.forward; // TODO: Why is this not working? it seems like no matter the vector here, the direction is the same.
-            print(vel);
+            vel = Camera.main.transform.forward; // TODO: Why is this not working? it seems like no matter the vector here, the direction is the same.
+            vel = new Vector3(vel.x, 0, vel.z);
         }
         vel = dashSpeed * vel.normalized;
         float timer = 0;
@@ -641,9 +643,11 @@ public class PlayerController : MonoBehaviour
         {
             _controller.Move(vel * Time.deltaTime);
             timer += Time.deltaTime;
+            print(vel);
             yield return new WaitForEndOfFrame();
         }
         ActState = ActionState.None;
+        dashCoroutine = null;
     }
 
     private void Interact() => throw new System.NotImplementedException("The method \"Interact\" is not yet implemented.");
