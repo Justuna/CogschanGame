@@ -547,6 +547,7 @@ public class PlayerController : MonoBehaviour
     private void StateInit()
     {
         Singleton = this;
+        CanMove = true;
         weapons = GetComponent<WeaponCache>();
 
         inputMappings = new CogschanInputMapping();
@@ -593,10 +594,11 @@ public class PlayerController : MonoBehaviour
             weapons.FinishReload();
             ActState = ActionState.None;
         }
-        /*if (ActState == ActionState.Dash && dashCoroutine is null)
-            dashCoroutine = StartCoroutine(Dash());*/
+        if (ActState == ActionState.Dash && dashCoroutine is null)
+            dashCoroutine = StartCoroutine(Dash());
 
         InputMove = !CanMove ? Vector2.zero : inputMappings.Movement.Move.ReadValue<Vector2>();
+        print(CanMove);
 
         InputLook = inputMappings.Weapon.Look.ReadValue<Vector2>();
         InputLook = new Vector2(InputLook.x, -InputLook.y);
@@ -634,27 +636,27 @@ public class PlayerController : MonoBehaviour
     }
 
     // TODO: Actually write these methods (maybe in a seperate script?).
-    private IEnumerator Dash() => throw new System.NotImplementedException("The coroutine \"Dash\" is not yet implemented.");
-    /*{
+    private IEnumerator Dash()
+    {
         Vector3 vel = _controller.velocity;
         vel = new Vector3(vel.x, 0, vel.z);
-        if (vel == Vector3.zero)
+        if (vel != Vector3.zero)
         {
-            vel = Camera.main.transform.forward; // TODO: Why is this not working? it seems like no matter the vector here, the direction is the same.
-            vel = new Vector3(vel.x, 0, vel.z);
+            CanMove = false;
+            vel = dashSpeed * vel.normalized;
+            float timer = 0;
+            while (timer < dashTimer)
+            {
+                _controller.Move(vel * Time.deltaTime);
+                timer += Time.deltaTime;
+                print(vel);
+                yield return new WaitForEndOfFrame();
+            }
         }
-        vel = dashSpeed * vel.normalized;
-        float timer = 0;
-        while (timer < dashTimer)
-        {
-            _controller.Move(vel * Time.deltaTime);
-            timer += Time.deltaTime;
-            print(vel);
-            yield return new WaitForEndOfFrame();
-        }
+        CanMove = true;
         ActState = ActionState.None;
         dashCoroutine = null;
-    }*/
+    }
 
     private void Interact() => throw new System.NotImplementedException("The method \"Interact\" is not yet implemented.");
     #endregion
