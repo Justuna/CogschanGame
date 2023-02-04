@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class Hitbox : MonoBehaviour
 {
-    public Entity Entity;
     public float Multiplier = 1f;
+
+    private Entity _entity;
+
+    private void Awake()
+    {
+        _entity = GetComponentInParent<Entity>();
+    }
 
     public void TakeHit(float damage)
     {
-        Entity.DealDamage(Multiplier * damage);
+        if (_entity != null) _entity.DealDamage(Multiplier * damage);
     }
 }

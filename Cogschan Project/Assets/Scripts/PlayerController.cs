@@ -599,7 +599,6 @@ public class PlayerController : MonoBehaviour
             dashCoroutine = StartCoroutine(Dash());
 
         InputMove = !CanMove ? Vector2.zero : inputMappings.Movement.Move.ReadValue<Vector2>();
-        print(CanMove);
 
         InputLook = inputMappings.Weapon.Look.ReadValue<Vector2>();
         InputLook = new Vector2(InputLook.x, -InputLook.y);
@@ -650,7 +649,6 @@ public class PlayerController : MonoBehaviour
             {
                 _controller.Move(vel * Time.deltaTime);
                 timer += Time.deltaTime;
-                print(vel);
                 yield return new WaitForEndOfFrame();
             }
         }
