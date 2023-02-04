@@ -143,7 +143,7 @@ public partial class @CogschanInputMapping : IInputActionCollection2, IDisposabl
                 {
                     ""name"": """",
                     ""id"": ""8561be18-c95c-4e93-9c0d-d3aa5afad94a"",
-                    ""path"": ""<Keyboard>/leftShift"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard and Mouse"",
@@ -154,7 +154,7 @@ public partial class @CogschanInputMapping : IInputActionCollection2, IDisposabl
                 {
                     ""name"": """",
                     ""id"": ""6c914859-3ba4-44e0-827e-d1f33d147be5"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
