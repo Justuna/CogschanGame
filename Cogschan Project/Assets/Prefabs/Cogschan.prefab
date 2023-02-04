@@ -17980,6 +17980,8 @@ MonoBehaviour:
   CameraAngleOverride: 0
   LockCameraPosition: 0
   ScrollBuffer: 0.1
+  dashTimer: 0.1
+  dashSpeed: 4
   InputJump: 0
   aimVirtualCamera: {fileID: 6603648617744939111}
   normalSensitivity: 0.2

@@ -140,7 +140,6 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        print("Is start running?");
         _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
 
         _hasAnimator = TryGetComponent(out _animator);
@@ -305,7 +304,7 @@ public class PlayerController : MonoBehaviour
             }
 
             // Jump
-            if (PlayerController.Singleton.InputJump && _jumpTimeoutDelta <= 0.0f)
+            if (Singleton.InputJump && _jumpTimeoutDelta <= 0.0f)
             {
 
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
@@ -434,6 +433,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float ScrollBuffer;
 
+    [Space(10)]
+    [Header("Dash Settings")]
+    [SerializeField]
+    [Tooltip("The length of time the dash lasts.")]
+    private float dashTimer;
+    [SerializeField]
+    [Tooltip("The speed of the dash.")]
+    private float dashSpeed;
+
     /// <summary>
     /// The Vector2 that determines the movement direction based on input.
     /// </summary>
@@ -544,7 +552,7 @@ public class PlayerController : MonoBehaviour
         inputMappings.Weapon.Aim.canceled += _ => inputAim = false;
         inputMappings.Movement.Jump.started += _ => { if (!inputAim) { InputJump = true; } };
         inputMappings.Movement.Jump.canceled += _ => InputJump = false;
-        inputMappings.Movement.Dash.performed += _ => Dash();
+        inputMappings.Movement.Dash.performed += _ => ActState = ActionState.Dash;
         inputMappings.Movement.Interact.performed += _ => Interact();
     }
 
@@ -577,9 +585,10 @@ public class PlayerController : MonoBehaviour
             weapons.FinishReload();
             ActState = ActionState.None;
         }
+        if (ActState == ActionState.Dash)
+            StartCoroutine(Dash());
 
-
-        InputMove = inputMappings.Movement.Move.ReadValue<Vector2>();
+        InputMove = ActState == ActionState.Dash ? Vector2.zero : inputMappings.Movement.Move.ReadValue<Vector2>();
         InputLook = inputMappings.Weapon.Look.ReadValue<Vector2>();
         InputLook = new Vector2(InputLook.x, -InputLook.y);
 
@@ -616,10 +625,31 @@ public class PlayerController : MonoBehaviour
     }
 
     // TODO: Actually write these methods (maybe in a seperate script?).
-    private void Dash() => throw new System.NotImplementedException("The method \"Dash\" is not yet implemented.");
+    private IEnumerator Dash()
+    {
+        Vector3 vel = _controller.velocity;
+        vel = new Vector3(vel.x, 0, vel.z);
+        print(vel);
+        if (vel == Vector3.zero)
+        {
+            vel = Vector3.forward; // TODO: Why is this not working? it seems like no matter the vector here, the direction is the same.
+            print(vel);
+        }
+        vel = dashSpeed * vel.normalized;
+        float timer = 0;
+        while (timer < dashTimer)
+        {
+            _controller.Move(vel * Time.deltaTime);
+            timer += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        ActState = ActionState.None;
+    }
+
     private void Interact() => throw new System.NotImplementedException("The method \"Interact\" is not yet implemented.");
     #endregion
 
+    #region Camera Stuff
     [Space(10)]
     [Header("Camera Stuff")]
     [SerializeField]
@@ -634,19 +664,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     [Tooltip("How far ahead of the camera raycasts should start (to avoid obstacles).")]
     public float forwardCameraDisplacement;
-
-    private void Awake()
-    {
-        StarterAssetsInit();
-        StateInit();
-    }
-
-    private void Update()
-    {
-        StarterAssetesUpdate();
-        StateUpdate();
-        CameraUpdate();
-    }
 
     private void CameraUpdate()
     {
@@ -683,5 +700,19 @@ public class PlayerController : MonoBehaviour
     public void SetAimCamera(CinemachineVirtualCamera camera)
     {
         aimVirtualCamera = camera;
+    }
+    #endregion
+
+    private void Awake()
+    {
+        StarterAssetsInit();
+        StateInit();
+    }
+
+    private void Update()
+    {
+        StarterAssetesUpdate();
+        StateUpdate();
+        CameraUpdate();
     }
 }
