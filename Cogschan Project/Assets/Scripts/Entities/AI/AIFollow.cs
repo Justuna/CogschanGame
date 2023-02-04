@@ -9,6 +9,7 @@ public class AIFollow : MonoBehaviour
     public NavMeshAgent nav;
     public Transform Player;
     public Transform Model;
+    public Transform DebugTransform;
 
     void Start()
     {
@@ -18,7 +19,17 @@ public class AIFollow : MonoBehaviour
 
     void Update()
     {
-        nav.SetDestination(Player.position);
+        NavMeshPath path = new NavMeshPath();
+        NavMesh.SamplePosition(transform.position, out NavMeshHit hit, Mathf.Infinity, NavMesh.AllAreas);
+        bool valid = NavMesh.CalculatePath(hit.position, Player.position, NavMesh.AllAreas, path);
+        if (valid)
+        {
+            Vector3 bestTarget = path.corners[path.corners.Length - 1];
+            Debug.Log("Status: " + path.status);
+            nav.SetPath(path);
+            //nav.SetDestination(bestTarget);
+        }
+        
         Model.LookAt(new Vector3(Player.position.x, transform.position.y, Player.position.z));
         Model.Rotate(new Vector3(0, 180, 0));
 

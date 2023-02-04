@@ -503,7 +503,7 @@ GameObject:
   - component: {fileID: 7017621132893755972}
   - component: {fileID: 8646322412633489426}
   - component: {fileID: 8646322412633489427}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Dummy Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
