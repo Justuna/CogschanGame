@@ -141,7 +141,6 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        print("Is start running?");
         _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
 
         _hasAnimator = TryGetComponent(out _animator);
@@ -306,7 +305,7 @@ public class PlayerController : MonoBehaviour
             }
 
             // Jump
-            if (PlayerController.Singleton.InputJump && _jumpTimeoutDelta <= 0.0f)
+            if (Singleton.InputJump && _jumpTimeoutDelta <= 0.0f)
             {
 
                 // the square root of H * -2 * G = how much velocity needed to reach desired height
@@ -429,11 +428,23 @@ public class PlayerController : MonoBehaviour
     // A float counter that determines whether or not to scroll.
     private float inputScrollTimer = 0;
 
+    // The dash coroutine, if active.
+    private Coroutine dashCoroutine = null;
+
     // The amount of time in seconds that the mouse wheel has to be scrolling in one direction for to count as a complete input.
     [Space(10)]
     [Header("Input")]
     [SerializeField]
     private float ScrollBuffer;
+
+    [Space(10)]
+    [Header("Dash Settings")]
+    [SerializeField]
+    [Tooltip("The length of time the dash lasts.")]
+    private float dashTimer;
+    [SerializeField]
+    [Tooltip("The speed of the dash.")]
+    private float dashSpeed;
 
     /// <summary>
     /// The Vector2 that determines the movement direction based on input.
@@ -448,6 +459,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     [HideInInspector]
     public bool InputJump;
+    /// <summary>
+    /// Determines whether the player can used WASD to control movement.
+    /// </summary>
+    [HideInInspector]
+    public bool CanMove = true;
 
     /// <summary>
     /// The singleton instance of the <see cref="PlayerController"/>.
@@ -532,6 +548,7 @@ public class PlayerController : MonoBehaviour
     private void StateInit()
     {
         Singleton = this;
+        CanMove = true;
         weapons = GetComponent<WeaponCache>();
 
         inputMappings = new CogschanInputMapping();
@@ -545,7 +562,7 @@ public class PlayerController : MonoBehaviour
         inputMappings.Weapon.Aim.canceled += _ => inputAim = false;
         inputMappings.Movement.Jump.started += _ => { if (!inputAim) { InputJump = true; } };
         inputMappings.Movement.Jump.canceled += _ => InputJump = false;
-        inputMappings.Movement.Dash.performed += _ => Dash();
+        inputMappings.Movement.Dash.started += _ => ActState = ActionState.Dash;
         inputMappings.Movement.Interact.performed += _ => Interact();
     }
 
@@ -578,9 +595,12 @@ public class PlayerController : MonoBehaviour
             weapons.FinishReload();
             ActState = ActionState.None;
         }
+        if (ActState == ActionState.Dash && dashCoroutine is null)
+            dashCoroutine = StartCoroutine(Dash());
 
+        InputMove = !CanMove ? Vector2.zero : inputMappings.Movement.Move.ReadValue<Vector2>();
+        print(CanMove);
 
-        InputMove = inputMappings.Movement.Move.ReadValue<Vector2>();
         InputLook = inputMappings.Weapon.Look.ReadValue<Vector2>();
         InputLook = new Vector2(InputLook.x, -InputLook.y);
 
@@ -617,10 +637,32 @@ public class PlayerController : MonoBehaviour
     }
 
     // TODO: Actually write these methods (maybe in a seperate script?).
-    private void Dash() => throw new System.NotImplementedException("The method \"Dash\" is not yet implemented.");
+    private IEnumerator Dash()
+    {
+        Vector3 vel = _controller.velocity;
+        vel = new Vector3(vel.x, 0, vel.z);
+        if (vel != Vector3.zero)
+        {
+            CanMove = false;
+            vel = dashSpeed * vel.normalized;
+            float timer = 0;
+            while (timer < dashTimer)
+            {
+                _controller.Move(vel * Time.deltaTime);
+                timer += Time.deltaTime;
+                print(vel);
+                yield return new WaitForEndOfFrame();
+            }
+        }
+        CanMove = true;
+        ActState = ActionState.None;
+        dashCoroutine = null;
+    }
+
     private void Interact() => throw new System.NotImplementedException("The method \"Interact\" is not yet implemented.");
     #endregion
 
+    #region Camera Stuff
     [Space(10)]
     [Header("Camera Stuff")]
     [SerializeField]
@@ -635,19 +677,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     [Tooltip("How far ahead of the camera raycasts should start (to avoid obstacles).")]
     public float forwardCameraDisplacement;
-
-    private void Awake()
-    {
-        StarterAssetsInit();
-        StateInit();
-    }
-
-    private void Update()
-    {
-        StarterAssetesUpdate();
-        StateUpdate();
-        CameraUpdate();
-    }
 
     private void CameraUpdate()
     {
@@ -684,5 +713,19 @@ public class PlayerController : MonoBehaviour
     public void SetAimCamera(CinemachineVirtualCamera camera)
     {
         aimVirtualCamera = camera;
+    }
+    #endregion
+
+    private void Awake()
+    {
+        StarterAssetsInit();
+        StateInit();
+    }
+
+    private void Update()
+    {
+        StarterAssetesUpdate();
+        StateUpdate();
+        CameraUpdate();
     }
 }
