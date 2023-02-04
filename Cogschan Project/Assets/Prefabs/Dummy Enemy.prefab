@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03dd0b6e219104b45a12144f390fcb87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 7017621132893755974}
-  multiplier: 1
+  Entity: {fileID: 7017621132893755974}
+  Multiplier: 1
 --- !u!65 &7017621131834740563
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -643,8 +643,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03dd0b6e219104b45a12144f390fcb87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 7017621132893755974}
-  multiplier: 5
+  Entity: {fileID: 7017621132893755974}
+  Multiplier: 1
 --- !u!65 &7017621132948627673
 BoxCollider:
   m_ObjectHideFlags: 0
