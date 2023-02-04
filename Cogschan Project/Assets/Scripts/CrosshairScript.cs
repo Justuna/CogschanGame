@@ -7,6 +7,7 @@ public class CrosshairScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Disables the outer crosshair
         foreach (Transform child in transform)
         {
             child.gameObject.SetActive(false);
@@ -16,32 +17,35 @@ public class CrosshairScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //When the player is firing
         if (PlayerController.Singleton.ActState == ActionState.Fire)
         {
-            Debug.Log("Firing");
+            //reenable the outer crosshair
             foreach (Transform child in transform)
             {
                 child.gameObject.SetActive(true);
             }
         }
+        //if the player is aiming 
         else if (PlayerController.Singleton.MoveState == MovementState.ADS)
         {
-            Debug.Log("ADSING");
+            //reenable the outer crosshair
             foreach (Transform child in transform)
             {
                 child.gameObject.SetActive(true);
             }
+            //rotate the outer crosshair
             var eulerAngles = transform.eulerAngles;
             transform.rotation = Quaternion.Euler(eulerAngles.x, eulerAngles.y, eulerAngles.z + 0.6f);
         }
+        //if nothing else 
         else
         {
-            Debug.Log("Nothing");
+            //disable the outer crosshair
             foreach (Transform child in transform)
             {
                 child.gameObject.SetActive(false);
             }
         }
-        Debug.Log(PlayerController.Singleton.ActState + "owo");
     }
 }
