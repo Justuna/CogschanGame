@@ -41,14 +41,14 @@ public class SimpleGun : Gun
         }
 
         Hitbox hitbox = hitTransform.GetComponent<Hitbox>();
-        if (hitbox != null && hitbox.multiplier > 1)
+        if (hitbox != null && hitbox.Multiplier > 1)
         {
             Instantiate(CritParticle, hitTransform.position, Quaternion.identity);
             Debug.Log("IT'S A CRIT!");
             hitbox.TakeHit(Damage);
 
         }
-        else if (hitbox != null && hitbox.multiplier <= 1)
+        else if (hitbox != null && hitbox.Multiplier <= 1)
         {
             Instantiate(Particle, hitTransform.position, Quaternion.identity);
             Debug.Log("Normal ass hit...");
@@ -82,14 +82,14 @@ public class SimpleGun : Gun
         }
 
         Hitbox hitbox = hitTransform.GetComponent<Hitbox>();
-        if (hitbox != null && hitbox.multiplier > 1)
+        if (hitbox != null && hitbox.Multiplier > 1)
         {
             Instantiate(CritParticle, hitTransform.position, Quaternion.identity);
             Debug.Log("IT'S A CRIT!");
             hitbox.TakeHit(Damage);
 
         }
-        else if (hitbox != null && hitbox.multiplier <= 1)
+        else if (hitbox != null && hitbox.Multiplier <= 1)
         {
             Instantiate(Particle, hitTransform.position, Quaternion.identity);
             Debug.Log("Normal ass hit...");
