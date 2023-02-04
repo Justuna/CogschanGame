@@ -645,13 +645,20 @@ public class PlayerController : MonoBehaviour
     {
         StarterAssetesUpdate();
         StateUpdate();
+        CameraUpdate();
+    }
 
-        if (Singleton.MoveState == MovementState.ADS)
+    private void CameraUpdate()
+    {
+        if (MoveState == MovementState.ADS || ActState == ActionState.Fire)
         {
-            aimVirtualCamera.gameObject.SetActive(true);
-            SetSensitivity(aimSensitivity);
-            SetRotateOnMove(false);
+            if (MoveState == MovementState.ADS)
+            {
+                aimVirtualCamera.gameObject.SetActive(true);
+                SetSensitivity(aimSensitivity);
+            }
 
+            SetRotateOnMove(false);
             Vector3 worldAimTarget = Vector3.zero;
             Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
             Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * forwardCameraDisplacement, Camera.main.transform.forward);
