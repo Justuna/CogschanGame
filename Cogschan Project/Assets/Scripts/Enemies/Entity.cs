@@ -10,10 +10,17 @@ public class Entity : MonoBehaviour
     public UnityEvent<GameObject> OnDeath;
 
     protected float _health;
+    protected Healthbar _healthbar;
+
+    protected virtual void Awake()
+    {
+        _health = MaxHealth;
+    }
 
     public virtual void DealDamage(float amount)
     {
         _health = Mathf.Max(_health - amount, 0);
+        _healthbar.UpdateValue(_health / MaxHealth);
 
         if (_health == 0)
         {
@@ -25,9 +32,10 @@ public class Entity : MonoBehaviour
     public virtual void HealHealth(float amount)
     {
         _health = Mathf.Min(_health + amount, MaxHealth);
+        _healthbar.UpdateValue(_health / MaxHealth);
     }
 
-    void Kill()
+    protected virtual void Kill()
     {
         Destroy(gameObject);
     }

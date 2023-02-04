@@ -6,21 +6,9 @@ public class Enemy : Entity
 {
     public Healthbar Healthbar;
 
-    void Awake()
+    void Start()
     {
-        _health = MaxHealth;
-        Healthbar.UpdateValue(1);
-    }
-
-    public override void DealDamage(float amount)
-    {
-        base.DealDamage(amount);
-        Healthbar.UpdateValue(_health / MaxHealth);
-    }
-
-    public override void HealHealth(float amount)
-    {
-        base.HealHealth(amount);
-        Healthbar.UpdateValue(_health / MaxHealth);
+        _healthbar = Healthbar;
+        _healthbar.UpdateValue(1);
     }
 }
