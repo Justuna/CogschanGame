@@ -9,21 +9,23 @@ public class AIFollow : MonoBehaviour
     public NavMeshAgent nav;
     public Transform Player;
     public Transform Model;
+    public Transform DebugTransform;
 
     void Start()
     {
         nav = GetComponent<NavMeshAgent>();
-        //currentTime = idleTime;
     }
 
     void Update()
     {
         NavMeshPath path = new NavMeshPath();
         NavMesh.SamplePosition(transform.position, out NavMeshHit hit, Mathf.Infinity, NavMesh.AllAreas);
-        bool valid = NavMesh.CalculatePath(hit.position, Player.position, NavMesh.AllAreas, path);
+        NavMesh.SamplePosition(Player.position, out NavMeshHit hit2, Mathf.Infinity, NavMesh.AllAreas);
+        bool valid = NavMesh.CalculatePath(hit.position, hit2.position, NavMesh.AllAreas, path);
         if (valid)
         {
             Vector3 bestTarget = path.corners[path.corners.Length - 1];
+            if (DebugTransform != null) DebugTransform.position = bestTarget;
             nav.SetPath(path);
         }
         
