@@ -9,6 +9,7 @@ public class Entity : MonoBehaviour
     protected float MaxHealth = 100;
     public UnityEvent<GameObject> OnDeath;
 
+    [SerializeField]
     protected float _health;
     protected Healthbar _healthbar;
 
