@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
 
     [Space(10)]
     [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
-    public float JumpTimeout = 0.50f;
+    public float JumpTimeout = 0;
 
     [Tooltip("Time required to pass before entering the fall state. Useful for walking down stairs")]
     public float FallTimeout = 0.15f;
@@ -128,6 +128,12 @@ public class PlayerController : MonoBehaviour
     private const float _threshold = 0.01f;
 
     private bool _hasAnimator;
+
+    public float VerticalVelocity
+    {
+        get => _verticalVelocity;
+        set => _verticalVelocity = value;
+    }
 
 
     private void StarterAssetsInit()
@@ -445,6 +451,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     [Tooltip("The speed of the dash.")]
     private float dashSpeed;
+    [SerializeField]
+    [Tooltip("The cooldown of the dash.")]
+    private float DashCooldown;
+    private float _dashCooldownTimer;
 
     /// <summary>
     /// The Vector2 that determines the movement direction based on input.
@@ -615,6 +625,8 @@ public class PlayerController : MonoBehaviour
             }
         }
         else inputScrollTimer -= Time.deltaTime;
+
+        if (_dashCooldownTimer >= -1) _dashCooldownTimer -= Time.deltaTime;
     }
 
     // Enable input mappings.
@@ -640,7 +652,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 vel = _controller.velocity;
         vel = new Vector3(vel.x, 0, vel.z);
-        if (vel != Vector3.zero)
+        if (vel != Vector3.zero && _dashCooldownTimer < 0)
         {
             CanMove = false;
             vel = dashSpeed * vel.normalized;
@@ -651,6 +663,7 @@ public class PlayerController : MonoBehaviour
                 timer += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
             }
+            _dashCooldownTimer = DashCooldown;
         }
         CanMove = true;
         ActState = ActionState.None;
