@@ -8451,7 +8451,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4267462005288876451}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.70000076, y: 1.625, z: -2.5}
+  m_LocalPosition: {x: 0.7, y: 1.625, z: -2.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8729,7 +8729,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03dd0b6e219104b45a12144f390fcb87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Entity: {fileID: 6771631127717395411}
   Multiplier: 1
 --- !u!1 &4324588842958910047
 GameObject:
@@ -14372,7 +14371,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6603648617301653054}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.70000076, y: 1.625, z: -4}
+  m_LocalPosition: {x: 0.7, y: 1.625, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -14443,7 +14442,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6603648617744939417}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.70000076, y: 1.625, z: -2.5}
+  m_LocalPosition: {x: 0.7, y: 1.625, z: -2.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -18024,12 +18023,12 @@ MonoBehaviour:
   RotationSmoothTime: 0.12
   SpeedChangeRate: 10
   Sensitivity: 1
-  LandingAudioClip: {fileID: 0}
+  LandingAudioClip: {fileID: 8300000, guid: 72f526a6a9890f643a88e85a61c86c8a, type: 3}
   FootstepAudioClips: []
   FootstepAudioVolume: 0.5
   JumpHeight: 1.2
   Gravity: -15
-  JumpTimeout: 0.5
+  JumpTimeout: 0
   FallTimeout: 0.15
   Grounded: 1
   GroundedOffset: -0.14
@@ -18044,9 +18043,11 @@ MonoBehaviour:
   LockCameraPosition: 0
   _verticalVelocity: 0
   ScrollBuffer: 0.1
-  dashTimer: 0.1
-  dashSpeed: 4
+  dashTimer: 0.2
+  dashSpeed: 12
+  DashCooldown: 5
   InputJump: 0
+  CanMove: 1
   aimVirtualCamera: {fileID: 6603648617744939111}
   normalSensitivity: 0.2
   aimSensitivity: 0.1
@@ -18067,6 +18068,7 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
+  _health: 0
 --- !u!1 &8824025184588894572
 GameObject:
   m_ObjectHideFlags: 0
