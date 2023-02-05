@@ -14,6 +14,7 @@ public class Bullet : MonoBehaviour
     private GameObject HitParticles;
     [SerializeField]
     private GameObject CritParticles;
+    [SerializeField] private GameObject WallParticles;
 
     private Rigidbody _rb;
 
@@ -45,15 +46,24 @@ public class Bullet : MonoBehaviour
                 Debug.Log("Normal ass hit...");
             }
 
+            
             hitbox.TakeHit(Damage);
             Debug.Log("Did damage");
-            Destroy(gameObject);
+
+            
         }
+        
+            Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        
+                
+            
         Debug.Log("Destroyed self");
         Destroy(gameObject);
+        Instantiate(WallParticles, gameObject.transform.position, Quaternion.identity);
+        //Debug.Log("the j");
     }
 }
