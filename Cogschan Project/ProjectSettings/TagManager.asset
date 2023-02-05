@@ -14,9 +14,9 @@ TagManager:
   - Water
   - UI
   - Enemy Hitbox
-  - 
-  - 
-  - 
+  - Player Hitbox
+  - Enemy Projectile
+  - Player Projectile
   - 
   - 
   - 
