@@ -7,7 +7,12 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField]
-    private float Damage;
+    private float MaxDamage = 10;
+
+    [SerializeField] private float MinDamage = 1;
+    [SerializeField] private float MaxFalloffDistance = 50;
+    [SerializeField] private float MinFalloffDistance = 10;
+
     [SerializeField]
     private float Speed;
     [SerializeField]
@@ -16,11 +21,27 @@ public class Bullet : MonoBehaviour
     private GameObject CritParticles;
     [SerializeField] private GameObject WallParticles;
 
+    private float _totalDistance = 0;
+    private Vector3 _lastPosition;
+
     private Rigidbody _rb;
 
     private void Awake()
     {
+        _lastPosition = transform.position;
         _rb = GetComponent<Rigidbody>();
+    }
+
+    private void Update()
+    {
+        /*
+        float distance = Vector3.Distance(_lastPosition, transform.position);
+        _totalDistance += distance ;
+        _lastPosition = transform.position ;
+        */
+
+        float _distance = Speed * Time.deltaTime;
+        _totalDistance += _distance;
     }
 
     public void Launch(Vector3 direction)
@@ -46,10 +67,15 @@ public class Bullet : MonoBehaviour
                 Debug.Log("Normal ass hit...");
             }
 
-            
-            hitbox.TakeHit(Damage);
-            Debug.Log("Did damage");
-
+            if(_totalDistance <= MinFalloffDistance)
+            {
+                hitbox.TakeHit(MaxDamage);
+                Debug.Log("Did " + MaxDamage + " damage");
+            } else{
+                int _finalDamage = (int)Mathf.Lerp(MaxDamage, MinDamage, (_totalDistance - MinFalloffDistance)/(MaxFalloffDistance - MinFalloffDistance));
+                hitbox.TakeHit(_finalDamage);
+                Debug.Log("Did " + _finalDamage + " damage");
+            }
             
         }
         
@@ -60,7 +86,7 @@ public class Bullet : MonoBehaviour
     {
         
                 
-            
+        Debug.Log("Total distance travelled:" + _totalDistance);
         Debug.Log("Destroyed self");
         Destroy(gameObject);
         Instantiate(WallParticles, gameObject.transform.position, Quaternion.identity);

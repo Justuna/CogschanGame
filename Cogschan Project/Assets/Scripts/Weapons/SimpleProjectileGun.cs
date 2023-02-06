@@ -14,7 +14,7 @@ public class SimpleProjectileGun : Gun
     [SerializeField] private Vector3 BulletSpreadVariance = new Vector3(0.1f, 0.1f, 0.1f);
     [SerializeField] private float ADSAccuracyBoost = 5;
     [SerializeField] private int BulletCount = 1;
-
+    
 
     public override bool HipFire()
     {

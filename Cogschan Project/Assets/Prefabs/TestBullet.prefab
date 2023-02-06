@@ -128,7 +128,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16ff2d57903dbc7439f3452e2823b129, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 10
+  MaxDamage: 10
+  MinDamage: 1
+  MaxFalloffDistance: 50
+  MinFalloffDistance: 10
   Speed: 100
   HitParticles: {fileID: 9222931191912853214, guid: a0f18980ea1bcc84a9c91285f4980d6c, type: 3}
   CritParticles: {fileID: 4030942653299727334, guid: ee09b25e4bac789479b814d405db1c25, type: 3}
