@@ -9,13 +9,18 @@ public class SimpleGun : Gun
     [SerializeField]
     private int Damage;
     [SerializeField]
-    private GameObject Particle;
+    private GameObject HitParticle;
     [SerializeField]
     private GameObject CritParticle;
+    [SerializeField]
+    private GameObject WallParticle;
     [SerializeField]
     private Transform Muzzle;
     [SerializeField]
     private LayerMask AimColliderLayerMask;
+    [SerializeField] private Vector3 BulletSpreadVariance = new Vector3(0.1f, 0.1f, 0.1f);
+    [SerializeField] private float ADSAccuracyBoost = 5;
+    [SerializeField] private int BulletCount = 1;
 
 
     public override bool HipFire()
@@ -25,34 +30,41 @@ public class SimpleGun : Gun
 
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
 
-        Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * thirdPersonController.forwardCameraDisplacement, Camera.main.transform.forward);
-
-        Transform hitTransform = null;
-        if (Physics.Raycast(cameraRay, out RaycastHit raycastHit, 999f, AimColliderLayerMask))
+        for (int x = 0; x < BulletCount; x++)
         {
-            hitTransform = raycastHit.transform;
-        }
+            Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * thirdPersonController.forwardCameraDisplacement, Camera.main.transform.forward);
+            cameraRay.direction += new Vector3(Random.Range(-BulletSpreadVariance.x, BulletSpreadVariance.x),
+                                                Random.Range(-BulletSpreadVariance.y, BulletSpreadVariance.y),
+                                                Random.Range(-BulletSpreadVariance.z, BulletSpreadVariance.z)
+                                                );
+            cameraRay.direction.Normalize();
 
-        Ray gunRay = new Ray(Muzzle.position, raycastHit.point - Muzzle.position);
+            Physics.Raycast(cameraRay, out RaycastHit hit, Mathf.Infinity, AimColliderLayerMask);
 
-        if (Physics.Raycast(gunRay, out raycastHit, 999f, AimColliderLayerMask))
-        {
-            hitTransform = raycastHit.transform;
-        }
+            Ray gunRay = new Ray(Muzzle.position, hit.point - Muzzle.position);
 
-        Hitbox hitbox = hitTransform.GetComponent<Hitbox>();
-        if (hitbox != null && hitbox.Multiplier > 1)
-        {
-            Instantiate(CritParticle, hitTransform.position, Quaternion.identity);
-            Debug.Log("IT'S A CRIT!");
-            hitbox.TakeHit(Damage);
+            if (Physics.Raycast(gunRay, out hit, Mathf.Infinity, AimColliderLayerMask))
+            {
+                Hitbox hitbox = hit.collider.GetComponent<Hitbox>();
+                if (hitbox != null && hitbox.Multiplier > 1)
+                {
+                    Instantiate(CritParticle, hit.point, Quaternion.identity);
+                    Debug.Log("IT'S A CRIT!");
+                    hitbox.TakeHit(Damage);
 
-        }
-        else if (hitbox != null && hitbox.Multiplier <= 1)
-        {
-            Instantiate(Particle, hitTransform.position, Quaternion.identity);
-            Debug.Log("Normal ass hit...");
-            hitbox.TakeHit(Damage);
+                }
+                else if (hitbox != null && hitbox.Multiplier <= 1)
+                {
+                    Instantiate(HitParticle, hit.point, Quaternion.identity);
+                    Debug.Log("Normal ass hit...");
+                    hitbox.TakeHit(Damage);
+                }
+                else
+                {
+                    Debug.Log("Hit nothing...");
+                    Instantiate(WallParticle, hit.point, Quaternion.identity);
+                }
+            }
         }
 
         return true;
@@ -65,35 +77,41 @@ public class SimpleGun : Gun
 
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
 
-        Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * thirdPersonController.forwardCameraDisplacement, Camera.main.transform.forward);
-        Debug.DrawRay(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * thirdPersonController.forwardCameraDisplacement, Camera.main.transform.forward, Color.green);
-
-        Transform hitTransform = null;
-        if (Physics.Raycast(cameraRay, out RaycastHit raycastHit, 999f, AimColliderLayerMask))
+        for (int x = 0; x < BulletCount; x++)
         {
-            hitTransform = raycastHit.transform;
-        }
+            Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * thirdPersonController.forwardCameraDisplacement, Camera.main.transform.forward);
+            cameraRay.direction += new Vector3(Random.Range((-BulletSpreadVariance.x) / ADSAccuracyBoost, (BulletSpreadVariance.x) / ADSAccuracyBoost),
+                                                Random.Range((-BulletSpreadVariance.y) / ADSAccuracyBoost, (BulletSpreadVariance.y) / ADSAccuracyBoost),
+                                                Random.Range((-BulletSpreadVariance.z) / ADSAccuracyBoost, (BulletSpreadVariance.z) / ADSAccuracyBoost)
+                                                );
+            cameraRay.direction.Normalize();
 
-        Ray gunRay = new Ray(Muzzle.position, raycastHit.point - Muzzle.position);
+            Physics.Raycast(cameraRay, out RaycastHit hit, Mathf.Infinity, AimColliderLayerMask);
 
-        if (Physics.Raycast(gunRay, out raycastHit, 999f, AimColliderLayerMask))
-        {
-            hitTransform = raycastHit.transform;
-        }
+            Ray gunRay = new Ray(Muzzle.position, hit.point - Muzzle.position);
 
-        Hitbox hitbox = hitTransform.GetComponent<Hitbox>();
-        if (hitbox != null && hitbox.Multiplier > 1)
-        {
-            Instantiate(CritParticle, hitTransform.position, Quaternion.identity);
-            Debug.Log("IT'S A CRIT!");
-            hitbox.TakeHit(Damage);
+            if (Physics.Raycast(gunRay, out hit, Mathf.Infinity, AimColliderLayerMask))
+            {
+                Hitbox hitbox = hit.collider.GetComponent<Hitbox>();
+                if (hitbox != null && hitbox.Multiplier > 1)
+                {
+                    Instantiate(CritParticle, hit.point, Quaternion.identity);
+                    Debug.Log("IT'S A CRIT!");
+                    hitbox.TakeHit(Damage);
 
-        }
-        else if (hitbox != null && hitbox.Multiplier <= 1)
-        {
-            Instantiate(Particle, hitTransform.position, Quaternion.identity);
-            Debug.Log("Normal ass hit...");
-            hitbox.TakeHit(Damage);
+                }
+                else if (hitbox != null && hitbox.Multiplier <= 1)
+                {
+                    Instantiate(HitParticle, hit.point, Quaternion.identity);
+                    Debug.Log("Normal ass hit...");
+                    hitbox.TakeHit(Damage);
+                }
+                else
+                {
+                    Debug.Log("Hit nothing...");
+                    Instantiate(WallParticle, hit.point, Quaternion.identity);
+                }
+            }
         }
 
         return true;

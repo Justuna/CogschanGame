@@ -59,7 +59,11 @@ public abstract class Gun : MonoBehaviour
     /// <summary>
     /// Whether or not the gun can fire.
     /// </summary>
-    public bool CanFire => fireClock <= 0 && (Ammo > 0 || InfiniteAmmo);
+    public bool CanFire => fireClock <= 0;
+    /// <summary>
+    /// Whether or not the gun has ammo to fire.
+    /// </summary>
+    public bool HasAmmo => Ammo > 0 || InfiniteAmmo;
     /// <summary>
     /// Whether or not the gun is reloading.
     /// </summary>
@@ -71,7 +75,7 @@ public abstract class Gun : MonoBehaviour
     /// <param name="hitTransform">The transform the crosshair is currently pointed at.</param>
     public virtual bool HipFire()
     {
-        if (!CanFire)
+        if (!CanFire || !HasAmmo)
             return false;
         Ammo -= 1;
         fireClock = FireRate;
@@ -83,7 +87,7 @@ public abstract class Gun : MonoBehaviour
     /// <param name="hitTransform">The transform the crosshair is currently pointed at.</param>
     public virtual bool ADSFire()
     {
-        if (!CanFire)
+        if (!CanFire || !HasAmmo)
             return false;
         Ammo -= 1;
         fireClock = FireRate;
