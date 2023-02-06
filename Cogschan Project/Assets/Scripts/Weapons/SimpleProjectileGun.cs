@@ -23,21 +23,22 @@ public class SimpleProjectileGun : Gun
 
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
         
-        for(int x = 0; x<BulletCount; x++)
+        for(int x = 0; x < BulletCount; x++)
         {       
-        Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * thirdPersonController.forwardCameraDisplacement, Camera.main.transform.forward);
-        cameraRay.direction += new Vector3(Random.Range(-BulletSpreadVariance.x, BulletSpreadVariance.x),
-                                            Random.Range(-BulletSpreadVariance.y, BulletSpreadVariance.y),
-                                            Random.Range(-BulletSpreadVariance.z, BulletSpreadVariance.z)
-                                            );
-        cameraRay.direction.Normalize();
+            Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * thirdPersonController.forwardCameraDisplacement, Camera.main.transform.forward);
+            cameraRay.direction += new Vector3(Random.Range(-BulletSpreadVariance.x, BulletSpreadVariance.x),
+                                                Random.Range(-BulletSpreadVariance.y, BulletSpreadVariance.y),
+                                                Random.Range(-BulletSpreadVariance.z, BulletSpreadVariance.z)
+                                                );
+            cameraRay.direction.Normalize();
 
-        Physics.Raycast(cameraRay, out RaycastHit hit, 999f, AimColliderLayerMask);
+            Physics.Raycast(cameraRay, out RaycastHit hit, 999f, AimColliderLayerMask);
 
-        Vector3 dir = hit.point - Muzzle.position;
-        Bullet bullet = Instantiate(Projectile, transform.position, Quaternion.identity).GetComponent<Bullet>();
-        if (bullet != null) bullet.Launch(dir);
+            Vector3 dir = hit.point - Muzzle.position;
+            Bullet bullet = Instantiate(Projectile, transform.position, Quaternion.identity).GetComponent<Bullet>();
+            if (bullet != null) bullet.Launch(dir);
         }
+
         return true;
     }
 
@@ -48,22 +49,23 @@ public class SimpleProjectileGun : Gun
 
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
 
-        for(int x = 0; x<BulletCount; x++)
+        for(int x = 0; x < BulletCount; x++)
         {
-        Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * thirdPersonController.forwardCameraDisplacement, Camera.main.transform.forward);
+            Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * thirdPersonController.forwardCameraDisplacement, Camera.main.transform.forward);
         
-        cameraRay.direction += new Vector3(Random.Range((-BulletSpreadVariance.x)/ADSAccuracyBoost, (BulletSpreadVariance.x)/ADSAccuracyBoost),
-                                            Random.Range((-BulletSpreadVariance.y)/ADSAccuracyBoost, (BulletSpreadVariance.y)/ADSAccuracyBoost),
-                                            Random.Range((-BulletSpreadVariance.z)/ADSAccuracyBoost, (BulletSpreadVariance.z)/ADSAccuracyBoost)
-                                            );
-        cameraRay.direction.Normalize();
+            cameraRay.direction += new Vector3(Random.Range((-BulletSpreadVariance.x)/ADSAccuracyBoost, (BulletSpreadVariance.x)/ADSAccuracyBoost),
+                                                Random.Range((-BulletSpreadVariance.y)/ADSAccuracyBoost, (BulletSpreadVariance.y)/ADSAccuracyBoost),
+                                                Random.Range((-BulletSpreadVariance.z)/ADSAccuracyBoost, (BulletSpreadVariance.z)/ADSAccuracyBoost)
+                                                );
+            cameraRay.direction.Normalize();
 
-        Physics.Raycast(cameraRay, out RaycastHit hit, 999f, AimColliderLayerMask);
+            Physics.Raycast(cameraRay, out RaycastHit hit, 999f, AimColliderLayerMask);
 
-        Vector3 dir = hit.point - Muzzle.position;
-        Bullet bullet = Instantiate(Projectile, transform.position, Quaternion.identity).GetComponent<Bullet>();
-        if (bullet != null) bullet.Launch(dir);
+            Vector3 dir = hit.point - Muzzle.position;
+            Bullet bullet = Instantiate(Projectile, transform.position, Quaternion.identity).GetComponent<Bullet>();
+            if (bullet != null) bullet.Launch(dir);
         }
+
         return true;
     
     }
