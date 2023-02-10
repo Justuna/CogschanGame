@@ -574,6 +574,12 @@ public class PlayerController : MonoBehaviour
         inputMappings.Movement.Jump.canceled += _ => InputJump = false;
         inputMappings.Movement.Dash.started += _ => ActState = ActionState.Dash;
         inputMappings.Movement.Interact.performed += _ => Interact();
+
+        inputMappings.Weapon.Weapon1.performed += _ => weapons.OtherWeapon(0);
+        inputMappings.Weapon.Weapon2.performed += _ => weapons.OtherWeapon(1);
+        inputMappings.Weapon.Weapon3.performed += _ => weapons.OtherWeapon(2);
+        inputMappings.Weapon.Weapon4.performed += _ => weapons.OtherWeapon(3);
+        inputMappings.Weapon.Weapon5.performed += _ => weapons.OtherWeapon(4);
     }
 
     // Use the inputs to set the action states and other values.
