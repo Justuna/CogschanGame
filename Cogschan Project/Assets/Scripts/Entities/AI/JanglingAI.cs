@@ -38,15 +38,13 @@ public class JanglingAI : MonoBehaviour
         }
         else
         {
+            if(Vector3.Distance(transform.position, Player.position) < 4){
+                PickNewDestination();
+                shouldMove = true;
+            };
             Model.LookAt(Player.transform);
         }
     }
-    void OnTriggerStay(Collider other)
-    {
-        PickNewDestination();
-        shouldMove = true;
-    }
-
     private void PickNewDestination()
     {
         JanglingNode node = destNodes[currentNode].GetComponent<JanglingNode>();
