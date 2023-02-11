@@ -55,6 +55,9 @@ MonoBehaviour:
   AimColliderLayerMask:
     serializedVersion: 2
     m_Bits: 72
-  BulletSpreadVariance: {x: 0.1, y: 0.1, z: 0.1}
+  MinBulletSpreadVariance: {x: 0.2, y: 0.2, z: 0.2}
+  MaxBulletSpreadVariance: {x: 0.2, y: 0.2, z: 0.2}
+  TimeToMaxVariance: 0
+  TimeToCooldown: 0
   ADSAccuracyBoost: 3
   BulletCount: 20
