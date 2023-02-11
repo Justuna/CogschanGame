@@ -60,4 +60,7 @@ MonoBehaviour:
   TimeToMaxVariance: 1.2
   TimeToCooldown: 0.3
   ADSAccuracyBoost: 3
+  VerticalRecoil: 0.5
+  HorizontalRecoil: 0.2
+  RecoilDecay: 10
   BulletCount: 1

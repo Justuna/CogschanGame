@@ -16,9 +16,15 @@ public class SimpleProjectileGun : Gun
     [SerializeField] private float TimeToMaxVariance = 1;
     [SerializeField] private float TimeToCooldown = 0.5f;
     [SerializeField] private float ADSAccuracyBoost = 5;
+
+    [SerializeField] private float VerticalRecoil = 1;
+    [SerializeField] private float HorizontalRecoil = 0;
+    [SerializeField] private float RecoilDecay = 1;
+
     [SerializeField] private int BulletCount = 1;
 
     private float _varianceFactor = 0;
+    private Vector2 _recoil = Vector2.zero;
 
     public override bool HipFire()
     {
@@ -26,6 +32,8 @@ public class SimpleProjectileGun : Gun
             return false;
 
         Vector3 finalVariance = Vector3.Lerp(MinBulletSpreadVariance, MaxBulletSpreadVariance, _varianceFactor);
+        _recoil.x = Random.RandomRange(-HorizontalRecoil, HorizontalRecoil);
+        _recoil.y = VerticalRecoil;
 
         return FireBullets(finalVariance);
     }
@@ -36,6 +44,8 @@ public class SimpleProjectileGun : Gun
             return false;
 
         Vector3 finalVariance = Vector3.Lerp(MinBulletSpreadVariance, MaxBulletSpreadVariance, _varianceFactor) / ADSAccuracyBoost;
+        _recoil.x = Random.RandomRange(-HorizontalRecoil, HorizontalRecoil);
+        _recoil.y = VerticalRecoil;
 
         return FireBullets(finalVariance);
     }
@@ -67,11 +77,20 @@ public class SimpleProjectileGun : Gun
     {
         base.Update();
 
-        if (TimeToCooldown == 0 || TimeToMaxVariance == 0) return;
+        if (!(TimeToCooldown == 0) && !(TimeToMaxVariance == 0))
+        {
+            if (playerController.ActState == ActionState.Fire) _varianceFactor += Time.deltaTime / TimeToMaxVariance;
+            else _varianceFactor -= Time.deltaTime / TimeToCooldown;
 
-        if (playerController.ActState == ActionState.Fire) _varianceFactor += Time.deltaTime / TimeToMaxVariance;
-        else _varianceFactor -= Time.deltaTime / TimeToCooldown;
+            _varianceFactor = Mathf.Clamp01(_varianceFactor);
+        }   
 
-        _varianceFactor = Mathf.Clamp01(_varianceFactor);
+        playerController.CameraRecoil = _recoil;
+        Debug.Log(_recoil);
+
+        _recoil.x -= Time.deltaTime * RecoilDecay;
+        _recoil.x = Mathf.Max(_recoil.x, 0);
+        _recoil.y -= Time.deltaTime * RecoilDecay;
+        _recoil.y = Mathf.Max(_recoil.y, 0);
     }
 }
