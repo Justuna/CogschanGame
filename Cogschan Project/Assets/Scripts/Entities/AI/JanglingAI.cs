@@ -17,7 +17,6 @@ public class JanglingAI : MonoBehaviour
         shouldMove = false;
         transform.position = destNodes[0].transform.position;
         currentNode = 0;
-        PickNewDestination();
     }
 
     // Update is called once per frame
@@ -34,18 +33,33 @@ public class JanglingAI : MonoBehaviour
                 shouldMove = false;
                 destination = null;
                 currentNode = nextNode;
-                PickNewDestination();
+                Model.LookAt(Player.transform);
             }
         }
+        else
+        {
+            Model.LookAt(Player.transform);
+        }
     }
-
+    void OnTriggerStay(Collider other)
+    {
+        PickNewDestination();
+        shouldMove = true;
+    }
 
     private void PickNewDestination()
     {
         JanglingNode node = destNodes[currentNode].GetComponent<JanglingNode>();
-        Debug.Log(node.adjacentNodes.ToString());
         int bestNode = 0;
         float greatestDistance = 0;
+        for (int i = 0; i < node.adjacentNodes.Length; i++)
+        {
+            if (Vector3.Distance(destNodes[node.adjacentNodes[i]].transform.position, Player.position) > greatestDistance)
+            {
+                bestNode = i;
+                greatestDistance = Vector3.Distance(destNodes[node.adjacentNodes[i]].transform.position, Player.position);
+            }
+        }
         destination = destNodes[node.adjacentNodes[bestNode]].transform;
         nextNode = node.adjacentNodes[bestNode];
         Debug.Log(destination + " " + nextNode);
