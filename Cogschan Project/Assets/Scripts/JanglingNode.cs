@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class JanglingNode : MonoBehaviour
 {
-    public GameObject[] adjacentNodes;
+    public int num;
+    public int[] adjacentNodes;
 }

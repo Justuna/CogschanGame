@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 188568609}
   - component: {fileID: 188568610}
   m_Layer: 0
-  m_Name: Node 1
+  m_Name: Node 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -181,8 +181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69cbd0ee76d9ec7439833ed379ac4012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  adjacentNodes:
-  - {fileID: 1425244359}
+  num: 0
+  adjacentNodes: 01000000
 --- !u!1 &350127570
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 350127572}
   - component: {fileID: 350127571}
   m_Layer: 0
-  m_Name: Node 2
+  m_Name: Node 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -213,8 +213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69cbd0ee76d9ec7439833ed379ac4012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  adjacentNodes:
-  - {fileID: 837634641}
+  num: 1
+  adjacentNodes: 02000000
 --- !u!65 &350127572
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -255,7 +255,7 @@ GameObject:
   - component: {fileID: 463399466}
   - component: {fileID: 463399465}
   m_Layer: 0
-  m_Name: Node 5
+  m_Name: Node 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -273,11 +273,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69cbd0ee76d9ec7439833ed379ac4012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  adjacentNodes:
-  - {fileID: 188568607}
-  - {fileID: 350127570}
-  - {fileID: 1425244359}
-  - {fileID: 837634641}
+  num: 4
+  adjacentNodes: 00000000000000000000000000000000
 --- !u!65 &463399466
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -306,6 +303,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &522853292 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8151087253564939329, guid: d58c5682f45ce53468cd6cf4a6966d74, type: 3}
+  m_PrefabInstance: {fileID: 907552898}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &542571777
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,7 +467,7 @@ GameObject:
   - component: {fileID: 837634643}
   - component: {fileID: 837634642}
   m_Layer: 0
-  m_Name: Node 4
+  m_Name: Node 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -483,9 +485,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69cbd0ee76d9ec7439833ed379ac4012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  adjacentNodes:
-  - {fileID: 350127570}
-  - {fileID: 1425244359}
+  num: 3
+  adjacentNodes: 0400000000000000
 --- !u!65 &837634643
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -652,7 +653,7 @@ GameObject:
   - component: {fileID: 1425244361}
   - component: {fileID: 1425244362}
   m_Layer: 0
-  m_Name: Node 3
+  m_Name: Node 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -698,7 +699,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69cbd0ee76d9ec7439833ed379ac4012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  adjacentNodes: []
+  num: 2
+  adjacentNodes: 03000000
 --- !u!1 &1491360755
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,15 +943,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Model: {fileID: 1491360756}
-  posNodes:
+  destNodes:
   - {fileID: 188568607}
   - {fileID: 350127570}
   - {fileID: 1425244359}
   - {fileID: 837634641}
   - {fileID: 463399464}
   shouldMove: 0
+  currentNode: 0
+  nextNode: 0
   destination: {fileID: 0}
-  Player: {fileID: 0}
+  Player: {fileID: 522853292}
   speed: 3
 --- !u!1 &1943365655
 GameObject:
