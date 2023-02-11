@@ -39,7 +39,7 @@ public abstract class Gun : MonoBehaviour
     [SerializeField]
     [Tooltip("The kind of ammo this gun uses.")]
     protected AmmoType ammoType;
-    protected PlayerController thirdPersonController;
+    protected PlayerController playerController;
     private float fireClock;
     private float reloadClock;
     private TextMeshProUGUI ammoText;
@@ -131,7 +131,7 @@ public abstract class Gun : MonoBehaviour
     /// </summary>
     protected virtual void Awake()
     {
-        thirdPersonController = GetComponentInParent<PlayerController>();
+        playerController = GetComponentInParent<PlayerController>();
     }
 
     /// <summary>

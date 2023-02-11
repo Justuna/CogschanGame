@@ -197,6 +197,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public Vector2 CameraRecoil { get; set; }
+
     private void CameraRotation()
     {
         // if there is an input and camera position is not fixed
@@ -208,7 +210,11 @@ public class PlayerController : MonoBehaviour
 
             _cinemachineTargetYaw += Singleton.InputLook.x * deltaTimeMultiplier * Sensitivity;
             _cinemachineTargetPitch += Singleton.InputLook.y * deltaTimeMultiplier * Sensitivity;
+            
         }
+
+        _cinemachineTargetPitch -= CameraRecoil.y;
+        _cinemachineTargetYaw -= CameraRecoil.x;
 
         // clamp our rotations so our values are limited 360 degrees
         _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
