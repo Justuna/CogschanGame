@@ -14341,7 +14341,7 @@ MonoBehaviour:
   CameraDistance: 2.5
   CameraCollisionFilter:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 2147483647
   IgnoreTag: Player
   CameraRadius: 0.15
   DampingIntoCollision: 0
@@ -14570,7 +14570,7 @@ MonoBehaviour:
   CameraDistance: 4
   CameraCollisionFilter:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 2147483647
   IgnoreTag: Player
   CameraRadius: 0.15
   DampingIntoCollision: 0
@@ -18038,7 +18038,7 @@ MonoBehaviour:
     m_Bits: 9
   CinemachineCameraTarget: {fileID: 3793070143516868512}
   TopClamp: 70
-  BottomClamp: -30
+  BottomClamp: -70
   CameraAngleOverride: 0
   LockCameraPosition: 0
   _verticalVelocity: 0
@@ -18068,7 +18068,6 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
-  _health: 0
 --- !u!1 &8824025184588894572
 GameObject:
   m_ObjectHideFlags: 0
