@@ -197,7 +197,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public Vector2 CameraRecoil { get; set; }
+
+    private Vector2 _accumulatedRecoil = Vector2.zero;
+    private Vector2 _cameraRecoil;
+    public Vector2 CameraRecoil
+    {
+        get { return _cameraRecoil; }
+        set
+        {
+            Vector2 maxChange = weapons.CurrGun.MaxRecoil - _accumulatedRecoil;
+            value.y = Mathf.Min(maxChange.y, value.y);
+            value.x = Mathf.Min(maxChange.x, value.x);
+            _cameraRecoil = value;
+            _accumulatedRecoil += value;
+        }
+    }
 
     private void CameraRotation()
     {
@@ -208,13 +222,15 @@ public class PlayerController : MonoBehaviour
             //float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
             float deltaTimeMultiplier = 1.0f;
 
-            _cinemachineTargetYaw += Singleton.InputLook.x * deltaTimeMultiplier * Sensitivity;
-            _cinemachineTargetPitch += Singleton.InputLook.y * deltaTimeMultiplier * Sensitivity;
-            
+            _cinemachineTargetYaw += InputLook.x * deltaTimeMultiplier * Sensitivity;
+            _cinemachineTargetPitch += InputLook.y * deltaTimeMultiplier * Sensitivity;
+
         }
 
-        _cinemachineTargetPitch -= CameraRecoil.y;
-        _cinemachineTargetYaw -= CameraRecoil.x;
+        Vector2 recoilReset = _accumulatedRecoil.normalized * Mathf.Min(weapons.CurrGun.RecoilCorrectionRate, _accumulatedRecoil.magnitude);
+        _cinemachineTargetPitch -= CameraRecoil.y - recoilReset.y;
+        _cinemachineTargetYaw -= CameraRecoil.x - recoilReset.x;
+        _accumulatedRecoil -= recoilReset;
 
         // clamp our rotations so our values are limited 360 degrees
         _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);

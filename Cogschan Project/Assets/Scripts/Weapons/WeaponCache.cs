@@ -18,6 +18,8 @@ public class WeaponCache : MonoBehaviour
     public bool IsReloading => _currGun.IsReloading;
     public bool CanFire => _currGun.CanFire;
 
+    public Gun CurrGun => _currGun;
+
     private void Awake()
     {
         _ctrl = GetComponent<PlayerController>();
