@@ -1,20 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Hitbox : MonoBehaviour
 {
     public float Multiplier = 1f;
-
-    private Entity _entity;
-
-    private void Awake()
-    {
-        _entity = GetComponentInParent<Entity>();
-    }
+    public UnityEvent<float> OnHit = new UnityEvent<float>();
 
     public void TakeHit(float damage)
     {
-        if (_entity != null) _entity.DealDamage(Multiplier * damage);
+        OnHit.Invoke(Multiplier * damage);
     }
 }
