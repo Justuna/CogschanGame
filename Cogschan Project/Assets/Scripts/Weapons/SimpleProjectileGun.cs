@@ -11,24 +11,55 @@ public class SimpleProjectileGun : Gun
     private Transform Muzzle;
     [SerializeField]
     private LayerMask AimColliderLayerMask;
-    [SerializeField] private Vector3 BulletSpreadVariance = new Vector3(0.1f, 0.1f, 0.1f);
+    [SerializeField] private Vector3 MinBulletSpreadVariance = new Vector3(0.1f, 0.1f, 0.1f);
+    [SerializeField] private Vector3 MaxBulletSpreadVariance = new Vector3(0.2f, 0.2f, 0.2f);
+    [SerializeField] private float TimeToMaxVariance = 1;
+    [SerializeField] private float TimeToCooldown = 0.5f;
     [SerializeField] private float ADSAccuracyBoost = 5;
+
+    [SerializeField] private float VerticalRecoil = 1;
+    [SerializeField] private float HorizontalRecoil = 0;
+    [SerializeField] private float RecoilDecay = 1;
+
     [SerializeField] private int BulletCount = 1;
-    
+
+    private float _varianceFactor = 0;
+    private Vector2 _recoil = Vector2.zero;
 
     public override bool HipFire()
     {
         if (!base.HipFire())
             return false;
 
+        Vector3 finalVariance = Vector3.Lerp(MinBulletSpreadVariance, MaxBulletSpreadVariance, _varianceFactor);
+        _recoil.x = Random.RandomRange(-HorizontalRecoil, HorizontalRecoil);
+        _recoil.y = VerticalRecoil;
+
+        return FireBullets(finalVariance);
+    }
+
+    public override bool ADSFire()
+    {
+        if (!base.ADSFire())
+            return false;
+
+        Vector3 finalVariance = Vector3.Lerp(MinBulletSpreadVariance, MaxBulletSpreadVariance, _varianceFactor) / ADSAccuracyBoost;
+        _recoil.x = Random.RandomRange(-HorizontalRecoil, HorizontalRecoil);
+        _recoil.y = VerticalRecoil;
+
+        return FireBullets(finalVariance);
+    }
+
+    private bool FireBullets(Vector3 finalVariance)
+    {
         Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
-        
-        for(int x = 0; x < BulletCount; x++)
-        {       
-            Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * thirdPersonController.forwardCameraDisplacement, Camera.main.transform.forward);
-            cameraRay.direction += new Vector3(Random.Range(-BulletSpreadVariance.x, BulletSpreadVariance.x),
-                                                Random.Range(-BulletSpreadVariance.y, BulletSpreadVariance.y),
-                                                Random.Range(-BulletSpreadVariance.z, BulletSpreadVariance.z)
+
+        for (int x = 0; x < BulletCount; x++)
+        {
+            Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * playerController.forwardCameraDisplacement, Camera.main.transform.forward);
+            cameraRay.direction += new Vector3(Random.Range(-finalVariance.x, finalVariance.x),
+                                                Random.Range(-finalVariance.y, finalVariance.y),
+                                                Random.Range(-finalVariance.z, finalVariance.z)
                                                 );
             cameraRay.direction.Normalize();
 
@@ -42,31 +73,24 @@ public class SimpleProjectileGun : Gun
         return true;
     }
 
-    public override bool ADSFire()
+    protected override void Update()
     {
-        if (!base.ADSFire())
-            return false;
+        base.Update();
 
-        Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
-
-        for(int x = 0; x < BulletCount; x++)
+        if (!(TimeToCooldown == 0) && !(TimeToMaxVariance == 0))
         {
-            Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * thirdPersonController.forwardCameraDisplacement, Camera.main.transform.forward);
-        
-            cameraRay.direction += new Vector3(Random.Range((-BulletSpreadVariance.x)/ADSAccuracyBoost, (BulletSpreadVariance.x)/ADSAccuracyBoost),
-                                                Random.Range((-BulletSpreadVariance.y)/ADSAccuracyBoost, (BulletSpreadVariance.y)/ADSAccuracyBoost),
-                                                Random.Range((-BulletSpreadVariance.z)/ADSAccuracyBoost, (BulletSpreadVariance.z)/ADSAccuracyBoost)
-                                                );
-            cameraRay.direction.Normalize();
+            if (playerController.ActState == ActionState.Fire) _varianceFactor += Time.deltaTime / TimeToMaxVariance;
+            else _varianceFactor -= Time.deltaTime / TimeToCooldown;
 
-            Physics.Raycast(cameraRay, out RaycastHit hit, 999f, AimColliderLayerMask);
+            _varianceFactor = Mathf.Clamp01(_varianceFactor);
+        }   
 
-            Vector3 dir = hit.point - Muzzle.position;
-            Bullet bullet = Instantiate(Projectile, transform.position, Quaternion.identity).GetComponent<Bullet>();
-            if (bullet != null) bullet.Launch(dir);
-        }
+        playerController.CameraRecoil = _recoil;
+        Debug.Log(_recoil);
 
-        return true;
-    
+        _recoil.x -= Time.deltaTime * RecoilDecay;
+        _recoil.x = Mathf.Max(_recoil.x, 0);
+        _recoil.y -= Time.deltaTime * RecoilDecay;
+        _recoil.y = Mathf.Max(_recoil.y, 0);
     }
 }
