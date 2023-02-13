@@ -642,6 +642,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -2.5000002
       objectReference: {fileID: 0}
+    - target: {fileID: 8082377440803607319, guid: d58c5682f45ce53468cd6cf4a6966d74, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8082377440803607319, guid: d58c5682f45ce53468cd6cf4a6966d74, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.38
+      objectReference: {fileID: 0}
     - target: {fileID: 8151087253564939329, guid: d58c5682f45ce53468cd6cf4a6966d74, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -702,6 +710,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1226532645}
   - component: {fileID: 1226532646}
+  - component: {fileID: 1226532647}
   m_Layer: 2
   m_Name: Hitbox
   m_TagString: Untagged
@@ -737,6 +746,34 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1226532647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1226532644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03dd0b6e219104b45a12144f390fcb87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Multiplier: 1
+  OnHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1792864248}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1425244359
 GameObject:
   m_ObjectHideFlags: 0
@@ -921,7 +958,7 @@ Transform:
   m_GameObject: {fileID: 1493178543}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2, y: 0.91, z: -5}
-  m_LocalScale: {x: 1, y: 5.2589, z: 1}
+  m_LocalScale: {x: 1, y: 5.2589, z: 2.8633}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 542571778}
@@ -1043,13 +1080,10 @@ MonoBehaviour:
   - {fileID: 1425244359}
   - {fileID: 837634641}
   - {fileID: 463399464}
-  shouldMove: 0
-  currentNode: 0
-  nextNode: 0
   destination: {fileID: 0}
   Player: {fileID: 522853292}
-  didItNotice: 0
-  startleTime: 0
+  setStartleTime: 1
+  startleTimer: 0
   speed: 5
-  runDistance: 6
-  noticeDistance: 15
+  runDistance: 4
+  noticeDistance: 10

@@ -9,16 +9,16 @@ public class JanglingAI : MonoBehaviour
     //List of predetermined destination Nodes
     public GameObject[] destNodes;
     //Whether or not Jangling should be moving
-    public bool shouldMove;
+    private bool shouldMove;
     //the node number its currently on
-    public int currentNode;
+    private int currentNode;
     //the node number of its destination
-    public int nextNode;
+    private int nextNode;
     //the position of its destination
     public Transform destination;
     //reference to the player character
     public Transform Player;
-    public bool didItNotice;
+    private bool didItNotice;
     public float setStartleTime;
     private float startleTimer;
     public float speed;
@@ -39,6 +39,7 @@ public class JanglingAI : MonoBehaviour
     {
         //Raycasts towards player to check lineOfSight
         RaycastHit hit;
+        Physics.Raycast(transform.position, (Player.position - transform.position), out hit, 20f);
         Debug.DrawRay(transform.position,(Player.position - transform.position));
         //running vs idle/notice
         if (shouldMove)
@@ -60,7 +61,7 @@ public class JanglingAI : MonoBehaviour
         else
         {
             //checks if player is close enough to initiate run away
-            if (Vector3.Distance(transform.position, Player.position) < runDistance || startleTimer != setStartleTime)
+            if (Vector3.Distance(transform.position, Player.position) < runDistance && hit.collider.tag == "Player" || startleTimer != setStartleTime)
             {
                 if (didItNotice)
                 {
@@ -69,7 +70,8 @@ public class JanglingAI : MonoBehaviour
                 }
                 else
                 {
-                    Model.LookAt(Player.transform);
+                    if(hit.collider.tag == "Player") Model.LookAt(Player.transform);
+
                     if (startleTimer >= 0)
                     {
                         startleTimer -= 1 * Time.deltaTime;
@@ -83,7 +85,7 @@ public class JanglingAI : MonoBehaviour
                 }
             }
             //checks if player is close enough for jangly to notice
-            else if (Vector3.Distance(transform.position, Player.position) < noticeDistance && Vector3.Distance(transform.position, Player.position) > runDistance && Physics.Raycast(transform.position, (Player.position - transform.position), out hit, 20f))
+            else if (Vector3.Distance(transform.position, Player.position) < noticeDistance && Vector3.Distance(transform.position, Player.position) > runDistance)
             {
                 if (hit.collider.tag == "Player")
                 {
