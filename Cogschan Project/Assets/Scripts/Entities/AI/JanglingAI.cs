@@ -5,6 +5,8 @@ using UnityEngine;
 public class JanglingAI : MonoBehaviour
 {
     //For making model look away
+    private float _health;
+
     public Transform Model;
     //List of predetermined destination Nodes
     public GameObject[] destNodes;
@@ -21,12 +23,15 @@ public class JanglingAI : MonoBehaviour
     private bool didItNotice;
     public float setStartleTime;
     private float startleTimer;
+    public float setStunTime;
+    private float stunTimer;
     public float speed;
     public float runDistance;
     public float noticeDistance;
     private void Awake()
     {
         startleTimer = setStartleTime;
+        stunTimer = setStartleTime;
         didItNotice = false;
         shouldMove = false;
         //resets Jangling position to first node in list
@@ -42,9 +47,11 @@ public class JanglingAI : MonoBehaviour
         Physics.Raycast(transform.position, (Player.position - transform.position), out hit, 20f);
         Debug.DrawRay(transform.position,(Player.position - transform.position));
         //running vs idle/notice
-        if (shouldMove)
+        if(stunTimer > 0){
+            stunTimer -= Time.deltaTime;
+        }
+        else if (shouldMove)
         {
-
             //Looks at and moves to destination Node
             Model.LookAt(destination.transform);
             transform.position = Vector3.MoveTowards(transform.position, destination.position, speed * Time.deltaTime);
@@ -117,5 +124,15 @@ public class JanglingAI : MonoBehaviour
         }
         destination = destNodes[node.adjacentNodes[bestNode]].transform;
         nextNode = node.adjacentNodes[bestNode];
+    }
+
+    public void DealDamage(float amount)
+    {
+        _health = Mathf.Max(_health - amount, 0);
+
+        if (_health == 0)
+        {
+            stunTimer = setStunTime;
+        }
     }
 }
