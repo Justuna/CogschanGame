@@ -18,11 +18,15 @@ public class JanglingAI : MonoBehaviour
     public Transform destination;
     //reference to the player character
     public Transform Player;
+    public bool didItNotice;
+    public float startleTime;
     public float speed;
     public float runDistance;
     public float noticeDistance;
     private void Awake()
     {
+        startleTime = 3f;
+        didItNotice = false;
         shouldMove = false;
         //resets Jangling position to first node in list
         transform.position = destNodes[0].transform.position;
@@ -32,8 +36,13 @@ public class JanglingAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Raycasts towards player to check lineOfSight
+        RaycastHit hit;
+        Debug.DrawRay(transform.position,(Player.position - transform.position));
+        //running vs idle/notice
         if (shouldMove)
         {
+
             //Looks at and moves to destination Node
             Model.LookAt(destination.transform);
             transform.position = Vector3.MoveTowards(transform.position, destination.position, speed * Time.deltaTime);
@@ -44,20 +53,47 @@ public class JanglingAI : MonoBehaviour
                 shouldMove = false;
                 destination = null;
                 currentNode = nextNode;
+                didItNotice = false;
             }
         }
         else
         {
             //checks if player is close enough to initiate run away
-            if (Vector3.Distance(transform.position, Player.position) < runDistance)
+            if (Vector3.Distance(transform.position, Player.position) < runDistance || startleTime != 3f)
             {
-                PickNewDestination();
-                shouldMove = true;
+                if (didItNotice)
+                {
+                    PickNewDestination();
+                    shouldMove = true;
+                }
+                else
+                {
+                    Model.LookAt(Player.transform);
+                    if (startleTime >= 0)
+                    {
+                        startleTime -= 1 * Time.deltaTime;
+                    }
+                    else
+                    {
+                        PickNewDestination();
+                        shouldMove = true;
+                        startleTime = 3f;
+                    }
+                }
             }
-            //checks if player is close enough for jangly  to notice
-            else if (Vector3.Distance(transform.position, Player.position) < noticeDistance)
+            //checks if player is close enough for jangly to notice
+            else if (Vector3.Distance(transform.position, Player.position) < noticeDistance && Vector3.Distance(transform.position, Player.position) > runDistance && Physics.Raycast(transform.position, (Player.position - transform.position), out hit, 20f))
             {
-                Model.LookAt(Player.transform);
+                if (hit.collider.tag == "Player")
+                {
+                    Model.LookAt(Player.transform);
+                    didItNotice = true;
+                }
+                else { didItNotice = false; }
+            }
+            else
+            {
+                didItNotice = false;
             }
         }
     }
