@@ -19,13 +19,14 @@ public class JanglingAI : MonoBehaviour
     //reference to the player character
     public Transform Player;
     public bool didItNotice;
-    public float startleTime;
+    public float setStartleTime;
+    private float startleTimer;
     public float speed;
     public float runDistance;
     public float noticeDistance;
     private void Awake()
     {
-        startleTime = 3f;
+        startleTimer = setStartleTime;
         didItNotice = false;
         shouldMove = false;
         //resets Jangling position to first node in list
@@ -59,7 +60,7 @@ public class JanglingAI : MonoBehaviour
         else
         {
             //checks if player is close enough to initiate run away
-            if (Vector3.Distance(transform.position, Player.position) < runDistance || startleTime != 3f)
+            if (Vector3.Distance(transform.position, Player.position) < runDistance || startleTimer != setStartleTime)
             {
                 if (didItNotice)
                 {
@@ -69,15 +70,15 @@ public class JanglingAI : MonoBehaviour
                 else
                 {
                     Model.LookAt(Player.transform);
-                    if (startleTime >= 0)
+                    if (startleTimer >= 0)
                     {
-                        startleTime -= 1 * Time.deltaTime;
+                        startleTimer -= 1 * Time.deltaTime;
                     }
                     else
                     {
                         PickNewDestination();
                         shouldMove = true;
-                        startleTime = 3f;
+                        startleTimer = setStartleTime;
                     }
                 }
             }
