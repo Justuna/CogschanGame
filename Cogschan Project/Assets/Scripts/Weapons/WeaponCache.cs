@@ -18,6 +18,8 @@ public class WeaponCache : MonoBehaviour
     public bool IsReloading => _currGun.IsReloading;
     public bool CanFire => _currGun.CanFire;
 
+    public Gun CurrGun => _currGun;
+
     private void Awake()
     {
         _ctrl = GetComponent<PlayerController>();
@@ -58,6 +60,14 @@ public class WeaponCache : MonoBehaviour
         SwitchWeapon();
     }
 
+    public void OtherWeapon(int index)
+    {
+        if (_currGunIndex == index || index < 0 || index >= _cache.Count)
+            return;
+        _currGunIndex = index;
+        SwitchWeapon();
+    }
+
     private void SwitchWeapon()
     {
         if (_currGun != null) _currGun.gameObject.SetActive(false);
@@ -81,7 +91,6 @@ public class WeaponCache : MonoBehaviour
         {
             gun.SetActive(false);
         }
-
         return gun;
     }
 

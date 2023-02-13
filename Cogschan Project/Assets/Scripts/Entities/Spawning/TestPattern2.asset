@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TestPattern2
   m_EditorClassIdentifier: 
   EnemyTypes:
+  - {fileID: 11400000, guid: 4ebcdccb9eebdf64f97c29b439d2faa6, type: 2}
   - {fileID: 11400000, guid: 456530b64d2d71c4589de8020765e699, type: 2}
-  - {fileID: 11400000, guid: 6551a861affba1b46bd8d2dfe59bb9bc, type: 2}
-  StartDifficulty: 30
+  StartDifficulty: 0
   MaxDifficulty: 100

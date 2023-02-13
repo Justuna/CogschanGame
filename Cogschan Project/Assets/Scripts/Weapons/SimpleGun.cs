@@ -32,7 +32,7 @@ public class SimpleGun : Gun
 
         for (int x = 0; x < BulletCount; x++)
         {
-            Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * thirdPersonController.forwardCameraDisplacement, Camera.main.transform.forward);
+            Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * playerController.forwardCameraDisplacement, Camera.main.transform.forward);
             cameraRay.direction += new Vector3(Random.Range(-BulletSpreadVariance.x, BulletSpreadVariance.x),
                                                 Random.Range(-BulletSpreadVariance.y, BulletSpreadVariance.y),
                                                 Random.Range(-BulletSpreadVariance.z, BulletSpreadVariance.z)
@@ -79,7 +79,7 @@ public class SimpleGun : Gun
 
         for (int x = 0; x < BulletCount; x++)
         {
-            Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * thirdPersonController.forwardCameraDisplacement, Camera.main.transform.forward);
+            Ray cameraRay = new Ray(Camera.main.ScreenToWorldPoint(screenCenterPoint) + (Camera.main.transform.forward) * playerController.forwardCameraDisplacement, Camera.main.transform.forward);
             cameraRay.direction += new Vector3(Random.Range((-BulletSpreadVariance.x) / ADSAccuracyBoost, (BulletSpreadVariance.x) / ADSAccuracyBoost),
                                                 Random.Range((-BulletSpreadVariance.y) / ADSAccuracyBoost, (BulletSpreadVariance.y) / ADSAccuracyBoost),
                                                 Random.Range((-BulletSpreadVariance.z) / ADSAccuracyBoost, (BulletSpreadVariance.z) / ADSAccuracyBoost)

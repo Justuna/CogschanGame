@@ -39,7 +39,13 @@ public abstract class Gun : MonoBehaviour
     [SerializeField]
     [Tooltip("The kind of ammo this gun uses.")]
     protected AmmoType ammoType;
-    protected PlayerController thirdPersonController;
+    [SerializeField]
+    [Tooltip("The maximum recoil.")]
+    protected Vector2 _maxRecoil;
+    [SerializeField]
+    [Tooltip("The rate at which recoil corrects.")]
+    protected float _recoilCorrectionRate;
+    protected PlayerController playerController;
     private float fireClock;
     private float reloadClock;
     private TextMeshProUGUI ammoText;
@@ -68,6 +74,14 @@ public abstract class Gun : MonoBehaviour
     /// Whether or not the gun is reloading.
     /// </summary>
     public bool IsReloading => reloadClock > 0;
+    /// <summary>
+    /// The maximum recoil
+    /// </summary>
+    public Vector2 MaxRecoil => _maxRecoil;
+    /// <summary>
+    /// The rate at which recoil corrects.
+    /// </summary>
+    public float RecoilCorrectionRate => _recoilCorrectionRate;
 
     /// <summary>
     /// Fire without aiming down sights. Returns false if unable to fire.
@@ -131,7 +145,7 @@ public abstract class Gun : MonoBehaviour
     /// </summary>
     protected virtual void Awake()
     {
-        thirdPersonController = GetComponentInParent<PlayerController>();
+        playerController = GetComponentInParent<PlayerController>();
     }
 
     /// <summary>
