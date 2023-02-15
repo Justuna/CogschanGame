@@ -45,10 +45,15 @@ public class JanglingAI : MonoBehaviour
         //Raycasts towards player to check lineOfSight
         RaycastHit hit;
         Physics.Raycast(transform.position, (Player.position - transform.position), out hit, 20f);
-        Debug.DrawRay(transform.position,(Player.position - transform.position));
+        Debug.DrawRay(transform.position, (Player.position - transform.position));
         //running vs idle/notice
-        if(stunTimer > 0){
+        if (stunTimer > 0)
+        {
             stunTimer -= Time.deltaTime;
+            if (shouldMove && stunTimer < .1)
+            {
+                StunnedPickNewDestination();
+            }
         }
         else if (shouldMove)
         {
@@ -77,7 +82,7 @@ public class JanglingAI : MonoBehaviour
                 }
                 else
                 {
-                    if(hit.collider.tag == "Player") Model.LookAt(Player.transform);
+                    if (hit.collider.tag == "Player") Model.LookAt(Player.transform);
 
                     if (startleTimer >= 0)
                     {
@@ -124,6 +129,14 @@ public class JanglingAI : MonoBehaviour
         }
         destination = destNodes[node.adjacentNodes[bestNode]].transform;
         nextNode = node.adjacentNodes[bestNode];
+    }
+    private void StunnedPickNewDestination()
+    {
+        if (Vector3.Distance(destNodes[currentNode].transform.position, Player.position) > Vector3.Distance(destNodes[nextNode].transform.position, Player.position))
+        {
+            destination = destNodes[currentNode].transform;
+        }
+        else { destination = destNodes[nextNode].transform; }
     }
 
     public void DealDamage(float amount)
