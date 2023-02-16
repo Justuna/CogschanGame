@@ -445,14 +445,14 @@ public partial class @CogschanInputMapping : IInputActionCollection2, IDisposabl
         m_Weapon_Aim = m_Weapon.FindAction("Aim", throwIfNotFound: true);
         m_Weapon_Look = m_Weapon.FindAction("Look", throwIfNotFound: true);
         m_Weapon_SwitchWeapon = m_Weapon.FindAction("Switch Weapon", throwIfNotFound: true);
-        // Menus
-        m_Menus = asset.FindActionMap("Menus", throwIfNotFound: true);
-        m_Menus_Pause = m_Menus.FindAction("Pause", throwIfNotFound: true);
         m_Weapon_Weapon1 = m_Weapon.FindAction("Weapon 1", throwIfNotFound: true);
         m_Weapon_Weapon2 = m_Weapon.FindAction("Weapon 2", throwIfNotFound: true);
         m_Weapon_Weapon3 = m_Weapon.FindAction("Weapon 3", throwIfNotFound: true);
         m_Weapon_Weapon4 = m_Weapon.FindAction("Weapon 4", throwIfNotFound: true);
         m_Weapon_Weapon5 = m_Weapon.FindAction("Weapon 5", throwIfNotFound: true);
+        // Menus
+        m_Menus = asset.FindActionMap("Menus", throwIfNotFound: true);
+        m_Menus_Pause = m_Menus.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
