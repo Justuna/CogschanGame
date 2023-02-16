@@ -13,7 +13,5 @@ MonoBehaviour:
   m_Name: TestGroup
   m_EditorClassIdentifier: 
   Patterns:
-  - Pattern: {fileID: 11400000, guid: 35b220e735c3cbb4599821fc9c2dbf9d, type: 2}
-    Weight: 1
   - Pattern: {fileID: 11400000, guid: cb7c90749fc583e43a894cc5e114f071, type: 2}
     Weight: 100

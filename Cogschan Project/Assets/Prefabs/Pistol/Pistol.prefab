@@ -50,11 +50,19 @@ MonoBehaviour:
   ReloadTime: 1
   _fireRate: 0.5
   ammoType: {fileID: 0}
+  _maxRecoil: {x: 1, y: 10}
+  _recoilCorrectionRate: 0.25
   Projectile: {fileID: 7564973805595333675, guid: e24c2710319597a4380729c36653f0bc, type: 3}
   Muzzle: {fileID: 165013744114904362}
   AimColliderLayerMask:
     serializedVersion: 2
     m_Bits: 72
-  BulletSpreadVariance: {x: 0.05, y: 0.05, z: 0.05}
-  ADSAccuracyBoost: 5
+  MinBulletSpreadVariance: {x: 0.01, y: 0.01, z: 0.01}
+  MaxBulletSpreadVariance: {x: 0.05, y: 0.05, z: 0.05}
+  TimeToMaxVariance: 1.2
+  TimeToCooldown: 0.3
+  ADSAccuracyBoost: 3
+  VerticalRecoil: 1
+  HorizontalRecoil: 0.2
+  RecoilDecay: 10
   BulletCount: 1

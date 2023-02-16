@@ -223,6 +223,51 @@ public partial class @CogschanInputMapping : IInputActionCollection2, IDisposabl
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Weapon 1"",
+                    ""type"": ""Button"",
+                    ""id"": ""5020f947-f40f-437d-8ca7-b336f72e240d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Weapon 2"",
+                    ""type"": ""Button"",
+                    ""id"": ""9ccb8e19-0d01-40a2-87ff-b7be44331064"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Weapon 3"",
+                    ""type"": ""Button"",
+                    ""id"": ""e1183132-e019-47df-a13a-07c13968b428"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Weapon 4"",
+                    ""type"": ""Button"",
+                    ""id"": ""0b061081-9e35-4417-9374-17d00c3827de"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Weapon 5"",
+                    ""type"": ""Button"",
+                    ""id"": ""ffc6452f-1e35-43c6-baf2-8ef764582fdc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -278,6 +323,61 @@ public partial class @CogschanInputMapping : IInputActionCollection2, IDisposabl
                     ""processors"": """",
                     ""groups"": ""Keyboard and Mouse"",
                     ""action"": ""Switch Weapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b0cea9d3-74e2-4b7a-a87c-92ec99ae420f"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Weapon 1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3649e79c-59f3-4f13-90b8-2bdb4dc05a9a"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Weapon 2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""da0022ab-b40e-4af9-b66f-298b7e29b063"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Weapon 3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""92a05892-db22-4d3e-81bb-2c9255870edc"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Weapon 4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e25da1b0-fd93-4acb-8ac4-ad27652eb794"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Weapon 5"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -348,6 +448,11 @@ public partial class @CogschanInputMapping : IInputActionCollection2, IDisposabl
         // Menus
         m_Menus = asset.FindActionMap("Menus", throwIfNotFound: true);
         m_Menus_Pause = m_Menus.FindAction("Pause", throwIfNotFound: true);
+        m_Weapon_Weapon1 = m_Weapon.FindAction("Weapon 1", throwIfNotFound: true);
+        m_Weapon_Weapon2 = m_Weapon.FindAction("Weapon 2", throwIfNotFound: true);
+        m_Weapon_Weapon3 = m_Weapon.FindAction("Weapon 3", throwIfNotFound: true);
+        m_Weapon_Weapon4 = m_Weapon.FindAction("Weapon 4", throwIfNotFound: true);
+        m_Weapon_Weapon5 = m_Weapon.FindAction("Weapon 5", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -477,6 +582,11 @@ public partial class @CogschanInputMapping : IInputActionCollection2, IDisposabl
     private readonly InputAction m_Weapon_Aim;
     private readonly InputAction m_Weapon_Look;
     private readonly InputAction m_Weapon_SwitchWeapon;
+    private readonly InputAction m_Weapon_Weapon1;
+    private readonly InputAction m_Weapon_Weapon2;
+    private readonly InputAction m_Weapon_Weapon3;
+    private readonly InputAction m_Weapon_Weapon4;
+    private readonly InputAction m_Weapon_Weapon5;
     public struct WeaponActions
     {
         private @CogschanInputMapping m_Wrapper;
@@ -486,6 +596,11 @@ public partial class @CogschanInputMapping : IInputActionCollection2, IDisposabl
         public InputAction @Aim => m_Wrapper.m_Weapon_Aim;
         public InputAction @Look => m_Wrapper.m_Weapon_Look;
         public InputAction @SwitchWeapon => m_Wrapper.m_Weapon_SwitchWeapon;
+        public InputAction @Weapon1 => m_Wrapper.m_Weapon_Weapon1;
+        public InputAction @Weapon2 => m_Wrapper.m_Weapon_Weapon2;
+        public InputAction @Weapon3 => m_Wrapper.m_Weapon_Weapon3;
+        public InputAction @Weapon4 => m_Wrapper.m_Weapon_Weapon4;
+        public InputAction @Weapon5 => m_Wrapper.m_Weapon_Weapon5;
         public InputActionMap Get() { return m_Wrapper.m_Weapon; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -510,6 +625,21 @@ public partial class @CogschanInputMapping : IInputActionCollection2, IDisposabl
                 @SwitchWeapon.started -= m_Wrapper.m_WeaponActionsCallbackInterface.OnSwitchWeapon;
                 @SwitchWeapon.performed -= m_Wrapper.m_WeaponActionsCallbackInterface.OnSwitchWeapon;
                 @SwitchWeapon.canceled -= m_Wrapper.m_WeaponActionsCallbackInterface.OnSwitchWeapon;
+                @Weapon1.started -= m_Wrapper.m_WeaponActionsCallbackInterface.OnWeapon1;
+                @Weapon1.performed -= m_Wrapper.m_WeaponActionsCallbackInterface.OnWeapon1;
+                @Weapon1.canceled -= m_Wrapper.m_WeaponActionsCallbackInterface.OnWeapon1;
+                @Weapon2.started -= m_Wrapper.m_WeaponActionsCallbackInterface.OnWeapon2;
+                @Weapon2.performed -= m_Wrapper.m_WeaponActionsCallbackInterface.OnWeapon2;
+                @Weapon2.canceled -= m_Wrapper.m_WeaponActionsCallbackInterface.OnWeapon2;
+                @Weapon3.started -= m_Wrapper.m_WeaponActionsCallbackInterface.OnWeapon3;
+                @Weapon3.performed -= m_Wrapper.m_WeaponActionsCallbackInterface.OnWeapon3;
+                @Weapon3.canceled -= m_Wrapper.m_WeaponActionsCallbackInterface.OnWeapon3;
+                @Weapon4.started -= m_Wrapper.m_WeaponActionsCallbackInterface.OnWeapon4;
+                @Weapon4.performed -= m_Wrapper.m_WeaponActionsCallbackInterface.OnWeapon4;
+                @Weapon4.canceled -= m_Wrapper.m_WeaponActionsCallbackInterface.OnWeapon4;
+                @Weapon5.started -= m_Wrapper.m_WeaponActionsCallbackInterface.OnWeapon5;
+                @Weapon5.performed -= m_Wrapper.m_WeaponActionsCallbackInterface.OnWeapon5;
+                @Weapon5.canceled -= m_Wrapper.m_WeaponActionsCallbackInterface.OnWeapon5;
             }
             m_Wrapper.m_WeaponActionsCallbackInterface = instance;
             if (instance != null)
@@ -529,6 +659,21 @@ public partial class @CogschanInputMapping : IInputActionCollection2, IDisposabl
                 @SwitchWeapon.started += instance.OnSwitchWeapon;
                 @SwitchWeapon.performed += instance.OnSwitchWeapon;
                 @SwitchWeapon.canceled += instance.OnSwitchWeapon;
+                @Weapon1.started += instance.OnWeapon1;
+                @Weapon1.performed += instance.OnWeapon1;
+                @Weapon1.canceled += instance.OnWeapon1;
+                @Weapon2.started += instance.OnWeapon2;
+                @Weapon2.performed += instance.OnWeapon2;
+                @Weapon2.canceled += instance.OnWeapon2;
+                @Weapon3.started += instance.OnWeapon3;
+                @Weapon3.performed += instance.OnWeapon3;
+                @Weapon3.canceled += instance.OnWeapon3;
+                @Weapon4.started += instance.OnWeapon4;
+                @Weapon4.performed += instance.OnWeapon4;
+                @Weapon4.canceled += instance.OnWeapon4;
+                @Weapon5.started += instance.OnWeapon5;
+                @Weapon5.performed += instance.OnWeapon5;
+                @Weapon5.canceled += instance.OnWeapon5;
             }
         }
     }
@@ -590,6 +735,11 @@ public partial class @CogschanInputMapping : IInputActionCollection2, IDisposabl
         void OnAim(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnSwitchWeapon(InputAction.CallbackContext context);
+        void OnWeapon1(InputAction.CallbackContext context);
+        void OnWeapon2(InputAction.CallbackContext context);
+        void OnWeapon3(InputAction.CallbackContext context);
+        void OnWeapon4(InputAction.CallbackContext context);
+        void OnWeapon5(InputAction.CallbackContext context);
     }
     public interface IMenusActions
     {
