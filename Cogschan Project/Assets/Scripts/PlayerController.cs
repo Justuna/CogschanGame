@@ -220,7 +220,7 @@ public class PlayerController : MonoBehaviour
         {
             //Don't multiply mouse input by Time.deltaTime;
             //float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
-            float deltaTimeMultiplier = 1.0f;
+            float deltaTimeMultiplier = 1.0f * Time.timeScale;
 
             _cinemachineTargetYaw += InputLook.x * deltaTimeMultiplier * Sensitivity;
             _cinemachineTargetPitch += InputLook.y * deltaTimeMultiplier * Sensitivity;
@@ -596,7 +596,7 @@ public class PlayerController : MonoBehaviour
         inputMappings.Movement.Jump.canceled += _ => InputJump = false;
         inputMappings.Movement.Dash.started += _ => ActState = ActionState.Dash;
         inputMappings.Movement.Interact.performed += _ => Interact();
-
+        inputMappings.Menus.Pause.performed += _ => UIManager.Instance.TogglePause();
         inputMappings.Weapon.Weapon1.performed += _ => weapons.OtherWeapon(0);
         inputMappings.Weapon.Weapon2.performed += _ => weapons.OtherWeapon(1);
         inputMappings.Weapon.Weapon3.performed += _ => weapons.OtherWeapon(2);
@@ -667,12 +667,6 @@ public class PlayerController : MonoBehaviour
     private void OnDisable()
     {
         inputMappings.Disable();
-    }
-
-    // Lock the cursor upon focusing the application.
-    private void OnApplicationFocus(bool hasFocus)
-    {
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // TODO: Actually write these methods (maybe in a seperate script?).

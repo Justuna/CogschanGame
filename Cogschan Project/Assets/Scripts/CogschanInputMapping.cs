@@ -382,6 +382,34 @@ public partial class @CogschanInputMapping : IInputActionCollection2, IDisposabl
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Menus"",
+            ""id"": ""26f5795a-8b24-41f0-98b4-3a5a1a46cd3f"",
+            ""actions"": [
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""33e6b412-ec80-468e-b5fa-8cbd9a18f829"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""8dd43723-36c3-4ce9-925e-2c2d30d768e8"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -422,6 +450,9 @@ public partial class @CogschanInputMapping : IInputActionCollection2, IDisposabl
         m_Weapon_Weapon3 = m_Weapon.FindAction("Weapon 3", throwIfNotFound: true);
         m_Weapon_Weapon4 = m_Weapon.FindAction("Weapon 4", throwIfNotFound: true);
         m_Weapon_Weapon5 = m_Weapon.FindAction("Weapon 5", throwIfNotFound: true);
+        // Menus
+        m_Menus = asset.FindActionMap("Menus", throwIfNotFound: true);
+        m_Menus_Pause = m_Menus.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -647,6 +678,39 @@ public partial class @CogschanInputMapping : IInputActionCollection2, IDisposabl
         }
     }
     public WeaponActions @Weapon => new WeaponActions(this);
+
+    // Menus
+    private readonly InputActionMap m_Menus;
+    private IMenusActions m_MenusActionsCallbackInterface;
+    private readonly InputAction m_Menus_Pause;
+    public struct MenusActions
+    {
+        private @CogschanInputMapping m_Wrapper;
+        public MenusActions(@CogschanInputMapping wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Pause => m_Wrapper.m_Menus_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_Menus; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenusActions set) { return set.Get(); }
+        public void SetCallbacks(IMenusActions instance)
+        {
+            if (m_Wrapper.m_MenusActionsCallbackInterface != null)
+            {
+                @Pause.started -= m_Wrapper.m_MenusActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_MenusActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_MenusActionsCallbackInterface.OnPause;
+            }
+            m_Wrapper.m_MenusActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
+            }
+        }
+    }
+    public MenusActions @Menus => new MenusActions(this);
     private int m_KeyboardandMouseSchemeIndex = -1;
     public InputControlScheme KeyboardandMouseScheme
     {
@@ -676,5 +740,9 @@ public partial class @CogschanInputMapping : IInputActionCollection2, IDisposabl
         void OnWeapon3(InputAction.CallbackContext context);
         void OnWeapon4(InputAction.CallbackContext context);
         void OnWeapon5(InputAction.CallbackContext context);
+    }
+    public interface IMenusActions
+    {
+        void OnPause(InputAction.CallbackContext context);
     }
 }

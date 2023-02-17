@@ -6,7 +6,7 @@ public class PlayerHealth : Entity
 {
     void Start()
     {
-        _healthbar = HUD.Instance.CogschanHealthbar;
+        _healthbar = UIManager.Instance.PlayerHealthbar;
         _healthbar.UpdateValue(1);
     }
 
