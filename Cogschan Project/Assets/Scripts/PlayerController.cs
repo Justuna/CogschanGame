@@ -682,6 +682,7 @@ public class PlayerController : MonoBehaviour
             while (timer < dashTimer)
             {
                 _controller.Move(vel * Time.deltaTime);
+                VerticalVelocity = 0;
                 timer += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
             }
@@ -749,6 +750,28 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    #region Miscellanous Stuff
+    [Space(10)]
+    [Header("Fall Damage")]
+    [SerializeField]
+    [Tooltip("Minumum vertical velocity for which fall damage is taken.")]
+    private float _minimumFallVelocity;
+    [SerializeField]
+    [Tooltip("Minimum fall damage.")]
+    private float _minimumFallDamage;
+    [SerializeField]
+    [Tooltip("How much more damage you take for every meter per second faster you are traveling past Minimum Fall Velocity")]
+    private float _fallDamageIncrement;
+
+    private void FallDamageUpdate()
+    {
+        print(VerticalVelocity);
+        if (Grounded && -(VerticalVelocity + 2) >= _minimumFallVelocity)
+            GetComponent<Entity>().DealDamage(_minimumFallDamage + _fallDamageIncrement * (-(VerticalVelocity + 2) - _minimumFallVelocity));
+
+    }
+    #endregion
+
     private void Awake()
     {
         StarterAssetsInit();
@@ -760,5 +783,6 @@ public class PlayerController : MonoBehaviour
         StarterAssetesUpdate();
         StateUpdate();
         CameraUpdate();
+        FallDamageUpdate();
     }
 }
