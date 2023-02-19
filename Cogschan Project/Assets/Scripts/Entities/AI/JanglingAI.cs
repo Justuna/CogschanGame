@@ -5,38 +5,39 @@ using UnityEngine;
 public class JanglingAI : MonoBehaviour
 {
     //For making model look away
-    private float _health;
+    public float _health;
 
     public Transform Model;
     //List of predetermined destination Nodes
     public GameObject[] destNodes;
     //Whether or not Jangling should be moving
-    private bool shouldMove;
+    public bool shouldMove;
     //the node number its currently on
-    private int currentNode;
+    public int currentNode;
     //the node number of its destination
-    private int nextNode;
+    public int nextNode;
     //the position of its destination
     public Transform destination;
     //reference to the player character
     public Transform Player;
-    private bool didItNotice;
+    public bool didItNotice;
     public float setStartleTime;
-    private float startleTimer;
+    public float startleTimer;
     public float setStunTime;
-    private float stunTimer;
+    public float stunTimer;
     public float speed;
     public float runDistance;
     public float noticeDistance;
     private void Awake()
     {
         startleTimer = setStartleTime;
-        stunTimer = setStartleTime;
         didItNotice = false;
         shouldMove = false;
         //resets Jangling position to first node in list
         transform.position = destNodes[0].transform.position;
         currentNode = 0;
+        _health = 100;
+        stunTimer = -1;
     }
 
     // Update is called once per frame
@@ -45,15 +46,20 @@ public class JanglingAI : MonoBehaviour
         //Raycasts towards player to check lineOfSight
         RaycastHit hit;
         Physics.Raycast(transform.position, (Player.position - transform.position), out hit, 20f);
-        Debug.DrawRay(transform.position, (Player.position - transform.position));
+        Debug.DrawRay(transform.position, (Player.position - transform.position), Color.green);
         //running vs idle/notice
-        if (stunTimer > 0)
+        if (stunTimer >= 0)
         {
             stunTimer -= Time.deltaTime;
-            if (shouldMove && stunTimer < .1)
+            if (stunTimer < .1)
             {
-                StunnedPickNewDestination();
+
+                if (shouldMove) StunnedPickNewDestination();
+                else PickNewDestination();
+                stunTimer = -1;
+                shouldMove = true;
             }
+
         }
         else if (shouldMove)
         {
@@ -143,9 +149,10 @@ public class JanglingAI : MonoBehaviour
     {
         _health = Mathf.Max(_health - amount, 0);
 
-        if (_health == 0)
+        if (_health <= 0)
         {
             stunTimer = setStunTime;
+            _health = 100;
         }
     }
 }
