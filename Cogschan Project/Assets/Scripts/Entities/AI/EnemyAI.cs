@@ -8,8 +8,9 @@ public class EnemyAI : MonoBehaviour
     public Transform player;
 
     public LayerMask whatIsGround, whatIsPlayer;
-
-    public float health;
+    
+    public Transform Model;
+    public Transform DebugTransform;
 
     //Patroling
     public Vector3 walkPoint;
@@ -17,9 +18,7 @@ public class EnemyAI : MonoBehaviour
     public float walkPointRange;
 
     //Attacking
-    public float timeBetweenAttacks;
     bool alreadyAttacked;
-    public GameObject projectile;
 
     //States
     public float sightRange, attackRange;
@@ -27,7 +26,6 @@ public class EnemyAI : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.Find("PlayerObj").transform;
         agent = GetComponent<NavMeshAgent>();
     }
 
@@ -44,7 +42,6 @@ public class EnemyAI : MonoBehaviour
     private void Patroling()
     {
         if (!walkPointSet) SearchWalkPoint();
-
         if (walkPointSet)
             agent.SetDestination(walkPoint);
 
@@ -66,7 +63,19 @@ public class EnemyAI : MonoBehaviour
 
     private void ChasePlayer()
     {
-        agent.SetDestination(player.position);
+        NavMeshPath path = new NavMeshPath();
+        NavMesh.SamplePosition(transform.position, out NavMeshHit hit, Mathf.Infinity, NavMesh.AllAreas);
+        NavMesh.SamplePosition(player.position, out NavMeshHit hit2, Mathf.Infinity, NavMesh.AllAreas);
+        bool valid = NavMesh.CalculatePath(hit.position, hit2.position, NavMesh.AllAreas, path);
+        if (valid)
+        {
+            Vector3 bestTarget = path.corners[path.corners.Length - 1];
+            if (DebugTransform != null) DebugTransform.position = bestTarget;
+            agent.SetPath(path);
+        }
+        
+        Model.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
+        Model.Rotate(new Vector3(0, 180, 0));
     }
 
     private void AttackPlayer()
@@ -76,29 +85,17 @@ public class EnemyAI : MonoBehaviour
         transform.LookAt(player);
 
         if (!alreadyAttacked)
-        {
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+        {   
 
             alreadyAttacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+           // Debug.Log("Attacked");
+            ResetAttack();
         }
     }
     private void ResetAttack()
     {
         alreadyAttacked = false;
-    }
-
-    public void TakeDamage(int damage)
-    {
-        health -= damage;
-
-        if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
-    }
-    private void DestroyEnemy()
-    {
-        Destroy(gameObject);
+        //Debug.Log("Attack Reset");
     }
 
     private void OnDrawGizmosSelected()
