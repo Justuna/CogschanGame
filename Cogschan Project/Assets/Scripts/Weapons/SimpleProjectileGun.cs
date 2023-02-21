@@ -32,7 +32,7 @@ public class SimpleProjectileGun : Gun
             return false;
 
         Vector3 finalVariance = Vector3.Lerp(MinBulletSpreadVariance, MaxBulletSpreadVariance, _varianceFactor);
-        _recoil.x = Random.RandomRange(-HorizontalRecoil, HorizontalRecoil);
+        _recoil.x = Random.Range(-HorizontalRecoil, HorizontalRecoil);
         _recoil.y = VerticalRecoil;
 
         return FireBullets(finalVariance);
@@ -44,7 +44,7 @@ public class SimpleProjectileGun : Gun
             return false;
 
         Vector3 finalVariance = Vector3.Lerp(MinBulletSpreadVariance, MaxBulletSpreadVariance, _varianceFactor) / ADSAccuracyBoost;
-        _recoil.x = Random.RandomRange(-HorizontalRecoil, HorizontalRecoil);
+        _recoil.x = Random.Range(-HorizontalRecoil, HorizontalRecoil);
         _recoil.y = VerticalRecoil;
 
         return FireBullets(finalVariance);
@@ -86,7 +86,6 @@ public class SimpleProjectileGun : Gun
         }   
 
         playerController.CameraRecoil = _recoil;
-        Debug.Log(_recoil);
 
         _recoil.x -= Time.deltaTime * RecoilDecay;
         _recoil.x = Mathf.Max(_recoil.x, 0);
