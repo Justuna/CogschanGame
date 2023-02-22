@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum EnemyState { Patrol, Alerted, Chase, ChaseLastSeen, Confused, PrepAttack, Attacking, PrepShot, Shooting }
+public enum EnemyState { Patrol, Alerted, Chase, ChaseLastSeen, Confused, WindUpAtk, Attacking, WindDownAtk, PrepShot, Shooting }
 
 public class EnemyAI : MonoBehaviour
 {
@@ -20,24 +20,7 @@ public class EnemyAI : MonoBehaviour
 
     private float _LOSInterruptClock;
 
-    private bool CanSee { get {
-            Ray ray = new Ray(transform.position, Player.position - transform.position);
-            bool LOS = Physics.CheckSphere(transform.position, SightRange, PlayerMask) && !Physics.Raycast(ray, SightRange, GroundMask);
-            if (LOS)
-            {
-                _LOSInterruptClock = LOSInterruptThreshold;
-                return true;
-            }
-            else
-            {
-                if (_LOSInterruptClock > 0)
-                {
-                    _LOSInterruptClock -= Time.deltaTime;
-                    return true;
-                }
-                else return false;
-            }
-        } }
+    private bool _canSee;
 
     private void Awake()
     {
@@ -47,6 +30,23 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
+        Ray ray = new Ray(transform.position, Player.position - transform.position);
+        bool LOS = Physics.CheckSphere(transform.position, SightRange, PlayerMask) && !Physics.Raycast(ray, SightRange, GroundMask);
+        if (LOS)
+        {
+            _LOSInterruptClock = LOSInterruptThreshold;
+            _canSee = true;
+        }
+        else
+        {
+            if (_LOSInterruptClock > 0)
+            {
+                _LOSInterruptClock -= Time.deltaTime;
+                _canSee = true;
+            }
+            else _canSee = false;
+        }
+
         Debug.Log(State);
         switch (State)
         {
@@ -65,9 +65,14 @@ public class EnemyAI : MonoBehaviour
             case EnemyState.ChaseLastSeen:
                 ChaseLastSeen();
                 break;
-            case EnemyState.PrepAttack:
+            case EnemyState.WindUpAtk:
+                WindUpAttack();
                 break;
             case EnemyState.Attacking:
+                Attacking();
+                break;
+            case EnemyState.WindDownAtk:
+                WindDownAttack();
                 break;
             case EnemyState.PrepShot:
                 break;
@@ -84,7 +89,7 @@ public class EnemyAI : MonoBehaviour
 
     private void LookAroundConfused()
     {
-        if (CanSee)
+        if (_canSee)
         {
             State = EnemyState.Alerted;
             _alertTimer = AlertTime;
@@ -118,7 +123,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Patrolling()
     {
-        if (CanSee)
+        if (_canSee)
         {
             _hasSetPatrolPoint = false;
             _agent.ResetPath();
@@ -180,7 +185,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Alerted()
     {
-        if (!CanSee)
+        if (!_canSee)
         {
             _hasSetPatrolPoint = false;
             _agent.ResetPath();
@@ -204,9 +209,17 @@ public class EnemyAI : MonoBehaviour
 
     private void ChasePlayer()
     {
-        if (!CanSee)
+        if (!_canSee)
         {
             State = EnemyState.ChaseLastSeen;
+            return;
+        }
+
+        if (Vector3.Distance(transform.position, Player.position) <= AttackRange && HasMeleeAttack)
+        {
+            _agent.ResetPath();
+            _attackTimer = WindUpDuration;
+            State = EnemyState.WindUpAtk;
             return;
         }
 
@@ -228,7 +241,7 @@ public class EnemyAI : MonoBehaviour
 
     private void ChaseLastSeen()
     {
-        if (!CanSee && (Vector3.Distance(transform.position, _lastSeenNavPos) <= PatrolPointMetRange))
+        if (!_canSee && (Vector3.Distance(transform.position, _lastSeenNavPos) <= PatrolPointMetRange))
         {
             _hasSetPatrolPoint = false;
             _agent.ResetPath();
@@ -239,7 +252,7 @@ public class EnemyAI : MonoBehaviour
 
         Debug.Log(_agent.pathStatus);
 
-        if (CanSee)
+        if (_canSee)
         {
             State = EnemyState.Chase;
             return;
@@ -264,42 +277,69 @@ public class EnemyAI : MonoBehaviour
     #region Attack State Stuff
 
     [Header("Attacking State Attributes")]
+    public bool HasMeleeAttack;
     public float AttackRange;
+    public float WindUpDuration;
+    public float AttackDuration;
+    public float WindDownDuration;
 
-    private bool _hasAttacked;
+    private float _attackTimer = 0;
 
-    private void AttackPlayer()
+    private void WindUpAttack()
     {
-        _agent.SetDestination(transform.position);
+        _attackTimer -= Time.deltaTime;
 
-        transform.LookAt(Player);
+        if (_canSee)
+        {
+            Model.LookAt(new Vector3(Player.position.x, transform.position.y, Player.position.z));
+            Model.Rotate(new Vector3(0, 180, 0));
+        }
 
-        if (!_hasAttacked)
-        {   
-
-            _hasAttacked = true;
-           // Debug.Log("Attacked");
-            ResetAttack();
+        if (_attackTimer <= 0)
+        {
+            _attackTimer = AttackDuration;
+            State = EnemyState.Attacking;
+            //Spawn hitbox
         }
     }
-    private void ResetAttack()
+
+    private void Attacking() 
     {
-        _hasAttacked = false;
-        //Debug.Log("Attack Reset");
+        _attackTimer -= Time.deltaTime;
+        if (_attackTimer <= 0)
+        {
+            _attackTimer = WindDownDuration;
+            State = EnemyState.WindDownAtk;
+            //Turn off hitbox
+        }
     }
+
+    private void WindDownAttack()
+    {
+        _attackTimer -= Time.deltaTime;
+        if (_attackTimer <= 0)
+        {
+            State = EnemyState.Chase;
+        }
+    }
+
     #endregion
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, AttackRange);
-        if (State == EnemyState.Alerted || State == EnemyState.Chase || State == EnemyState.ChaseLastSeen) Gizmos.DrawSphere(_lastSeenPosition, 1f);
+        if (State == EnemyState.Alerted || State == EnemyState.Chase || State == EnemyState.ChaseLastSeen ||
+            State == EnemyState.WindUpAtk || State == EnemyState.Attacking || State == EnemyState.WindDownAtk) 
+            Gizmos.DrawSphere(_lastSeenPosition, 1f);
         else Gizmos.DrawSphere(_randomPoint, 1f);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, SightRange);
         Gizmos.DrawSphere(_attemptPoint, 1f);
         Gizmos.color = Color.green;
-        if (State == EnemyState.Alerted || State == EnemyState.Chase || State == EnemyState.ChaseLastSeen) Gizmos.DrawSphere(_lastSeenNavPos, 1f);
+        if (State == EnemyState.Alerted || State == EnemyState.Chase || State == EnemyState.ChaseLastSeen ||
+            State == EnemyState.WindUpAtk || State == EnemyState.Attacking || State == EnemyState.WindDownAtk) 
+            Gizmos.DrawSphere(_lastSeenNavPos, 1f);
         else Gizmos.DrawSphere(_patrolPoint, 1f);
     }
 }
