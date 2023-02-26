@@ -45,7 +45,7 @@ public class SimpleGun : Gun
 
             if (Physics.Raycast(gunRay, out hit, Mathf.Infinity, AimColliderLayerMask))
             {
-                Hitbox hitbox = hit.collider.GetComponent<Hitbox>();
+                Hurtbox hitbox = hit.collider.GetComponent<Hurtbox>();
                 if (hitbox != null && hitbox.Multiplier > 1)
                 {
                     Instantiate(CritParticle, hit.point, Quaternion.identity);
@@ -92,7 +92,7 @@ public class SimpleGun : Gun
 
             if (Physics.Raycast(gunRay, out hit, Mathf.Infinity, AimColliderLayerMask))
             {
-                Hitbox hitbox = hit.collider.GetComponent<Hitbox>();
+                Hurtbox hitbox = hit.collider.GetComponent<Hurtbox>();
                 if (hitbox != null && hitbox.Multiplier > 1)
                 {
                     Instantiate(CritParticle, hit.point, Quaternion.identity);

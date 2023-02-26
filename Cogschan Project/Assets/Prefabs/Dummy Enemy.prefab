@@ -515,7 +515,7 @@ GameObject:
   - component: {fileID: 7017621132893755975}
   - component: {fileID: 7017621132893755974}
   - component: {fileID: 7017621132893755972}
-  - component: {fileID: 7034984721899961500}
+  - component: {fileID: 1502872462899274225}
   - component: {fileID: 8646322412633489427}
   m_Layer: 2
   m_Name: Dummy Enemy
@@ -574,7 +574,7 @@ CapsuleCollider:
   m_Height: 3.0341365
   m_Direction: 1
   m_Center: {x: -0.0008506775, y: -0.013985276, z: 0}
---- !u!114 &7034984721899961500
+--- !u!114 &1502872462899274225
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -583,28 +583,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 7017621132893755969}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a53e4c99ab57499184f80502e15d560, type: 3}
+  m_Script: {fileID: 11500000, guid: 5a381bfdd8a253d4392fa4558cbcaa4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
   Model: {fileID: 7017621132890820195}
-  DebugTransform: {fileID: 0}
   GroundMask:
     serializedVersion: 2
     m_Bits: 8
   PlayerMask:
     serializedVersion: 2
     m_Bits: 128
-  SightRange: 20
+  SightRange: 40
   LOSInterruptThreshold: 1
   MinConfusionTime: 3
   MaxConfusionTime: 5
-  MinPatrolPointRange: 10
-  MaxPatrolRange: 20
+  MinPatrolRange: 5
+  MaxPatrolRange: 15
   PatrolPointMetRange: 2
-  TimeUntilBored: 5
-  AlertTime: 2
-  AttackRange: 2
+  TimeUntilBored: 15
+  AlertTime: 0.5
+  HasMeleeAttack: 0
+  AttackRange: 0
+  HasRangedAttack: 1
+  MinTimeUntilRangedAttack: 10
+  MaxTimeUntilRangedAttack: 20
 --- !u!195 &8646322412633489427
 NavMeshAgent:
   m_ObjectHideFlags: 0
