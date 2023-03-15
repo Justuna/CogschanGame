@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a92a1a57f161d740b26ba6e67174709, type: 3}
   m_Name: MarksmanAmmo
   m_EditorClassIdentifier: 
-  Identifier: 
+  Identifier: Marksman
