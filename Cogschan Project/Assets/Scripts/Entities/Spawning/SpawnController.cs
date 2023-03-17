@@ -37,6 +37,12 @@ public class SpawnController : MonoBehaviour
     public float AuxWaveMinSpread = 0.5f;
     public float AuxWaveMaxNavmeshRaycastDistance = 20;
 
+    [Header("Zenith Variables")]
+    [SerializeField]
+    private float _zenithTime;
+    private float _zenithTimer;
+    public bool IsZenith { get; private set; }
+
     private float _difficulty;
     private float _mainSpawnTimer;
     private float _extraSpawnTimer;
@@ -51,7 +57,7 @@ public class SpawnController : MonoBehaviour
     void Update()
     {
         // Difficulty increases by 1 every minute, by default
-        _difficulty += Time.deltaTime * 1/60 * DifficultyScale;
+        _difficulty += Time.deltaTime * 1 / 60 * DifficultyScale;
         _difficulty = Mathf.Min(_difficulty, MaxDifficulty);
 
         // Main spawn timer ticks down regularly to spawn enemy batallions near player
@@ -69,6 +75,12 @@ public class SpawnController : MonoBehaviour
             SetExtraSpawnTimer();
             SpawnExtraWave();
         }
+
+        // Zenith timer ticks up to begin Zenith, which is one of the requirements for the boss spawning.
+        if (_zenithTimer < _zenithTime)
+            _zenithTimer += Time.deltaTime;
+        if (_zenithTimer >= _zenithTime)
+            IsZenith = true;
     }
 
     void SetMainSpawnTimer()

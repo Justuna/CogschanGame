@@ -18071,6 +18071,7 @@ MonoBehaviour:
   _minimumFallVelocity: 5
   _minimumFallDamage: 1
   _fallDamageIncrement: 1
+  _knockbackDecayRate: 1
 --- !u!114 &6771631127717395411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18087,6 +18088,8 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
+  _regenRate: 5
+  _regenPauseLength: 5
 --- !u!1 &8824025184588894572
 GameObject:
   m_ObjectHideFlags: 0

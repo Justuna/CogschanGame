@@ -32,7 +32,6 @@ public class PlayerController : MonoBehaviour
 {
     private Vector3 move = Vector3.zero;
 
-    #region Starter Assets Stuff
     [Header("Player")]
     [Tooltip("Move speed of the character in m/s")]
     public float MoveSpeed = 2.0f;
@@ -137,7 +136,13 @@ public class PlayerController : MonoBehaviour
         set => _verticalVelocity = value;
     }
 
+    /// <summary>
+    /// Number of keys that the player has picked up.
+    /// </summary>
+    public int KeyCount { get; private set; }
 
+
+    #region Starter Assets Stuff
     private void StarterAssetsInit()
     {
         // get a reference to our main camera
@@ -795,7 +800,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Adds specified knockback to the player.
+    /// </summary>
     public void AddKnockback(Vector3 knockback) => _knockbackVel += knockback;
+
+    /// <summary>
+    /// Adds 1 key to the player inventory.
+    /// </summary>
+    public void PickupKey() => KeyCount++;
     #endregion
 
     private void Awake()
