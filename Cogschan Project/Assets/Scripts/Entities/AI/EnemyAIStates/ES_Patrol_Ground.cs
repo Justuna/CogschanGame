@@ -2,44 +2,11 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ES_Patrol_Ground : MonoBehaviour, EnemyState
+public class ES_Patrol_Ground : ES_Patrol
 {
-    public float MinPatrolRange;
-    public float MaxPatrolRange;
-    public float PatrolPointMetRange;
-    public float TimeUntilBored;
-
     public NavMeshAgent Agent;
-    public LOSCalculator LOS;
 
-    public event Action LOSMade, Bored;
-
-    private Vector3 _patrolPoint;
-    private bool _hasSetPatrolPoint;
-    private float _boredTimer;
-
-    public void Behavior()
-    {
-        if (LOS.CanSee)
-        {
-            LOSMade?.Invoke();
-            return;
-        }
-
-        if (!_hasSetPatrolPoint) SearchWalkPoint();
-        if (_hasSetPatrolPoint)
-            Agent.SetDestination(_patrolPoint);
-
-        Vector3 distanceToWalkPoint = transform.position - _patrolPoint;
-        _boredTimer -= Time.deltaTime;
-
-        if (distanceToWalkPoint.magnitude < PatrolPointMetRange || _boredTimer <= 0)
-        {
-            Bored?.Invoke();
-        }
-    }
-
-    private void SearchWalkPoint()
+    protected override void SearchPatrolPoint()
     {
         NavMeshHit hit;
 
@@ -59,27 +26,8 @@ public class ES_Patrol_Ground : MonoBehaviour, EnemyState
         }
     }
 
-    public void ResetTimer()
+    protected override void MoveToPatrolPoint()
     {
-        _boredTimer = TimeUntilBored;
-    }
-
-    public void ResetPatrolPoint()
-    {
-        _hasSetPatrolPoint = false;
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (_hasSetPatrolPoint)
-        {
-            Gizmos.color = Color.green;
-        }
-        else
-        {
-            Gizmos.color = Color.red;
-        }
-
-        Gizmos.DrawSphere(_patrolPoint, 0.5f);
+        Agent.SetDestination(_patrolPoint);
     }
 }
