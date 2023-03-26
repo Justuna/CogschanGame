@@ -63,4 +63,23 @@ public class ES_Patrol_Ground : MonoBehaviour, EnemyState
     {
         _boredTimer = TimeUntilBored;
     }
+
+    public void ResetPatrolPoint()
+    {
+        _hasSetPatrolPoint = false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (_hasSetPatrolPoint)
+        {
+            Gizmos.color = Color.green;
+        }
+        else
+        {
+            Gizmos.color = Color.red;
+        }
+
+        Gizmos.DrawSphere(_patrolPoint, 0.5f);
+    }
 }

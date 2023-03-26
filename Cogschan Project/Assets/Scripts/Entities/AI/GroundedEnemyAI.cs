@@ -6,16 +6,24 @@ public abstract class GroundedEnemyAI : MonoBehaviour
 {
     protected EnemyState _state;
 
-    public ES_Confused Confused;
-    public ES_Alerted Alerted;
-    public ES_Patrol_Ground Patrol;
-    public ES_Chase_Ground Chase;
-    public ES_ChaseLastSeen_Ground ChaseLastSeen;
-    public ES_MeleeAttack MeleeAttack;
-    public ES_RangedAttack RangedAttack;
-    public ES_Waiting Waiting;
-
-    public bool HasMeleeAttack, HasRangedAttack;
+    [SerializeField]
+    protected ES_Confused Confused;
+    [SerializeField]
+    protected ES_Alerted Alerted;
+    [SerializeField]
+    protected ES_Patrol_Ground Patrol;
+    [SerializeField]
+    protected ES_Chase_Ground Chase;
+    [SerializeField]
+    protected ES_ChaseLastSeen_Ground ChaseLastSeen;
+    [SerializeField]
+    protected ES_MeleeAttack MeleeAttack;
+    [SerializeField]
+    protected ES_RangedAttack RangedAttack;
+    [SerializeField]
+    protected ES_Waiting Waiting;
+    [SerializeField]
+    protected bool HasMeleeAttack, HasRangedAttack;
 
     protected virtual void Awake()
     {
@@ -48,6 +56,7 @@ public abstract class GroundedEnemyAI : MonoBehaviour
             Chase.RangedAttack += Skip_RangedAttack;
         }
 
+        _state = Confused;
     }
 
     protected virtual void Update()
@@ -64,6 +73,7 @@ public abstract class GroundedEnemyAI : MonoBehaviour
     protected virtual void Confused_To_Patrol()
     {
         Patrol.ResetTimer();
+        Patrol.ResetPatrolPoint();
         _state = Patrol;
     }
 
@@ -81,52 +91,65 @@ public abstract class GroundedEnemyAI : MonoBehaviour
     protected virtual void Patrol_To_Confused()
     {
         Patrol.Agent.ResetPath();
-
+        Patrol.ResetPatrolPoint();
+        Confused.ResetTimer();
+        _state = Confused;
     }
 
     protected virtual void Patrol_To_Alerted()
     {
-
+        Patrol.Agent.ResetPath();
+        Patrol.ResetPatrolPoint();
+        Alerted.ResetTimer();
+        _state = Alerted;
     }
 
     protected virtual void Chase_To_ChaseLastSeen()
     {
-
+        _state = ChaseLastSeen;
     }
 
     protected virtual void Chase_To_MeleeAttack()
     {
-
+        Chase.Agent.ResetPath();
+        BeginMeleeAttack();
+        _state = MeleeAttack;
     }
 
     protected virtual void Chase_To_RangedAttack()
     {
-
+        Chase.Agent.ResetPath();
+        Chase.ResetRangedAttackTimer();
+        BeginRangedAttack();
+        _state = RangedAttack;
     }
 
     protected virtual void Skip_MeleeAttack()
     {
-
+        Chase.Agent.ResetPath();
+        _state = Waiting;
     }
 
     protected virtual void Skip_RangedAttack()
     {
-
+        Chase.ResetRangedAttackTimer();
     }
 
     protected virtual void ChaseLastSeen_To_Confused()
     {
-
+        ChaseLastSeen.Agent.ResetPath();
+        Confused.ResetTimer();
+        _state = Confused;
     }
 
     protected virtual void ChaseLastSeen_To_Chase()
     {
-
+        _state = Chase;
     }
 
     protected virtual void Waiting_To_Chase()
     {
-
+        _state = Chase;
     }
 
     protected abstract void BeginMeleeAttack();

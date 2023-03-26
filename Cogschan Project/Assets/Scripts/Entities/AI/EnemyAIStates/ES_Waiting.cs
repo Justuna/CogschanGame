@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ES_Waiting : MonoBehaviour, EnemyState
 {
-    public float AttackRange;
+    public float WaitRange;
 
     public LOSCalculator LOS;
 
@@ -13,7 +13,7 @@ public class ES_Waiting : MonoBehaviour, EnemyState
 
     public void Behavior()
     {
-        if (LOS.CanSee || Vector3.Distance(transform.position, LOS.LastSeenPosition) > AttackRange)
+        if (LOS.CanSee || Vector3.Distance(transform.position, LOS.LastSeenPosition) > WaitRange)
         {
             OutOfRange?.Invoke();
         }

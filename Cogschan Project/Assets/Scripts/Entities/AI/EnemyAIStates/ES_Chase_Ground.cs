@@ -52,4 +52,9 @@ public class ES_Chase_Ground : MonoBehaviour, EnemyState
         Model.transform.LookAt(new Vector3(LOS.LastSeenPosition.x, transform.position.y, LOS.LastSeenPosition.z));
         Model.transform.Rotate(new Vector3(0, 180, 0));
     }
+
+    public void ResetRangedAttackTimer()
+    {
+        _rangedAttackTimer = UnityEngine.Random.Range(MinTimeUntilRangedAttack, MaxTimeUntilRangedAttack);
+    }
 }
