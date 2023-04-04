@@ -11,17 +11,7 @@ public abstract class FlyingEnemyAI : MonoBehaviour
     [SerializeField]
     protected ES_Alerted Alerted;
     [SerializeField]
-    protected ES_Patrol Patrol;
-    [SerializeField]
-    protected ES_Chase_Flying Chase;
-    [SerializeField]
-    protected ES_ChaseLastSeen_Flying ChaseLastSeen;
-    [SerializeField]
-    protected ES_RangedAttack RangedAttack;
-    [SerializeField]
-    protected ES_Waiting Waiting;
-    [SerializeField]
-    protected bool HasRangedAttack;
+    protected ES_Patrol_Flying Patrol;
 
     protected virtual void Awake()
     {
@@ -31,19 +21,6 @@ public abstract class FlyingEnemyAI : MonoBehaviour
         Alerted.ReadyToChase += Alerted_To_Chase;
         Patrol.LOSMade += Patrol_To_Alerted;
         Patrol.Bored += Patrol_To_Confused;
-        Chase.LOSBroken += Chase_To_ChaseLastSeen;
-        ChaseLastSeen.LOSBroken += ChaseLastSeen_To_Confused;
-        ChaseLastSeen.LOSMade += ChaseLastSeen_To_Chase;
-        Waiting.OutOfRange += Waiting_To_Chase;
-
-        if (HasRangedAttack)
-        {
-            Chase.RangedAttack += Chase_To_RangedAttack;
-        }
-        else
-        {
-            Chase.RangedAttack += Skip_RangedAttack;
-        }
 
         _state = Confused;
     }
@@ -55,31 +32,25 @@ public abstract class FlyingEnemyAI : MonoBehaviour
 
     protected virtual void Confused_To_Alerted()
     {
-        Alerted.ResetTimer();
-        _state = Alerted;
     }
 
     protected virtual void Confused_To_Patrol()
     {
         Patrol.ResetTimer();
-        Patrol.ResetPatrolPoint();
         _state = Patrol;
     }
 
     protected virtual void Alerted_To_Confused()
     {
-        Confused.ResetTimer();
-        _state = Confused;
     }
 
     protected virtual void Alerted_To_Chase()
     {
-        _state = Chase;
     }
 
     protected virtual void Patrol_To_Confused()
     {
-        Patrol.Agent.ResetPath();
+        Patrol.RB.velocity = Vector3.zero;
         Patrol.ResetPatrolPoint();
         Confused.ResetTimer();
         _state = Confused;
@@ -87,62 +58,7 @@ public abstract class FlyingEnemyAI : MonoBehaviour
 
     protected virtual void Patrol_To_Alerted()
     {
-        Patrol.Agent.ResetPath();
-        Patrol.ResetPatrolPoint();
-        Alerted.ResetTimer();
-        _state = Alerted;
     }
-
-    protected virtual void Chase_To_ChaseLastSeen()
-    {
-        _state = ChaseLastSeen;
-    }
-
-    protected virtual void Chase_To_MeleeAttack()
-    {
-        Chase.Agent.ResetPath();
-        BeginMeleeAttack();
-        _state = MeleeAttack;
-    }
-
-    protected virtual void Chase_To_RangedAttack()
-    {
-        Chase.Agent.ResetPath();
-        Chase.ResetRangedAttackTimer();
-        BeginRangedAttack();
-        _state = RangedAttack;
-    }
-
-    protected virtual void Skip_MeleeAttack()
-    {
-        Chase.Agent.ResetPath();
-        _state = Waiting;
-    }
-
-    protected virtual void Skip_RangedAttack()
-    {
-        Chase.ResetRangedAttackTimer();
-    }
-
-    protected virtual void ChaseLastSeen_To_Confused()
-    {
-        ChaseLastSeen.Agent.ResetPath();
-        Confused.ResetTimer();
-        _state = Confused;
-    }
-
-    protected virtual void ChaseLastSeen_To_Chase()
-    {
-        _state = Chase;
-    }
-
-    protected virtual void Waiting_To_Chase()
-    {
-        _state = Chase;
-    }
-
-    protected abstract void BeginMeleeAttack();
-    public abstract void EndMeleeAttack();
 
     protected abstract void BeginRangedAttack();
     public abstract void EndRangedAttack();
