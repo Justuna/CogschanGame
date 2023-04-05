@@ -104,29 +104,17 @@ namespace StarterAssets
         // private StarterAssetsInputs _input;
         private GameObject _mainCamera;
         private bool _rotateOnMove = true;
-
         private const float _threshold = 0.01f;
-
-        private bool _hasAnimator;
-
 
         private void Awake()
         {
-            // get a reference to our main camera
-            if (_mainCamera == null)
-            {
-                _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-            }
-        }
-
-        private void Start()
-        {
+            _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
 
-            _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
 
             AssignAnimationIDs();
+            _animator = GetComponent<Animator>();
 
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
@@ -135,8 +123,6 @@ namespace StarterAssets
 
         private void Update()
         {
-            _hasAnimator = TryGetComponent(out _animator);
-
             JumpAndGravity();
             GroundedCheck();
             Move();
@@ -164,11 +150,8 @@ namespace StarterAssets
             Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers,
                 QueryTriggerInteraction.Ignore);
 
-            // update animator if using character
-            if (_hasAnimator)
-            {
-                _animator.SetBool(_animIDGrounded, Grounded);
-            }
+            // update animator
+            _animator.SetBool(_animIDGrounded, Grounded);
         }
 
         private void CameraRotation()
@@ -257,11 +240,9 @@ namespace StarterAssets
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 
             // update animator if using character
-            if (_hasAnimator)
-            {
-                _animator.SetFloat(_animIDSpeed, _animationBlend);
-                _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
-            }
+            _animator.SetFloat(_animIDSpeed, _animationBlend);
+            _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+
         }
 
         private void JumpAndGravity()
@@ -272,11 +253,9 @@ namespace StarterAssets
                 _fallTimeoutDelta = FallTimeout;
 
                 // update animator if using character
-                if (_hasAnimator)
-                {
-                    _animator.SetBool(_animIDJump, false);
-                    _animator.SetBool(_animIDFreeFall, false);
-                }
+                _animator.SetBool(_animIDJump, false);
+                _animator.SetBool(_animIDFreeFall, false);
+
 
                 // stop our velocity dropping infinitely when grounded
                 if (_verticalVelocity < 0.0f)
@@ -292,10 +271,8 @@ namespace StarterAssets
                     _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 
                     // update animator if using character
-                    if (_hasAnimator)
-                    {
-                        _animator.SetBool(_animIDJump, true);
-                    }
+                    _animator.SetBool(_animIDJump, true);
+
                 }
 
                 // jump timeout
@@ -317,10 +294,7 @@ namespace StarterAssets
                 else
                 {
                     // update animator if using character
-                    if (_hasAnimator)
-                    {
-                        _animator.SetBool(_animIDFreeFall, true);
-                    }
+                    _animator.SetBool(_animIDFreeFall, true);
                 }
 
                 // if we are not grounded, do not jump
@@ -340,12 +314,10 @@ namespace StarterAssets
 
         private void OnDrawGizmosSelected()
         {
-            Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
-            Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);
-
-            if (Grounded) Gizmos.color = transparentGreen;
-            else Gizmos.color = transparentRed;
-
+            //Green
+            if (Grounded) Gizmos.color = new Color(0.0f, 1.0f, 0.0f, 0.35f);
+            //Red
+            else Gizmos.color = new Color(1.0f, 0.0f, 0.0f, 0.35f);
             // when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
             Gizmos.DrawSphere(
                 new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z),

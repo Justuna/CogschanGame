@@ -9926,6 +9926,7 @@ MonoBehaviour:
   _fireRate: 0.5
   damage: 10
   particle: {fileID: 9222931191912853214, guid: a0f18980ea1bcc84a9c91285f4980d6c, type: 3}
+  critParticle: {fileID: 0}
 --- !u!1 &5016355993856628341
 GameObject:
   m_ObjectHideFlags: 0
@@ -18017,6 +18018,7 @@ MonoBehaviour:
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
+  _verticalVelocity: 0
 --- !u!114 &5123329296722891385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18036,7 +18038,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   debugTransform: {fileID: 0}
+  originTransform: {fileID: 0}
   gun: {fileID: 4995485919253603517}
+  gunLocation: {fileID: 0}
+  forwardCameraDisplacement: 0
 --- !u!114 &2881835916040472121
 MonoBehaviour:
   m_ObjectHideFlags: 0
