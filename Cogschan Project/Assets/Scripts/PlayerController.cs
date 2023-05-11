@@ -30,7 +30,8 @@ public enum ActionState
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
-    #region Starter Assets Stuff
+    private Vector3 move = Vector3.zero;
+
     [Header("Player")]
     [Tooltip("Move speed of the character in m/s")]
     public float MoveSpeed = 2.0f;
@@ -135,7 +136,13 @@ public class PlayerController : MonoBehaviour
         set => _verticalVelocity = value;
     }
 
+    /// <summary>
+    /// Number of keys that the player has picked up.
+    /// </summary>
+    public int KeyCount { get; private set; }
 
+
+    #region Starter Assets Stuff
     private void StarterAssetsInit()
     {
         // get a reference to our main camera
@@ -301,8 +308,8 @@ public class PlayerController : MonoBehaviour
         Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
         // move the player
-        _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
-                         new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+        move += targetDirection.normalized * (_speed * Time.deltaTime) +
+                         new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime;
 
         // update animator if using character
         if (_hasAnimator)
@@ -681,7 +688,8 @@ public class PlayerController : MonoBehaviour
             float timer = 0;
             while (timer < dashTimer)
             {
-                _controller.Move(vel * Time.deltaTime);
+                move += vel * Time.deltaTime;
+                VerticalVelocity = 0;
                 timer += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
             }
@@ -749,6 +757,60 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    #region Miscellanous Stuff
+    [Space(10)]
+    [Header("Fall Damage")]
+    [SerializeField]
+    [Tooltip("Minumum vertical velocity for which fall damage is taken.")]
+    private float _minimumFallVelocity;
+    [SerializeField]
+    [Tooltip("Minimum fall damage.")]
+    private float _minimumFallDamage;
+    [SerializeField]
+    [Tooltip("How much more damage you take for every meter per second faster you are traveling past Minimum Fall Velocity")]
+    private float _fallDamageIncrement;
+
+    [Space(10)]
+    [Header("Knockback")]
+    [SerializeField]
+    [Tooltip("How fast knockback decays.")]
+    private float _knockbackDecayRate;
+    private Vector3 _knockbackVel = Vector3.zero;
+
+    private void MiscUpdate()
+    {
+        FallDamageUpdate();
+        KnockbackUpdate();
+    }
+
+    private void FallDamageUpdate()
+    {
+        // TODO: Figure out a better way of calculating current vertical velocity.
+        if (Grounded && -(VerticalVelocity + 2) >= _minimumFallVelocity)
+            GetComponent<Entity>().DealDamage(_minimumFallDamage + _fallDamageIncrement * (-(VerticalVelocity + 2) - _minimumFallVelocity));
+    }
+
+    private void KnockbackUpdate()
+    {
+        if (_knockbackVel != Vector3.zero)
+        {
+            move += _knockbackVel * Time.deltaTime;
+            // Reduce the magnitude of knockback velocity by knockback decay rate, or set it to zero if the magnitude is too low.
+            _knockbackVel -= Mathf.Min(_knockbackDecayRate, _knockbackVel.magnitude) * Time.deltaTime * _knockbackVel.normalized;
+        }
+    }
+
+    /// <summary>
+    /// Adds specified knockback to the player.
+    /// </summary>
+    public void AddKnockback(Vector3 knockback) => _knockbackVel += knockback;
+
+    /// <summary>
+    /// Adds 1 key to the player inventory.
+    /// </summary>
+    public void PickupKey() => KeyCount++;
+    #endregion
+
     private void Awake()
     {
         StarterAssetsInit();
@@ -760,5 +822,8 @@ public class PlayerController : MonoBehaviour
         StarterAssetesUpdate();
         StateUpdate();
         CameraUpdate();
+        MiscUpdate();
+        _controller.Move(move);
+        move = Vector3.zero;
     }
 }

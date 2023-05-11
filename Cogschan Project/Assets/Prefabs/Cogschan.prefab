@@ -8451,7 +8451,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4267462005288876451}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 33.3, y: 5.655, z: 94.25}
+  m_LocalPosition: {x: 0.70000076, y: 1.625, z: -2.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14386,7 +14386,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6603648617301653054}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.7, y: 1.625, z: -4}
+  m_LocalPosition: {x: 0.70000076, y: 1.625, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -14457,7 +14457,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6603648617744939417}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.7, y: 1.625, z: -2.5}
+  m_LocalPosition: {x: 0.70000076, y: 1.625, z: -2.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -18019,7 +18019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82fe6cac8ffb8e546928f07deb9b6fca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartingGun: {fileID: 165013744114904365, guid: 58108bcb8ef37144d887ab22d98d2d8e, type: 3}
+  StartingGun: {fileID: 165013744114904365, guid: 970205971c311d84b9b0897f1d071cf3, type: 3}
   RightHand: {fileID: 3100162983899313499}
 --- !u!114 &6711323755194256733
 MonoBehaviour:
@@ -18038,8 +18038,9 @@ MonoBehaviour:
   RotationSmoothTime: 0.12
   SpeedChangeRate: 10
   Sensitivity: 1
-  LandingAudioClip: {fileID: 8300000, guid: 72f526a6a9890f643a88e85a61c86c8a, type: 3}
-  FootstepAudioClips: []
+  LandingAudioClip: {fileID: 8300000, guid: ff697d3070687ce4583faa0561a145a2, type: 3}
+  FootstepAudioClips:
+  - {fileID: 8300000, guid: 72f526a6a9890f643a88e85a61c86c8a, type: 3}
   FootstepAudioVolume: 0.5
   JumpHeight: 1.2
   Gravity: -15
@@ -18067,6 +18068,10 @@ MonoBehaviour:
   normalSensitivity: 0.2
   aimSensitivity: 0.1
   forwardCameraDisplacement: 1
+  _minimumFallVelocity: 5
+  _minimumFallDamage: 1
+  _fallDamageIncrement: 1
+  _knockbackDecayRate: 1
 --- !u!114 &6771631127717395411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18083,6 +18088,8 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
+  _regenRate: 5
+  _regenPauseLength: 5
 --- !u!1 &8824025184588894572
 GameObject:
   m_ObjectHideFlags: 0
