@@ -52,7 +52,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Hitbox hitbox = other.GetComponent<Hitbox>();
+        Hurtbox hitbox = other.GetComponent<Hurtbox>();
         if (hitbox != null)
         {
             if (hitbox.Multiplier > 1)
