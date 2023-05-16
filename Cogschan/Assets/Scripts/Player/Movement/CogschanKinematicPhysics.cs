@@ -10,15 +10,21 @@ public class CogschanKinematicPhysics : MonoBehaviour
     [SerializeField] private float _terminalVelocity;
     [SerializeField] private float _airSteering;
     [SerializeField] private float _mass;
-    
+
     /// <summary>
     /// The vector that represents Cogschan's attempted movement.
     /// </summary>
     [HideInInspector] public Vector3 DesiredVelocity;
-    
+
     private VelocityOverride _velocityOverride = null;
     private Queue<Vector3> _impulses = new Queue<Vector3>();
     private Vector3 _previousVelocity = Vector3.zero;
+
+    // The acceleration of the player in the air ignoring forces/impulses.
+    /* TODO: Provide a better way of finding the acceleration. It should probably vary based on player state/input.
+     * For example, if the player is pushed forward, maybe they should slow down slower if they are holding forward and faster if they are holding backwards.
+     */
+    private float Acceleration => _airSteering;
 
     private void LateUpdate()
     {
@@ -58,6 +64,7 @@ public class CogschanKinematicPhysics : MonoBehaviour
                     actualVelocity += _impulses.Dequeue() / _mass;
                 }
 
+                /* Going to comment this out for now
                 // Don't want to zero-out momentum if there's no directional input
                 if (DesiredVelocity != Vector3.zero)
                 {
@@ -66,7 +73,9 @@ public class CogschanKinematicPhysics : MonoBehaviour
                     DesiredVelocity.y = actualVelocity.y;
 
                     actualVelocity = Vector3.Lerp(actualVelocity, DesiredVelocity, Time.deltaTime * _airSteering);
-                }
+                } */
+
+                CalculateActualVelocity(ref actualVelocity);
 
                 _previousVelocity = actualVelocity;
             }
@@ -97,5 +106,32 @@ public class CogschanKinematicPhysics : MonoBehaviour
     public void AddImpulse(Vector3 impulse)
     {
         _impulses.Enqueue(impulse);
+    }
+
+    // Calculates the new velocity by returning the actual velocity to the desired velocity at a constant rate.
+    private void CalculateActualVelocity(ref Vector3 actualVelocity)
+    {
+        Vector2 actualVelocityHorizontal = HorizontalVector(actualVelocity);
+        Vector2 desiredVelocityHorizontal = HorizontalVector(DesiredVelocity);
+
+        Vector2 diff = desiredVelocityHorizontal - actualVelocityHorizontal;
+        float maxDelta = Acceleration * Time.deltaTime;
+        if (diff.magnitude > maxDelta)
+            diff = diff.normalized * maxDelta;
+        actualVelocityHorizontal += diff;
+
+        actualVelocity = HorizontalTo3Dim(actualVelocityHorizontal, actualVelocity.y);
+    }
+
+    // Converts a Vector3 to a Vector2 using the horizontal components (x and z).
+    private Vector2 HorizontalVector(Vector3 vec)
+    {
+        return new(vec.x, vec.z);
+    }
+
+    // Converts a horizontal Vector2 and a y component to a Vector3.
+    private Vector3 HorizontalTo3Dim(Vector2 vec, float y)
+    {
+        return new(vec.x, y, vec.y);
     }
 }
