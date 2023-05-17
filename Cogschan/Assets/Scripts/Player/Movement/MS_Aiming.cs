@@ -5,8 +5,8 @@ public class MS_Aiming : MonoBehaviour, IMovementState
     [SerializeField] private CogschanKinematicPhysics _movementHandler;
     [SerializeField] private PlayerCameraController _cameraController;
     [SerializeField] private GameObject _cogschanModel;
-    [SerializeField] private float AimSpeed = 2;
-    [SerializeField] private float TurnSpeed = 10;
+    [SerializeField] private float _aimSpeed = 2;
+    [SerializeField] private float _turnSpeed = 10;
 
     public CogschanSimpleEvent AimingIntoSprinting;
     public CogschanSimpleEvent AimingIntoWalking;
@@ -18,9 +18,9 @@ public class MS_Aiming : MonoBehaviour, IMovementState
         Vector3 movementDir = dir * movement;
 
         // When aiming, always look forward, not in the direction of movement
-        _cogschanModel.transform.rotation = Quaternion.Lerp(_cogschanModel.transform.rotation, dir, TurnSpeed * Time.deltaTime);
+        _cogschanModel.transform.rotation = Quaternion.Lerp(_cogschanModel.transform.rotation, dir, _turnSpeed * Time.deltaTime);
 
-        movementDir *= AimSpeed;
+        movementDir *= _aimSpeed;
 
         _movementHandler.DesiredVelocity = movementDir;
 
@@ -45,5 +45,10 @@ public class MS_Aiming : MonoBehaviour, IMovementState
     public void OnJump()
     {
         // Do nothing
+    }
+
+    public float GetBaseSpeed()
+    {
+        return _aimSpeed;
     }
 }

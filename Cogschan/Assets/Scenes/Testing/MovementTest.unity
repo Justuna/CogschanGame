@@ -169,9 +169,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cc: {fileID: 1918345262}
   _groundChecker: {fileID: 1448292879}
+  _playerMovementController: {fileID: 1491913467}
   _gravityAcceleration: 40
   _terminalVelocity: 50
-  _airSteering: 8
+  _airSteerFactor: 100
+  _airBrakeFactor: 2
   _mass: 10
   DesiredVelocity: {x: 0, y: 0, z: 0}
 --- !u!1 &246072114
@@ -292,8 +294,8 @@ MonoBehaviour:
   _movementHandler: {fileID: 164887538}
   _cameraController: {fileID: 1907301250}
   _cogschanModel: {fileID: 563201248}
-  SprintSpeed: 8
-  TurnSpeed: 10
+  _sprintSpeed: 8
+  _turnSpeed: 10
 --- !u!1 &526668585
 GameObject:
   m_ObjectHideFlags: 0
@@ -547,7 +549,7 @@ Transform:
   m_GameObject: {fileID: 673475720}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -32.6, z: 0}
-  m_LocalScale: {x: 15.29407, y: 15.29407, z: 15.29407}
+  m_LocalScale: {x: 95.997826, y: 95.997826, z: 95.997826}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1758284821}
@@ -587,7 +589,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 987d470d3f03e134a91fcfdfaa4c88da, type: 2}
+  - {fileID: 2100000, guid: de522cee69aa6974a8a1dc069703cd4c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -728,7 +730,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 987d470d3f03e134a91fcfdfaa4c88da, type: 2}
+  - {fileID: 2100000, guid: de522cee69aa6974a8a1dc069703cd4c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1157,8 +1159,8 @@ MonoBehaviour:
   _movementHandler: {fileID: 164887538}
   _cameraController: {fileID: 1907301250}
   _cogschanModel: {fileID: 563201248}
-  WalkSpeed: 4
-  TurnSpeed: 10
+  _walkSpeed: 4
+  _turnSpeed: 10
 --- !u!1 &1086814133
 GameObject:
   m_ObjectHideFlags: 0
@@ -1691,8 +1693,8 @@ MonoBehaviour:
   ms_Sprinting: {fileID: 330004070}
   ms_Aiming: {fileID: 1722154692}
   ms_Dashing: {fileID: 829737501}
-  _dashCooldown: 5
-  JumpImpulse: 150
+  _dashCooldown: 1
+  JumpImpulse: 200
 --- !u!1 &1546919396
 GameObject:
   m_ObjectHideFlags: 0
@@ -2323,8 +2325,8 @@ MonoBehaviour:
   _movementHandler: {fileID: 164887538}
   _cameraController: {fileID: 1907301250}
   _cogschanModel: {fileID: 563201248}
-  AimSpeed: 2
-  TurnSpeed: 10
+  _aimSpeed: 2
+  _turnSpeed: 10
 --- !u!1 &1758284820
 GameObject:
   m_ObjectHideFlags: 0
@@ -2664,7 +2666,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 987d470d3f03e134a91fcfdfaa4c88da, type: 2}
+  - {fileID: 2100000, guid: de522cee69aa6974a8a1dc069703cd4c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

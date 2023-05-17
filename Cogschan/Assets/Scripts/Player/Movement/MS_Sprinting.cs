@@ -7,8 +7,8 @@ public class MS_Sprinting : MonoBehaviour, IMovementState
     [SerializeField] private CogschanKinematicPhysics _movementHandler;
     [SerializeField] private PlayerCameraController _cameraController;
     [SerializeField] private GameObject _cogschanModel;
-    [SerializeField] private float SprintSpeed = 8;
-    [SerializeField] private float TurnSpeed = 10;
+    [SerializeField] private float _sprintSpeed = 8;
+    [SerializeField] private float _turnSpeed = 10;
 
     public CogschanSimpleEvent SprintingIntoAiming;
     public CogschanSimpleEvent SprintingIntoWalking;
@@ -23,10 +23,10 @@ public class MS_Sprinting : MonoBehaviour, IMovementState
         if (movementDir != Vector3.zero)
         {
             Quaternion movementDirQ = Quaternion.LookRotation(movementDir);
-            _cogschanModel.transform.rotation = Quaternion.Lerp(_cogschanModel.transform.rotation, movementDirQ, TurnSpeed * Time.deltaTime);
+            _cogschanModel.transform.rotation = Quaternion.Lerp(_cogschanModel.transform.rotation, movementDirQ, _turnSpeed * Time.deltaTime);
         }
 
-        movementDir *= SprintSpeed;
+        movementDir *= _sprintSpeed;
 
         _movementHandler.DesiredVelocity = movementDir;
 
@@ -52,5 +52,10 @@ public class MS_Sprinting : MonoBehaviour, IMovementState
     {
         if (_groundChecker.IsGrounded) _movementHandler.AddImpulse(Vector3.up * _playerController.JumpImpulse);
         else Debug.Log("Not grounded!");
+    }
+
+    public float GetBaseSpeed()
+    {
+        return _sprintSpeed;
     }
 }

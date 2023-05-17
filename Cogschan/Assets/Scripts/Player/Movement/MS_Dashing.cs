@@ -45,4 +45,9 @@ public class MS_Dashing : MonoBehaviour, IMovementState
     {
         // Do nothing
     }
+
+    public float GetBaseSpeed()
+    {
+        return _dashSpeed;
+    }
 }
