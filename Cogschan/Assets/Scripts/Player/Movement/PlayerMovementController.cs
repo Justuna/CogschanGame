@@ -43,6 +43,10 @@ public class PlayerMovementController : MonoBehaviour
     /// Whether or not Cogschan can dash.
     /// </summary>
     public bool CanDash { get { return _dashTimer <= 0; } }
+    /// <summary>
+    /// What the base speed of the current state is.
+    /// </summary>
+    public float CurrentBaseSpeed { get { return _currentState.GetBaseSpeed(); } }
 
     private void Start()
     {
@@ -69,6 +73,11 @@ public class PlayerMovementController : MonoBehaviour
     {
         _currentState.Behavior();
         if (_dashTimer > 0) _dashTimer -= Time.deltaTime;
+    }
+
+    public void ResetCooldown()
+    {
+        _dashTimer = 0;
     }
 
     #region Glue Methods
@@ -111,7 +120,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void DashEnded()
     {
-        _currentState = ms_Walking;
+        _currentState = ms_Sprinting;
         _dashTimer = _dashCooldown;
     }
 
