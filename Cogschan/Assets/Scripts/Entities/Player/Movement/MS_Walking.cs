@@ -47,7 +47,7 @@ public class MS_Walking : MonoBehaviour, IMovementState
 
     public void OnJump()
     {
-        if (_groundChecker.IsGrounded) _movementHandler.AddImpulse(Vector3.up * _playerController.JumpImpulse);
+        if (_groundChecker.IsGrounded) _movementHandler.AddImpulse(Vector3.up * _playerController.JumpImpulse, false, 0);
         else Debug.Log("Not grounded!");
     }
 

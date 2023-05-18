@@ -83,14 +83,35 @@ public class CogschanKinematicPhysics : MonoBehaviour
     }
 
     /// <summary>
+    /// Removes a velocity override from the character controller, if present.
+    /// </summary>
+    /// <param name="maintainMomentum">
+    /// How much of the velocity to maintain as momentum.
+    /// </param>
+    public void RemoveOverrideVelocity(float maintainMomentum)
+    {
+        _previousVelocity = _velocityOverride.GetVelocity() * maintainMomentum;
+        _velocityOverride = null;
+    }
+
+    /// <summary>
     /// Adds an impulse force to be simulated by the character controller.
     /// </summary>
     /// <param name="impulse">
     /// The force of the impulse.
     /// </param>
-    public void AddImpulse(Vector3 impulse)
+    /// <param name="cancelOverride">Whether or not the new impulse should cancel any velocity overrides.</param>
+    /// <param name="maintainMomentum">How much of the previous velocity should be maintained by momentum. Only meaningful if <c>cancelOverride</c> is true.</param>
+    public void AddImpulse(Vector3 impulse, bool cancelOverride, float maintainMomentum)
     {
-        _impulses.Enqueue(impulse);
+        if (cancelOverride || _velocityOverride == null)
+        {
+            _impulses.Enqueue(impulse);
+            if (_velocityOverride != null)
+            {
+                RemoveOverrideVelocity(maintainMomentum);
+            }
+        }
     }
 
     // Converts a Vector3 to a Vector2 using the horizontal components (x and z).
