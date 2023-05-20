@@ -20,6 +20,7 @@ public class MS_Dashing : MonoBehaviour, IMovementState
         _timer = _duration;
         Quaternion dir = Quaternion.Euler(_cameraController.CameraLateralDirection);
         Vector3 movement = new Vector3(CogschanInputSingleton.Instance.MovementDirection.x, 0, CogschanInputSingleton.Instance.MovementDirection.y);
+        if (movement == Vector3.zero) movement = Vector3.forward;
         Vector3 movementDir = dir * movement;
 
         movementDir *= _dashSpeed;

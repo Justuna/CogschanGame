@@ -50,8 +50,11 @@ public class MS_Sprinting : MonoBehaviour, IMovementState
 
     public void OnJump()
     {
-        if (_groundChecker.IsGrounded) _movementHandler.AddImpulse(Vector3.up * _playerController.JumpImpulse, false, 0);
-        else Debug.Log("Not grounded!");
+        if (_groundChecker.IsGrounded)
+        {
+            _movementHandler.AddImpulse(Vector3.up * _playerController.JumpImpulse, false, 0);
+            _groundChecker.BeginGroundedTimer();
+        }
     }
 
     public float GetBaseSpeed()
