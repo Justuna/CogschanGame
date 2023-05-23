@@ -139,6 +139,8 @@ public class CogschanKinematicPhysics : MonoBehaviour
         Vector2 desiredMovementHorizontal = HorizontalVector(DesiredVelocity.normalized);
 
         float maxDelta = _airSteerFactor * Time.deltaTime;
+        
+        // Prevents steering from overriding gravity on slopes by cancelling out component of velocity going into slope
         if (_groundChecker.SurfaceType == GroundChecker.SurfaceTypes.STEEP_SLOPE)
         {
             float slopePenalty = Mathf.Clamp01(Mathf.Cos(Mathf.Deg2Rad * Vector3.Angle(_groundChecker.SurfaceNormal.Value, DesiredVelocity)) + 1);
@@ -164,7 +166,7 @@ public class CogschanKinematicPhysics : MonoBehaviour
 
         // Simulates normal force of the slope acting on the character, pushing them out of the surface.
         // Makes gravity work correctly on steep slopes instead of catching on the surface.
-        // Also prevents player from getting lodged on slope if they are thrown at it at high speed/try to air-steer into it.
+        // Also prevents player from getting lodged on slope if they are thrown at it at high speed.
         // Kind of wonky math but it works well enough in practice.
         if (_groundChecker.SurfaceType == GroundChecker.SurfaceTypes.STEEP_SLOPE)
         {
