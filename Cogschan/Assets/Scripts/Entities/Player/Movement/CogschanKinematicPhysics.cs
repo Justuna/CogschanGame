@@ -8,6 +8,7 @@ public class CogschanKinematicPhysics : MonoBehaviour
     [SerializeField] private GroundChecker _groundChecker;
     [SerializeField] private PlayerMovementController _playerMovementController;
     [SerializeField] private float _gravityAcceleration;
+    [SerializeField] private float _normalForceAcceleration;
     [SerializeField] private float _terminalVelocity;
     [SerializeField] private float _airSteerFactor;
     [SerializeField] private float _mass;
@@ -44,10 +45,14 @@ public class CogschanKinematicPhysics : MonoBehaviour
             if (_groundChecker.IsGrounded && _impulses.Count == 0)
             {
                 actualVelocity = DesiredVelocity;
-                _previousVelocity = DesiredVelocity;
+                if (_groundChecker.SurfaceType == GroundChecker.SurfaceTypes.WALKABLE_SLOPE)
+                {
+                    actualVelocity = Quaternion.AngleAxis(_groundChecker.SurfaceAngle.Value, _groundChecker.ZeroDirection.Value) * actualVelocity;
+                }
+                _previousVelocity = actualVelocity;
             }
             // Either you're being knocked into the air, or you already were in the air
-            // Use previous velocity to calculate momentum
+            // Use previous velocity to calculate momentum, and add new impulses
             // Accelerate in the direction of desired movement at a constant rate
             else
             {
@@ -57,10 +62,8 @@ public class CogschanKinematicPhysics : MonoBehaviour
                 }
 
                 actualVelocity = _previousVelocity;
-                actualVelocity.y -= _gravityAcceleration * Time.deltaTime;
-                actualVelocity.y = Mathf.Max(-_terminalVelocity, actualVelocity.y);
-
                 actualVelocity = ApplyAirSteering(actualVelocity);
+                actualVelocity = ApplyForces(actualVelocity);
 
                 _previousVelocity = actualVelocity;
             }
@@ -136,6 +139,12 @@ public class CogschanKinematicPhysics : MonoBehaviour
         Vector2 desiredMovementHorizontal = HorizontalVector(DesiredVelocity.normalized);
 
         float maxDelta = _airSteerFactor * Time.deltaTime;
+        if (_groundChecker.SurfaceType == GroundChecker.SurfaceTypes.STEEP_SLOPE)
+        {
+            float slopePenalty = Mathf.Clamp01(Mathf.Cos(Mathf.Deg2Rad * Vector3.Angle(_groundChecker.SurfaceNormal.Value, DesiredVelocity)) + 1);
+            maxDelta *= slopePenalty;
+        }
+
         actualVelocityHorizontal += desiredMovementHorizontal * maxDelta;
         if (actualVelocityHorizontal.magnitude > _playerMovementController.CurrentBaseSpeed)
         {
@@ -143,6 +152,28 @@ public class CogschanKinematicPhysics : MonoBehaviour
         }
 
         actualVelocity = HorizontalTo3Dim(actualVelocityHorizontal, actualVelocity.y);
+        return actualVelocity;
+    }
+
+    // Accelerates velocity downward based on strength of gravity.
+    // If on a steep slope, also applies normal force.
+    private Vector3 ApplyForces(Vector3 actualVelocity)
+    {
+        Vector3 gravity = Vector3.down * _gravityAcceleration * Time.deltaTime;
+        actualVelocity += gravity;
+
+        // Simulates normal force of the slope acting on the character, pushing them out of the surface.
+        // Makes gravity work correctly on steep slopes instead of catching on the surface.
+        // Also prevents player from getting lodged on slope if they are thrown at it at high speed/try to air-steer into it.
+        // Kind of wonky math but it works well enough in practice.
+        if (_groundChecker.SurfaceType == GroundChecker.SurfaceTypes.STEEP_SLOPE)
+        {
+            Vector3 normalForce = _groundChecker.SurfaceNormal.Value * _normalForceAcceleration * actualVelocity.magnitude * 
+                Mathf.Clamp01(-Mathf.Cos(Mathf.Deg2Rad * Vector3.Angle(_groundChecker.SurfaceNormal.Value, actualVelocity))) * Time.deltaTime;
+            actualVelocity += normalForce;
+        }
+
+        actualVelocity.y = Mathf.Max(-_terminalVelocity, actualVelocity.y);
         return actualVelocity;
     }
 }

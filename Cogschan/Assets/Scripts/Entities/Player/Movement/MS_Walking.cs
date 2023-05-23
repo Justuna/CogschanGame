@@ -50,7 +50,6 @@ public class MS_Walking : MonoBehaviour, IMovementState
         if (_groundChecker.IsGrounded)
         {
             _movementHandler.AddImpulse(Vector3.up * _playerController.JumpImpulse, false, 0);
-            _groundChecker.BeginGroundedTimer();
         }
     }
 

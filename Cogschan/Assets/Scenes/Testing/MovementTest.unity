@@ -171,6 +171,7 @@ MonoBehaviour:
   _groundChecker: {fileID: 1448292879}
   _playerMovementController: {fileID: 1491913467}
   _gravityAcceleration: 40
+  _normalForceAcceleration: 60
   _terminalVelocity: 50
   _airSteerFactor: 100
   _mass: 10
@@ -5496,7 +5497,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-106538
+  m_Name: pb_Mesh28448
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6049,7 +6050,7 @@ Transform:
   m_GameObject: {fileID: 721517718}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -8.68, y: 0, z: 17.64}
-  m_LocalScale: {x: 14.276038, y: 10.208, z: 10.23}
+  m_LocalScale: {x: 14.276038, y: 9.0013075, z: 10.23}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1758284821}
@@ -7729,18 +7730,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2b627ab136567b4680a6651b3439696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CheckMethod: 1
   _ground:
     serializedVersion: 2
     m_Bits: 8
-  _yOffsetBox: 0.1
-  _height: 0.1
-  _width: 0.7
-  _yOffsetSphere: 0.46
-  _radius: 0.48
-  _cc: {fileID: 1918345262}
-  _useTimer: 0
-  _minTimeOffGround: 0.05
+  _steepAngle: 45
+  _wallAngle: 90
+  _yOffset: 0.5
+  _radius: 0.5
+  _castDistance: 0.1
+  _notGroundColor: {r: 1, g: 0, b: 0, a: 0.7529412}
+  _steepSlopeColor: {r: 1, g: 0.4358647, b: 0, a: 0.7529412}
+  _walkableSlopeColor: {r: 1, g: 0.8518007, b: 0, a: 0.7529412}
+  _flatGroundColor: {r: 0.46407866, g: 1, b: 0, a: 0.7529412}
 --- !u!1 &1490070355
 GameObject:
   m_ObjectHideFlags: 0
@@ -9009,7 +9010,7 @@ Transform:
   m_GameObject: {fileID: 1899150146}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.16, y: 0, z: 8.67}
-  m_LocalScale: {x: 14.276038, y: 10.208, z: 0.29283375}
+  m_LocalScale: {x: 14.276038, y: 9.127795, z: 0.29283375}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1758284821}
@@ -9168,7 +9169,7 @@ CharacterController:
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
-  m_SkinWidth: 0.0001
+  m_SkinWidth: 0.05
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!4 &1918345263
