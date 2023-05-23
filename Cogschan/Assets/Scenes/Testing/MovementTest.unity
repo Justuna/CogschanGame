@@ -6166,7 +6166,9 @@ MonoBehaviour:
   _playerController: {fileID: 1491913467}
   _movementHandler: {fileID: 164887538}
   _cameraController: {fileID: 1907301250}
+  _cogschanModel: {fileID: 563201248}
   _dashSpeed: 30
+  _turnSpeed: 20
   _duration: 0.3
   _momentumFactor: 0.5
 --- !u!1 &843878157

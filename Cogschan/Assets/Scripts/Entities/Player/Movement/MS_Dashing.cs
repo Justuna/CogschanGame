@@ -7,11 +7,14 @@ public class MS_Dashing : MonoBehaviour, IMovementState
     [SerializeField] private PlayerMovementController _playerController;
     [SerializeField] private CogschanKinematicPhysics _movementHandler;
     [SerializeField] private PlayerCameraController _cameraController;
-    [SerializeField] private float _dashSpeed;
+    [SerializeField] private GameObject _cogschanModel;
+    [SerializeField] private float _dashSpeed = 30;
+    [SerializeField] private float _turnSpeed = 10;
     [SerializeField] private float _duration;
     [SerializeField] private float _momentumFactor;
 
     private float _timer;
+    private Quaternion _movementDirQ;
 
     public CogschanSimpleEvent DashEnded; 
 
@@ -26,11 +29,16 @@ public class MS_Dashing : MonoBehaviour, IMovementState
         movementDir *= _dashSpeed;
         ConstantVelocityOverride dash = new ConstantVelocityOverride(movementDir, () => !_playerController.IsDashing, _momentumFactor);
         _movementHandler.OverrideVelocity(dash);
+
+        _movementDirQ = Quaternion.LookRotation(movementDir);
     }
 
     public void Behavior()
     {
         _timer -= Time.deltaTime;
+
+        _cogschanModel.transform.rotation = Quaternion.Lerp(_cogschanModel.transform.rotation, _movementDirQ, _turnSpeed * Time.deltaTime);
+
         if (_timer <= 0 )
         {
             DashEnded.Invoke();
