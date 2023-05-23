@@ -8,18 +8,24 @@ public class BouncePad : MonoBehaviour
     [SerializeField] private Collider _collider;
     [SerializeField] private Vector3 _impulse;
     [SerializeField] private bool _isRelative;
+    [SerializeField] private float _proneTime = 0f;
 
     private void OnTriggerEnter(Collider other)
     {
-        IHurtbox hurtbox = other.GetComponentInChildren<IHurtbox>();
-        if (hurtbox != null)
+        CogschanKinematicPhysics movementHandler = other.GetComponentInChildren<CogschanKinematicPhysics>();
+        PlayerMovementController movementController = other.GetComponentInChildren<PlayerMovementController>();
+        if (movementHandler != null)
         {
             Vector3 actualImpulse = _impulse;
             if (_isRelative)
             {
                 actualImpulse = transform.rotation * _impulse;
             }
-            hurtbox.AddImpulse(actualImpulse, true, 0);
+            movementHandler.AddImpulse(actualImpulse, true, 0);
+        }
+        if (movementController != null && _proneTime > 0)
+        {
+            movementController.KnockProne(_proneTime);
         }
     }
 }

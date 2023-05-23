@@ -16,7 +16,8 @@ public class MS_Dashing : MonoBehaviour, IMovementState
     private float _timer;
     private Quaternion _movementDirQ;
 
-    public CogschanSimpleEvent DashEnded; 
+    public CogschanSimpleEvent DashEnded;
+    public CogschanFloatEvent DashingIntoProne;
 
     public void Initialize()
     {
@@ -58,5 +59,10 @@ public class MS_Dashing : MonoBehaviour, IMovementState
     public float GetBaseSpeed()
     {
         return _dashSpeed;
+    }
+
+    public void OnProne(float duration)
+    {
+        DashingIntoProne.Invoke(duration);
     }
 }

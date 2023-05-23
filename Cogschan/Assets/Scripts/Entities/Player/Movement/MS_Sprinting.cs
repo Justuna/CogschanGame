@@ -13,6 +13,7 @@ public class MS_Sprinting : MonoBehaviour, IMovementState
     public CogschanSimpleEvent SprintingIntoAiming;
     public CogschanSimpleEvent SprintingIntoWalking;
     public CogschanSimpleEvent SprintingIntoDashing;
+    public CogschanFloatEvent SprintingIntoProne;
 
     public void Behavior()
     {
@@ -59,5 +60,10 @@ public class MS_Sprinting : MonoBehaviour, IMovementState
     public float GetBaseSpeed()
     {
         return _sprintSpeed;
+    }
+
+    public void OnProne(float duration)
+    {
+        SprintingIntoProne.Invoke(duration);
     }
 }

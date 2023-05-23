@@ -104,15 +104,15 @@ public class CogschanKinematicPhysics : MonoBehaviour
     /// The force of the impulse.
     /// </param>
     /// <param name="cancelOverride">Whether or not the new impulse should cancel any velocity overrides.</param>
-    /// <param name="maintainMomentum">How much of the previous velocity should be maintained by momentum. Only meaningful if <c>cancelOverride</c> is true.</param>
-    public void AddImpulse(Vector3 impulse, bool cancelOverride, float maintainMomentum)
+    /// <param name="maintainCancelledMomentum">How much of the previous velocity should be maintained by momentum. Only meaningful if <c>cancelOverride</c> is true.</param>
+    public void AddImpulse(Vector3 impulse, bool cancelOverride, float maintainCancelledMomentum)
     {
         if (cancelOverride || _velocityOverride == null)
         {
             _impulses.Enqueue(impulse);
             if (_velocityOverride != null)
             {
-                RemoveOverrideVelocity(maintainMomentum);
+                RemoveOverrideVelocity(maintainCancelledMomentum);
             }
         }
     }

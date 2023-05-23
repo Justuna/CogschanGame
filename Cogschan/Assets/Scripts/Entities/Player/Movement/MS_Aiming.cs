@@ -10,6 +10,7 @@ public class MS_Aiming : MonoBehaviour, IMovementState
 
     public CogschanSimpleEvent AimingIntoSprinting;
     public CogschanSimpleEvent AimingIntoWalking;
+    public CogschanFloatEvent AimingIntoProne;
 
     public void Behavior()
     {
@@ -50,5 +51,10 @@ public class MS_Aiming : MonoBehaviour, IMovementState
     public float GetBaseSpeed()
     {
         return _aimSpeed;
+    }
+
+    public void OnProne(float duration)
+    {
+        AimingIntoProne.Invoke(duration);
     }
 }

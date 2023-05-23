@@ -18,6 +18,7 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private MS_Sprinting ms_Sprinting;
     [SerializeField] private MS_Aiming ms_Aiming;
     [SerializeField] private MS_Dashing ms_Dashing;
+    [SerializeField] private MS_Prone ms_Prone;
     [SerializeField] private float _dashCooldown;
     public float JumpImpulse;
 
@@ -27,6 +28,10 @@ public class PlayerMovementController : MonoBehaviour
     private IMovementState _currentState;
     private float _dashTimer;
 
+    /// <summary>
+    /// Whether or not Cogschan is mid-dash.
+    /// </summary>
+    public bool IsWalking { get { return _currentState.Equals(ms_Walking); } }
     /// <summary>
     /// Whether or not Cogschan is aiming down sights.
     /// </summary>
@@ -39,6 +44,15 @@ public class PlayerMovementController : MonoBehaviour
     /// Whether or not Cogschan is mid-dash.
     /// </summary>
     public bool IsDashing { get { return _currentState.Equals(ms_Dashing); } }
+    /// <summary>
+    /// Whether or not Cogschan is mid-dash.
+    /// </summary>
+    public bool IsProne { get { return _currentState.Equals(ms_Prone); } }
+    /// <summary>
+    /// Whether or not the current movement state should restrict actions from being taken or cancel actions in progress.
+    /// Is true if <c>IsDashing</c> or <c>IsProne</c> are true.
+    /// </summary>
+    public bool CannotAct { get { return IsProne || IsDashing; } }
     /// <summary>
     /// Whether or not Cogschan can dash.
     /// </summary>
@@ -61,12 +75,17 @@ public class PlayerMovementController : MonoBehaviour
         ms_Walking.WalkingIntoAiming += WalkingIntoAiming;
         ms_Walking.WalkingIntoSprinting += WalkingIntoSprinting;
         ms_Walking.WalkingIntoDashing += XIntoDashing;
+        ms_Walking.WalkingIntoProne += XIntoProne;
         ms_Sprinting.SprintingIntoAiming += SprintingIntoAiming;
         ms_Sprinting.SprintingIntoWalking += SprintingIntoWalking;
         ms_Sprinting.SprintingIntoDashing += XIntoDashing;
+        ms_Sprinting.SprintingIntoProne += XIntoProne;
         ms_Aiming.AimingIntoSprinting += AimingIntoSprinting;
         ms_Aiming.AimingIntoWalking += AimingIntoWalking;
+        ms_Aiming.AimingIntoProne += XIntoProne;
         ms_Dashing.DashEnded += DashEnded;
+        ms_Dashing.DashingIntoProne += DashIntoProne;
+        ms_Prone.ProneEnded += ProneEnded;
     }
 
     private void Update()
@@ -75,9 +94,14 @@ public class PlayerMovementController : MonoBehaviour
         if (_dashTimer > 0) _dashTimer -= Time.deltaTime;
     }
 
-    public void ResetCooldown()
+    public void ResetDashCooldown()
     {
         _dashTimer = 0;
+    }
+
+    public void KnockProne(float duration)
+    {
+        _currentState.OnProne(duration);
     }
 
     #region Glue Methods
@@ -118,10 +142,28 @@ public class PlayerMovementController : MonoBehaviour
         _currentState = ms_Dashing;
     }
 
+    private void XIntoProne(float duration)
+    {
+        ms_Prone.Initialize(duration);
+        _currentState = ms_Prone;
+    }
+
+    private void DashIntoProne(float duration)
+    {
+        ms_Prone.Initialize(duration);
+        _currentState = ms_Prone;
+        _dashTimer = _dashCooldown;
+    }
+
     private void DashEnded()
     {
-        _currentState = ms_Sprinting;
+        _currentState = ms_Walking;
         _dashTimer = _dashCooldown;
+    }
+
+    private void ProneEnded()
+    {
+        _currentState = ms_Walking;
     }
 
     #endregion

@@ -25,7 +25,10 @@ public class CogschanInputSingleton : MonoBehaviour
     }
     #endregion
 
+    [SerializeField] private float _inputScrollCooldown;
+
     private CogschanMapping _inputMapping;
+    private float _inputScrollTimer;
 
     /// <summary>
     /// The change in horizontal mouse position since the last frame.
@@ -60,6 +63,18 @@ public class CogschanInputSingleton : MonoBehaviour
     /// Event that fires when the dash button is pressed.
     /// </summary>
     public CogschanSimpleEvent OnDashButtonPressed;
+    /// <summary>
+    /// Event that fires when the reload button is pressed.
+    /// </summary>
+    public CogschanSimpleEvent OnReloadButtonPressed;
+    /// <summary>
+    /// Event that fires when forward scrolling passes a certain threshold (mouse and keyboard) or next weapon button is pressed (controllers).
+    /// </summary>
+    public CogschanSimpleEvent OnSwitchNextWeapon;
+    /// <summary>
+    /// Event that fires when backward scrolling passes a certain threshold (mouse and keyboard). Not available for controllers (currently).
+    /// </summary>
+    public CogschanSimpleEvent OnSwitchPrevWeapon;
 
     private void Start()
     {
@@ -76,8 +91,12 @@ public class CogschanInputSingleton : MonoBehaviour
         
         _inputMapping.Weapon.Fire.performed += _ => { IsHoldingFire = true; };
         _inputMapping.Weapon.Fire.canceled += _ => { IsHoldingFire = false; };
+        _inputMapping.Weapon.Reload.performed += _ => { OnReloadButtonPressed.Invoke(); };
+        _inputMapping.Weapon.NextWeapon.performed += _ => { OnSwitchNextWeapon.Invoke(); };
 
         _inputMapping.Menus.Pause.performed += _ => { OnPauseButtonPressed.Invoke(); };
+
+        _inputScrollTimer = 0;
     }
 
     private void Update()
@@ -85,6 +104,24 @@ public class CogschanInputSingleton : MonoBehaviour
         Vector2 mouseDelta = _inputMapping.Camera.LookAround.ReadValue<Vector2>();
         MouseDeltaHorizontal = mouseDelta.x;
         MouseDeltaVertical = mouseDelta.y;
+
+        Vector2 scrollDelta = _inputMapping.Weapon.SwitchWeapons.ReadValue<Vector2>();
+        if (_inputScrollTimer <= 0 && scrollDelta.y != 0)
+        {
+            _inputScrollTimer = _inputScrollCooldown;
+            if (scrollDelta.y > 0)
+            {
+                OnSwitchNextWeapon.Invoke();
+                Debug.Log("Next weapon!");
+                
+            }
+            else
+            {
+                OnSwitchPrevWeapon.Invoke();
+                _inputScrollTimer = _inputScrollCooldown;
+            }
+        }
+        else _inputScrollTimer -= Time.deltaTime;
 
         MovementDirection = _inputMapping.Movement.Direction.ReadValue<Vector2>();
     }
