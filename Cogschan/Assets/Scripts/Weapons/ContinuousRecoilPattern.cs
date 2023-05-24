@@ -62,8 +62,22 @@ public class ContinuousRecoilPattern : ScriptableObject
     /// Although you can set the strength of the recoil in the animation curves, this lets you do quick tweaks.
     /// </remarks>
     public float HorizontalPower;
+    /// <summary>
+    /// How much the vertical noise should be multiplied by.
+    /// </summary>
     public float VerticalNoiseAmplitude;
+    /// <summary>
+    /// How much the horizontal noise should be multiplied by.
+    /// </summary>
     public float HorizontalNoiseAmplitude;
+    /// <summary>
+    /// How much the vertical noise should be "stretched".
+    /// </summary>
+    /// <remarks> This variable is used in the generation of Perlin noise: https://en.wikipedia.org/wiki/Perlin_noise.</remarks>
     public float VerticalNoiseScale;
+    /// <summary>
+    /// How much the horizontal noise should be "stretched".
+    /// </summary>
+    /// <remarks> This variable is used in the generation of Perlin noise: https://en.wikipedia.org/wiki/Perlin_noise</remarks>
     public float HorizontalNoiseScale;
 }
