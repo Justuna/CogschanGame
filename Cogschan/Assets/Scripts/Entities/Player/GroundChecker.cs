@@ -72,7 +72,7 @@ public class GroundChecker : MonoBehaviour
     private void Start()
     {
         SurfaceType = SurfaceTypes.NOT_GROUND;
-        SurfaceAngle = null; 
+        SurfaceAngle = null;
         ZeroDirection = null;
         GradientDirection = null;
         SurfaceNormal = null;
@@ -93,7 +93,11 @@ public class GroundChecker : MonoBehaviour
             }
             else
             {
+                // An angle perpendicular to both the normal vector and the y axis.
+                // Since it's perpendicular to the y-axis, it has a y component of zero.
                 Vector3 temp = Vector3.Cross(sphereHit.normal, Vector3.down).normalized;
+                // An angle that is perpendicular to both the above vector and the normal vector.
+                // Always the direction of greatest descent.
                 Vector3 surfaceGradient = Vector3.Cross(temp, sphereHit.normal).normalized;
                 Vector3 surfaceGradientFlat = new Vector3(surfaceGradient.x, 0, surfaceGradient.z);
                 SurfaceAngle = Vector3.Angle(surfaceGradient, surfaceGradientFlat);
@@ -153,6 +157,6 @@ public class GroundChecker : MonoBehaviour
             Gizmos.color = Color.blue;
             Gizmos.DrawLine(transform.position, transform.position + GradientDirection.Value);
         }
-        
+
     }
 }
