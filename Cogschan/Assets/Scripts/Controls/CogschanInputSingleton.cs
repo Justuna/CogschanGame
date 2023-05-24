@@ -88,7 +88,7 @@ public class CogschanInputSingleton : MonoBehaviour
 
         _inputMapping.Camera.Aim.performed += _ => { IsHoldingAim = true; };
         _inputMapping.Camera.Aim.canceled += _ => { IsHoldingAim = false; };
-        
+
         _inputMapping.Weapon.Fire.performed += _ => { IsHoldingFire = true; };
         _inputMapping.Weapon.Fire.canceled += _ => { IsHoldingFire = false; };
         _inputMapping.Weapon.Reload.performed += _ => { OnReloadButtonPressed.Invoke(); };
@@ -113,12 +113,12 @@ public class CogschanInputSingleton : MonoBehaviour
             {
                 OnSwitchNextWeapon.Invoke();
                 Debug.Log("Next weapon!");
-                
+
             }
             else
             {
                 OnSwitchPrevWeapon.Invoke();
-                _inputScrollTimer = _inputScrollCooldown;
+                Debug.Log("Previous weapon!");
             }
         }
         else _inputScrollTimer -= Time.deltaTime;
