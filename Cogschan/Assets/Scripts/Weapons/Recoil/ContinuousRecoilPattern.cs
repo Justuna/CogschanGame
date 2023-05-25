@@ -4,7 +4,7 @@
 /// A class for holding data about a weapon's recoil. Meant for fast-firing weapons whose recoil follows a pattern over many shots.
 /// </summary>
 [CreateAssetMenu(fileName = "Continuous RecoilPattern", menuName = "Cogschan/Weapon/Continuous Recoil Pattern")]
-public class ContinuousRecoilPattern : ScriptableObject
+public class ContinuousRecoilPattern : RecoilPattern
 {
     /// <summary>
     /// The change in the vertical recoil as it ramps up (from 0 to 1).

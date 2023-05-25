@@ -2,11 +2,7 @@
 
 public class MS_Walking : MonoBehaviour, IMovementState
 {
-    [SerializeField] private GroundChecker _groundChecker;
-    [SerializeField] private CogschanKinematicPhysics _movementHandler;
-    [SerializeField] private PlayerMovementController _movementController;
-    [SerializeField] private PlayerActionController _actionController;
-    [SerializeField] private PlayerCameraController _cameraController;
+    [SerializeField] private PlayerServiceLocator _services;
     [SerializeField] private GameObject _cogschanModel;
     [SerializeField] private float _walkSpeed = 4;
     [SerializeField] private float _turnSpeed = 10;
@@ -18,29 +14,29 @@ public class MS_Walking : MonoBehaviour, IMovementState
 
     public void Behavior()
     {
-        Quaternion dir = Quaternion.Euler(_cameraController.CameraLateralDirection);
+        Quaternion dir = Quaternion.Euler(_services.CameraController.CameraLateralDirection);
         Vector3 movement = new Vector3(CogschanInputSingleton.Instance.MovementDirection.x, 0, CogschanInputSingleton.Instance.MovementDirection.y);
         Vector3 movementDir = dir * movement;
 
-        if (movementDir != Vector3.zero && !_actionController.IsFiring)
+        if (movementDir != Vector3.zero && !_services.ActionController.IsFiring)
         {
             Quaternion movementDirQ = Quaternion.LookRotation(movementDir);
             _cogschanModel.transform.rotation = Quaternion.Lerp(_cogschanModel.transform.rotation, movementDirQ, _turnSpeed * Time.deltaTime);
         }
-        else if (_actionController.IsFiring)
+        else if (_services.ActionController.IsFiring)
         {
             _cogschanModel.transform.rotation = Quaternion.Lerp(_cogschanModel.transform.rotation, dir, _turnSpeed * Time.deltaTime);
         }
 
         movementDir *= _walkSpeed;
 
-        _movementHandler.DesiredVelocity = movementDir;
+        _services.KinematicPhysics.DesiredVelocity = movementDir;
 
         if (CogschanInputSingleton.Instance.IsHoldingAim)
         {
             WalkingIntoAiming.Invoke();
         }
-        else if (CogschanInputSingleton.Instance.IsHoldingSprint && !_actionController.IsFiring)
+        else if (CogschanInputSingleton.Instance.IsHoldingSprint && !_services.ActionController.IsFiring)
         {
             WalkingIntoSprinting.Invoke();
         }
@@ -48,14 +44,14 @@ public class MS_Walking : MonoBehaviour, IMovementState
 
     public void OnDash()
     {
-        if (_movementController.CanDash) WalkingIntoDashing.Invoke();
+        if (_services.MovementController.CanDash) WalkingIntoDashing.Invoke();
     }
 
     public void OnJump()
     {
-        if (_groundChecker.IsGrounded)
+        if (_services.GroundChecker.IsGrounded)
         {
-            _movementHandler.AddImpulse(Vector3.up * _movementController.JumpImpulse, false, 0);
+            _services.KinematicPhysics.AddImpulse(Vector3.up * _services.MovementController.JumpImpulse, false, 0);
         }
     }
 

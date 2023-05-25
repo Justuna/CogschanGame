@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class AS_Idle : MonoBehaviour, IActionState
 {
-    [SerializeField] private PlayerMovementController _movementController;
+    [SerializeField] private PlayerServiceLocator _services;
 
     public CogschanSimpleEvent IdleIntoFiring;
     public CogschanSimpleEvent IdleIntoNextWeapon;
@@ -13,11 +13,11 @@ public class AS_Idle : MonoBehaviour, IActionState
 
     public void Behavior()
     {
-        if (_movementController.CannotAct)
+        if (_services.MovementController.CannotAct)
         {
-            OnLock(() => !_movementController.CannotAct);
+            OnLock(() => !_services.MovementController.CannotAct);
         }
-        else if (CogschanInputSingleton.Instance.IsHoldingFire && !_movementController.IsSprinting)
+        else if (CogschanInputSingleton.Instance.IsHoldingFire && !_services.MovementController.IsSprinting)
         {
             IdleIntoFiring.Invoke();
         }

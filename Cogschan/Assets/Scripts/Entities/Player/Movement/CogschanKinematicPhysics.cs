@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class CogschanKinematicPhysics : MonoBehaviour
 {
-    [SerializeField] private CharacterController _cc;
-    [SerializeField] private GroundChecker _groundChecker;
-    [SerializeField] private PlayerMovementController _playerMovementController;
+    [SerializeField] private PlayerServiceLocator _services;
     [SerializeField] private float _gravityAcceleration;
     [SerializeField] private float _normalForceAcceleration;
     [SerializeField] private float _terminalVelocity;
@@ -18,7 +16,7 @@ public class CogschanKinematicPhysics : MonoBehaviour
     /// </summary>
     [HideInInspector] public Vector3 DesiredVelocity;
 
-    private VelocityOverride _velocityOverride = null;
+    private IVelocityOverride _velocityOverride = null;
     private Queue<Vector3> _impulses = new Queue<Vector3>();
     private Vector3 _previousVelocity = Vector3.zero;
 
@@ -42,12 +40,12 @@ public class CogschanKinematicPhysics : MonoBehaviour
         else
         {
             // Grounded movement is based entirely on input
-            if (_groundChecker.IsGrounded && _impulses.Count == 0)
+            if (_services.GroundChecker.IsGrounded && _impulses.Count == 0)
             {
                 actualVelocity = DesiredVelocity;
-                if (_groundChecker.SurfaceType == GroundChecker.SurfaceTypes.WALKABLE_SLOPE)
+                if (_services.GroundChecker.SurfaceType == GroundChecker.SurfaceTypes.WALKABLE_SLOPE)
                 {
-                    actualVelocity = Quaternion.AngleAxis(_groundChecker.SurfaceAngle.Value, _groundChecker.ZeroDirection.Value) * actualVelocity;
+                    actualVelocity = Quaternion.AngleAxis(_services.GroundChecker.SurfaceAngle.Value, _services.GroundChecker.ZeroDirection.Value) * actualVelocity;
                 }
                 _previousVelocity = actualVelocity;
             }
@@ -69,7 +67,7 @@ public class CogschanKinematicPhysics : MonoBehaviour
             }
         }
 
-        _cc.Move(actualVelocity * Time.deltaTime);
+        _services.CharacterController.Move(actualVelocity * Time.deltaTime);
 
         DesiredVelocity = Vector3.zero;
     }
@@ -80,7 +78,7 @@ public class CogschanKinematicPhysics : MonoBehaviour
     /// <param name="velocityOverride">
     /// The velocity override to add.
     /// </param>
-    public void OverrideVelocity(VelocityOverride velocityOverride)
+    public void OverrideVelocity(IVelocityOverride velocityOverride)
     {
         _velocityOverride = velocityOverride;
     }
@@ -141,14 +139,14 @@ public class CogschanKinematicPhysics : MonoBehaviour
         float maxDelta = _airSteerFactor * Time.deltaTime;
         
         // Prevents steering from overriding gravity on slopes by cancelling out component of velocity going into slope
-        if (_groundChecker.SurfaceType == GroundChecker.SurfaceTypes.STEEP_SLOPE)
+        if (_services.GroundChecker.SurfaceType == GroundChecker.SurfaceTypes.STEEP_SLOPE)
         {
-            float slopePenalty = Mathf.Clamp01(Mathf.Cos(Mathf.Deg2Rad * Vector3.Angle(_groundChecker.SurfaceNormal.Value, DesiredVelocity)) + 1);
+            float slopePenalty = Mathf.Clamp01(Mathf.Cos(Mathf.Deg2Rad * Vector3.Angle(_services.GroundChecker.SurfaceNormal.Value, DesiredVelocity)) + 1);
             maxDelta *= slopePenalty;
         }
 
         actualVelocityHorizontal += desiredMovementHorizontal * maxDelta;
-        if (actualVelocityHorizontal.magnitude > _playerMovementController.CurrentBaseSpeed)
+        if (actualVelocityHorizontal.magnitude > _services.MovementController.CurrentBaseSpeed)
         {
             actualVelocityHorizontal = Vector2.ClampMagnitude(actualVelocityHorizontal, previousVelocityHorizontal.magnitude);
         }
@@ -168,10 +166,10 @@ public class CogschanKinematicPhysics : MonoBehaviour
         // Makes gravity work correctly on steep slopes instead of catching on the surface.
         // Also prevents player from getting lodged on slope if they are thrown at it at high speed.
         // Kind of wonky math but it works well enough in practice.
-        if (_groundChecker.SurfaceType == GroundChecker.SurfaceTypes.STEEP_SLOPE)
+        if (_services.GroundChecker.SurfaceType == GroundChecker.SurfaceTypes.STEEP_SLOPE)
         {
-            Vector3 normalForce = _groundChecker.SurfaceNormal.Value * _normalForceAcceleration * actualVelocity.magnitude * 
-                Mathf.Clamp01(-Mathf.Cos(Mathf.Deg2Rad * Vector3.Angle(_groundChecker.SurfaceNormal.Value, actualVelocity))) * Time.deltaTime;
+            Vector3 normalForce = _services.GroundChecker.SurfaceNormal.Value * _normalForceAcceleration * actualVelocity.magnitude * 
+                Mathf.Clamp01(-Mathf.Cos(Mathf.Deg2Rad * Vector3.Angle(_services.GroundChecker.SurfaceNormal.Value, actualVelocity))) * Time.deltaTime;
             actualVelocity += normalForce;
         }
 

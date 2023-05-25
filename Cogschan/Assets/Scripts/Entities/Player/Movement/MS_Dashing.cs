@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class MS_Dashing : MonoBehaviour, IMovementState
 {
-    [SerializeField] private PlayerMovementController _playerController;
-    [SerializeField] private CogschanKinematicPhysics _movementHandler;
-    [SerializeField] private PlayerCameraController _cameraController;
+    [SerializeField] private PlayerServiceLocator _services;
     [SerializeField] private GameObject _cogschanModel;
     [SerializeField] private float _dashSpeed = 30;
     [SerializeField] private float _turnSpeed = 10;
@@ -22,14 +20,14 @@ public class MS_Dashing : MonoBehaviour, IMovementState
     public void Initialize()
     {
         _timer = _duration;
-        Quaternion dir = Quaternion.Euler(_cameraController.CameraLateralDirection);
+        Quaternion dir = Quaternion.Euler(_services.CameraController.CameraLateralDirection);
         Vector3 movement = new Vector3(CogschanInputSingleton.Instance.MovementDirection.x, 0, CogschanInputSingleton.Instance.MovementDirection.y);
         if (movement == Vector3.zero) movement = Vector3.forward;
         Vector3 movementDir = dir * movement;
 
         movementDir *= _dashSpeed;
-        ConstantVelocityOverride dash = new ConstantVelocityOverride(movementDir, () => !_playerController.IsDashing, _momentumFactor);
-        _movementHandler.OverrideVelocity(dash);
+        ConstantVelocityOverride dash = new ConstantVelocityOverride(movementDir, () => !_services.MovementController.IsDashing, _momentumFactor);
+        _services.KinematicPhysics.OverrideVelocity(dash);
 
         _movementDirQ = Quaternion.LookRotation(movementDir);
     }

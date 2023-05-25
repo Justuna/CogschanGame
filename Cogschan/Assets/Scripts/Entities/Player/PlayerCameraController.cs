@@ -11,9 +11,9 @@ using System;
 /// </summary>
 public class PlayerCameraController : MonoBehaviour
 {
+    [SerializeField] private PlayerServiceLocator _services;
     [SerializeField] private CinemachineVirtualCamera _moveCamera;
     [SerializeField] private CinemachineVirtualCamera _aimCamera;
-    [SerializeField] private PlayerMovementController _movementController;
     [SerializeField] private Transform _followTarget;
     [SerializeField] private Transform _targetReticle;
     [SerializeField] private Transform _cogschanPOV;
@@ -110,7 +110,7 @@ public class PlayerCameraController : MonoBehaviour
     {
         // Pick which camera to use
         // Aim camera has higher priority, so it will automatically take hold if it's active
-        if (_movementController.IsAiming)
+        if (_services.MovementController.IsAiming)
         {
             _aimCamera.gameObject.SetActive(true);
         }
@@ -159,5 +159,17 @@ public class PlayerCameraController : MonoBehaviour
             _targetReticle.position = cameraCenter;
             TargetPosition = null;
         }
+    }
+
+    public void AddRecoil(SimpleRecoilPattern pattern)
+    {
+        SimpleRecoilEvent recoil = new SimpleRecoilEvent(pattern);
+        _recoilEvents.Add(recoil);
+    }
+
+    public void AddRecoil(ContinuousRecoilPattern pattern, Func<bool> endCondition)
+    {
+        ContinuousRecoilEvent recoil = new ContinuousRecoilEvent(pattern, endCondition);
+        _recoilEvents.Add(recoil);
     }
 }

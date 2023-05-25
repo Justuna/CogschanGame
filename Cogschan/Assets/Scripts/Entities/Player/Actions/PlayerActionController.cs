@@ -2,6 +2,9 @@
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Script responsible for translating player input into actions, like firing and shooting.
+/// </summary>
 public class PlayerActionController : MonoBehaviour
 {
     [SerializeField] private AS_Idle as_Idle;

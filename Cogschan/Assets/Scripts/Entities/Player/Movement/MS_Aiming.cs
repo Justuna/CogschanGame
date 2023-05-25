@@ -2,8 +2,7 @@
 
 public class MS_Aiming : MonoBehaviour, IMovementState
 {
-    [SerializeField] private CogschanKinematicPhysics _movementHandler;
-    [SerializeField] private PlayerCameraController _cameraController;
+    [SerializeField] private PlayerServiceLocator _services;
     [SerializeField] private GameObject _cogschanModel;
     [SerializeField] private float _aimSpeed = 2;
     [SerializeField] private float _turnSpeed = 10;
@@ -14,7 +13,7 @@ public class MS_Aiming : MonoBehaviour, IMovementState
 
     public void Behavior()
     {
-        Quaternion dir = Quaternion.Euler(_cameraController.CameraLateralDirection);
+        Quaternion dir = Quaternion.Euler(_services.CameraController.CameraLateralDirection);
         Vector3 movement = new Vector3(CogschanInputSingleton.Instance.MovementDirection.x, 0, CogschanInputSingleton.Instance.MovementDirection.y);
         Vector3 movementDir = dir * movement;
 
@@ -23,7 +22,7 @@ public class MS_Aiming : MonoBehaviour, IMovementState
 
         movementDir *= _aimSpeed;
 
-        _movementHandler.DesiredVelocity = movementDir;
+        _services.KinematicPhysics.DesiredVelocity = movementDir;
 
         if (!CogschanInputSingleton.Instance.IsHoldingAim)
         {

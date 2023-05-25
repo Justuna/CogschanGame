@@ -3,21 +3,23 @@ using UnityEngine;
 
 public class AS_Firing : MonoBehaviour, IActionState
 {
-    [SerializeField] private PlayerMovementController _movementController;
+    [SerializeField] private PlayerServiceLocator _services;
 
     public CogschanSimpleEvent FiringIntoIdle;
     public CogschanConditionEvent FiringIntoLocked;
 
     public void Behavior()
     {
-        if (_movementController.CannotAct)
+        if (_services.MovementController.CannotAct)
         {
-            OnLock(() => !_movementController.CannotAct);
+            OnLock(() => !_services.MovementController.CannotAct);
         }
         else if (!CogschanInputSingleton.Instance.IsHoldingFire)
         {
             FiringIntoIdle.Invoke();
         }
+        
+        _services.WeaponCache.CurrentWeapon.Use();
     }
 
     public void OnNextWeapon()

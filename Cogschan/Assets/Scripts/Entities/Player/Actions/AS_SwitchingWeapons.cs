@@ -3,16 +3,16 @@ using UnityEngine;
 
 public class AS_SwitchingWeapons : MonoBehaviour, IActionState
 {
-    [SerializeField] private PlayerMovementController _movementController;
+    [SerializeField] private PlayerServiceLocator _services;
 
     public CogschanSimpleEvent SwitchingIntoIdle;
     public CogschanConditionEvent SwitchingIntoLocked;
 
     public void Behavior()
     {
-        if (_movementController.CannotAct)
+        if (_services.MovementController.CannotAct)
         {
-            OnLock(() => !_movementController.CannotAct);
+            OnLock(() => !_services.MovementController.CannotAct);
         }
         else if (true)
         {

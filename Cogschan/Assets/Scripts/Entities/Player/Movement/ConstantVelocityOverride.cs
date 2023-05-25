@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class ConstantVelocityOverride : VelocityOverride
+public class ConstantVelocityOverride : IVelocityOverride
 {
     private Vector3 _velocity;
     private Func<bool> _whenFinished;

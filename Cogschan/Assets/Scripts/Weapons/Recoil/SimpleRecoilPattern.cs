@@ -6,7 +6,7 @@ using UnityEngine;
 /// A class for holding data about a weapon's recoil. Meant for simple, one-off recoil effects.
 /// </summary>
 [CreateAssetMenu(fileName="SimpleRecoilPattern", menuName ="Cogschan/Weapon/Simple Recoil Pattern")]
-public class SimpleRecoilPattern : ScriptableObject
+public class SimpleRecoilPattern : RecoilPattern
 {
     /// <summary>
     /// The change in the vertical recoil over time (from 0 to 1).

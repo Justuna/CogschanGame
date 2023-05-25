@@ -2,10 +2,7 @@
 
 public class MS_Sprinting : MonoBehaviour, IMovementState
 {
-    [SerializeField] private GroundChecker _groundChecker;
-    [SerializeField] private PlayerMovementController _playerController;
-    [SerializeField] private CogschanKinematicPhysics _movementHandler;
-    [SerializeField] private PlayerCameraController _cameraController;
+    [SerializeField] private PlayerServiceLocator _services;
     [SerializeField] private GameObject _cogschanModel;
     [SerializeField] private float _sprintSpeed = 8;
     [SerializeField] private float _turnSpeed = 10;
@@ -17,7 +14,7 @@ public class MS_Sprinting : MonoBehaviour, IMovementState
 
     public void Behavior()
     {
-        Quaternion dir = Quaternion.Euler(_cameraController.CameraLateralDirection);
+        Quaternion dir = Quaternion.Euler(_services.CameraController.CameraLateralDirection);
         Vector3 movement = new Vector3(CogschanInputSingleton.Instance.MovementDirection.x, 0, CogschanInputSingleton.Instance.MovementDirection.y);
         Vector3 movementDir = dir * movement;
 
@@ -29,7 +26,7 @@ public class MS_Sprinting : MonoBehaviour, IMovementState
 
         movementDir *= _sprintSpeed;
 
-        _movementHandler.DesiredVelocity = movementDir;
+        _services.KinematicPhysics.DesiredVelocity = movementDir;
 
         if (!CogschanInputSingleton.Instance.IsHoldingSprint)
         {
@@ -46,14 +43,14 @@ public class MS_Sprinting : MonoBehaviour, IMovementState
 
     public void OnDash()
     {
-        if (_playerController.CanDash) SprintingIntoDashing.Invoke();
+        if (_services.MovementController.CanDash) SprintingIntoDashing.Invoke();
     }
 
     public void OnJump()
     {
-        if (_groundChecker.IsGrounded)
+        if (_services.GroundChecker.IsGrounded)
         {
-            _movementHandler.AddImpulse(Vector3.up * _playerController.JumpImpulse, false, 0);
+            _services.KinematicPhysics.AddImpulse(Vector3.up * _services.MovementController.JumpImpulse, false, 0);
         }
     }
 
