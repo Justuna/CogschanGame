@@ -11,11 +11,11 @@ TagManager:
   - Level
   - Water
   - UI
-  - Player
-  - 
-  - 
-  - 
-  - 
+  - Entity
+  - Player Hitbox
+  - Player Hurtbox
+  - Enemy Hitbox
+  - Enemy Hurtbox
   - 
   - 
   - 
