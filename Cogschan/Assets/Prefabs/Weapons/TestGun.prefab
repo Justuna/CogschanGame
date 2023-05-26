@@ -53,7 +53,8 @@ MonoBehaviour:
   _ammoType: {fileID: 0}
   _clipSize: 0
   _maxClips: 0
-  _projectilePrefab: {fileID: 0}
+  _projectilePrefab: {fileID: 521982211236534687, guid: 1771c52a6935b447db7e7b3745743a50,
+    type: 3}
 --- !u!1 &7554969327838763247
 GameObject:
   m_ObjectHideFlags: 0
