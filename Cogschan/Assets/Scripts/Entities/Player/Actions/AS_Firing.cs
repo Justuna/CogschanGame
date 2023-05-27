@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class AS_Firing : MonoBehaviour, IActionState
 {
-    [SerializeField] private PlayerServiceLocator _services;
+    [SerializeField] private EntityServiceLocator _services;
 
     public CogschanSimpleEvent FiringIntoIdle;
     public CogschanConditionEvent FiringIntoLocked;
@@ -16,7 +16,7 @@ public class AS_Firing : MonoBehaviour, IActionState
         }
         else if (!CogschanInputSingleton.Instance.IsHoldingFire)
         {
-            FiringIntoIdle.Invoke();
+            FiringIntoIdle?.Invoke();
         }
         
         _services.WeaponCache.CurrentWeapon.Use();

@@ -25,7 +25,7 @@ public abstract class Gun : MonoBehaviour, IWeapon
     [Tooltip("The maximum amount of clips that can be in reserve at once.")]
     [SerializeField] protected int _maxClips;
 
-    protected PlayerServiceLocator _services;
+    protected EntityServiceLocator _services;
     protected float _fireRateTimer = 0;
 
     public int LoadedAmmo { get; private set; }
@@ -42,7 +42,7 @@ public abstract class Gun : MonoBehaviour, IWeapon
         ReserveAmmo = 0;
     }
 
-    public void Init(PlayerServiceLocator services)
+    public void Init(EntityServiceLocator services)
     {
         _services = services;
     }

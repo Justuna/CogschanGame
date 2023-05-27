@@ -127,7 +127,7 @@ public interface IWeapon
     /// An initialization method to pass to the weapon all of the dependencies it might have through the <c>PlayerServiceLocator</c>.
     /// </summary>
     /// <param name="services"></param>
-    public void Init(PlayerServiceLocator services);
+    public void Init(EntityServiceLocator services);
 
     /// <summary>
     /// Returns a name that can be used to uniquely identify this weapon.

@@ -11,7 +11,7 @@ using System;
 /// </summary>
 public class PlayerCameraController : MonoBehaviour
 {
-    [SerializeField] private PlayerServiceLocator _services;
+    [SerializeField] private EntityServiceLocator _services;
     [SerializeField] private CinemachineVirtualCamera _moveCamera;
     [SerializeField] private CinemachineVirtualCamera _aimCamera;
     [SerializeField] private Transform _followTarget;

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class AS_SwitchingWeapons : MonoBehaviour, IActionState
 {
-    [SerializeField] private PlayerServiceLocator _services;
+    [SerializeField] private EntityServiceLocator _services;
 
     public CogschanSimpleEvent SwitchingIntoIdle;
     public CogschanConditionEvent SwitchingIntoLocked;
@@ -16,7 +16,7 @@ public class AS_SwitchingWeapons : MonoBehaviour, IActionState
         }
         else if (true)
         {
-            SwitchingIntoIdle.Invoke();
+            SwitchingIntoIdle?.Invoke();
         }
     }
 

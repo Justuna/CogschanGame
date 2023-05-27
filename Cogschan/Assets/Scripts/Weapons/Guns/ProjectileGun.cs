@@ -10,11 +10,9 @@ public class ProjectileGun : Gun
 
     protected override void Fire(Vector3 targetPosition)
     {
-        Debug.Log("Fire!");
     }
 
     protected override void FireAccurate(Vector3 targetPosition)
     {
-        Debug.Log("Fire, but accurately!");
     }
 }

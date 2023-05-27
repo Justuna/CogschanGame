@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MS_Dashing : MonoBehaviour, IMovementState
 {
-    [SerializeField] private PlayerServiceLocator _services;
+    [SerializeField] private EntityServiceLocator _services;
     [SerializeField] private GameObject _cogschanModel;
     [SerializeField] private float _dashSpeed = 30;
     [SerializeField] private float _turnSpeed = 10;
@@ -40,7 +40,7 @@ public class MS_Dashing : MonoBehaviour, IMovementState
 
         if (_timer <= 0 )
         {
-            DashEnded.Invoke();
+            DashEnded?.Invoke();
         }
     }
 

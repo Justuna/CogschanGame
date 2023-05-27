@@ -31,7 +31,7 @@ public class HealthTracker : MonoBehaviour
     {
         Health = Mathf.Clamp(health, 0, _maxHealth);
 
-        if (Health == 0) OnDeath.Invoke();
+        if (Health == 0) OnDeath?.Invoke();
     }
 
     /// <summary>

@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LOSCalculator : MonoBehaviour
+public class LOSChecker : MonoBehaviour
 {
     [SerializeField] private Transform _playerTarget;
-    [SerializeField] private Transform _eyes;
     [SerializeField] private LayerMask _solidMask;
     [SerializeField] private LayerMask _playerMask;
     [SerializeField] private float _sightRange;
@@ -18,9 +17,9 @@ public class LOSCalculator : MonoBehaviour
 
     void Update()
     {
-        Vector3 dir = _playerTarget.position - _eyes.position;
-        Ray ray = new Ray(_eyes.position, dir);
-        bool LOS = Physics.CheckSphere(_eyes.position, _sightRange, _playerMask) && !Physics.Raycast(ray, dir.magnitude, _solidMask);
+        Vector3 dir = _playerTarget.position - transform.position;
+        Ray ray = new Ray(transform.position, dir);
+        bool LOS = Physics.CheckSphere(transform.position, _sightRange, _playerMask) && !Physics.Raycast(ray, dir.magnitude, _solidMask);
 
         if (LOS)
         {

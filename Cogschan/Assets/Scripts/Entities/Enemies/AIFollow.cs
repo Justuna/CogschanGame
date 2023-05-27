@@ -6,22 +6,20 @@ using UnityEngine.AI;
 
 public class AIFollow : MonoBehaviour
 {
+    [SerializeField] private EntityServiceLocator _services;
     public float lookRadius = 10f;
-    public NavMeshAgent nav;
     public Transform Player;
     public Transform Model;
     public float RecalculateTimer = 0.5f;
     public float Speed = 5;
     public float TurnSpeed = 10;
 
-    private float _timer;
     private NavMeshPath _path;
+    private float _timer = 0;
     private int _currentCorner = 0;
 
     void Start()
     {
-        nav = GetComponent<NavMeshAgent>();
-        _timer = 0;
         _path = new NavMeshPath();
     }
 
@@ -38,22 +36,19 @@ public class AIFollow : MonoBehaviour
         }
 
         Vector3 targetPosition = _path.corners[_currentCorner];
-        if (Vector3.Distance(targetPosition, transform.position) < 0.01f && _currentCorner < _path.corners.Length - 1)
+        Debug.DrawLine(transform.position, targetPosition, Color.red);
+        if (Vector3.Distance(targetPosition, transform.position) <= 0.05f && _currentCorner < _path.corners.Length - 1)
         {
             _currentCorner += 1;
         }
-        else if (Vector3.Distance(targetPosition, transform.position) >= 0.01f)
+        else if (Vector3.Distance(targetPosition, transform.position) > 0.05f)
         {
             Vector3 moveDir = (targetPosition - transform.position).normalized;
-            nav.Move(moveDir * Speed * Time.deltaTime);
             Vector3 moveDirHorizontal = moveDir;
             moveDirHorizontal.y = 0;
+
+            _services.KinematicPhysics.DesiredVelocity = moveDir * Speed;
             Model.rotation = Quaternion.Lerp(Model.rotation, Quaternion.LookRotation(moveDirHorizontal), Time.deltaTime * TurnSpeed);
         }
-    }
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, lookRadius);
     }
 }
