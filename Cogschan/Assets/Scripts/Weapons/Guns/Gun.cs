@@ -10,12 +10,16 @@ public abstract class Gun : MonoBehaviour, IWeapon
     [SerializeField] protected ParticleSystem _muzzleFlash;
     [Tooltip("The recoil pattern to call when this gun fires.")]
     [SerializeField] protected RecoilPattern _recoilPattern;
+    [Tooltip("The spread pattern to call when this gun fires.")]
+    [SerializeField] protected SpreadPattern _spreadPattern;
     [Tooltip("How long is required to wait after firing the gun to fire it again.")]
     [SerializeField] protected float _fireRate = 0.5f;
     [Tooltip("The unique name that identifies this gun prefab.")]
     [SerializeField] protected string _name;
     [Tooltip("The transform at which the projectile is spawned.")]
     [SerializeField] protected Transform _muzzle;
+    [Tooltip("The spread of the gun over time.")]
+    [SerializeField] protected AnimationCurve _spreadCurve;
 
     [Header("Ammo Attributes")]
     [Tooltip("Whether or not this gun requires ammo to use.")]
@@ -103,7 +107,8 @@ public abstract class Gun : MonoBehaviour, IWeapon
                 case ContinuousRecoilPattern cont:
                     if (!_contRecoilActive)
                     {
-                        Func<bool> endCondition = () => {
+                        Func<bool> endCondition = () =>
+                        {
                             bool condition = !_services.ActionController.IsFiring || !SufficientAmmo();
                             _contRecoilActive = !condition;
                             return condition;
@@ -127,7 +132,7 @@ public abstract class Gun : MonoBehaviour, IWeapon
     /// <param name="targetPosition">The world position to be firing at.</param>
     protected abstract void FireAccurate(Vector3 targetPosition);
 
-    
+
 
     /// <summary>
     /// Whether or not Cogschan is in a firing animation.
