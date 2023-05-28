@@ -10,8 +10,8 @@ public class ProjectileGun : Gun
 
     protected override void Fire(Vector3 targetPosition)
     {
-        Projectile proj = Instantiate(_projectilePrefab, transform.position + targetPosition.normalized, Quaternion.identity);
-        proj.SetDirection(targetPosition);
+        Projectile proj = Instantiate(_projectilePrefab, _muzzle.transform.position, Quaternion.identity);
+        proj.SetDirection(targetPosition - _muzzle.transform.position);
     }
 
     protected override void FireAccurate(Vector3 targetPosition)

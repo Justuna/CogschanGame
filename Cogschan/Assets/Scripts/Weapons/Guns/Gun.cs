@@ -14,6 +14,8 @@ public abstract class Gun : MonoBehaviour, IWeapon
     [SerializeField] protected float _fireRate = 0.5f;
     [Tooltip("The unique name that identifies this gun prefab.")]
     [SerializeField] protected string _name;
+    [Tooltip("The transform at which the projectile is spawned.")]
+    [SerializeField] protected Transform _muzzle;
 
     [Header("Ammo Attributes")]
     [Tooltip("Whether or not this gun requires ammo to use.")]
@@ -24,6 +26,8 @@ public abstract class Gun : MonoBehaviour, IWeapon
     [SerializeField] protected int _clipSize;
     [Tooltip("The maximum amount of clips that can be in reserve at once.")]
     [SerializeField] protected int _maxClips;
+
+
 
     protected EntityServiceLocator _services;
     protected float _fireRateTimer = 0;
