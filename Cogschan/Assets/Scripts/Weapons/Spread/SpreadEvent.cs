@@ -14,21 +14,20 @@ public class SpreadEvent
     }
 
     /// <summary>
-    /// Returns a random spread angle based on the pattern and the time elapsed. The euler angles assume the z axis is the direction the weapon is pointing.
+    /// Returns a random spread angle based on the pattern and the time elapsed. 
     /// </summary>
-    /// <returns></returns>
-    public Vector3 GetSpread()
+    public Vector2 GetSpread()
     {
         float t = Mathf.Clamp01(_timer / _spreadPattern.Duration);
         float magnitude = _spreadPattern.Spread.Evaluate(t);
         float angle = Random.Range(0, 2 * Mathf.PI);
-        return new Vector3(magnitude * Mathf.Sin(angle), magnitude * Mathf.Cos(angle));
+        return new Vector2(magnitude * Mathf.Sin(angle), magnitude * Mathf.Cos(angle));
     }
 
     /// <summary>
     /// Progresses time on the spread event.
     /// </summary>
-    /// <returns> Returns </returns>
+    /// <returns> Returns true if the spread event has finished, and false otherwise. </returns>
     public bool StepTime()
     {
         _timer += Time.deltaTime;
