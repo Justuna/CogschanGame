@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-#endregion
-#region Weapon Interfaces
 
 /// <summary>
 /// Interface to represent an object that holds onto and progresses a recoil pattern.
@@ -26,5 +24,3 @@ public interface IRecoilEvent
     /// </returns>
     bool StepTime();
 }
-
-#endregion

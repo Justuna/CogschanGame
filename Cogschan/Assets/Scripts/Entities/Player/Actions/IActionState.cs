@@ -2,7 +2,7 @@
 /// <summary>
 /// An interface that defines a state to be used by the action state machine. Provides additional hooks for handling the reloading and weapon-switching inputs.
 /// </summary>
-public interface IActionState : Globals
+public interface IActionState : IMachineState
 {
     /// <summary>
     /// What this state should do in response to the reload button.
@@ -24,5 +24,3 @@ public interface IActionState : Globals
     /// </summary>
     public void OnLock(Func<bool> unlockCondition);
 }
-
-#endregion

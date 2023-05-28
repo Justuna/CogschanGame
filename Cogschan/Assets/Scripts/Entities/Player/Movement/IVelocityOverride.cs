@@ -1,8 +1,4 @@
 ﻿using UnityEngine;
-#endregion
-#region Weapon Interfaces
-
-#endregion
 
 /// <summary>
 /// Interface for retrieving information from any script that would override a character's velocity.
@@ -34,5 +30,3 @@ public interface IVelocityOverride
     /// </returns>
     public float MaintainMomentumFactor();
 }
-
-#endregion

@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-#endregion
-
-#region Weapon Interfaces
 
 /// <summary>
 /// An interface providing functions that a weapon would need.
@@ -99,5 +96,3 @@ public interface IWeapon
     /// </returns>
     public int? GetReserveAmmoCount();
 }
-
-#endregion

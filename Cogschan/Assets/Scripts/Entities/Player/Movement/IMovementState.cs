@@ -3,7 +3,7 @@
 /// An interface that defines a state to be used by the movement state machine. Provides additional hooks for handling 
 /// dashing/jumping inputs, being knocked prone, and fetching a base speed value.
 /// </summary>
-public interface IMovementState : Globals
+public interface IMovementState : IMachineState
 {
     /// <summary>
     /// What this state should do in response to the dash button.
@@ -35,7 +35,3 @@ public interface IMovementState : Globals
     /// </returns>
     public float GetBaseSpeed();
 }
-
-#endregion
-
-#endregion
