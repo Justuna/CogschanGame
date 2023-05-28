@@ -35,21 +35,17 @@ public abstract class Gun : MonoBehaviour, IWeapon
 
     protected EntityServiceLocator _services;
     protected float _fireRateTimer = 0;
+    protected int _loadedAmmo = 0;
+    protected int _reserveAmmo = 0;
 
     private bool _contRecoilActive = false;
-
-    public int LoadedAmmo { get; private set; }
-    public int ReserveAmmo { get; private set; }
 
     protected void Start()
     {
         if (_requiresAmmo)
         {
-            LoadedAmmo = _clipSize;
+            _loadedAmmo = _clipSize;
         }
-        else LoadedAmmo = 0;
-
-        ReserveAmmo = 0;
     }
 
     public void Init(EntityServiceLocator services)
@@ -94,7 +90,7 @@ public abstract class Gun : MonoBehaviour, IWeapon
     private void PreFireSetup()
     {
         _fireRateTimer = _fireRate;
-        LoadedAmmo -= 1;
+        _loadedAmmo -= 1;
 
         if (_muzzleFlash != null) _muzzleFlash.Play();
         if (_recoilPattern != null)
@@ -157,33 +153,33 @@ public abstract class Gun : MonoBehaviour, IWeapon
 
     public bool SufficientAmmo()
     {
-        return !_requiresAmmo || LoadedAmmo > 0;
+        return !_requiresAmmo || _loadedAmmo > 0;
     }
 
     public bool CanReload()
     {
-        return _requiresAmmo && ReserveAmmo > 0;
+        return _requiresAmmo && _reserveAmmo > 0;
     }
 
     public void Reload()
     {
         if (!_requiresAmmo) return;
 
-        int _oldClip = LoadedAmmo;
-        LoadedAmmo = _clipSize;
-        ReserveAmmo -= LoadedAmmo - _oldClip;
+        int _oldClip = _loadedAmmo;
+        _loadedAmmo = _clipSize;
+        _reserveAmmo -= _loadedAmmo - _oldClip;
     }
 
     public bool CanLoadClip()
     {
-        return _requiresAmmo && ReserveAmmo < _clipSize * _maxClips;
+        return _requiresAmmo && _reserveAmmo < _clipSize * _maxClips;
     }
 
     public void LoadClip()
     {
         if (!_requiresAmmo) return;
 
-        ReserveAmmo = Mathf.Min(_clipSize * _maxClips, ReserveAmmo + _clipSize);
+        _reserveAmmo = Mathf.Min(_clipSize * _maxClips, _reserveAmmo + _clipSize);
     }
 
     public AmmoType GetAmmoType()
@@ -194,5 +190,17 @@ public abstract class Gun : MonoBehaviour, IWeapon
         }
 
         return _ammoType;
+    }
+
+    public int? GetLoadedAmmoCount()
+    {
+        if (!_requiresAmmo) return null;
+        else return _loadedAmmo;
+    }
+
+    public int? GetReserveAmmoCount()
+    {
+        if (!_requiresAmmo) return null;
+        else return _reserveAmmo;
     }
 }

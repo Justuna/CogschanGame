@@ -124,7 +124,7 @@ public interface IEnemyState : IMachineState
 public interface IWeapon
 {
     /// <summary>
-    /// An initialization method to pass to the weapon all of the dependencies it might have through the <c>PlayerServiceLocator</c>.
+    /// An initialization method to pass to the weapon all of the dependencies it might have through the <c>EntityServiceLocator</c>.
     /// </summary>
     /// <param name="services"></param>
     public void Init(EntityServiceLocator services);
@@ -203,6 +203,16 @@ public interface IWeapon
     /// Returns the type of ammunition that this weapon needs to be loaded with. If the weapon does not require ammo, returns <c>null</c> instead.
     /// </returns>
     public AmmoType GetAmmoType();
+
+    /// <returns>
+    /// Return the amount of ammunition currently loaded in the weapon. If the weapon does not require ammo, returns <c>null</c> instead.
+    /// </returns>
+    public int? GetLoadedAmmoCount();
+
+    /// <returns>
+    /// Return the amount of ammunition currently kept in reserve for this weapon. If the weapon does not require ammo, returns <c>null</c> instead.
+    /// </returns>
+    public int? GetReserveAmmoCount();
 }
 
 /// <summary>
