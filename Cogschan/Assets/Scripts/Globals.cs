@@ -124,7 +124,7 @@ public interface IEnemyState : IMachineState
 public interface IWeapon
 {
     /// <summary>
-    /// An initialization method to pass to the weapon all of the dependencies it might have through the <c>PlayerServiceLocator</c>.
+    /// An initialization method to pass to the weapon all of the dependencies it might have through the <c>EntityServiceLocator</c>.
     /// </summary>
     /// <param name="services"></param>
     public void Init(EntityServiceLocator services);
