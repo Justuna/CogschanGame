@@ -106,4 +106,5 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   Duration: 0.7
-  Power: 8
+  VerticalPower: 5
+  HorizontalPower: 1

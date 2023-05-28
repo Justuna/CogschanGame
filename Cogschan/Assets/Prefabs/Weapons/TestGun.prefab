@@ -46,13 +46,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _muzzleFlash: {fileID: 0}
-  _recoilPattern: {fileID: 0}
+  _recoilPattern: {fileID: 11400000, guid: a17d57b45e1bf1349aed3be497d6e408, type: 2}
   _fireRate: 0.5
   _name: TestGun
-  _requiresAmmo: 0
-  _ammoType: {fileID: 0}
-  _clipSize: 0
-  _maxClips: 0
+  _requiresAmmo: 1
+  _ammoType: {fileID: 11400000, guid: ab095c8fac5360941b09f51016c6acdd, type: 2}
+  _clipSize: 12
+  _maxClips: 1
   _projectilePrefab: {fileID: 0}
 --- !u!1 &7554969327838763247
 GameObject:

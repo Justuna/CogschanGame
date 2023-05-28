@@ -14,7 +14,7 @@ public class AS_Firing : MonoBehaviour, IActionState
         {
             OnLock(() => !_services.MovementController.CannotAct);
         }
-        else if (!CogschanInputSingleton.Instance.IsHoldingFire)
+        else if (!CogschanInputSingleton.Instance.IsHoldingFire && !_services.WeaponCache.CurrentWeapon.InUse())
         {
             FiringIntoIdle?.Invoke();
         }
