@@ -17,6 +17,10 @@ public class HealthTracker : MonoBehaviour
     /// The current health of this entity.
     /// </summary>
     public int Health { get; private set; }
+    /// <summary>
+    /// The maximum health that this entity can (normally) have.
+    /// </summary>
+    public int MaxHealth => _maxHealth;
 
     private void Start()
     {
