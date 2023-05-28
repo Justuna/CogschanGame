@@ -65,10 +65,6 @@ public abstract class Gun : MonoBehaviour, IWeapon
         return gameObject;
     }
 
-    /// <summary>
-    /// Fires the gun from the hip. If the fire rate duration has not elapsed, will not fire.
-    /// </summary>
-    /// <param name="targetPosition">The world position to be firing at.</param>
     public void Use()
     {
         if (_fireRateTimer > 0 || InUse() || !SufficientAmmo()) return;
@@ -82,12 +78,11 @@ public abstract class Gun : MonoBehaviour, IWeapon
         else Fire(_services.CameraController.TargetPosition.Value);
     }
 
-    protected abstract void Fire(Vector3 targetPosition);
-
     /// <summary>
-    /// Fires the gun accurately. If the fire rate duration has not elapsed, will not fire.
+    /// Fires the gun from the hip. If the fire rate duration has not elapsed, will not fire.
     /// </summary>
     /// <param name="targetPosition">The world position to be firing at.</param>
+    protected abstract void Fire(Vector3 targetPosition);
 
     private void PreFireSetup()
     {
@@ -110,6 +105,10 @@ public abstract class Gun : MonoBehaviour, IWeapon
         }
     }
 
+    /// <summary>
+    /// Fires the gun accurately. If the fire rate duration has not elapsed, will not fire.
+    /// </summary>
+    /// <param name="targetPosition">The world position to be firing at.</param>
     protected abstract void FireAccurate(Vector3 targetPosition);
 
     /// <summary>
