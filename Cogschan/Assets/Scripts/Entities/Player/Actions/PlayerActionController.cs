@@ -60,7 +60,6 @@ public class PlayerActionController : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(_currentState.ToString());
         _currentState.Behavior();
     }
 

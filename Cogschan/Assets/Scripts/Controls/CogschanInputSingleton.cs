@@ -81,8 +81,8 @@ public class CogschanInputSingleton : MonoBehaviour
         _inputMapping = new CogschanMapping();
         _inputMapping.Enable();
 
-        _inputMapping.Movement.Jump.performed += _ => { OnJumpButtonPressed.Invoke(); };
-        _inputMapping.Movement.BurstDash.performed += _ => { OnDashButtonPressed.Invoke(); };
+        _inputMapping.Movement.Jump.performed += _ => { OnJumpButtonPressed?.Invoke(); };
+        _inputMapping.Movement.BurstDash.performed += _ => { OnDashButtonPressed?.Invoke(); };
         _inputMapping.Movement.Sprint.performed += _ => { IsHoldingSprint = true; };
         _inputMapping.Movement.Sprint.canceled += _ => { IsHoldingSprint = false; };
 
@@ -91,10 +91,10 @@ public class CogschanInputSingleton : MonoBehaviour
 
         _inputMapping.Weapon.Fire.performed += _ => { IsHoldingFire = true; };
         _inputMapping.Weapon.Fire.canceled += _ => { IsHoldingFire = false; };
-        _inputMapping.Weapon.Reload.performed += _ => { OnReloadButtonPressed.Invoke(); };
-        _inputMapping.Weapon.NextWeapon.performed += _ => { OnSwitchNextWeapon.Invoke(); };
+        _inputMapping.Weapon.Reload.performed += _ => { OnReloadButtonPressed?.Invoke(); };
+        _inputMapping.Weapon.NextWeapon.performed += _ => { OnSwitchNextWeapon?.Invoke(); };
 
-        _inputMapping.Menus.Pause.performed += _ => { OnPauseButtonPressed.Invoke(); };
+        _inputMapping.Menus.Pause.performed += _ => { OnPauseButtonPressed?.Invoke(); };
 
         _inputScrollTimer = 0;
     }
@@ -111,13 +111,13 @@ public class CogschanInputSingleton : MonoBehaviour
             _inputScrollTimer = _inputScrollCooldown;
             if (scrollDelta.y > 0)
             {
-                OnSwitchNextWeapon.Invoke();
+                OnSwitchNextWeapon?.Invoke();
                 Debug.Log("Next weapon!");
 
             }
             else
             {
-                OnSwitchPrevWeapon.Invoke();
+                OnSwitchPrevWeapon?.Invoke();
                 Debug.Log("Previous weapon!");
             }
         }

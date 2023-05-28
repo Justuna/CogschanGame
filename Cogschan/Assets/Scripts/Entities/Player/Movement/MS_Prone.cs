@@ -21,7 +21,7 @@ public class MS_Prone : MonoBehaviour, IMovementState
         }
         else
         {
-            ProneEnded.Invoke();
+            ProneEnded?.Invoke();
         }
     }
 

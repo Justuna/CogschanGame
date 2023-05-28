@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class AS_Reloading : MonoBehaviour, IActionState
 {
-    [SerializeField] private PlayerServiceLocator _services;
+    [SerializeField] private EntityServiceLocator _services;
 
     public CogschanSimpleEvent ReloadingIntoIdle;
     public CogschanConditionEvent ReloadingIntoLocked;
@@ -16,7 +16,7 @@ public class AS_Reloading : MonoBehaviour, IActionState
         }
         else if (true)
         {
-            ReloadingIntoIdle.Invoke();
+            ReloadingIntoIdle?.Invoke();
         }
     }
 

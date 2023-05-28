@@ -31,6 +31,9 @@ public abstract class Hitbox : MonoBehaviour
     /// <summary>
     /// The impulse that this hitbox should impart.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Returns a <c>Vector3</c> that represents the combined direction and magnitude of the impulse.</returns>
     public abstract Vector3 GetImpulse();
+
+    // TODO: Add a method for registering an entity as being "hit" by this damage source already, to prevent it from being hit again.
+    // Or maybe that's better off in specific hitbox implementations?
 }

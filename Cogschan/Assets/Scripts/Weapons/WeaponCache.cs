@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class WeaponCache : MonoBehaviour
 {
-    [SerializeField] private PlayerServiceLocator _services;
+    [SerializeField] private EntityServiceLocator _services;
     [SerializeField] private GameObject _defaultWeaponPrefab;
     [SerializeField] private Transform _weaponParent;
     [SerializeField] private int _maxSize = 9;

@@ -18,7 +18,7 @@ public class AS_Locked : MonoBehaviour, IActionState
         _unlockConditions.RemoveAll(condition => condition());
         if (_unlockConditions.Count == 0 )
         {
-            ActionsUnlocked.Invoke();
+            ActionsUnlocked?.Invoke();
         }
     }
 

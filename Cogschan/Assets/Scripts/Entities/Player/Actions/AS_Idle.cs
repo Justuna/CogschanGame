@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class AS_Idle : MonoBehaviour, IActionState
 {
-    [SerializeField] private PlayerServiceLocator _services;
+    [SerializeField] private EntityServiceLocator _services;
 
     public CogschanSimpleEvent IdleIntoFiring;
     public CogschanSimpleEvent IdleIntoNextWeapon;
@@ -19,23 +19,23 @@ public class AS_Idle : MonoBehaviour, IActionState
         }
         else if (CogschanInputSingleton.Instance.IsHoldingFire && !_services.MovementController.IsSprinting)
         {
-            IdleIntoFiring.Invoke();
+            IdleIntoFiring?.Invoke();
         }
     }
 
     public void OnNextWeapon()
     {
-        IdleIntoNextWeapon.Invoke();
+        IdleIntoNextWeapon?.Invoke();
     }
 
     public void OnPrevWeapon()
     {
-        IdleIntoPrevWeapon.Invoke();
+        IdleIntoPrevWeapon?.Invoke();
     }
 
     public void OnReload()
     {
-        IdleIntoReloading.Invoke();
+        IdleIntoReloading?.Invoke();
     }
 
     public void OnLock(Func<bool> unlockCondition)

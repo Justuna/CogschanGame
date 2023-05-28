@@ -2,7 +2,7 @@
 
 public class MS_Aiming : MonoBehaviour, IMovementState
 {
-    [SerializeField] private PlayerServiceLocator _services;
+    [SerializeField] private EntityServiceLocator _services;
     [SerializeField] private GameObject _cogschanModel;
     [SerializeField] private float _aimSpeed = 2;
     [SerializeField] private float _turnSpeed = 10;
@@ -28,11 +28,11 @@ public class MS_Aiming : MonoBehaviour, IMovementState
         {
             if (CogschanInputSingleton.Instance.IsHoldingSprint)
             {
-                AimingIntoSprinting.Invoke();
+                AimingIntoSprinting?.Invoke();
             }
             else
             {
-                AimingIntoWalking.Invoke();
+                AimingIntoWalking?.Invoke();
             }
         }
     }

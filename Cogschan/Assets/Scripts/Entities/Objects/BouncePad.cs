@@ -12,7 +12,7 @@ public class BouncePad : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        CogschanKinematicPhysics movementHandler = other.GetComponentInChildren<CogschanKinematicPhysics>();
+        KinematicPhysics movementHandler = other.GetComponentInChildren<KinematicPhysics>();
         PlayerMovementController movementController = other.GetComponentInChildren<PlayerMovementController>();
         if (movementHandler != null)
         {
