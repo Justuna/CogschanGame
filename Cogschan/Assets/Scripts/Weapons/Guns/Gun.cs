@@ -32,6 +32,8 @@ public abstract class Gun : MonoBehaviour, IWeapon
     protected EntityServiceLocator _services;
     protected float _fireRateTimer = 0;
 
+    private bool _contRecoilActive = false;
+
     public int LoadedAmmo { get; private set; }
     public int ReserveAmmo { get; private set; }
 
@@ -83,11 +85,8 @@ public abstract class Gun : MonoBehaviour, IWeapon
     }
 
     /// <summary>
-    /// Fires the gun from the hip. If the fire rate duration has not elapsed, will not fire.
+    /// Does all of the setup necessary right before the gun is fired.
     /// </summary>
-    /// <param name="targetPosition">The world position to be firing at.</param>
-    protected abstract void Fire(Vector3 targetPosition);
-
     private void PreFireSetup()
     {
         _fireRateTimer = _fireRate;
@@ -102,18 +101,33 @@ public abstract class Gun : MonoBehaviour, IWeapon
                     _services.CameraController.AddRecoil(simple);
                     break;
                 case ContinuousRecoilPattern cont:
-                    Func<bool> endCondition = () => !_services.ActionController.IsFiring;
-                    _services.CameraController.AddRecoil(cont, endCondition);
+                    if (!_contRecoilActive)
+                    {
+                        Func<bool> endCondition = () => {
+                            bool condition = !_services.ActionController.IsFiring || !SufficientAmmo();
+                            _contRecoilActive = !condition;
+                            return condition;
+                        };
+                        _services.CameraController.AddRecoil(cont, endCondition);
+                    }
                     break;
             }
         }
     }
 
     /// <summary>
-    /// Fires the gun accurately. If the fire rate duration has not elapsed, will not fire.
+    /// Fires the gun from the hip.
+    /// </summary>
+    /// <param name="targetPosition">The world position to be firing at.</param>
+    protected abstract void Fire(Vector3 targetPosition);
+
+    /// <summary>
+    /// Fires the gun accurately.
     /// </summary>
     /// <param name="targetPosition">The world position to be firing at.</param>
     protected abstract void FireAccurate(Vector3 targetPosition);
+
+    
 
     /// <summary>
     /// Whether or not Cogschan is in a firing animation.
