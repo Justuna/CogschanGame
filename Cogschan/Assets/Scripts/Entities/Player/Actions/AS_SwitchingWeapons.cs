@@ -51,6 +51,11 @@ public class AS_SwitchingWeapons : MonoBehaviour, IActionState
         // Do nothing
     }
 
+    public void OnInteract()
+    {
+        // Do nothing
+    }
+
     public void OnLock(Func<bool> unlockCondition)
     {
         SwitchingIntoLocked(unlockCondition);

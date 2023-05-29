@@ -3,13 +3,15 @@ using UnityEngine.AI;
 
 public class EntityServiceLocator : MonoBehaviour
 {
+    public bool IsPlayer = false;
+
     [Header("General Services")]
     public CharacterController CharacterController;
     public GroundChecker GroundChecker;
     public HealthTracker HealthTracker;
+    public InteractionChecker InteractionChecker;
     public KinematicPhysics KinematicPhysics;
     public GameObject Model;
-
 
     [Header("Player Only")]
     public PlayerActionController ActionController;

@@ -10,6 +10,11 @@ public interface IActionState : IMachineState
     public void OnReload();
 
     /// <summary>
+    /// What this state should do in response to the interact button.
+    /// </summary>
+    public void OnInteract();
+
+    /// <summary>
     /// What this state should do in response to an attempt to switch to the next weapon.
     /// </summary>
     public void OnNextWeapon();

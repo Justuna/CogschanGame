@@ -35,6 +35,11 @@ public class AS_Reloading : MonoBehaviour, IActionState
         // Do nothing
     }
 
+    public void OnInteract()
+    {
+        // Do nothing
+    }
+
     public void OnLock(Func<bool> unlockCondition)
     {
         ReloadingIntoLocked(unlockCondition);

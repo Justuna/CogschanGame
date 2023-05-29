@@ -3,29 +3,18 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class BouncePad : MonoBehaviour
+public class BouncePad : Interactable
 {
-    [SerializeField] private Collider _collider;
     [SerializeField] private Vector3 _impulse;
     [SerializeField] private bool _isRelative;
-    [SerializeField] private float _proneTime = 0f;
 
-    private void OnTriggerEnter(Collider other)
+    protected override void InteractInternal(EntityServiceLocator services)
     {
-        KinematicPhysics movementHandler = other.GetComponentInChildren<KinematicPhysics>();
-        PlayerMovementController movementController = other.GetComponentInChildren<PlayerMovementController>();
-        if (movementHandler != null)
+        Vector3 actualImpulse = _impulse;
+        if (_isRelative)
         {
-            Vector3 actualImpulse = _impulse;
-            if (_isRelative)
-            {
-                actualImpulse = transform.rotation * _impulse;
-            }
-            movementHandler.AddImpulse(actualImpulse, true, 0);
+            actualImpulse = transform.rotation * _impulse;
         }
-        if (movementController != null && _proneTime > 0)
-        {
-            movementController.KnockProne(_proneTime);
-        }
+        services.KinematicPhysics.AddImpulse(actualImpulse, true, 0);
     }
 }
