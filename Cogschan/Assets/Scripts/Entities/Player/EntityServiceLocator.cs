@@ -6,8 +6,10 @@ public class EntityServiceLocator : MonoBehaviour
     [Header("General Services")]
     public CharacterController CharacterController;
     public GroundChecker GroundChecker;
+    public HealthTracker HealthTracker;
     public KinematicPhysics KinematicPhysics;
     public GameObject Model;
+
 
     [Header("Player Only")]
     public PlayerActionController ActionController;

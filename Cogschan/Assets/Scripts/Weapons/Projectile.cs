@@ -1,21 +1,32 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// Projectiles to be fired out of <see cref="ProjectileGun"/>s.
+/// Script that moves a kinematic rigidbody at constant speed.
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
 public class Projectile : MonoBehaviour
 {
-    [SerializeField]
-    [Tooltip("The speed of the projectile")]
-    private float _speed;
+    [Tooltip("The rigidbody that is attached to this projectile.")]
+    [SerializeField] private Rigidbody _rigidBody;
+    [Tooltip("The speed of the projectile.")]
+    [SerializeField] private float _speed;
+
+    private Vector3 _velocity = Vector3.zero;
 
     /// <summary>
-    /// Makes the projectile move in the specified direction.
+    /// Tells the projectile to move in a specific direction.
     /// </summary>
     public void SetDirection(Vector3 direction)
     {
-        GetComponent<Rigidbody>().velocity = _speed * direction.normalized;
+        _velocity = _speed * direction.normalized;
+    }
+
+    // Because the rigidbody is kinematic, we have to do the moving ourselves.
+    // Since it's a rigidbody, used fixed update (kinematic body will do smooth interpolation for us)
+    // We also don't have to check if timescale = 0, because physics inherently uses timescale
+    private void FixedUpdate()
+    {
+        _rigidBody.MovePosition(_rigidBody.position + _velocity * Time.fixedDeltaTime);
     }
 }
 
