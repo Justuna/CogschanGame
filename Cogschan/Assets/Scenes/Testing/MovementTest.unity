@@ -5754,8 +5754,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _services: {fileID: 1918345264}
-  _defaultWeaponPrefab: {fileID: 7554969326682805842, guid: e2855ffa2252f6146a6a28ee7dce0e0d,
-    type: 3}
+  _defaultWeaponPrefabs:
+  - {fileID: 7554969326682805842, guid: e2855ffa2252f6146a6a28ee7dce0e0d, type: 3}
+  - {fileID: 7554969326682805842, guid: ace8bbc8f257b3547b05cce9d96cabce, type: 3}
   _weaponParent: {fileID: 2054569899}
   _maxSize: 9
 --- !u!1 &526668585

@@ -8,18 +8,23 @@ using UnityEngine;
 public class WeaponCache : MonoBehaviour
 {
     [SerializeField] private EntityServiceLocator _services;
-    [SerializeField] private GameObject _defaultWeaponPrefab;
+    [SerializeField] private GameObject[] _defaultWeaponPrefabs;
     [SerializeField] private Transform _weaponParent;
     [SerializeField] private int _maxSize = 9;
 
     private List<IWeapon> _cache = new List<IWeapon>();
+    [SerializeField]
     private int _currentWeaponIndex;
 
     public IWeapon CurrentWeapon { get { return _cache[_currentWeaponIndex]; } }
 
     private void Start()
     {
-        AddWeapon(_defaultWeaponPrefab);
+        foreach (GameObject prefab in _defaultWeaponPrefabs)
+        {
+            AddWeapon(prefab, false);
+        }
+        PickWeapon(0);
     }
 
     /// <summary>
@@ -60,6 +65,7 @@ public class WeaponCache : MonoBehaviour
     /// </summary>
     public void NextWeapon()
     {
+        if (_cache.Count <= 1) return;
         PickWeapon((_currentWeaponIndex + 1) % _cache.Count);
     }
 
@@ -68,7 +74,8 @@ public class WeaponCache : MonoBehaviour
     /// </summary>
     public void PrevWeapon()
     {
-        PickWeapon((_currentWeaponIndex - 1) % _cache.Count);
+        if (_cache.Count <= 1) return;
+        PickWeapon((_currentWeaponIndex - 1 + _cache.Count) % _cache.Count);
     }
 
     /// <summary>
