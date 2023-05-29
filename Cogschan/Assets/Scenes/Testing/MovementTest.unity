@@ -7252,6 +7252,7 @@ MonoBehaviour:
   _cogschanModel: {fileID: 563201248}
   _walkSpeed: 4
   _turnSpeed: 10
+  _turnSpeedFiring: 50
 --- !u!1 &1086814133
 GameObject:
   m_ObjectHideFlags: 0
@@ -9225,7 +9226,7 @@ MonoBehaviour:
   _services: {fileID: 1918345264}
   _cogschanModel: {fileID: 563201248}
   _aimSpeed: 2
-  _turnSpeed: 10
+  _turnSpeed: 50
 --- !u!1 &1740946220
 GameObject:
   m_ObjectHideFlags: 0
@@ -9750,7 +9751,7 @@ MonoBehaviour:
   _cogschanPOV: {fileID: 1775654793}
   _targetableMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 1032
   _mouseHorizontalSensitivity: 0.5
   _mouseVerticalSensitivity: 0.1
   _maxYaw: 70

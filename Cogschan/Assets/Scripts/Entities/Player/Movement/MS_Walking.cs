@@ -6,6 +6,7 @@ public class MS_Walking : MonoBehaviour, IMovementState
     [SerializeField] private GameObject _cogschanModel;
     [SerializeField] private float _walkSpeed = 4;
     [SerializeField] private float _turnSpeed = 10;
+    [SerializeField] private float _turnSpeedFiring = 50;
 
     public CogschanSimpleEvent WalkingIntoAiming;
     public CogschanSimpleEvent WalkingIntoSprinting;
@@ -25,7 +26,7 @@ public class MS_Walking : MonoBehaviour, IMovementState
         }
         else if (_services.ActionController.IsFiring)
         {
-            _cogschanModel.transform.rotation = Quaternion.Lerp(_cogschanModel.transform.rotation, dir, _turnSpeed * Time.deltaTime);
+            _cogschanModel.transform.rotation = Quaternion.Lerp(_cogschanModel.transform.rotation, dir, _turnSpeedFiring * Time.deltaTime);
         }
 
         movementDir *= _walkSpeed;
