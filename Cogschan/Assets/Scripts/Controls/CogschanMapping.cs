@@ -242,6 +242,15 @@ public partial class @CogschanMapping : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""b9b74276-5df3-46aa-b336-a6d9bb01cb6d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -376,6 +385,28 @@ public partial class @CogschanMapping : IInputActionCollection2, IDisposable
                     ""action"": ""BurstDash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9afbd5ae-75a0-491f-9efa-6496d523135f"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MouseKeyboard"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a23a999b-d049-4ee2-a727-38207b7123ff"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -476,6 +507,7 @@ public partial class @CogschanMapping : IInputActionCollection2, IDisposable
         m_Movement_Jump = m_Movement.FindAction("Jump", throwIfNotFound: true);
         m_Movement_Sprint = m_Movement.FindAction("Sprint", throwIfNotFound: true);
         m_Movement_BurstDash = m_Movement.FindAction("BurstDash", throwIfNotFound: true);
+        m_Movement_Interact = m_Movement.FindAction("Interact", throwIfNotFound: true);
         // Menus
         m_Menus = asset.FindActionMap("Menus", throwIfNotFound: true);
         m_Menus_Pause = m_Menus.FindAction("Pause", throwIfNotFound: true);
@@ -640,6 +672,7 @@ public partial class @CogschanMapping : IInputActionCollection2, IDisposable
     private readonly InputAction m_Movement_Jump;
     private readonly InputAction m_Movement_Sprint;
     private readonly InputAction m_Movement_BurstDash;
+    private readonly InputAction m_Movement_Interact;
     public struct MovementActions
     {
         private @CogschanMapping m_Wrapper;
@@ -648,6 +681,7 @@ public partial class @CogschanMapping : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Movement_Jump;
         public InputAction @Sprint => m_Wrapper.m_Movement_Sprint;
         public InputAction @BurstDash => m_Wrapper.m_Movement_BurstDash;
+        public InputAction @Interact => m_Wrapper.m_Movement_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -669,6 +703,9 @@ public partial class @CogschanMapping : IInputActionCollection2, IDisposable
                 @BurstDash.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnBurstDash;
                 @BurstDash.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnBurstDash;
                 @BurstDash.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnBurstDash;
+                @Interact.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_MovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -685,6 +722,9 @@ public partial class @CogschanMapping : IInputActionCollection2, IDisposable
                 @BurstDash.started += instance.OnBurstDash;
                 @BurstDash.performed += instance.OnBurstDash;
                 @BurstDash.canceled += instance.OnBurstDash;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
         }
     }
@@ -758,6 +798,7 @@ public partial class @CogschanMapping : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnBurstDash(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
     public interface IMenusActions
     {
