@@ -10,8 +10,12 @@ public class ProjectileGun : Gun
 
     protected override void Fire(Vector3 targetPosition)
     {
+        Vector3 dir = (targetPosition - _muzzle.transform.position).normalized;
+        if (_spreadEvent is not null)
+            SpreadEvent.ApplySpread(ref dir, _spreadEvent.GetSpread());
+        print("Magnitude of spread: " + _spreadEvent?.GetSpread().magnitude);
         Projectile proj = Instantiate(_projectilePrefab, _muzzle.transform.position, Quaternion.identity);
-        proj.SetDirection(targetPosition - _muzzle.transform.position);
+        proj.SetDirection(dir);
     }
 
     protected override void FireAccurate(Vector3 targetPosition)

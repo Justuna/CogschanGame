@@ -37,6 +37,7 @@ public abstract class Gun : MonoBehaviour, IWeapon
     protected float _fireRateTimer = 0;
     protected int _loadedAmmo = 0;
     protected int _reserveAmmo = 0;
+    protected SpreadEvent _spreadEvent;
 
     private bool _contRecoilActive = false;
 
@@ -46,6 +47,8 @@ public abstract class Gun : MonoBehaviour, IWeapon
         {
             _loadedAmmo = _clipSize;
         }
+        if (_spreadPattern is not null)
+            _spreadEvent = new(_spreadPattern);
     }
 
     public void Init(EntityServiceLocator services)
@@ -82,6 +85,8 @@ public abstract class Gun : MonoBehaviour, IWeapon
 
         if (_services.MovementController.IsAiming) FireAccurate(_services.CameraController.TargetPosition.Value);
         else Fire(_services.CameraController.TargetPosition.Value);
+
+        _spreadEvent?.StepTime();
     }
 
     /// <summary>

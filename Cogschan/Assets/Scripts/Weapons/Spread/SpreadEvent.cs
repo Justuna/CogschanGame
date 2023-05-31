@@ -37,4 +37,16 @@ public class SpreadEvent
         }
         return false;
     }
+
+    /// <summary>
+    /// Applies the <paramref name="spread"/> to the <paramref name="vector"/>.
+    /// </summary>
+    /// <param name="vector">The vector the spread will be applied to.</param>
+    /// <param name="spread">The spread to be applied.</param>
+    public static void ApplySpread(ref Vector3 vector, Vector2 spread)
+    {
+        Quaternion toForward = Quaternion.FromToRotation(vector, Vector3.forward);
+        vector = Quaternion.Inverse(toForward) * Quaternion.Euler(spread)
+            * toForward * vector;
+    }
 }
