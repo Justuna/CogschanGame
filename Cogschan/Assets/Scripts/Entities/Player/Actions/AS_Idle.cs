@@ -38,6 +38,12 @@ public class AS_Idle : MonoBehaviour, IActionState
         IdleIntoReloading?.Invoke();
     }
 
+    public void OnInteract()
+    {
+        Interactable optIn = _services.InteractionChecker.OptIn;
+        if (optIn != null) optIn.Interact(_services);
+    }
+
     public void OnLock(Func<bool> unlockCondition)
     {
         IdleIntoLocked.Invoke(unlockCondition);

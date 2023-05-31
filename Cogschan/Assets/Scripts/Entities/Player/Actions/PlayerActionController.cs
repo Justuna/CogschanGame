@@ -43,6 +43,7 @@ public class PlayerActionController : MonoBehaviour
         CogschanInputSingleton.Instance.OnReloadButtonPressed += () => { _currentState.OnReload(); };
         CogschanInputSingleton.Instance.OnSwitchNextWeapon += () => { _currentState.OnNextWeapon(); };
         CogschanInputSingleton.Instance.OnSwitchPrevWeapon += () => { _currentState.OnPrevWeapon(); };
+        CogschanInputSingleton.Instance.OnInteractButtonPressed += () => { _currentState.OnInteract(); };
 
         as_Idle.IdleIntoFiring += IdleIntoFiring;
         as_Idle.IdleIntoReloading += IdleIntoReloading;
@@ -82,13 +83,13 @@ public class PlayerActionController : MonoBehaviour
 
     private void IdleIntoNextWeapon()
     {
-        // Some sort of setup function here
+        as_SwitchingWeapons.Init(true);
         _currentState = as_SwitchingWeapons;
     }
 
     private void IdleIntoPrevWeapon()
     {
-        // Some sort of setup function here
+        as_SwitchingWeapons.Init(false);
         _currentState = as_SwitchingWeapons;
     }
 

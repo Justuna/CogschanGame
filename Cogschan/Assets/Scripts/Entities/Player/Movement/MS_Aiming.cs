@@ -5,7 +5,7 @@ public class MS_Aiming : MonoBehaviour, IMovementState
     [SerializeField] private EntityServiceLocator _services;
     [SerializeField] private GameObject _cogschanModel;
     [SerializeField] private float _aimSpeed = 2;
-    [SerializeField] private float _turnSpeed = 10;
+    [SerializeField] private float _turnSpeed = 50;
 
     public CogschanSimpleEvent AimingIntoSprinting;
     public CogschanSimpleEvent AimingIntoWalking;

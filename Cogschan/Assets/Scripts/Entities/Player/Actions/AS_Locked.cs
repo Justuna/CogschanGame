@@ -37,6 +37,11 @@ public class AS_Locked : MonoBehaviour, IActionState
         // Do nothing
     }
 
+    public void OnInteract()
+    {
+        // Do nothing
+    }
+
     public void OnLock(Func<bool> unlockCondition)
     {
         Initialize(unlockCondition);

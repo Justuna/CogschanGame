@@ -68,6 +68,10 @@ public class CogschanInputSingleton : MonoBehaviour
     /// </summary>
     public CogschanSimpleEvent OnReloadButtonPressed;
     /// <summary>
+    /// Event that fires when the interact button is pressed.
+    /// </summary>
+    public CogschanSimpleEvent OnInteractButtonPressed;
+    /// <summary>
     /// Event that fires when forward scrolling passes a certain threshold (mouse and keyboard) or next weapon button is pressed (controllers).
     /// </summary>
     public CogschanSimpleEvent OnSwitchNextWeapon;
@@ -85,6 +89,7 @@ public class CogschanInputSingleton : MonoBehaviour
         _inputMapping.Movement.BurstDash.performed += _ => { OnDashButtonPressed?.Invoke(); };
         _inputMapping.Movement.Sprint.performed += _ => { IsHoldingSprint = true; };
         _inputMapping.Movement.Sprint.canceled += _ => { IsHoldingSprint = false; };
+        _inputMapping.Movement.Interact.performed += _ => { OnInteractButtonPressed?.Invoke(); };
 
         _inputMapping.Camera.Aim.performed += _ => { IsHoldingAim = true; };
         _inputMapping.Camera.Aim.canceled += _ => { IsHoldingAim = false; };
@@ -112,13 +117,10 @@ public class CogschanInputSingleton : MonoBehaviour
             if (scrollDelta.y > 0)
             {
                 OnSwitchNextWeapon?.Invoke();
-                Debug.Log("Next weapon!");
-
             }
             else
             {
                 OnSwitchPrevWeapon?.Invoke();
-                Debug.Log("Previous weapon!");
             }
         }
         else _inputScrollTimer -= Time.deltaTime;

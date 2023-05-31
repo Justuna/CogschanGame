@@ -10,17 +10,26 @@ public class HealthTracker : MonoBehaviour
     [SerializeField] private int _maxHealth;
 
     /// <summary>
-    /// An event that is triggered when this entity reaches 0 health.
+    /// An event that is triggered when this entity reaches 0 health, but before it is set to be destroyed.
+    /// </summary>
+    public CogschanSimpleEvent BeforeDeath;
+    /// <summary>
+    /// An event that is triggered when this entity has been set to be destroyed following its health reaching 0.
     /// </summary>
     public CogschanSimpleEvent OnDeath;
     /// <summary>
     /// The current health of this entity.
     /// </summary>
     public int Health { get; private set; }
+    /// <summary>
+    /// The maximum health that this entity can (normally) have.
+    /// </summary>
+    public int MaxHealth => _maxHealth;
 
     private void Start()
     {
         Health = _maxHealth;
+        OnDeath += () => Debug.Log(name + " should be dead.");
     }
 
     /// <summary>
@@ -31,7 +40,16 @@ public class HealthTracker : MonoBehaviour
     {
         Health = Mathf.Clamp(health, 0, _maxHealth);
 
-        if (Health == 0) OnDeath?.Invoke();
+        if (Health == 0)
+        {
+            BeforeDeath?.Invoke();
+
+            // Just in case an on-death listener restores some health
+            if (Health == 0)
+            {
+                OnDeath?.Invoke();
+            }
+        }
     }
 
     /// <summary>

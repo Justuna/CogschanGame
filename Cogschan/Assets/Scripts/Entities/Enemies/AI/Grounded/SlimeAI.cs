@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class SlimeAI : GroundedEnemyAI
 {
-    protected override void Update()
-    {
-        base.Update();
-        Debug.Log(_state);
-    }
-
     public override void EndMeleeAttack()
     {
         throw new System.NotImplementedException();

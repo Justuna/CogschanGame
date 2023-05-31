@@ -37,6 +37,11 @@ public class AS_Firing : MonoBehaviour, IActionState
         // Do nothing
     }
 
+    public void OnInteract()
+    {
+        // Do nothing
+    }
+
     public void OnLock(Func<bool> unlockCondition)
     {
         FiringIntoLocked.Invoke(unlockCondition);
