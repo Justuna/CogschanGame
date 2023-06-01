@@ -18,8 +18,6 @@ public abstract class Gun : MonoBehaviour, IWeapon
     [SerializeField] protected string _name;
     [Tooltip("The transform from which the bullet will originate.")]
     [SerializeField] protected Transform _muzzle;
-    [Tooltip("The spread of the gun over time.")]
-    [SerializeField] protected AnimationCurve _spreadCurve;
 
     [Header("Ammo Attributes")]
     [Tooltip("Whether or not this gun requires ammo to use.")]
@@ -36,6 +34,9 @@ public abstract class Gun : MonoBehaviour, IWeapon
     protected float _fireRateTimer = 0;
     protected int _loadedAmmo = 0;
     protected int _reserveAmmo = 0;
+    /// <summary>
+    /// The <see cref="SpreadEvent"/> associated with the gun.
+    /// </summary>
     protected SpreadEvent _spreadEvent;
 
     private bool _contRecoilActive = false;
@@ -61,6 +62,8 @@ public abstract class Gun : MonoBehaviour, IWeapon
         {
             _fireRateTimer -= Time.deltaTime;
         }
+
+        _spreadEvent?.StepTime();
     }
 
     public string GetName()
@@ -84,8 +87,6 @@ public abstract class Gun : MonoBehaviour, IWeapon
 
         if (_services.MovementController.IsAiming) FireAccurate(_services.CameraController.TargetPosition.Value);
         else Fire(_services.CameraController.TargetPosition.Value);
-
-        _spreadEvent?.StepTime();
     }
 
     /// <summary>

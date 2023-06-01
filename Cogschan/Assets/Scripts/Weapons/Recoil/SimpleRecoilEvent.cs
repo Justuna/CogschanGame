@@ -14,7 +14,7 @@ public class SimpleRecoilEvent : IRecoilEvent
     {
         _recoilPattern = recoilPattern;
     }
-    
+
     public Vector2 GetRecoil()
     {
         float t = Mathf.Clamp01(_timer / _recoilPattern.Duration);

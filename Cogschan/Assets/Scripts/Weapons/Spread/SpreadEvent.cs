@@ -6,7 +6,7 @@
 public class SpreadEvent
 {
     private SpreadPattern _spreadPattern;
-    private float _timer = 0;
+    private float _counter = 0;
 
     public SpreadEvent(SpreadPattern spreadPattern)
     {
@@ -18,24 +18,24 @@ public class SpreadEvent
     /// </summary>
     public Vector2 GetSpread()
     {
-        float t = Mathf.Clamp01(_timer / _spreadPattern.Duration);
-        float magnitude = _spreadPattern.Spread.Evaluate(t);
+        float t = _counter / _spreadPattern.Duration;
+        float magnitude = _spreadPattern.Magnitude * _spreadPattern.Spread.Evaluate(t);
         float angle = Random.Range(0, 2 * Mathf.PI);
-        return new Vector2(magnitude * Mathf.Sin(angle), magnitude * Mathf.Cos(angle));
+        return new(magnitude * Mathf.Sin(angle), magnitude * Mathf.Cos(angle));
+    }
+
+    public void IncrementSpread()
+    {
+        _counter = Mathf.Min(_spreadPattern.Duration, _counter + _spreadPattern.Increase);
     }
 
     /// <summary>
     /// Progresses time on the spread event.
     /// </summary>
-    /// <returns> Returns true if the spread event has finished, and false otherwise. </returns>
-    public bool StepTime()
+    public void StepTime()
     {
-        _timer += Time.deltaTime;
-        if (_timer >= _spreadPattern.Duration)
-        {
-            return true;
-        }
-        return false;
+        _counter -= Time.deltaTime;
+        _counter = Mathf.Clamp(_counter, 0, _spreadPattern.Duration);
     }
 
     /// <summary>
