@@ -21,6 +21,10 @@ public class AS_Idle : MonoBehaviour, IActionState
         {
             IdleIntoFiring?.Invoke();
         }
+        else if (CogschanInputSingleton.Instance.IsReloadButtonDown && !_services.MovementController.IsSprinting)
+        {
+            IdleIntoReloading?.Invoke();
+        }
     }
 
     public void OnNextWeapon()
