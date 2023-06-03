@@ -9,21 +9,19 @@ public class ProjectileGun : Gun
     [Tooltip("The prefab of the projectile that this gun shoots.")]
     [SerializeField] private Projectile _projectilePrefab;
 
-    protected override void Fire(Vector3 targetPosition)
+    protected override void Fire(Vector3 targetPosition) => SpawnProjectile(targetPosition, _spreadEvent, _count);
+
+    protected override void FireAccurate(Vector3 targetPosition) => SpawnProjectile(targetPosition, _spreadEventAccurate, _countAccurate);
+
+    // Spawn the projectile given the paramaeters.
+    private void SpawnProjectile(Vector3 targetPosition, SpreadEvent spread, int count)
     {
         Vector3 dir = (targetPosition - _muzzle.transform.position).normalized;
-        if (_spreadEvent is not null)
+        for (int i = 0; i < count; i++)
         {
-            SpreadEvent.ApplySpread(ref dir, _spreadEvent.GetSpread());
-            _spreadEvent.IncrementSpread();
+            Vector3 spreadDir = SpreadEvent.ApplySpread(dir, spread.GetSpread());
+            Projectile proj = Instantiate(_projectilePrefab, _muzzle.transform.position, Quaternion.identity);
+            proj.SetDirection(spreadDir);
         }
-        Projectile proj = Instantiate(_projectilePrefab, _muzzle.transform.position, Quaternion.identity);
-        proj.SetDirection(dir);
-    }
-
-    protected override void FireAccurate(Vector3 targetPosition)
-    {
-        // TODO: Make this do different stuff
-        Fire(targetPosition);
     }
 }

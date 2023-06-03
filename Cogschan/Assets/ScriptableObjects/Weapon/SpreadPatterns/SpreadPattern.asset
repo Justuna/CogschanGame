@@ -14,9 +14,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Spread:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.0000017806888
+      value: -0.000001007691
+      inSlope: 0.99999917
+      outSlope: 0.99999917
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.99999917
+      outSlope: 0.99999917
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  Duration: 0
-  Magnitude: 0
+  Duration: 2
+  Increase: 1
+  Magnitude: 10
