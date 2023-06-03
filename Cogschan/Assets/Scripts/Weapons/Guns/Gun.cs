@@ -12,14 +12,14 @@ public abstract class Gun : MonoBehaviour, IWeapon
     [SerializeField] protected RecoilPattern _recoilPattern;
     [Tooltip("The spread pattern to call when this gun fires.")]
     [SerializeField] protected SpreadPattern _spreadPattern;
+    [Tooltip("The spread pattern to call when this gun fires accurately.")]
+    [SerializeField] protected SpreadPattern _spreadPatternAccutate;
     [Tooltip("How long is required to wait after firing the gun to fire it again.")]
     [SerializeField] protected float _fireRate = 0.5f;
     [Tooltip("The unique name that identifies this gun prefab.")]
     [SerializeField] protected string _name;
     [Tooltip("The transform from which the bullet will originate.")]
     [SerializeField] protected Transform _muzzle;
-    [Tooltip("The spread of the gun over time.")]
-    [SerializeField] protected AnimationCurve _spreadCurve;
 
     [Header("Ammo Attributes")]
     [Tooltip("Whether or not this gun requires ammo to use.")]
@@ -30,12 +30,29 @@ public abstract class Gun : MonoBehaviour, IWeapon
     [SerializeField] protected int _clipSize;
     [Tooltip("The maximum amount of clips that can be in reserve at once.")]
     [SerializeField] protected int _maxClips;
+    [Tooltip("The number of ammo fired in one shot.")]
+    [SerializeField] private int _count;
+    [Tooltip("The number of ammo fired in one shot when firing accurately")]
+    [SerializeField] private int _countAccurate;
+
 
 
     protected EntityServiceLocator _services;
     protected float _fireRateTimer = 0;
     protected int _loadedAmmo = 0;
     protected int _reserveAmmo = 0;
+    /// <summary>
+    /// The amount of bullets being fired.
+    /// </summary>
+    protected int _fireCount = 0;
+    /// <summary>
+    /// The <see cref="SpreadEvent"/> associated with the gun.
+    /// </summary>
+    protected SpreadEvent _spreadEvent;
+    /// <summary>
+    /// The <see cref="SpreadEvent"/> associated with the gun's accurate firing mode.
+    /// </summary>
+    protected SpreadEvent _spreadEventAccurate;
 
     private bool _contRecoilActive = false;
 
@@ -45,6 +62,10 @@ public abstract class Gun : MonoBehaviour, IWeapon
         {
             _loadedAmmo = _clipSize;
         }
+        if (_spreadPattern is not null)
+            _spreadEvent = new(_spreadPattern);
+        if (_spreadPatternAccutate is not null)
+            _spreadEventAccurate = new(_spreadPatternAccutate);
     }
 
     public void Init(EntityServiceLocator services)
@@ -58,6 +79,9 @@ public abstract class Gun : MonoBehaviour, IWeapon
         {
             _fireRateTimer -= Time.deltaTime;
         }
+
+        _spreadEvent?.StepTime();
+        _spreadEventAccurate?.StepTime();
     }
 
     public string GetName()
@@ -89,7 +113,9 @@ public abstract class Gun : MonoBehaviour, IWeapon
     private void PreFireSetup()
     {
         _fireRateTimer = _fireRate;
-        _loadedAmmo -= 1;
+        _fireCount = _services.MovementController.IsAiming ? _countAccurate : _count;
+        _fireCount = Mathf.Min(_fireCount, _loadedAmmo);
+        _loadedAmmo -= _fireCount;
 
         if (_muzzleFlash != null) _muzzleFlash.Play();
         if (_recoilPattern != null)
@@ -113,6 +139,8 @@ public abstract class Gun : MonoBehaviour, IWeapon
                     break;
             }
         }
+        _spreadEvent?.IncrementSpread();
+        _spreadEventAccurate?.IncrementSpread();
     }
 
     /// <summary>
