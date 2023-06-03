@@ -19,7 +19,7 @@ public class ProjectileGun : Gun
         Vector3 dir = (targetPosition - _muzzle.transform.position).normalized;
         for (int i = 0; i < _fireCount; i++)
         {
-            Projectile proj = Instantiate(_projectilePrefab, _muzzle.transform.position, Quaternion.identity);
+            Projectile proj = Instantiate(_projectilePrefab, _muzzle.position, Quaternion.identity);
             proj.SetDirection(spread.ApplySpread(dir));
         }
     }
