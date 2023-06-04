@@ -61,7 +61,8 @@ MonoBehaviour:
   _count: 3
   _countAccurate: 2
   _reloadTime: 1
-  _projectilePrefab: {fileID: 0}
+  _projectilePrefab: {fileID: 521982211236534687, guid: 04d54ea240a5b2a4486b1a614fbb5446,
+    type: 3}
 --- !u!1 &6758714540721902103
 GameObject:
   m_ObjectHideFlags: 0
