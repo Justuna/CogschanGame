@@ -17,10 +17,12 @@ public class ProjectileGun : Gun
     private void SpawnProjectile(Vector3 targetPosition, SpreadEvent spread)
     {
         Vector3 dir = (targetPosition - _muzzle.transform.position).normalized;
-        for (int i = 0; i < _fireCount; i++)
+        for (int i = 0; i < _count; i++)
         {
             Projectile proj = Instantiate(_projectilePrefab, _muzzle.position, Quaternion.identity);
-            proj.SetDirection(spread.ApplySpread(dir));
+            proj.SetDirection(spread is not null
+                ? spread.ApplySpread(dir)
+                : dir);
         }
     }
 }

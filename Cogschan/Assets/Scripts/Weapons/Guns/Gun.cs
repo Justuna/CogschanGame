@@ -30,8 +30,8 @@ public abstract class Gun : MonoBehaviour, IWeapon
     [SerializeField] protected int _clipSize;
     [Tooltip("The maximum amount of clips that can be in reserve at once.")]
     [SerializeField] protected int _maxClips;
-    [Tooltip("The number of ammo fired in one shot.")]
-    [SerializeField] private int _count;
+    [Tooltip("The number of bullets fired in one shot.")]
+    [SerializeField] protected int _count = 1;
     [Tooltip("The number of ammo fired in one shot when firing accurately")]
     [SerializeField] private int _countAccurate;
     [Tooltip("The amount of time the gun takes to reload")]
@@ -43,10 +43,6 @@ public abstract class Gun : MonoBehaviour, IWeapon
     protected float _fireRateTimer = 0;
     protected int _loadedAmmo = 0;
     protected int _reserveAmmo = 0;
-    /// <summary>
-    /// The amount of bullets being fired.
-    /// </summary>
-    protected int _fireCount = 0;
     /// <summary>
     /// The <see cref="SpreadEvent"/> associated with the gun.
     /// </summary>
@@ -116,9 +112,7 @@ public abstract class Gun : MonoBehaviour, IWeapon
     private void PreFireSetup()
     {
         _fireRateTimer = _fireRate;
-        _fireCount = _services.MovementController.IsAiming ? _countAccurate : _count;
-        _fireCount = Mathf.Min(_fireCount, _loadedAmmo);
-        _loadedAmmo -= _fireCount;
+        _loadedAmmo--;
 
         if (_muzzleFlash != null) _muzzleFlash.Play();
         if (_recoilPattern != null)

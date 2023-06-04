@@ -25,7 +25,6 @@ public class WeaponCache : MonoBehaviour
             AddWeapon(prefab, false);
         }
         PickWeapon(0);
-        print(_cache.Count);
     }
 
     /// <summary>
