@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class PlayerActionController : MonoBehaviour
 {
+    [SerializeField] private EntityServiceLocator _services;
     [SerializeField] private AS_Idle as_Idle;
     [SerializeField] private AS_Locked as_Locked;
     [SerializeField] private AS_Firing as_Firing;
@@ -78,7 +79,11 @@ public class PlayerActionController : MonoBehaviour
 
     private void IdleIntoReloading()
     {
-        _currentState = as_Reloading;
+        if (_services.WeaponCache.CurrentWeapon.CanReload())
+        {
+            as_Reloading.Init(_services.WeaponCache.CurrentWeapon.GetReloadTime());
+            _currentState = as_Reloading;
+        }
     }
 
     private void IdleIntoNextWeapon()

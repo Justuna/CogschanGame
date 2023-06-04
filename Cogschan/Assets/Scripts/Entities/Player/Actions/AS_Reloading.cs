@@ -8,22 +8,35 @@ public class AS_Reloading : MonoBehaviour, IActionState
     public CogschanSimpleEvent ReloadingIntoIdle;
     public CogschanConditionEvent ReloadingIntoLocked;
 
+    private float _timer;
+
+    public void Init(float timer)
+    {
+        _timer = timer;
+    }
+
     public void Behavior()
     {
         if (_services.MovementController.CannotAct)
         {
             OnLock(() => !_services.MovementController.CannotAct);
         }
-        else if (CurrentWeaponSufficientAmmo())
-        {
-            ReloadingIntoIdle?.Invoke();
-        }
-    }
 
-    private bool CurrentWeaponSufficientAmmo()
-    {
-        IWeapon currentWeapon = _services.WeaponCache.CurrentWeapon;
-        return currentWeapon == null || currentWeapon.SufficientAmmo();
+        _timer -= Time.deltaTime;
+        if (_timer <= 0) 
+        {
+            IWeapon currentWeapon = _services.WeaponCache.CurrentWeapon;
+
+            if (currentWeapon != null || currentWeapon.SufficientAmmo())
+            {
+                if (currentWeapon.CanReload())
+                {
+                    currentWeapon.Reload();
+                }
+
+                ReloadingIntoIdle?.Invoke();
+            }
+        }
     }
 
     public void OnNextWeapon()
@@ -38,14 +51,7 @@ public class AS_Reloading : MonoBehaviour, IActionState
 
     public void OnReload()
     {
-        if (_services.MovementController.CannotAct)
-            return;
-
-        IWeapon currentWeapon = _services.WeaponCache.CurrentWeapon;
-        if (currentWeapon != null && currentWeapon.CanReload())
-        {
-            currentWeapon.Reload();
-        }
+        // Do nothing
     }
 
     public void OnInteract()

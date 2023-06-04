@@ -5782,6 +5782,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f963c81fef29f04da89dd76cec80ea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _services: {fileID: 1918345264}
   as_Idle: {fileID: 753785018}
   as_Locked: {fileID: 1389066041}
   as_Firing: {fileID: 188387653}
@@ -5920,6 +5921,7 @@ MonoBehaviour:
   _defaultWeaponPrefabs:
   - {fileID: 7554969326682805842, guid: e2855ffa2252f6146a6a28ee7dce0e0d, type: 3}
   - {fileID: 7554969326682805842, guid: ace8bbc8f257b3547b05cce9d96cabce, type: 3}
+  - {fileID: 6758714540400352426, guid: 406617b2629b64d9ea8ae84b6b7fef56, type: 3}
   _weaponParent: {fileID: 2054569899}
   _maxSize: 9
   _currentWeaponIndex: 0
