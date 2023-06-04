@@ -17,15 +17,15 @@ public class RaycastGun : Gun
     private void FireRaycast(Vector3 targetPosition, SpreadEvent spread)
     {
         Vector3 dir = (targetPosition - _muzzle.transform.position).normalized;
-        for (int i = 0; i < _fireCount; i++)
+        for (int i = 0; i < _count; i++)
         {
-            Vector3 spreadDir = spread.ApplySpread(dir);
+            Vector3 spreadDir = spread is not null ? spread.ApplySpread(dir) : dir;
             if (Physics.Raycast(_muzzle.position, spreadDir, out RaycastHit hitInfo))
                 HitObject(hitInfo.collider.gameObject);
             if (_projectilePrefab is not null)
             {
                 Projectile proj = Instantiate(_projectilePrefab, _muzzle.position, Quaternion.identity);
-                proj.SetDirection(spread.ApplySpread(dir));
+                proj.SetDirection(spreadDir);
             }
         }
     }
