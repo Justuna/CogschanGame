@@ -14,10 +14,16 @@ public class AS_Reloading : MonoBehaviour, IActionState
         {
             OnLock(() => !_services.MovementController.CannotAct);
         }
-        else if (true)
+        else if (CurrentWeaponSufficientAmmo())
         {
             ReloadingIntoIdle?.Invoke();
         }
+    }
+
+    private bool CurrentWeaponSufficientAmmo()
+    {
+        IWeapon currentWeapon = _services.WeaponCache.CurrentWeapon;
+        return currentWeapon == null || currentWeapon.SufficientAmmo();
     }
 
     public void OnNextWeapon()
@@ -32,7 +38,14 @@ public class AS_Reloading : MonoBehaviour, IActionState
 
     public void OnReload()
     {
-        // Do nothing
+        if (_services.MovementController.CannotAct)
+            return;
+
+        IWeapon currentWeapon = _services.WeaponCache.CurrentWeapon;
+        if (currentWeapon != null && currentWeapon.CanReload())
+        {
+            currentWeapon.Reload();
+        }
     }
 
     public void OnInteract()
