@@ -88,6 +88,12 @@ public abstract class KinematicPhysics : MonoBehaviour
         }
     }
 
+    public void RemoveComponent(Vector3 component)
+    {
+        component = component.normalized;
+        _previousVelocity -= Vector3.Dot(_previousVelocity, component) * component;
+    }
+
     // Converts a Vector3 to a Vector2 using the horizontal components (x and z).
     protected Vector2 HorizontalVector(Vector3 vec)
     {

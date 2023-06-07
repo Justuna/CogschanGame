@@ -50,7 +50,7 @@ public class PlayerKinematicPhysics : KinematicPhysics
         Vector2 desiredMovementHorizontal = HorizontalVector(DesiredVelocity.normalized);
 
         float maxDelta = _airSteerFactor * Time.deltaTime;
-        
+
         // Prevents steering from overriding gravity on slopes by cancelling out component of velocity going into slope
         if (_services.GroundChecker.SurfaceType == GroundChecker.SurfaceTypes.STEEP_SLOPE)
         {

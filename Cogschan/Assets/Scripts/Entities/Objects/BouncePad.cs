@@ -15,6 +15,7 @@ public class BouncePad : Interactable
         {
             actualImpulse = transform.rotation * _impulse;
         }
+        services.KinematicPhysics.RemoveComponent(actualImpulse);
         services.KinematicPhysics.AddImpulse(actualImpulse, true, 0);
     }
 }
