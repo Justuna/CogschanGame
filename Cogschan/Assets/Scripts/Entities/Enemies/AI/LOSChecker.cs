@@ -10,6 +10,7 @@ public class LOSChecker : MonoBehaviour
     [SerializeField] private float _sightRange;
     [SerializeField] private float _interruptThreshold;
 
+    public float SightRange => _sightRange;
     public bool CanSee { get; private set; }
     public Vector3 LastSeenPosition { get; private set; }
 

@@ -25,4 +25,9 @@ public class EntityServiceLocator : MonoBehaviour
     [Header("Ground Enemies Only")]
     public NavMeshAgent NavMeshAgent;
     public GroundedEnemyAI GroundedAI;
+
+    [Header("Janglings Only")]
+    public PointGraph PointGraph;
+    public Transform Jangling;
+    public JanglingAI JanglingAI;
 }

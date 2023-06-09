@@ -10,13 +10,21 @@ public class HealthTracker : MonoBehaviour
     [SerializeField] private int _maxHealth;
 
     /// <summary>
+    /// An event that is triggered when this entity takes damage.
+    /// </summary>
+    public CogschanSimpleEvent OnDamaged;
+    /// <summary>
+    /// An event that is triggered when this entity is healed.
+    /// </summary>
+    public CogschanSimpleEvent OnHealed;
+    /// <summary>
     /// An event that is triggered when this entity reaches 0 health, but before it is set to be destroyed.
     /// </summary>
-    public CogschanSimpleEvent BeforeDeath;
+    public CogschanSimpleEvent BeforeDefeat;
     /// <summary>
     /// An event that is triggered when this entity has been set to be destroyed following its health reaching 0.
     /// </summary>
-    public CogschanSimpleEvent OnDeath;
+    public CogschanSimpleEvent OnDefeat;
     /// <summary>
     /// The current health of this entity.
     /// </summary>
@@ -29,7 +37,11 @@ public class HealthTracker : MonoBehaviour
     private void Start()
     {
         Health = _maxHealth;
-        OnDeath += () => Debug.Log(name + " should be dead.");
+    }
+
+    public void ResetHealth()
+    {
+        Health = _maxHealth;
     }
 
     /// <summary>
@@ -38,16 +50,19 @@ public class HealthTracker : MonoBehaviour
     /// <param name="health">The value to set health to.</param>
     public void SetHealth(int health)
     {
+        // If dead, should not be able to do more damage or heal
+        if (Health <= 0) return;
+
         Health = Mathf.Clamp(health, 0, _maxHealth);
 
         if (Health == 0)
         {
-            BeforeDeath?.Invoke();
+            BeforeDefeat?.Invoke();
 
             // Just in case an on-death listener restores some health
             if (Health == 0)
             {
-                OnDeath?.Invoke();
+                OnDefeat?.Invoke();
             }
         }
     }
@@ -59,6 +74,7 @@ public class HealthTracker : MonoBehaviour
     public void Damage(int amount)
     {
         SetHealth(Health - amount);
+        OnDamaged?.Invoke();
     }
 
     /// <summary>
@@ -68,5 +84,6 @@ public class HealthTracker : MonoBehaviour
     public void Heal(int amount)
     {
         SetHealth(Health + amount);
+        OnHealed?.Invoke();
     }
 }
