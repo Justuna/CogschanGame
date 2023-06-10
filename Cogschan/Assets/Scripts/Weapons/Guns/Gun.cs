@@ -32,6 +32,10 @@ public abstract class Gun : MonoBehaviour, IWeapon
     [SerializeField] protected int _maxClips;
     [Tooltip("The number of bullets fired in one shot.")]
     [SerializeField] protected int _count = 1;
+    [Tooltip("The number of ammo fired in one shot when firing accurately")]
+    [SerializeField] private int _countAccurate;
+    [Tooltip("The amount of time the gun takes to reload")]
+    [SerializeField] private float _reloadTime;
 
 
 
@@ -55,6 +59,7 @@ public abstract class Gun : MonoBehaviour, IWeapon
         if (_requiresAmmo)
         {
             _loadedAmmo = _clipSize;
+            _reserveAmmo = _clipSize;
         }
         if (_spreadPattern is not null)
             _spreadEvent = new(_spreadPattern);
@@ -177,16 +182,24 @@ public abstract class Gun : MonoBehaviour, IWeapon
 
     public bool CanReload()
     {
-        return _requiresAmmo && _reserveAmmo > 0;
+        return _requiresAmmo && _reserveAmmo > 0 && _loadedAmmo < _clipSize;
     }
 
     public void Reload()
     {
         if (!_requiresAmmo) return;
 
-        int _oldClip = _loadedAmmo;
-        _loadedAmmo = _clipSize;
-        _reserveAmmo -= _loadedAmmo - _oldClip;
+        int missingAmmo = _clipSize - _loadedAmmo;
+        if (_reserveAmmo >= missingAmmo)
+        {
+            _loadedAmmo = _clipSize;
+            _reserveAmmo -= missingAmmo;
+        }
+        else
+        {
+            _loadedAmmo = _reserveAmmo;
+            _reserveAmmo = 0;
+        }
     }
 
     public bool CanLoadClip()
@@ -221,5 +234,10 @@ public abstract class Gun : MonoBehaviour, IWeapon
     {
         if (!_requiresAmmo) return null;
         else return _reserveAmmo;
+    }
+
+    float IWeapon.GetReloadTime()
+    {
+        return _reloadTime;
     }
 }

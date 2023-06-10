@@ -62,6 +62,11 @@ public interface IWeapon
     /// </returns>
     public bool CanReload();
 
+    /// <returns>
+    /// How long the weapon takes to reload.
+    /// </returns>
+    public float GetReloadTime();
+
     /// <summary>
     /// Attempts to reload the weapon using current ammunition.
     /// </summary>
