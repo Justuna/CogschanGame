@@ -56,7 +56,6 @@ public class JanglingAI : MonoBehaviour
     private void Update()
     {
         _state.Behavior();
-        Debug.Log(_state);
     }
 
     #region Glue Methods
