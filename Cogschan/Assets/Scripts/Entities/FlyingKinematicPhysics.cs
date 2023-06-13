@@ -1,21 +1,10 @@
-#define TESTING
-
 using UnityEngine;
 
 public class FlyingKinematicPhysics : KinematicPhysics
 {
-    /// <summary>
-    /// The current acceleration direction of the object. Must have a magnitude of less than one
-    /// </summary>
-    public Vector3 AccelerationDirection
-    {
-        get => _accelDir;
-        set => _accelDir = value / Mathf.Max(value.magnitude, 1);
-    }
-
     [SerializeField]
-    [Tooltip("The maximum acceleration of the object. Must be positive.")]
-    private float _maxAccel;
+    [Tooltip("The acceleration of the object. Must be positive.")]
+    private float _acceleration;
     [SerializeField]
     [Tooltip("The maximum speed of the object under normal conditions. Must be positive.")]
     private float _maxSpeed;
@@ -24,44 +13,47 @@ public class FlyingKinematicPhysics : KinematicPhysics
     [Range(0, 1)]
     private float _dragMultiplier;
 
+    private Vector3 _accelDir;
+
 #if TESTING
     private float _timer;
 #endif
 
-    private Vector3 _accelDir;
-
     protected override Vector3 PickVelocity()
     {
-#if TESTING
+#if TESTING && HIGH_SPEED
         if (_timer <= Time.deltaTime)
             return Vector3.right * 10 * _maxSpeed;
 #endif
-        Vector3 velocity = _previousVelocity + _accelDir * _maxAccel;
-        if (velocity.magnitude > _maxSpeed * _accelDir.magnitude)
-            velocity *= Mathf.Max(_maxSpeed * _accelDir.magnitude / velocity.magnitude, Mathf.Pow(1 -_dragMultiplier, Time.deltaTime));
+        Vector3 velocity = _previousVelocity;
+        if (velocity.magnitude > _maxSpeed)
+            velocity *= Mathf.Max(_maxSpeed / velocity.magnitude, Mathf.Pow(1 - _dragMultiplier, Time.deltaTime));
+        velocity += _accelDir * _acceleration * Time.deltaTime;
+        float maxVelThisFrame = Mathf.Max(_maxSpeed, _previousVelocity.magnitude);
+        if (velocity.magnitude > maxVelThisFrame)
+            velocity = velocity.normalized * Mathf.Max(_maxSpeed, maxVelThisFrame);
         _previousVelocity = velocity;
         return velocity;
     }
 
     protected override void MakeMove(Vector3 actualVelocity)
     {
-        _services.CharacterController.Move(actualVelocity);
+        _services.CharacterController.Move(actualVelocity * Time.deltaTime);
     }
 
-    // Since in air, this metho should do nothing.
-    protected override Vector3 ApplyForces(Vector3 actualVelocity) => actualVelocity;
-
-#if TESTING
-    private void Start()
+    // Since in air, this method should do nothing.
+    protected override Vector3 ApplyForces(Vector3 actualVelocity)
     {
-        _previousVelocity = Vector3.right * 10 * _maxSpeed;
+        Debug.LogWarning("The method ApplyForces was called on a Flying Kinematic Physics instance. However, this method does nothing. Was this call intended?");
+        return actualVelocity;
     }
 
     private void Update()
     {
-        AccelerationDirection = Vector3.up * Mathf.Sin(_timer);
+#if TESTING
+        DesiredVelocity = Vector3.up * Mathf.Sin(_timer);
         _timer += Time.deltaTime;
-    }
-
 #endif
+        _accelDir = (DesiredVelocity - _previousVelocity).normalized;
+    }
 }
