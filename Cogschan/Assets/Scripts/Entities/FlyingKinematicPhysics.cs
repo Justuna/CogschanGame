@@ -1,3 +1,5 @@
+#define TESTING
+
 using UnityEngine;
 
 public class FlyingKinematicPhysics : KinematicPhysics
@@ -18,17 +20,25 @@ public class FlyingKinematicPhysics : KinematicPhysics
     [Tooltip("The maximum speed of the object under normal conditions. Must be positive.")]
     private float _maxSpeed;
     [SerializeField]
-    [Tooltip("The multiplier applied to the velocity of the object at high speeds. Must be between 0 and 1.")]
+    [Tooltip("The multiplier applied to the velocity of the object at high speeds every second. Must be between 0 (no drag) and 1 (complete drag).")]
     [Range(0, 1)]
     private float _dragMultiplier;
+
+#if TESTING
+    private float _timer;
+#endif
 
     private Vector3 _accelDir;
 
     protected override Vector3 PickVelocity()
     {
+#if TESTING
+        if (_timer <= Time.deltaTime)
+            return Vector3.right * 10 * _maxSpeed;
+#endif
         Vector3 velocity = _previousVelocity + _accelDir * _maxAccel;
-        if (velocity.magnitude > _maxSpeed)
-            velocity *= Mathf.Min(_previousVelocity.magnitude / velocity.magnitude, _dragMultiplier);
+        if (velocity.magnitude > _maxSpeed * _accelDir.magnitude)
+            velocity *= Mathf.Max(_maxSpeed * _accelDir.magnitude / velocity.magnitude, Mathf.Pow(1 -_dragMultiplier, Time.deltaTime));
         _previousVelocity = velocity;
         return velocity;
     }
@@ -40,4 +50,18 @@ public class FlyingKinematicPhysics : KinematicPhysics
 
     // Since in air, this metho should do nothing.
     protected override Vector3 ApplyForces(Vector3 actualVelocity) => actualVelocity;
+
+#if TESTING
+    private void Start()
+    {
+        _previousVelocity = Vector3.right * 10 * _maxSpeed;
+    }
+
+    private void Update()
+    {
+        AccelerationDirection = Vector3.up * Mathf.Sin(_timer);
+        _timer += Time.deltaTime;
+    }
+
+#endif
 }

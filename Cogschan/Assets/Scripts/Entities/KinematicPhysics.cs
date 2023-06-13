@@ -88,6 +88,9 @@ public abstract class KinematicPhysics : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Removes the component of the velocity parralel to the given component.
+    /// </summary>
     public void RemoveComponent(Vector3 component)
     {
         component = component.normalized;
