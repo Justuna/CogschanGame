@@ -11963,7 +11963,7 @@ MonoBehaviour:
   _services: {fileID: 3424766857740342337}
   _mass: 10
   DesiredVelocity: {x: 0, y: 0, z: 0}
-  _maxAccel: 0.5
+  _acceleration: 0.5
   _maxSpeed: 1
   _dragMultiplier: 0.787
 --- !u!1 &3424766857276287632
