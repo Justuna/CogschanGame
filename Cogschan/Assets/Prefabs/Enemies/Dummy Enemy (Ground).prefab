@@ -86,6 +86,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7141802876199917094}
   - component: {fileID: 1095272810402876813}
+  - component: {fileID: 8822921928947837377}
   m_Layer: 6
   m_Name: Health Tracker
   m_TagString: Untagged
@@ -121,6 +122,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 20
+--- !u!114 &8822921928947837377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754363548816795228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bee0c96d733b0b4dac77621221141d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _services: {fileID: 4028257471934700786}
 --- !u!1 &2898720146758116805
 GameObject:
   m_ObjectHideFlags: 0
@@ -1139,6 +1153,9 @@ MonoBehaviour:
   LOSChecker: {fileID: 4028257471396374109}
   NavMeshAgent: {fileID: 4028257471934700783}
   GroundedAI: {fileID: 4028257470974038894}
+  PointGraph: {fileID: 0}
+  Jangling: {fileID: 0}
+  JanglingAI: {fileID: 0}
 --- !u!1 &4028257471937635598
 GameObject:
   m_ObjectHideFlags: 0
@@ -1502,7 +1519,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
-  _isImmediate: 0
+  _isImmediate: 1
   _barVelocity: 5
 --- !u!1 &6802807857965199744
 GameObject:
