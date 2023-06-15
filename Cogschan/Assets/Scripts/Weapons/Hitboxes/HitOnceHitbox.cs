@@ -4,6 +4,7 @@ using UnityEngine.Events;
 /// <summary>
 /// A hitbox that destroys itself and its object immediately after overlapping a hurtbox or level object. Cannot trigger more than once.
 /// </summary>
+[RequireComponent(typeof(Collider))]
 public class HitOnceHitbox : Hitbox
 {
     [Tooltip("The damage that this hitbox should deal.")]

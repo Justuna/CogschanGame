@@ -2,7 +2,7 @@
 using UnityEngine.Events;
 
 /// <summary>
-/// A script dedicated for holding information about damage sources/healing sources. Requires a kinematic rigidbody and a trigger collider.
+/// A script dedicated for holding information about damage sources/healing sources. Requires a kinematic rigidbody and (usually) a trigger collider.
 /// </summary>
 [RequireComponent (typeof(Rigidbody))]
 public abstract class Hitbox : MonoBehaviour
