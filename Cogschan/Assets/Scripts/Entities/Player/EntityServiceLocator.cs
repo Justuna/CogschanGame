@@ -25,4 +25,7 @@ public class EntityServiceLocator : MonoBehaviour
     [Header("Ground Enemies Only")]
     public NavMeshAgent NavMeshAgent;
     public GroundedEnemyAI GroundedAI;
+
+    [Header("Flying Enemies Only")]
+    public FlyingEnemyAI FlyingAI;
 }
