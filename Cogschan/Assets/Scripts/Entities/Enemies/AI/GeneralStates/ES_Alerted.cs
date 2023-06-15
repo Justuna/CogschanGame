@@ -22,8 +22,11 @@ public class ES_Alerted : MonoBehaviour, IEnemyState
 
         Vector3 lookDir = (_services.LOSChecker.LastSeenPosition - transform.position).normalized;
         lookDir.y = 0;
-        _services.Model.transform.rotation = Quaternion.Lerp(_services.Model.transform.rotation, Quaternion.LookRotation(lookDir),
+        if (_services.GroundedAI != null)
+            _services.Model.transform.rotation = Quaternion.Lerp(_services.Model.transform.rotation, Quaternion.LookRotation(lookDir),
                 Time.deltaTime * _services.GroundedAI.TurnSpeed);
+        else
+            _services.Model.transform.rotation = Quaternion.LookRotation(lookDir);
 
         if (_alertTimer > 0)
         {

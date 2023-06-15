@@ -29,6 +29,15 @@ public abstract class FlyingEnemyAI : MonoBehaviour
         es_Patrol.Bored += PatrolToConfused;
         es_Chase.LostPlayer += ChaseToConfused;
         es_Chase.InAttackRange += ChaseToAttack;
+
+        _state = es_Confused;
+    }
+
+    protected virtual void Update()
+    {
+        _state.Behavior();
+
+        print(_state.GetType().ToString());
     }
 
     protected virtual void ConfusedToAlerted()

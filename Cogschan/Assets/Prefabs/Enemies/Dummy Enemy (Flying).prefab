@@ -346,7 +346,7 @@ MonoBehaviour:
   LOSChecker: {fileID: 723379264093828479}
   NavMeshAgent: {fileID: 0}
   GroundedAI: {fileID: 0}
-  FlyingAI: {fileID: 0}
+  FlyingAI: {fileID: 7258594435129910290}
 --- !u!1 &723379263735601430
 GameObject:
   m_ObjectHideFlags: 0

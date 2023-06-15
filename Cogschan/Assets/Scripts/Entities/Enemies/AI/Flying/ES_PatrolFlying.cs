@@ -21,6 +21,8 @@ public class ES_PatrolFlying : ES_Patrol
             pointIsValid = !Physics.Raycast(ray, dir.magnitude, _solidMask);
         }
         _patrolPoint =  point;
+        _hasSetPatrolPoint = true;
+        _boredTimer = _timeUntilBored;
 
     }
 

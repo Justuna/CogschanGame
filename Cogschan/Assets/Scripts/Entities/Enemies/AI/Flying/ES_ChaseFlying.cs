@@ -17,8 +17,11 @@ public class ES_ChaseFlying : MonoBehaviour, IEnemyState
         {
             Vector3 displacement = _services.LOSChecker.LastSeenPosition - transform.position;
             if (displacement.magnitude > _attackRange)
+            {
                 _services.KinematicPhysics.DesiredVelocity =
                     displacement.normalized * _services.FlyingAI.Speed;
+                _services.Model.transform.rotation = Quaternion.LookRotation(displacement);
+            }
             else
                 InAttackRange();
         }
