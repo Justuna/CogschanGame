@@ -2,8 +2,10 @@
 
 public class TestInteractable : Interactable
 {
+    public GameObject Prefab; 
+
     protected override void InteractInternal(EntityServiceLocator services)
     {
-        Debug.Log("Greetings, " + services.name + "! It's me, your friend " + name + "!");
+        Instantiate(Prefab, transform.position, Quaternion.identity);
     }
 }

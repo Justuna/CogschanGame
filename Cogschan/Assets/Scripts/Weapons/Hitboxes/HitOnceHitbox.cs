@@ -6,6 +6,8 @@ using UnityEngine.Events;
 /// </summary>
 public class HitOnceHitbox : Hitbox
 {
+    [Tooltip("The damage that this hitbox should deal.")]
+    [SerializeField] protected int _damage;
     [Tooltip("The impulse to be delivered to the owner of the hurtbox upon receiving damage. Does not trigger if the vector is zero.")]
     [SerializeField] private Vector3 _impulse = Vector3.zero;
     [Tooltip("Whether or not the impulse can cancel a velocity override on the owner of the hurtbox.")]
