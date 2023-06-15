@@ -6,10 +6,25 @@ using UnityEngine;
 public static class Vector3Extensions
 {
     /// <summary>
+    /// Converts a cylindrical vector (rho, phi, z) to a cartesian vector (x, y, z).
+    /// </summary>
+    /// <remarks>
+    /// In this case, rho refers to the radial distance (rho &gt;= 0), phi to the azimuth (0 &lt;= phi &lt; 2pi), and z to the height. <br/>
+    /// Note that, in Unity's cartesian coordinates, y refers to the height, not z.
+    /// For more info, see https://en.wikipedia.org/wiki/Cylindrical_coordinate_system#Cartesian_coordinates.
+    /// </remarks>
+    public static Vector3 CylindricalToCartesian(this Vector3 cylindrical)
+    {
+        float x = cylindrical.x * Mathf.Cos(cylindrical.y);
+        float y = cylindrical.x * Mathf.Sin(cylindrical.y);
+        return new(x, cylindrical.z, y);
+    }
+
+    /// <summary>
     /// Converts a spherical vector (r, theta, phi) to a cartesian vector (x, y, z).
     /// </summary>
     /// <remarks>
-    /// In this case, r refers to the radius (r &gt;= 0), theta to the inclination (0 &lt;= theta &lt;= pi), and phi to the azimuth (0 &lt;= phi &lt;= 2pi). <br/>
+    /// In this case, r refers to the radius (r &gt;= 0), theta to the inclination (0 &lt;= theta &lt;= pi), and phi to the azimuth (0 &lt;= phi &lt; 2pi). <br/>
     /// For more info, see https://en.wikipedia.org/wiki/Spherical_coordinate_system#Cartesian_coordinates.
     /// </remarks>
     public static Vector3 SphericalToCartesian(this Vector3 spherical)

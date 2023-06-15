@@ -36,8 +36,6 @@ public abstract class FlyingEnemyAI : MonoBehaviour
     protected virtual void Update()
     {
         _state.Behavior();
-
-        print(_state.GetType().ToString());
     }
 
     protected virtual void ConfusedToAlerted()
