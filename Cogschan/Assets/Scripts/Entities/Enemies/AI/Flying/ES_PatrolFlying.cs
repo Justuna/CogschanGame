@@ -9,6 +9,15 @@ public class ES_PatrolFlying : ES_Patrol
     [SerializeField]
     private LayerMask _solidMask;
 
+    private float _groundHeight;
+
+    private void FixedUpdate()
+    {
+        Ray ray = new(transform.position, Vector3.down);
+        Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _solidMask);
+        _groundHeight = transform.position.y - hit.distance;
+    }
+
     protected override void SearchPatrolPoint()
     {
         bool pointIsValid = false;
@@ -17,8 +26,7 @@ public class ES_PatrolFlying : ES_Patrol
         {
             float rho = Random.Range(_minPatrolRange, _maxPatrolRange);
             float phi = Random.Range(0, Mathf.PI) % Mathf.PI;
-            float z = Random.Range(_minPatrolHeight, _maxPatrolHeight) + GetGroundHeight();
-            print(GetGroundHeight());
+            float z = Random.Range(_minPatrolHeight, _maxPatrolHeight) + _groundHeight;
             point = new Vector3(rho, phi, z).CylindricalToCartesian();
 
             Vector3 dir = point - transform.position;
@@ -26,7 +34,6 @@ public class ES_PatrolFlying : ES_Patrol
             pointIsValid = !Physics.Raycast(ray, dir.magnitude, _solidMask);
         }
         _patrolPoint =  point;
-        print(point);
         _hasSetPatrolPoint = true;
         _boredTimer = _timeUntilBored;
 
@@ -37,13 +44,5 @@ public class ES_PatrolFlying : ES_Patrol
         Vector3 moveDir = (_patrolPoint - transform.position).normalized;
         _services.KinematicPhysics.DesiredVelocity = (_patrolPoint - transform.position).normalized * _services.FlyingAI.Speed;
         _services.Model.transform.rotation = Quaternion.LookRotation(moveDir); // TODO: Make this non-instant.
-    }
-
-    private float GetGroundHeight()
-    {
-        Ray ray = new(transform.position, Vector3.down);
-        Physics.Raycast(ray, out RaycastHit hit, float.PositiveInfinity, _solidMask);
-        print(hit.collider.gameObject);
-        return transform.position.y - hit.distance;
     }
 }
