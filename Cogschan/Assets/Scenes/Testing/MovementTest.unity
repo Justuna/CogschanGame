@@ -11445,5 +11445,10 @@ PrefabInstance:
       propertyPath: _playerTarget
       value: 
       objectReference: {fileID: 1918345263}
+    - target: {fileID: 723379264614938595, guid: 4bd37852d3d594d41bfc9b57f821d37f,
+        type: 3}
+      propertyPath: _dragMultiplier
+      value: 0.094
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bd37852d3d594d41bfc9b57f821d37f, type: 3}

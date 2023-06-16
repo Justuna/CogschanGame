@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class HitOnceHitbox : Hitbox
 {
     [Tooltip("The impulse to be delivered to the owner of the hurtbox upon receiving damage. Does not trigger if the vector is zero.")]
-    [SerializeField] private Vector3 _impulse = Vector3.zero;
+    [SerializeField] private float _impulseMagnitude = 0;
     [Tooltip("Whether or not the impulse can cancel a velocity override on the owner of the hurtbox.")]
     [SerializeField] private bool _canCancelOverride = false;
     [Tooltip("How much of the momentum is maintained if this hitbox cancels the velocity override on a hurtbox.")]
@@ -29,8 +29,8 @@ public class HitOnceHitbox : Hitbox
 
             // There is a nonzero possibility that we will have enemies with no physics, so the kinematic physics component might be null
 
-            if (_impulse != Vector3.zero && hurtbox.Services.KinematicPhysics != null) 
-                hurtbox.Services.KinematicPhysics?.AddImpulse(_impulse, _canCancelOverride, _maintainedMomentum);
+            if (_impulseMagnitude != 0 && hurtbox.Services.KinematicPhysics != null) 
+                hurtbox.Services.KinematicPhysics?.AddImpulse(_impulseMagnitude * GetComponent<Rigidbody>().velocity.normalized, _canCancelOverride, _maintainedMomentum);
         }
 
         foreach (GameObject o in _spawnedOnImpact)
