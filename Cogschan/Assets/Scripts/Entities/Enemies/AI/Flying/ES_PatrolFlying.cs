@@ -34,7 +34,8 @@ public class ES_PatrolFlying : ES_Patrol
     {
         Vector3 moveDir = (_patrolPoint - transform.position).normalized;
         _services.KinematicPhysics.DesiredVelocity = (_patrolPoint - transform.position).normalized * _services.FlyingAI.Speed;
-        _services.Model.transform.rotation = Quaternion.LookRotation(moveDir); // TODO: Make this non-instant.
+        _services.Model.transform.rotation = Quaternion.Lerp(_services.Model.transform.rotation, Quaternion.LookRotation(moveDir),
+                Time.deltaTime * _services.FlyingAI.TurnSpeed);
     }
 
     // Determines the height of the ground to use when determining which height to travel to.

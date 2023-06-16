@@ -14,8 +14,10 @@ public abstract class FlyingEnemyAI : MonoBehaviour
     [SerializeField] protected bool _hasMeleeAttack;
     [SerializeField] protected bool _hasRangedAttack;
     [SerializeField] protected float _speed;
+    [SerializeField] protected float _turnSpeed;
 
     public float Speed => _speed;
+    public float TurnSpeed => _turnSpeed;
 
     protected IEnemyState _state;
 

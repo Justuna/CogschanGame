@@ -21,12 +21,17 @@ public class ES_Alerted : MonoBehaviour, IEnemyState
         }
 
         Vector3 lookDir = (_services.LOSChecker.LastSeenPosition - transform.position).normalized;
+        float turnSpeed;
         lookDir.y = 0;
         if (_services.GroundedAI != null)
-            _services.Model.transform.rotation = Quaternion.Lerp(_services.Model.transform.rotation, Quaternion.LookRotation(lookDir),
-                Time.deltaTime * _services.GroundedAI.TurnSpeed);
+        {
+            turnSpeed = _services.GroundedAI.TurnSpeed;
+            lookDir.y = 0;
+        }
         else
-            _services.Model.transform.rotation = Quaternion.LookRotation(lookDir);
+            turnSpeed = _services.FlyingAI.TurnSpeed;
+        _services.Model.transform.rotation = Quaternion.Lerp(_services.Model.transform.rotation, Quaternion.LookRotation(lookDir),
+            Time.deltaTime * turnSpeed);
 
         if (_alertTimer > 0)
         {

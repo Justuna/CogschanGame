@@ -639,6 +639,7 @@ MonoBehaviour:
   _hasMeleeAttack: 0
   _hasRangedAttack: 0
   _speed: 5
+  _turnSpeed: 10
 --- !u!1 &723379264614938526
 GameObject:
   m_ObjectHideFlags: 0

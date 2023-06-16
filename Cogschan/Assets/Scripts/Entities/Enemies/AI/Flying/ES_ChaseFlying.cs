@@ -1,3 +1,4 @@
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 
 public class ES_ChaseFlying : MonoBehaviour, IEnemyState
@@ -20,7 +21,8 @@ public class ES_ChaseFlying : MonoBehaviour, IEnemyState
             {
                 _services.KinematicPhysics.DesiredVelocity =
                     displacement.normalized * _services.FlyingAI.Speed;
-                _services.Model.transform.rotation = Quaternion.LookRotation(displacement);
+                _services.Model.transform.rotation = Quaternion.Lerp(_services.Model.transform.rotation, Quaternion.LookRotation(displacement),
+                Time.deltaTime * _services.FlyingAI.TurnSpeed);
             }
             else
                 InAttackRange();
