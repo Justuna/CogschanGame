@@ -20,7 +20,6 @@ public class ES_ChaseFlying : MonoBehaviour, IEnemyState
             {
                 _services.KinematicPhysics.DesiredVelocity =
                     displacement.normalized * _services.FlyingAI.Speed;
-                print(displacement.normalized * _services.FlyingAI.Speed);
                 _services.Model.transform.rotation = Quaternion.LookRotation(displacement);
             }
             else

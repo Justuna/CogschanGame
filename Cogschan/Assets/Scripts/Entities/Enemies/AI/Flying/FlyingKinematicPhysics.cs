@@ -16,16 +16,11 @@ public class FlyingKinematicPhysics : KinematicPhysics
 
     private Vector3 _accelDir;
 
-#if TESTING
-    private float _timer;
-#endif
-
     protected override Vector3 PickVelocity()
     {
-#if TESTING && HIGH_SPEED
-        if (_timer <= Time.deltaTime)
-            return Vector3.right * 10 * _maxSpeed;
-#endif
+        while (_impulses.Count > 0)
+            _previousVelocity += _impulses.Dequeue() / _mass;
+
         _accelDir = (DesiredVelocity - _previousVelocity).normalized;
         Vector3 velocity = _previousVelocity;
         if (velocity.magnitude > _maxSpeed)
@@ -49,12 +44,4 @@ public class FlyingKinematicPhysics : KinematicPhysics
         Debug.LogWarning("The method ApplyForces was called on a Flying Kinematic Physics instance. However, this method does nothing. Was this call intended?");
         return actualVelocity;
     }
-
-#if TESTING
-    private void Update()
-    {
-        DesiredVelocity = Vector3.up * Mathf.Sin(_timer);
-        _timer += Time.deltaTime;
-    }
-#endif
 }
