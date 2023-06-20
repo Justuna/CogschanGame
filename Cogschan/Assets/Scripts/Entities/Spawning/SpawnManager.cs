@@ -23,7 +23,7 @@ public class SpawnManager : MonoBehaviour
     private float _maxSpawnInterval;
     [SerializeField]
     [Tooltip("The weighting of the categories. Must contain at least one non-zero value and no negative values.")]
-    private float[] _catWeights;
+    private float[] _categoryWeights;
 
     [Header("Credit parameters")]
     [SerializeField]
@@ -39,10 +39,11 @@ public class SpawnManager : MonoBehaviour
     private FiniteDistribution<SpawnCategory> _categoryDist;
     private float _spawnTimer = 0;
     private float _spawnInterval;
+    private bool _isFirstSpawn = true;
 
     private void Start()
     {
-        _categoryDist = new((SpawnCategory[])Enum.GetValues(typeof(SpawnCategory)), _catWeights);
+        _categoryDist = new((SpawnCategory[])Enum.GetValues(typeof(SpawnCategory)), _categoryWeights);
         ResetSpawnInterval();
     }
 
@@ -59,8 +60,19 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    // Randomize the spawn interaval and reset the timer..
-    private void ResetSpawnInterval()
+    /// <summary>
+    /// The method called for the first spawn event.
+    /// </summary>
+    /// <returns> Whether or not the spawn was successful. </returns>
+    protected virtual bool FirstSpawn()
+    {
+        return Spawn();
+    }
+
+    /// <summary>
+    /// Randomize the spawn interaval and reset the timer..
+    /// </summary>
+    protected virtual void ResetSpawnInterval()
     {
         _spawnInterval = UnityEngine.Random.Range(_minSpawnInterval, _maxSpawnInterval);
         _spawnTimer = 0;
@@ -69,6 +81,14 @@ public class SpawnManager : MonoBehaviour
     // Tries to spawn an object at the location of the manager.
     private bool Spawn()
     {
+        // If the first spawn event, run that method instead.
+        if (_isFirstSpawn)
+        {
+            _isFirstSpawn = false;
+            return FirstSpawn();
+        }
+        
+        // Select a random category and verify that there are valid spawns.
         FiniteDistribution<SpawnCategory> dist = _categoryDist;
         List<SpawnInfo> spawnsInCat = new();
         List<float> spawnWeights = new();
@@ -91,6 +111,8 @@ public class SpawnManager : MonoBehaviour
                 return false; // No more valid categories.
             dist = dist.Ignore(category);
         }
+
+        // Spawn an object at random.
         SpawnInfo selectedSpawn = new FiniteDistribution<SpawnInfo>(spawnsInCat, spawnWeights).GetRandomValue();
         _credits -= selectedSpawn.Cost;
         selectedSpawn.Spawner.Spawn(transform.position);
