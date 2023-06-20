@@ -30,4 +30,7 @@ public class EntityServiceLocator : MonoBehaviour
     public PointGraph PointGraph;
     public Transform Jangling;
     public JanglingAI JanglingAI;
+
+    [Header("Flying Enemies Only")]
+    public FlyingEnemyAI FlyingAI;
 }

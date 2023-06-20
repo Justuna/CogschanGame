@@ -473,7 +473,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4028257470515962417}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1941085d1dd7624ab13537f863892fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 44bf52908b437674c8f27d92cc08c537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _services: {fileID: 4028257471934700786}
@@ -520,7 +520,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4028257470562818137}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f42a6f533451d584589be8ec5c44adea, type: 3}
+  m_Script: {fileID: 11500000, guid: f431c80ad3555754fa2ede8745efb98c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4028257470631880238
@@ -564,7 +564,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4028257470631880238}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a02be248d3cb7440ad989da3631a8e6, type: 3}
+  m_Script: {fileID: 11500000, guid: 51aa0367c80def44a9fa78963075a80a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _services: {fileID: 4028257471934700786}
@@ -720,7 +720,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4028257471150577326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b45a75dcd68f2774a93a7d4569f567b5, type: 3}
+  m_Script: {fileID: 11500000, guid: 0af4d703712aede478c3c096bef1dd20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _services: {fileID: 4028257471934700786}
@@ -822,7 +822,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4028257471373851099}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df41857c5ee01334c99b84686a36edd6, type: 3}
+  m_Script: {fileID: 11500000, guid: b1e88c50ee889be49b8b5e8713a8b392, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4028257471385274391
@@ -1153,6 +1153,7 @@ MonoBehaviour:
   LOSChecker: {fileID: 4028257471396374109}
   NavMeshAgent: {fileID: 4028257471934700783}
   GroundedAI: {fileID: 4028257470974038894}
+  FlyingAI: {fileID: 0}
   PointGraph: {fileID: 0}
   Jangling: {fileID: 0}
   JanglingAI: {fileID: 0}

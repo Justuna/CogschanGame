@@ -88,6 +88,9 @@ public abstract class KinematicPhysics : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Removes the component of the velocity parralel to the given component.
+    /// </summary>
     public void RemoveComponent(Vector3 component)
     {
         component = component.normalized;
@@ -108,7 +111,7 @@ public abstract class KinematicPhysics : MonoBehaviour
 
     // Accelerates velocity downward based on strength of gravity.
     // If on a steep slope, also applies normal force.
-    protected Vector3 ApplyForces(Vector3 actualVelocity)
+    protected virtual Vector3 ApplyForces(Vector3 actualVelocity)
     {
         Vector3 gravity = Vector3.down * PhysicsConstantSingleton.Instance.GravityAcceleration * Time.deltaTime;
         actualVelocity += gravity;
