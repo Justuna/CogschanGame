@@ -110,6 +110,8 @@ public class SpawnManager : MonoBehaviour
             if (dist.SampleSpaceCount == 1)
                 return false; // No more valid categories.
             dist = dist.Ignore(category);
+            spawnsInCat = new();
+            spawnWeights = new();
         }
 
         // Spawn an object at random.
