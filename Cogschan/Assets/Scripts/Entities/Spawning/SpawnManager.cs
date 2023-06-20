@@ -49,8 +49,8 @@ public class SpawnManager : MonoBehaviour
 
     private void Update()
     {
-        _credits += _creditAddRate;
-        _creditAddRate += _creditAddRateRate;
+        _credits += _creditAddRate * Time.deltaTime;
+        _creditAddRate += _creditAddRateRate * Time.deltaTime;
         _spawnTimer += Time.deltaTime;
 
         if (_spawnTimer >= _spawnInterval)
@@ -70,7 +70,7 @@ public class SpawnManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Randomize the spawn interaval and reset the timer..
+    /// Randomize the spawn interaval and reset the timer.
     /// </summary>
     protected virtual void ResetSpawnInterval()
     {
