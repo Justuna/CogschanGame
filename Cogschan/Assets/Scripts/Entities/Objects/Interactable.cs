@@ -11,11 +11,11 @@ public abstract class Interactable : MonoBehaviour
 {
     [Tooltip("Whether or not the entity will be forced to interact upon entering the interaction area. If false, the entity must opt-in instead. For the player," +
         "this means pressing the interact button.")]
-    [SerializeField] private bool _forcedInteraction;
+    [SerializeField] protected bool _forcedInteraction;
     [Tooltip("Whether or not the interaction is limited to the player.")]
-    [SerializeField] private bool _playerOnly;
+    [SerializeField] protected bool _playerOnly;
     [Tooltip("The message displayed to the player when they overlap the interaction area. If the interaction is forced, this does not display.")]
-    [SerializeField] private string _optInMessage = "Press E to interact.";
+    [SerializeField] protected string _optInMessage = "Press E to interact.";
 
     /// <summary>
     /// Whether or not the player will be forced to interact upon entering the interaction area. If false, the player must opt-in instead by pressing 

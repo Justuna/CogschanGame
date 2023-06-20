@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Singleton holding all of the global game state.
@@ -38,7 +39,19 @@ public class GameStateSingleton : MonoBehaviour
     /// <summary>
     /// An event that fires when Cogschan acquires all of the keys necessary to progress.
     /// </summary>
-    public CogschanSimpleEvent GotAllKeys;
+    /// <remarks>
+    /// Does not use <c>CogschanSimpleEvent</c> because we want to be able to define the listeners in the inspector for this event.
+    /// </remarks>
+    public UnityEvent GotAllKeys = new UnityEvent();
+    /// <summary>
+    /// An event that fires when Cogschan actually deposits all of the keys.
+    /// </summary>
+    /// <remarks>
+    /// Does not use <c>CogschanSimpleEvent</c> because we want to be able to define the listeners in the inspector for this event.
+    /// </remarks>
+    public UnityEvent LevelClear = new UnityEvent();
+
+    private bool _levelCleared = false;
 
     /// <summary>
     /// Increments the amount of keys that the player has in possession.
@@ -47,5 +60,17 @@ public class GameStateSingleton : MonoBehaviour
     {
         KeyCount++;
         if (KeyCount == _keysNeeded) GotAllKeys?.Invoke();
+    }
+
+    /// <summary>
+    /// Initiates game victory handlers.
+    /// </summary>
+    public void ClearLevel()
+    {
+        if (_levelCleared) return;
+
+        Debug.Log("Victory!~");
+        _levelCleared = true;
+        LevelClear?.Invoke();
     }
 }
