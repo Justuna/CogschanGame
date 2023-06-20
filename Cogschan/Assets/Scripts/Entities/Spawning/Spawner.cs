@@ -8,7 +8,7 @@ public abstract class Spawner : MonoBehaviour
     /// <summary>
     /// The spawn info for the spawner.
     /// </summary>
-    public SpawnInfo SpawnInfo;
+    public abstract SpawnInfo SpawnInfo { get; }
 
 
     /// <summary>
