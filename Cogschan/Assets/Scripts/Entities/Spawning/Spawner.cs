@@ -3,8 +3,14 @@ using UnityEngine;
 /// <summary>
 /// The abstract class for objects which are capable of spawning other objects.
 /// </summary>
-public abstract class Spawner
+public abstract class Spawner : MonoBehaviour
 {
+    /// <summary>
+    /// The spawn info for the spawner.
+    /// </summary>
+    public SpawnInfo SpawnInfo;
+
+
     /// <summary>
     /// Spawns the object at the requested position.
     /// </summary>

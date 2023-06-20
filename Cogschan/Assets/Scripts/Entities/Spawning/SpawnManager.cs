@@ -5,9 +5,9 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     /// <summary>
-    /// The set of <see cref="SpawnCategory"/>s the manager chooses from.
+    /// The set of <see cref="SpawnInfo"/>s the manager chooses from.
     /// </summary>
-    public readonly HashSet<SpawnCategory> Categories = new();
+    public readonly HashSet<SpawnInfo> Spawns = new();
 
     [Header("Spawn parameters")]
     [SerializeField]
@@ -59,8 +59,8 @@ public class SpawnManager : MonoBehaviour
     // Tries to spawn an object at the location of the manager.
     private bool Spawn()
     {
-        float totalWeight = 0;
-        List<(SpawnCategory, float)> boundaries = new();
+        /*float totalWeight = 0;
+        List<(S, float)> boundaries = new();
         foreach (SpawnCategory cat in Categories)
         {
             if (!cat.ContainsValidSpawns(_credits))
@@ -85,6 +85,7 @@ public class SpawnManager : MonoBehaviour
 
         _credits -= spawn.Cost;
         spawn.Spawner.Spawn(transform.position);
-        return true;
+        return true;*/
+        throw new System.NotImplementedException();
     }
 }

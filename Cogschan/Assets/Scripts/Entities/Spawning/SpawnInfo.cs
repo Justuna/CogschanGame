@@ -25,6 +25,10 @@ public readonly struct SpawnInfo
     /// The condition that must be met for this spawn to be selected.
     /// </summary>
     public readonly Func<bool> Condition;
+    /// <summary>
+    /// The category of the spawned object.
+    /// </summary>
+    public readonly SpawnCategory Category;
 
     /// <summary>
     /// Constructor for <see cref="SpawnInfo"/>.
@@ -34,7 +38,7 @@ public readonly struct SpawnInfo
     /// <param name="weight"> The relative frequency of this spawn being selected. Must be nonnegative. </param>
     /// <param name="condition"> The condition that must be met for this spawn to be selected. </param>
     /// <exception cref="ArgumentOutOfRangeException"> Thrown if the parameters do not meet the stated preconditions.</exception>
-    public SpawnInfo(Spawner spawner, float cost, float weight, Func<bool> condition)
+    public SpawnInfo(Spawner spawner, float cost, float weight, Func<bool> condition, SpawnCategory category)
     {
         if (cost <= 0)
             throw new ArgumentOutOfRangeException(nameof(cost), "The cost must be positive.");
@@ -45,6 +49,7 @@ public readonly struct SpawnInfo
         Cost = cost;
         Weight = weight;
         Condition = condition;
+        Category = category;
     }
 
     /// <summary>
@@ -56,7 +61,7 @@ public readonly struct SpawnInfo
     {
         if (newWeight < 0)
             throw new ArgumentOutOfRangeException(nameof(newWeight), "The new weight must be nonnegative.");
-        return new(Spawner, Cost, newWeight, Condition);
+        return new(Spawner, Cost, newWeight, Condition, Category);
     }
 
     /// <summary>
@@ -65,4 +70,14 @@ public readonly struct SpawnInfo
     /// <param name="budget"> The number of availible credits.</param>
     /// <returns></returns>
     public bool IsPurchasable(float budget) => Cost <= budget && Condition() && Weight != 0;
+
+    public void AddToManager(SpawnManager manager)
+    {
+        manager.Spawns.Add(this);
+    }
+
+    public enum SpawnCategory
+    {
+
+    }
 }
