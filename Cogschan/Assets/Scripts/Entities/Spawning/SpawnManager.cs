@@ -69,28 +69,31 @@ public class SpawnManager : MonoBehaviour
     // Tries to spawn an object at the location of the manager.
     private bool Spawn()
     {
-        SpawnCategory category = _categoryDist.GetRandomValue();
+        FiniteDistribution<SpawnCategory> dist = _categoryDist;
         List<SpawnInfo> spawnsInCat = new();
         List<float> spawnWeights = new();
-        foreach (SpawnInfo spawn in Spawns)
+        bool spawnPossible = false;
+        while (true)
         {
-            if (spawn.IsPurchasable(_credits) && spawn.Category == category)
+            SpawnCategory category = dist.GetRandomValue();
+            foreach (SpawnInfo spawn in Spawns)
             {
-                spawnsInCat.Add(spawn);
-                spawnWeights.Add(spawn.Weight);
+                if (spawn.IsPurchasable(_credits) && spawn.Category == category)
+                {
+                    spawnsInCat.Add(spawn);
+                    spawnWeights.Add(spawn.Weight);
+                    spawnPossible = true;
+                }
             }
+            if (spawnPossible)
+                break;
+            if (dist.SampleSpaceCount == 1)
+                return false; // No more valid categories.
+            dist = dist.Ignore(category);
         }
-
-        try
-        {
-            SpawnInfo selectedSpawn = new FiniteDistribution<SpawnInfo>(spawnsInCat, spawnWeights).GetRandomValue();
-            _credits -= selectedSpawn.Cost;
-            selectedSpawn.Spawner.Spawn(transform.position);
-            return true;
-        }
-        catch (ArgumentException)
-        {
-            return false;
-        }
+        SpawnInfo selectedSpawn = new FiniteDistribution<SpawnInfo>(spawnsInCat, spawnWeights).GetRandomValue();
+        _credits -= selectedSpawn.Cost;
+        selectedSpawn.Spawner.Spawn(transform.position);
+        return true;
     }
 }

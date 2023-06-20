@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 /// <summary>
 /// Models a distribution with a finite sample space.
@@ -11,6 +12,11 @@ public readonly struct FiniteDistribution<T>
     private readonly ReadOnlyCollection<T> _sampleSpace;
     private readonly ReadOnlyCollection<float> _weights;
     private readonly static Random s_random = new();
+
+    /// <summary>
+    /// The amount of possibilities in the sample space.
+    /// </summary>
+    public int SampleSpaceCount => _sampleSpace.Count;
 
     /// <summary>
     /// Constructor for <see cref="FiniteDistribution{T}"/>
@@ -52,5 +58,32 @@ public readonly struct FiniteDistribution<T>
             i++;
         }
         return _sampleSpace[i];
+    }
+
+    /// <summary>
+    /// Returns whether or not the given <paramref name="element"/> is a member of the sample space.
+    /// </summary>
+    public bool IsInSampleSpace(T element) => _sampleSpace.Contains(element);
+
+    /// <summary>
+    /// Returns a new <see cref="FiniteDistribution{T}"/> which one element removed.
+    /// </summary>
+    /// <exception cref="ArgumentException"> Thrown when the given <paramref name="element"/> is not in the sample space.</exception>
+    /// <exception cref="InvalidOperationException"> Thrown when removing the element would result in an empty sample space. </exception>
+    public FiniteDistribution<T> Ignore(T element)
+    {
+        int index = _sampleSpace.IndexOf(element);
+        if (index == -1)
+            throw new ArgumentException("The given element is not in the sample space", nameof(element));
+        if (SampleSpaceCount == 1)
+            throw new InvalidOperationException("The resulting distribution would have an empty sample space.");
+
+
+        List<T> newSampleSpace = _sampleSpace.ToList();
+        newSampleSpace.Remove(element);
+        List<float> newWeights = _weights.ToList();
+        newWeights.RemoveAt(index);
+
+        return new(newSampleSpace, newWeights);
     }
 }
