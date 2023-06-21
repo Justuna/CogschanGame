@@ -1,33 +1,35 @@
 ﻿using System;
+using UnityEngine;
 
 /// <summary>
 /// Contains the information required to spawn an object.
 /// </summary>
-public readonly struct SpawnInfo
+[Serializable]
+public struct SpawnInfo
 {
     /// <summary>
     /// The <see cref="global::Spawner"/> used to spawn the associated object.
     /// </summary>
-    public readonly Spawner Spawner;
+    [SerializeField]
+    public Spawner Spawner;
     /// <summary>
     /// The cost of the object.
     /// </summary>
-    public readonly float Cost;
+    [SerializeField]
+    public float Cost;
     /// <summary>
     /// The relative frequency of this spawn being selected.
     /// </summary>
     /// <remarks>
     /// The weights of all objects in the collection does not have to equal one; rather, the weight will be scaled by the total weight in the selection algorithm.
     /// </remarks>
-    public readonly float Weight;
-    /// <summary>
-    /// The condition that must be met for this spawn to be selected.
-    /// </summary>
-    public readonly Func<bool> Condition;
+    [SerializeField]
+    public float Weight;
     /// <summary>
     /// The category of the spawned object.
     /// </summary>
-    public readonly SpawnCategory Category;
+    [SerializeField]
+    public SpawnCategory Category;
 
     /// <summary>
     /// Constructor for <see cref="SpawnInfo"/>.
@@ -35,9 +37,8 @@ public readonly struct SpawnInfo
     /// <param name="spawner"> The <see cref="global::Spawner"/> used to spawn the associated object.</param>
     /// <param name="cost"> The cost of the object. Must be positive. </param>
     /// <param name="weight"> The relative frequency of this spawn being selected. Must be nonnegative. </param>
-    /// <param name="condition"> The condition that must be met for this spawn to be selected. </param>
     /// <exception cref="ArgumentOutOfRangeException"> Thrown if the parameters do not meet the stated preconditions.</exception>
-    public SpawnInfo(Spawner spawner, float cost, float weight, Func<bool> condition, SpawnCategory category)
+    public SpawnInfo(Spawner spawner, float cost, float weight, SpawnCategory category)
     {
         if (cost <= 0)
             throw new ArgumentOutOfRangeException(nameof(cost), "The cost must be positive.");
@@ -47,7 +48,6 @@ public readonly struct SpawnInfo
         Spawner = spawner;
         Cost = cost;
         Weight = weight;
-        Condition = condition;
         Category = category;
     }
 
@@ -60,7 +60,7 @@ public readonly struct SpawnInfo
     {
         if (newWeight < 0)
             throw new ArgumentOutOfRangeException(nameof(newWeight), "The new weight must be nonnegative.");
-        return new(Spawner, Cost, newWeight, Condition, Category);
+        return new(Spawner, Cost, newWeight, Category);
     }
 
     /// <summary>
@@ -68,7 +68,7 @@ public readonly struct SpawnInfo
     /// </summary>
     /// <param name="budget"> The number of availible credits.</param>
     /// <returns></returns>
-    public bool IsPurchasable(float budget) => Cost <= budget && Condition() && Weight != 0;
+    public bool IsPurchasable(float budget) => Cost <= budget && Weight != 0;
 
     public void AddToManager(SpawnManager manager)
     {
@@ -77,6 +77,6 @@ public readonly struct SpawnInfo
 
     public enum SpawnCategory
     {
-
+        Enemy,
     }
 }

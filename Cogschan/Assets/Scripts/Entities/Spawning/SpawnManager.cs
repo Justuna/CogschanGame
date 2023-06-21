@@ -34,7 +34,7 @@ public class SpawnManager : MonoBehaviour
     [Tooltip("The rate at which credits are initially added to the Spawn Manager. Must be nonnegative.")]
     private float _creditAddRate;
     [Tooltip("The rate at which the rate at which credits are added to the Spawn Manager increases. Essentially the second derivative of credits. Must be nonnegative.")]
-    private readonly float _creditAddRateRate;
+    private float _creditAddRateRate;
 
     private FiniteDistribution<SpawnCategory> _categoryDist;
     private float _spawnTimer = 0;
