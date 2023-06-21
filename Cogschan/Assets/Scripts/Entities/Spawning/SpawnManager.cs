@@ -29,12 +29,12 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     [Tooltip("The initial amount of credits. Must be nonnegative.")]
     private float _credits = 0;
+    [Header("Credit Parameters")]
     [SerializeField]
     [Tooltip("The rate at which credits are initially added to the Spawn Manager. Must be nonnegative.")]
     private float _creditAddRate;
-    [SerializeField]
     [Tooltip("The rate at which the rate at which credits are added to the Spawn Manager increases. Essentially the second derivative of credits. Must be nonnegative.")]
-    private float _creditAddRateRate;
+    private readonly float _creditAddRateRate;
 
     private FiniteDistribution<SpawnCategory> _categoryDist;
     private float _spawnTimer = 0;
@@ -55,7 +55,7 @@ public class SpawnManager : MonoBehaviour
 
         if (_spawnTimer >= _spawnInterval)
         {
-            while (Spawn()) { continue; }
+            while (Spawn()) { }
             ResetSpawnInterval();
         }
     }
@@ -117,7 +117,7 @@ public class SpawnManager : MonoBehaviour
         // Spawn an object at random.
         SpawnInfo selectedSpawn = new FiniteDistribution<SpawnInfo>(spawnsInCat, spawnWeights).GetRandomValue();
         _credits -= selectedSpawn.Cost;
-        selectedSpawn.Spawner.Spawn(transform.position); // TODO: Have better position code.
+        selectedSpawn.Spawner.Spawn(transform.position);
         return true;
     }
 }

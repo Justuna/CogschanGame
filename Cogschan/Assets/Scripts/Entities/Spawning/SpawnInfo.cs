@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 
 /// <summary>
 /// Contains the information required to spawn an object.
@@ -22,6 +21,10 @@ public readonly struct SpawnInfo
     /// </remarks>
     public readonly float Weight;
     /// <summary>
+    /// The condition that must be met for this spawn to be selected.
+    /// </summary>
+    public readonly Func<bool> Condition;
+    /// <summary>
     /// The category of the spawned object.
     /// </summary>
     public readonly SpawnCategory Category;
@@ -32,8 +35,9 @@ public readonly struct SpawnInfo
     /// <param name="spawner"> The <see cref="global::Spawner"/> used to spawn the associated object.</param>
     /// <param name="cost"> The cost of the object. Must be positive. </param>
     /// <param name="weight"> The relative frequency of this spawn being selected. Must be nonnegative. </param>
+    /// <param name="condition"> The condition that must be met for this spawn to be selected. </param>
     /// <exception cref="ArgumentOutOfRangeException"> Thrown if the parameters do not meet the stated preconditions.</exception>
-    public SpawnInfo(Spawner spawner, float cost, float weight, SpawnCategory category)
+    public SpawnInfo(Spawner spawner, float cost, float weight, Func<bool> condition, SpawnCategory category)
     {
         if (cost <= 0)
             throw new ArgumentOutOfRangeException(nameof(cost), "The cost must be positive.");
@@ -43,6 +47,7 @@ public readonly struct SpawnInfo
         Spawner = spawner;
         Cost = cost;
         Weight = weight;
+        Condition = condition;
         Category = category;
     }
 
@@ -55,7 +60,7 @@ public readonly struct SpawnInfo
     {
         if (newWeight < 0)
             throw new ArgumentOutOfRangeException(nameof(newWeight), "The new weight must be nonnegative.");
-        return new(Spawner, Cost, newWeight, Category);
+        return new(Spawner, Cost, newWeight, Condition, Category);
     }
 
     /// <summary>
@@ -63,23 +68,15 @@ public readonly struct SpawnInfo
     /// </summary>
     /// <param name="budget"> The number of availible credits.</param>
     /// <returns></returns>
-    public bool IsPurchasable(float budget) => Cost <= budget && Weight != 0;
+    public bool IsPurchasable(float budget) => Cost <= budget && Condition() && Weight != 0;
 
-    /// <summary>
-    /// Adds the spawn info to the <paramref name="manager"/>.
-    /// </summary>
     public void AddToManager(SpawnManager manager)
     {
         manager.Spawns.Add(this);
     }
 
-    public void Spawn(Vector3 position) => Spawner.Spawn(position);
-
-    /// <summary>
-    /// The possible categories the spawn info can have.
-    /// </summary>
     public enum SpawnCategory
     {
-        Player,
+
     }
 }
