@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EnemySpawner : Spawner
 {
+    [Header("Spawned object parameters")]
     [SerializeField]
     [Tooltip("The prefab to be spawned.")]
     private GameObject _prefab;
@@ -11,6 +12,20 @@ public class EnemySpawner : Spawner
     [SerializeField]
     [Tooltip("A list of spawn managers to add the spawn card to.")]
     private SpawnManager[] _spawnManagers;
+
+    [Header("Spawn position parameters")]
+    [SerializeField]
+    [Tooltip("The minimum distance from the spawn point the object can spawn.")]
+    private float _minimumRadius;
+    [SerializeField]
+    [Tooltip("The maximum distance from the spawn point the object can spawn.")]
+    private float _maximumRadius;
+    [SerializeField]
+    [Tooltip("The height at which the object is spawned.")]
+    private float _height;
+    [SerializeField]
+    [Tooltip("Whether or not the object should attempt to be spawned not over the skybox.")]
+    private bool _shouldAvoidSkybox;
 
     public override SpawnInfo SpawnInfo => _spawnInfo;
 
@@ -22,6 +37,18 @@ public class EnemySpawner : Spawner
 
     public override void Spawn(Vector3 position)
     {
+        for (int i = 0; i < Constants.MAX_ITER; i++)
+        {
+            float radius = Random.Range(_minimumRadius, _maximumRadius);
+            float theta = Random.Range(0, 2 * Mathf.PI);
+            Vector3 spawnPos = new Vector3(radius, theta).CylindricalToCartesian() + position;
+            spawnPos.y = GroundFinder.HeightOfGround(spawnPos) + _height;
+            if (GroundFinder.IsOverGround(position) || !_shouldAvoidSkybox)
+            {
+                position = spawnPos;
+                break;
+            }
+        }
         Instantiate(_prefab, position, Quaternion.identity);
     }
 }

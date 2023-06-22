@@ -2,6 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+#region Constants
+/// <summary>
+/// A collection of global constants.
+/// </summary>
+public static class Constants
+{
+    /// <summary>
+    /// The maximum number of iterations for loops that may otherwise never terminate.
+    /// </summary>
+    public const int MAX_ITER = 1024;
+}
+#endregion
+
 #region Delegates
 
 /// <summary>

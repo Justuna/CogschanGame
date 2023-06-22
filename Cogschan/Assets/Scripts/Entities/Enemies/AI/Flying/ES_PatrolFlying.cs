@@ -11,23 +11,25 @@ public class ES_PatrolFlying : ES_Patrol
 
     protected override void SearchPatrolPoint()
     {
-        bool pointIsValid = false;
-        Vector3 point = new();
-        while (!pointIsValid)
+        Vector3 point = transform.position;
+        for (int i = 0; i < Constants.MAX_ITER; i++)
         {
             float rho = Random.Range(_minPatrolRange, _maxPatrolRange);
             float phi = Random.Range(0, Mathf.PI) % Mathf.PI;
-            float z = Random.Range(_minPatrolHeight, _maxPatrolHeight) + GetGroundHeight();
-            point = new Vector3(rho, phi, z).CylindricalToCartesian();
+            Vector3 position = new Vector3(rho, phi).CylindricalToCartesian() + transform.position;
+            position.y = GroundFinder.HeightOfGround(point) + Random.Range(_minPatrolHeight, _maxPatrolHeight);
 
             Vector3 dir = point - transform.position;
             Ray ray = new(transform.position, dir);
-            pointIsValid = !Physics.Raycast(ray, dir.magnitude, _solidMask);
+            if (GroundFinder.IsOverGround(point) && !Physics.Raycast(ray, dir.magnitude, _solidMask))
+            {
+                point = position;
+                break;
+            }
         }
         _patrolPoint =  point;
         _hasSetPatrolPoint = true;
         _boredTimer = _timeUntilBored;
-
     }
 
     protected override void MoveToPatrolPoint()
@@ -36,13 +38,5 @@ public class ES_PatrolFlying : ES_Patrol
         _services.KinematicPhysics.DesiredVelocity = (_patrolPoint - transform.position).normalized * _services.FlyingAI.Speed;
         _services.Model.transform.rotation = Quaternion.Lerp(_services.Model.transform.rotation, Quaternion.LookRotation(moveDir),
                 Time.deltaTime * _services.FlyingAI.TurnSpeed);
-    }
-
-    // Determines the height of the ground to use when determining which height to travel to.
-    private float GetGroundHeight()
-    {
-        Ray ray = new(transform.position, Vector3.down);
-        Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _solidMask);
-        return transform.position.y - hit.distance;
     }
 }

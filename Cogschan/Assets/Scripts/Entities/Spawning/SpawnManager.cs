@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+using static Constants;
 using static SpawnInfo;
 
 /// <summary>
@@ -33,6 +34,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     [Tooltip("The rate at which credits are initially added to the Spawn Manager. Must be nonnegative.")]
     private float _creditAddRate;
+    [SerializeField]
     [Tooltip("The rate at which the rate at which credits are added to the Spawn Manager increases. Essentially the second derivative of credits. Must be nonnegative.")]
     private float _creditAddRateRate;
 
