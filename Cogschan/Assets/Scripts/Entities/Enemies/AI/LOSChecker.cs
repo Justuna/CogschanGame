@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LOSChecker : MonoBehaviour
 {
-    [SerializeField] private Transform _playerTarget;
+    private Transform _playerTarget;
     [SerializeField] private LayerMask _solidMask;
     [SerializeField] private LayerMask _playerMask;
     [SerializeField] private float _sightRange;
@@ -15,6 +15,11 @@ public class LOSChecker : MonoBehaviour
     public Vector3 LastSeenPosition { get; private set; }
 
     protected float _interruptClock;
+
+    private void Start()
+    {
+        _playerTarget = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
     void Update()
     {

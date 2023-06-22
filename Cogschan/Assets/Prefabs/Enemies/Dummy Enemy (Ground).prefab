@@ -771,7 +771,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ground:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 4104
   _steepAngle: 45
   _wallAngle: 90
   _yOffset: 0
@@ -903,10 +903,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 536dc52433b0dd14e91d6f2b8e13dfb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerTarget: {fileID: 0}
   _solidMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 4104
   _playerMask:
     serializedVersion: 2
     m_Bits: 64
