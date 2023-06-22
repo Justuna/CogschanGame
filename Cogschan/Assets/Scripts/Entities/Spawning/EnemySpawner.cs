@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 public class EnemySpawner : Spawner
 {
@@ -24,8 +26,8 @@ public class EnemySpawner : Spawner
     [Tooltip("The height at which the object is spawned.")]
     private float _height;
     [SerializeField]
-    [Tooltip("Whether or not the object should attempt to be spawned not over the skybox.")]
-    private bool _shouldAvoidSkybox;
+    [Tooltip("Whether or not the object uses the nav mesh.")]
+    private bool _isNavMeshAgent;
 
     public override SpawnInfo SpawnInfo => _spawnInfo;
 
@@ -37,18 +39,14 @@ public class EnemySpawner : Spawner
 
     public override void Spawn(Vector3 position)
     {
-        for (int i = 0; i < Constants.MAX_ITER; i++)
-        {
-            float radius = Random.Range(_minimumRadius, _maximumRadius);
-            float theta = Random.Range(0, 2 * Mathf.PI);
-            Vector3 spawnPos = new Vector3(radius, theta).CylindricalToCartesian() + position;
-            spawnPos.y = GroundFinder.HeightOfGround(spawnPos) + _height;
-            if (GroundFinder.IsOverGround(position) || !_shouldAvoidSkybox)
-            {
-                position = spawnPos;
-                break;
-            }
-        }
+        float radius = Random.Range(_minimumRadius, _maximumRadius);
+        float theta = Random.Range(0, 2 * Mathf.PI);
+        position += new Vector3(radius, theta).CylindricalToCartesian();
+        position.y = GroundFinder.HeightOfGround(position) + _height;
+        if (_isNavMeshAgent
+            && NavMesh.SamplePosition(position, out NavMeshHit hit, Mathf.Infinity, NavMesh.AllAreas))
+            position = hit.position;
+
         Instantiate(_prefab, position, Quaternion.identity);
     }
 }

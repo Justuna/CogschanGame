@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 using static Constants;
@@ -94,25 +95,21 @@ public class SpawnManager : MonoBehaviour
         FiniteDistribution<SpawnCategory> dist = _categoryDist;
         List<SpawnInfo> spawnsInCat = new();
         List<float> spawnWeights = new();
-        bool spawnPossible = false;
         while (true)
         {
             SpawnCategory category = dist.GetRandomValue();
-            foreach (SpawnInfo spawn in Spawns)
+            spawnsInCat = (from spawn in Spawns
+                          where spawn.IsPurchasable(_credits) && spawn.Category == category
+                          select spawn).ToList();
+            foreach (SpawnInfo spawn in spawnsInCat)
             {
-                if (spawn.IsPurchasable(_credits) && spawn.Category == category)
-                {
-                    spawnsInCat.Add(spawn);
-                    spawnWeights.Add(spawn.Weight);
-                    spawnPossible = true;
-                }
+                spawnWeights.Add(spawn.Weight);
             }
-            if (spawnPossible)
+            if (spawnsInCat.Count != 0)
                 break;
             if (dist.SampleSpaceCount == 1)
                 return false; // No more valid categories.
             dist = dist.Ignore(category);
-            spawnsInCat = new();
             spawnWeights = new();
         }
 
