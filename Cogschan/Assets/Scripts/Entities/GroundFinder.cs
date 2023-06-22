@@ -30,7 +30,7 @@ public static class GroundFinder
     public static float HeightOfGround(Vector3 position)
     {
         Ray ray = new(position, Vector3.down);
-        Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, s_ground & s_skybox);
+        Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, s_ground | s_skybox);
         return position.y - hit.distance;
     }
 }

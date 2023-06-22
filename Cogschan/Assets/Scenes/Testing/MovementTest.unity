@@ -6366,7 +6366,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 726278930}
-  - component: {fileID: 726278931}
+  - component: {fileID: 726278932}
   m_Layer: 3
   m_Name: LevelSpawnManager
   m_TagString: Untagged
@@ -6389,7 +6389,7 @@ Transform:
   m_Father: {fileID: 1758284821}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &726278931
+--- !u!114 &726278932
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6398,7 +6398,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 726278929}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6afe38eeaab213c48b25635c79491860, type: 3}
+  m_Script: {fileID: 11500000, guid: b869aebee67cf574abae04b8ab8c1b9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _minSpawnInterval: 15
@@ -6408,6 +6408,10 @@ MonoBehaviour:
   _credits: 0
   _creditAddRate: 0.25
   _creditAddRateRate: 0.025
+  _minX: -35.5825
+  _maxX: 35.5825
+  _minZ: -35.5825
+  _maxZ: 35.5825
 --- !u!1 &734259187
 GameObject:
   m_ObjectHideFlags: 0
@@ -9799,11 +9803,12 @@ MonoBehaviour:
   _prefab: {fileID: 4028257471934700776, guid: f3e6c8af41cd0f84a84256a99c2e3e05, type: 3}
   _spawnInfo:
     Spawner: {fileID: 1751502814}
-    Cost: 1
+    Cost: 2
     Weight: 1
     Category: 0
   _spawnManagers:
   - {fileID: 847735977}
+  - {fileID: 726278932}
   _minimumRadius: 5
   _maximumRadius: 10
   _height: 0
@@ -9838,11 +9843,12 @@ MonoBehaviour:
   _prefab: {fileID: 723379263556669386, guid: 4bd37852d3d594d41bfc9b57f821d37f, type: 3}
   _spawnInfo:
     Spawner: {fileID: 1751502816}
-    Cost: 1
-    Weight: 0.5
+    Cost: 3
+    Weight: 1
     Category: 0
   _spawnManagers:
   - {fileID: 847735977}
+  - {fileID: 726278932}
   _minimumRadius: 5
   _maximumRadius: 10
   _height: 3
