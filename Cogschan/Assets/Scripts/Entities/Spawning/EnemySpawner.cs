@@ -39,9 +39,7 @@ public class EnemySpawner : Spawner
 
     public override void Spawn(Vector3 position)
     {
-        float radius = Random.Range(_minimumRadius, _maximumRadius);
-        float theta = Random.Range(0, 2 * Mathf.PI);
-        position += new Vector3(radius, theta).CylindricalToCartesian();
+        position = ContinuousDistributions.GetRandomPointInAnnulus(_minimumRadius, _maximumRadius, position);
         position.y = GroundFinder.HeightOfGround(position) + _height;
         if (_isNavMeshAgent
             && NavMesh.SamplePosition(position, out NavMeshHit hit, Mathf.Infinity, NavMesh.AllAreas))

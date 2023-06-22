@@ -3,10 +3,13 @@ using UnityEngine;
 public class ES_PatrolFlying : ES_Patrol
 {
     [SerializeField]
+    [Tooltip("The minimum height of the patrol point.")]
     private float _minPatrolHeight;
     [SerializeField]
+    [Tooltip("The maximum height of the patrol point.")]
     private float _maxPatrolHeight;
     [SerializeField]
+    [Tooltip("The layers that the enemy can't travel through.")]
     private LayerMask _solidMask;
 
     protected override void SearchPatrolPoint()
@@ -14,9 +17,7 @@ public class ES_PatrolFlying : ES_Patrol
         Vector3 point = transform.position;
         for (int i = 0; i < Constants.MAX_ITER; i++)
         {
-            float rho = Random.Range(_minPatrolRange, _maxPatrolRange);
-            float phi = Random.Range(0, Mathf.PI) % Mathf.PI;
-            Vector3 position = new Vector3(rho, phi).CylindricalToCartesian() + transform.position;
+            Vector3 position = ContinuousDistributions.GetRandomPointInAnnulus(_minPatrolRange, _maxPatrolRange, transform.position);
             position.y = GroundFinder.HeightOfGround(point) + Random.Range(_minPatrolHeight, _maxPatrolHeight);
 
             Vector3 dir = point - transform.position;

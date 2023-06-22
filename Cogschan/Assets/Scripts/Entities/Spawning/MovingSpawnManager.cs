@@ -23,6 +23,6 @@ public class MovingSpawnManager : SpawnManager
     protected override void ResetSpawnInterval()
     {
         base.ResetSpawnInterval();
-        transform.position = new(Random.Range(_minX, _maxX), transform.position.y, Random.Range(_minZ, _maxZ));
+        transform.position = ContinuousDistributions.GetRandomPointInSquare(_minX, _maxX, _minZ, _maxZ, transform.position.y * Vector3.up);
     }
 }
