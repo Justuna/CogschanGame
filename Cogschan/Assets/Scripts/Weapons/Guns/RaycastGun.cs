@@ -22,7 +22,7 @@ public class RaycastGun : Gun
             Vector3 spreadDir = spread is not null ? spread.ApplySpread(dir) : dir;
             if (Physics.Raycast(_muzzle.position, spreadDir, out RaycastHit hitInfo))
                 HitObject(hitInfo.collider.gameObject);
-            if (_projectilePrefab is not null)
+            if (_projectilePrefab != null)
             {
                 Projectile proj = Instantiate(_projectilePrefab, _muzzle.position, Quaternion.identity);
                 proj.SetDirection(spreadDir);
