@@ -19,17 +19,17 @@ public class FlyingKinematicPhysics : KinematicPhysics
     protected override Vector3 PickVelocity()
     {
         while (_impulses.Count > 0)
-            _previousVelocity += _impulses.Dequeue() / _mass;
+            PreviousVelocity += _impulses.Dequeue() / _mass;
 
-        _accelDir = (DesiredVelocity - _previousVelocity).normalized;
-        Vector3 velocity = _previousVelocity;
+        _accelDir = (DesiredVelocity - PreviousVelocity).normalized;
+        Vector3 velocity = PreviousVelocity;
         if (velocity.magnitude > _maxSpeed)
             velocity *= Mathf.Max(_maxSpeed / velocity.magnitude, Mathf.Pow(1 - _dragMultiplier, Time.deltaTime));
         velocity += _accelDir * _acceleration * Time.deltaTime;
-        float maxVelThisFrame = Mathf.Max(_maxSpeed, _previousVelocity.magnitude);
+        float maxVelThisFrame = Mathf.Max(_maxSpeed, PreviousVelocity.magnitude);
         if (velocity.magnitude > maxVelThisFrame)
             velocity = velocity.normalized * Mathf.Max(_maxSpeed, maxVelThisFrame);
-        _previousVelocity = velocity;
+        PreviousVelocity = velocity;
         return velocity;
     }
 
