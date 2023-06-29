@@ -1152,10 +1152,10 @@ MonoBehaviour:
   LOSChecker: {fileID: 4028257471396374109}
   NavMeshAgent: {fileID: 4028257471934700783}
   GroundedAI: {fileID: 4028257470974038894}
+  FlyingAI: {fileID: 0}
   PointGraph: {fileID: 0}
   Jangling: {fileID: 0}
   JanglingAI: {fileID: 0}
-  FlyingAI: {fileID: 0}
 --- !u!1 &4028257471937635598
 GameObject:
   m_ObjectHideFlags: 0
@@ -1206,8 +1206,6 @@ MonoBehaviour:
   _minTimeUntilRangedAttack: 5
   _maxTimeUntilRangedAttack: 10
   _recalculateTime: 0.1
-  _turnAngleDegrees: 15
-  _turnCorrectionLength: 1
 --- !u!1 &4498697738049471356
 GameObject:
   m_ObjectHideFlags: 0
