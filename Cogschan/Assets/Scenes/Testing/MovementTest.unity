@@ -248,7 +248,6 @@ MonoBehaviour:
   _services: {fileID: 1918345264}
   _mass: 10
   DesiredVelocity: {x: 0, y: 0, z: 0}
-  PreviousVelocity: {x: 0, y: 0, z: 0}
   _airSteerFactor: 100
 --- !u!1 &188387651
 GameObject:

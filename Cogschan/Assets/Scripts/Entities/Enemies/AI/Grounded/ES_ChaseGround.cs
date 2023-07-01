@@ -86,7 +86,7 @@ public class ES_ChaseGround : MonoBehaviour, IEnemyState
 
             if (moveDirHorizontal != Vector3.zero)
             {
-                _services.Model.transform.rotation = Quaternion.Lerp(_services.Model.transform.rotation,
+                _services.Model.transform.rotation = Quaternion.RotateTowards(_services.Model.transform.rotation,
                     Quaternion.LookRotation(moveDirHorizontal), Time.deltaTime * _services.GroundedAI.TurnSpeed);
 
                 _services.KinematicPhysics.DesiredVelocity = _services.Model.transform.forward * _services.GroundedAI.Speed;

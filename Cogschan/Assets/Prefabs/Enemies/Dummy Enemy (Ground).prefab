@@ -616,7 +616,6 @@ MonoBehaviour:
   _services: {fileID: 4028257471934700786}
   _mass: 10
   DesiredVelocity: {x: 0, y: 0, z: 0}
-  PreviousVelocity: {x: 0, y: 0, z: 0}
   _minimumTimeOffGround: 0.1
 --- !u!1 &4028257470974038895
 GameObject:
@@ -679,7 +678,7 @@ MonoBehaviour:
   _hasMeleeAttack: 0
   _hasRangedAttack: 0
   _speed: 5
-  _turnSpeed: 10
+  _turnSpeed: 90
 --- !u!1 &4028257471150577326
 GameObject:
   m_ObjectHideFlags: 0
@@ -1207,7 +1206,6 @@ MonoBehaviour:
   _minTimeUntilRangedAttack: 5
   _maxTimeUntilRangedAttack: 10
   _recalculateTime: 0.1
-  _acceleration: 15
 --- !u!1 &4498697738049471356
 GameObject:
   m_ObjectHideFlags: 0
