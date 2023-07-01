@@ -36,11 +36,11 @@ public class GroundEnemyKinematicPhysics : KinematicPhysics
 
                 while (_impulses.Count > 0)
                 {
-                    PreviousVelocity += _impulses.Dequeue() / _mass;
+                    _previousVelocity += _impulses.Dequeue() / _mass;
                 }
             }
 
-            actualVelocity = ApplyForces(PreviousVelocity);
+            actualVelocity = ApplyForces(_previousVelocity);
         }
 
         return actualVelocity;

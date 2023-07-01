@@ -17,7 +17,7 @@ public class PlayerKinematicPhysics : KinematicPhysics
             {
                 actualVelocity = Quaternion.AngleAxis(_services.GroundChecker.SurfaceAngle.Value, _services.GroundChecker.ZeroDirection.Value) * actualVelocity;
             }
-            PreviousVelocity = actualVelocity;
+            _previousVelocity = actualVelocity;
         }
         // Either you're being knocked into the air, or you already were in the air
         // Use previous velocity to calculate momentum, and add new impulses
@@ -26,10 +26,10 @@ public class PlayerKinematicPhysics : KinematicPhysics
         {
             while (_impulses.Count > 0)
             {
-                PreviousVelocity += _impulses.Dequeue() / _mass;
+                _previousVelocity += _impulses.Dequeue() / _mass;
             }
 
-            actualVelocity = ApplyForces(ApplyAirSteering(PreviousVelocity));
+            actualVelocity = ApplyForces(ApplyAirSteering(_previousVelocity));
         }
 
         return actualVelocity;
@@ -46,7 +46,7 @@ public class PlayerKinematicPhysics : KinematicPhysics
     private Vector3 ApplyAirSteering(Vector3 actualVelocity)
     {
         Vector2 actualVelocityHorizontal = HorizontalVector(actualVelocity);
-        Vector2 previousVelocityHorizontal = HorizontalVector(PreviousVelocity);
+        Vector2 previousVelocityHorizontal = HorizontalVector(_previousVelocity);
         Vector2 desiredMovementHorizontal = HorizontalVector(DesiredVelocity.normalized);
 
         float maxDelta = _airSteerFactor * Time.deltaTime;

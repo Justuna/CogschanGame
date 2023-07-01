@@ -1207,7 +1207,7 @@ MonoBehaviour:
   _minTimeUntilRangedAttack: 5
   _maxTimeUntilRangedAttack: 10
   _recalculateTime: 0.1
-  _acceleration: 20
+  _acceleration: 15
 --- !u!1 &4498697738049471356
 GameObject:
   m_ObjectHideFlags: 0

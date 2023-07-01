@@ -8,15 +8,12 @@ public abstract class KinematicPhysics : MonoBehaviour
 
     protected IVelocityOverride _velocityOverride = null;
     protected Queue<Vector3> _impulses = new Queue<Vector3>();
+    protected Vector3 _previousVelocity = Vector3.zero;
 
     /// <summary>
     /// The vector that represents Cogschan's attempted movement.
     /// </summary>
     [HideInInspector] public Vector3 DesiredVelocity;
-    /// <summary>
-    /// The previous velocity of the object.
-    /// </summary>
-    [HideInInspector] public Vector3 PreviousVelocity = Vector3.zero;
 
     private void LateUpdate()
     {
@@ -31,13 +28,13 @@ public abstract class KinematicPhysics : MonoBehaviour
 
             if (_velocityOverride.IsFinished())
             {
-                PreviousVelocity = actualVelocity * _velocityOverride.MaintainMomentumFactor();
+                _previousVelocity = actualVelocity * _velocityOverride.MaintainMomentumFactor();
                 _velocityOverride = null;
             }
         }
         else
         {
-            actualVelocity = PreviousVelocity = PickVelocity();
+            actualVelocity = _previousVelocity = PickVelocity();
         }
 
         MakeMove(actualVelocity);
@@ -67,7 +64,7 @@ public abstract class KinematicPhysics : MonoBehaviour
     /// </param>
     public void RemoveOverrideVelocity(float maintainMomentum)
     {
-        PreviousVelocity = _velocityOverride.GetVelocity() * maintainMomentum;
+        _previousVelocity = _velocityOverride.GetVelocity() * maintainMomentum;
         _velocityOverride = null;
     }
 
@@ -97,7 +94,7 @@ public abstract class KinematicPhysics : MonoBehaviour
     public void RemoveComponent(Vector3 component)
     {
         component = component.normalized;
-        PreviousVelocity -= Vector3.Dot(PreviousVelocity, component) * component;
+        _previousVelocity -= Vector3.Dot(_previousVelocity, component) * component;
     }
 
     // Converts a Vector3 to a Vector2 using the horizontal components (x and z).

@@ -10,7 +10,6 @@ public class ES_ChaseGround : MonoBehaviour, IEnemyState
     [SerializeField] private float _minTimeUntilRangedAttack;
     [SerializeField] private float _maxTimeUntilRangedAttack;
     [SerializeField] private float _recalculateTime;
-    [SerializeField] private float _acceleration;
 
     public CogschanSimpleEvent LostPlayer;
     public CogschanSimpleEvent RangedAttack;
@@ -85,14 +84,13 @@ public class ES_ChaseGround : MonoBehaviour, IEnemyState
             Vector3 moveDirHorizontal = moveDir;
             moveDirHorizontal.y = 0;
 
-            Vector3 finalVelocity = moveDir * _services.GroundedAI.Speed;
-            Vector3 deltaV = finalVelocity - _services.KinematicPhysics.PreviousVelocity;
-
-            _services.KinematicPhysics.DesiredVelocity = _services.KinematicPhysics.PreviousVelocity
-                + deltaV.normalized * Mathf.Min(deltaV.magnitude, _acceleration * Time.deltaTime);
             if (moveDirHorizontal != Vector3.zero)
-                _services.Model.transform.rotation = Quaternion.Lerp(_services.Model.transform.rotation, 
+            {
+                _services.Model.transform.rotation = Quaternion.Lerp(_services.Model.transform.rotation,
                     Quaternion.LookRotation(moveDirHorizontal), Time.deltaTime * _services.GroundedAI.TurnSpeed);
+
+                _services.KinematicPhysics.DesiredVelocity = _services.Model.transform.forward * _services.GroundedAI.Speed;
+            }
         }
     }
 }
