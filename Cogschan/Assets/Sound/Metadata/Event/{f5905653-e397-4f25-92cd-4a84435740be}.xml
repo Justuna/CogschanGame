@@ -5,10 +5,10 @@
 			<value>Red</value>
 		</property>
 		<property name="name">
-			<value>TestInstance</value>
+			<value>TestEmitter</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{dcaff5e3-f28a-46f2-963c-d7cbf4e37ad1}</destination>
@@ -181,9 +181,11 @@
 	<object class="MixerBusEffectChain" id="{27a44d57-8621-430e-9389-0a530f9267e0}">
 		<relationship name="effects">
 			<destination>{ccd32403-bde0-4f12-a16b-57f80c96657e}</destination>
+			<destination>{7e5eaab0-58d5-4ced-9e05-280d9c087f43}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{0f75dd11-62b9-40a7-a887-cb08084edaf5}" />
 	<object class="MixerBusFader" id="{ec939a74-4887-4e3a-95cb-72c2420f575d}" />
 	<object class="MixerBusFader" id="{ccd32403-bde0-4f12-a16b-57f80c96657e}" />
+	<object class="SpatialiserEffect" id="{7e5eaab0-58d5-4ced-9e05-280d9c087f43}" />
 </objects>

@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -27,6 +29,7 @@ public class GameStateSingleton : MonoBehaviour
     #endregion
 
     [SerializeField] private int _keysNeeded;
+    [SerializeField] private EventReference _backgroundMusic;
 
     /// <summary>
     /// The current amount of keys the player has.
@@ -52,6 +55,13 @@ public class GameStateSingleton : MonoBehaviour
     public UnityEvent LevelClear = new UnityEvent();
 
     private bool _levelCleared = false;
+    private EventInstance _bgmInstance;
+
+    public void Start()
+    {
+        _bgmInstance = AudioSingleton.Instance.PlayInstance(_backgroundMusic);
+        _bgmInstance.start();
+    }
 
     /// <summary>
     /// Increments the amount of keys that the player has in possession.

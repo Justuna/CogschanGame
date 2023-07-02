@@ -63,6 +63,7 @@ public class AudioSingleton : MonoBehaviour
             instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
             instance.release();
         }
+        _eventInstances.Clear();
     }
 
     private void OnDestroy()
