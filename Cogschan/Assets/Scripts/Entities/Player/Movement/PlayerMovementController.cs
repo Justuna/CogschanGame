@@ -16,6 +16,7 @@ using UnityEngine;
 /// </remarks>
 public class PlayerMovementController : MonoBehaviour
 {
+    [SerializeField] private EntityServiceLocator _services;
     [SerializeField] private MS_Walking ms_Walking;
     [SerializeField] private MS_Sprinting ms_Sprinting;
     [SerializeField] private MS_Aiming ms_Aiming;

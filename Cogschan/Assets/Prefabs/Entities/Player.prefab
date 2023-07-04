@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5df9bdc504cc8e646b261fc85b3e5886, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _services: {fileID: 4272273026959324190}
   ms_Walking: {fileID: 4272273027975874224}
   ms_Sprinting: {fileID: 4272273027482804808}
   ms_Aiming: {fileID: 4272273026761288426}
@@ -770,6 +771,7 @@ MonoBehaviour:
   InteractionChecker: {fileID: 4272273026867365164}
   KinematicPhysics: {fileID: 4272273027051352028}
   Model: {fileID: 4272273027718369486}
+  Animator: {fileID: 5415748230183760727}
   ActionController: {fileID: 4272273027381579292}
   CameraController: {fileID: 4272273026912620460}
   MovementController: {fileID: 4272273026262752981}
@@ -1097,7 +1099,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _services: {fileID: 4272273026959324190}
   _defaultWeaponPrefabs:
-  - {fileID: 7554969326682805842, guid: ace8bbc8f257b3547b05cce9d96cabce, type: 3}
+  - {fileID: 7554969326682805842, guid: e2855ffa2252f6146a6a28ee7dce0e0d, type: 3}
   _weaponParent: {fileID: 4272273026823039877}
   _maxSize: 9
   _currentWeaponIndex: 0
@@ -1308,7 +1310,7 @@ Transform:
   - {fileID: 4272273026823039877}
   - {fileID: 4272273027005722277}
   - {fileID: 4272273026867365167}
-  - {fileID: 8015638973406601005}
+  - {fileID: 2146165912446724397}
   m_Father: {fileID: 4272273026451096401}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1712,7 +1714,7 @@ MonoBehaviour:
   _credits: 0
   _creditAddRate: 1
   _creditAddRateRate: 0.05
---- !u!1001 &7545777121328642246
+--- !u!1001 &1892092367227129542
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -1784,11 +1786,22 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 6dd02065a387e2d42a774039bc672ec0, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 5761c0807e2ba784d87f2e79584484ec,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5761c0807e2ba784d87f2e79584484ec, type: 3}
---- !u!4 &8015638973406601005 stripped
+--- !u!4 &2146165912446724397 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5761c0807e2ba784d87f2e79584484ec,
     type: 3}
-  m_PrefabInstance: {fileID: 7545777121328642246}
+  m_PrefabInstance: {fileID: 1892092367227129542}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5415748230183760727 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 5761c0807e2ba784d87f2e79584484ec,
+    type: 3}
+  m_PrefabInstance: {fileID: 1892092367227129542}
   m_PrefabAsset: {fileID: 0}
