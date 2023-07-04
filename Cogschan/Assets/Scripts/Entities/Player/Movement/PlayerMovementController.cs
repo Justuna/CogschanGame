@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -19,6 +21,7 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private MS_Aiming ms_Aiming;
     [SerializeField] private MS_Dashing ms_Dashing;
     [SerializeField] private MS_Prone ms_Prone;
+    [SerializeField] private EventReference _runningSound;
     [SerializeField] private float _dashCooldown;
     public float JumpImpulse;
 
@@ -26,6 +29,7 @@ public class PlayerMovementController : MonoBehaviour
     /// The current state of Cogschan. Decides her movement behavior.
     /// </summary>
     private IMovementState _currentState;
+    private EventInstance _runSoundInstance;
     private float _dashTimer;
 
     /// <summary>
@@ -61,6 +65,7 @@ public class PlayerMovementController : MonoBehaviour
     /// What the base speed of the current state is.
     /// </summary>
     public float CurrentBaseSpeed { get { return _currentState.GetBaseSpeed(); } }
+    public EventInstance RunningSoundInstance => _runSoundInstance;
 
     private void Start()
     {
@@ -86,6 +91,9 @@ public class PlayerMovementController : MonoBehaviour
         ms_Dashing.DashEnded += DashEnded;
         ms_Dashing.DashingIntoProne += DashIntoProne;
         ms_Prone.ProneEnded += ProneEnded;
+
+        _runSoundInstance = AudioSingleton.Instance.PlayInstance(_runningSound);
+        _runSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
 
     private void Update()
@@ -113,21 +121,25 @@ public class PlayerMovementController : MonoBehaviour
 
     private void WalkingIntoSprinting()
     {
+        _runSoundInstance.start();
         _currentState = ms_Sprinting;
     }
 
     private void SprintingIntoAiming()
     {
+        _runSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         _currentState = ms_Aiming;
     }
 
     private void SprintingIntoWalking()
     {
+        _runSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         _currentState = ms_Walking;
     }
 
     private void AimingIntoSprinting()
     {
+        _runSoundInstance.start();
         _currentState = ms_Sprinting;
     }
 
@@ -138,12 +150,14 @@ public class PlayerMovementController : MonoBehaviour
 
     private void XIntoDashing()
     {
+        _runSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         ms_Dashing.Initialize();
         _currentState = ms_Dashing;
     }
 
     private void XIntoProne(float duration)
     {
+        _runSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         ms_Prone.Initialize(duration);
         _currentState = ms_Prone;
     }

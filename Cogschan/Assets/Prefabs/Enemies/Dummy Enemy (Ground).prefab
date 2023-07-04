@@ -675,6 +675,13 @@ MonoBehaviour:
   es_MeleeAttack: {fileID: 4028257471373851097}
   es_RangedAttack: {fileID: 4028257470562818143}
   es_Waiting: {fileID: 4028257470631880236}
+  _alertSound:
+    Guid:
+      Data1: -1072738589
+      Data2: 1268909905
+      Data3: -1306600280
+      Data4: -1412316770
+    Path: event:/Test/TestOneShot
   _hasMeleeAttack: 0
   _hasRangedAttack: 0
   _speed: 5
