@@ -1,3 +1,4 @@
+using FMODUnity;
 using UnityEngine;
 
 public abstract class GroundedEnemyAI : MonoBehaviour
@@ -11,6 +12,7 @@ public abstract class GroundedEnemyAI : MonoBehaviour
     [SerializeField] protected ES_RangedAttack es_RangedAttack;
     [SerializeField] protected ES_Waiting es_Waiting;
     [Header("Other Attributes")]
+    [SerializeField] protected EventReference _alertSound;
     [SerializeField] protected bool _hasMeleeAttack;
     [SerializeField] protected bool _hasRangedAttack;
     [SerializeField] protected float _speed;
@@ -23,11 +25,11 @@ public abstract class GroundedEnemyAI : MonoBehaviour
 
     protected virtual void Awake()
     {
-        es_Confused.LOSMade += ConfusedToAlerted;
+        es_Confused.LOSMade += XToAlerted;
         es_Confused.Bored += ConfusedToPatrol;
         es_Alerted.LOSBroken += AlertedToConfused;
         es_Alerted.ReadyToChase += AlertedToChase;
-        es_Patrol.LOSMade += PatrolToAlerted;
+        es_Patrol.LOSMade += XToAlerted;
         es_Patrol.Bored += PatrolToConfused;
         es_Chase.LostPlayer += ChaseToConfused;
         es_Waiting.OutOfRange += WaitingToChase;
@@ -58,8 +60,9 @@ public abstract class GroundedEnemyAI : MonoBehaviour
         _state.Behavior();
     }
 
-    protected virtual void ConfusedToAlerted()
+    protected virtual void XToAlerted()
     {
+        AudioSingleton.Instance.PlayOneShot(_alertSound, transform.position);
         es_Alerted.ResetTimer();
         _state = es_Alerted;
     }
@@ -86,12 +89,6 @@ public abstract class GroundedEnemyAI : MonoBehaviour
     {
         es_Confused.Init();
         _state = es_Confused;
-    }
-
-    protected virtual void PatrolToAlerted()
-    {
-        es_Alerted.ResetTimer();
-        _state = es_Alerted;
     }
 
     protected virtual void ChaseToMeleeAttack()

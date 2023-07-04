@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{50162ba2-7d86-4144-93be-0631bde63033}">
+		<property name="assetPath">
+			<value>SFX/Test/cartoon_slip.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.57599999999999996</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{7385d327-e6ad-43bf-8305-c4c3dfc45949}</destination>
+		</relationship>
+	</object>
+</objects>

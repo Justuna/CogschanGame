@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{933ae694-94fa-4404-aed9-93a890bc1876}">
+		<property name="assetPath">
+			<value>Music/Test/NSRSayuApproach.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>55.222857142857144</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{7385d327-e6ad-43bf-8305-c4c3dfc45949}</destination>
+		</relationship>
+	</object>
+</objects>
