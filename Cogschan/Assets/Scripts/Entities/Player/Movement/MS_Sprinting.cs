@@ -1,8 +1,11 @@
-﻿using UnityEngine;
+﻿using FMOD.Studio;
+using FMODUnity;
+using UnityEngine;
 
 public class MS_Sprinting : MonoBehaviour, IMovementState
 {
     [SerializeField] private EntityServiceLocator _services;
+    [SerializeField] private EventReference _runningSound;
     [SerializeField] private GameObject _cogschanModel;
     [SerializeField] private float _sprintSpeed = 8;
     [SerializeField] private float _turnSpeed = 10;
@@ -14,6 +17,8 @@ public class MS_Sprinting : MonoBehaviour, IMovementState
 
     public void Behavior()
     {
+        bool audible = false;
+
         Quaternion dir = Quaternion.Euler(_services.CameraController.CameraLateralDirection);
         Vector3 movement = new Vector3(CogschanInputSingleton.Instance.MovementDirection.x, 0, CogschanInputSingleton.Instance.MovementDirection.y);
         Vector3 movementDir = dir * movement;
@@ -22,11 +27,25 @@ public class MS_Sprinting : MonoBehaviour, IMovementState
         {
             Quaternion movementDirQ = Quaternion.LookRotation(movementDir);
             _cogschanModel.transform.rotation = Quaternion.Lerp(_cogschanModel.transform.rotation, movementDirQ, _turnSpeed * Time.deltaTime);
+
+            if (_services.GroundChecker.IsGrounded)
+            {
+                audible = true;
+            }
         }
 
         movementDir *= _sprintSpeed;
 
         _services.KinematicPhysics.DesiredVelocity = movementDir;
+
+        if (audible)
+        {
+            _services.MovementController.RunningSoundInstance.setVolume(100);
+        }
+        else
+        {
+            _services.MovementController.RunningSoundInstance.setVolume(0f);
+        }
 
         if (!CogschanInputSingleton.Instance.IsHoldingSprint)
         {

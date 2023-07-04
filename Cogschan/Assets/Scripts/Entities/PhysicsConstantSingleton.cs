@@ -4,7 +4,7 @@ public class PhysicsConstantSingleton : MonoBehaviour
 {
     #region Singleton Stuff
     /// <summary>
-    /// The only instance of the CogschanInputSingleton class that is allowed to exist.
+    /// The only instance of this class that is allowed to exist.
     /// </summary>
     public static PhysicsConstantSingleton Instance { get; private set; }
 

@@ -99,4 +99,33 @@ public class WeaponCache : MonoBehaviour
         _currentWeaponIndex = index;
         CurrentWeapon.GetGameObject().SetActive(true);
     }
+
+    /// <summary>
+    /// Goes through all of the weapons in the cache and attempts to load the ammo into them. 
+    /// </summary>
+    /// <param name="clips">The number of clips to load.</param>
+    /// <param name="type">The type of ammo to load.</param>
+    /// <returns>
+    /// Returns <c>true</c> if at least one weapon was successfully able to reload at least one clip. 
+    /// Returns <c>false</c> if no weapons were able to reload with the supplied ammo.
+    /// </returns>
+    public bool AddAmmo(int clips, AmmoType type)
+    {
+        Debug.Log("Attempting to load weapons...");
+
+        int clipsLeft = clips;
+        bool didLoad = false;
+
+        foreach (IWeapon weapon in _cache)
+        {
+            while (weapon.CanLoadClip() && weapon.GetAmmoType() == type && clipsLeft > 0)
+            {
+                didLoad = true;
+                weapon.LoadClip();
+                clipsLeft--;
+            }
+        }
+
+        return didLoad;
+    }
 }
