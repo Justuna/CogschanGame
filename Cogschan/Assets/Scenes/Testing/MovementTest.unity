@@ -172,9 +172,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _forcedInteraction: 1
-  _playerOnly: 1
+  _playerOnly: 0
   _optInMessage: Press E to interact.
-  _defaultBoost: 150
+  _boost: 10
+  _nullBoost: 150
 --- !u!54 &62072
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -202,7 +203,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 150, y: 1, z: 150}
+  m_Size: {x: 3600, y: 1, z: 3600}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &144195937
 GameObject:
