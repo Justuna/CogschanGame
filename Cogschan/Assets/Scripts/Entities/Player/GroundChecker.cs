@@ -68,6 +68,10 @@ public class GroundChecker : MonoBehaviour
     /// The normal of the surface at the point of contact. IF there is no ground, returns null.
     /// </summary>
     public Vector3? SurfaceNormal { get; private set; }
+    /// <summary>
+    /// The last grounded position of Cogschan.
+    /// </summary>
+    public Vector3? LastGroundPosition { get; private set; }
 
     private void Start()
     {
@@ -76,6 +80,7 @@ public class GroundChecker : MonoBehaviour
         ZeroDirection = null;
         GradientDirection = null;
         SurfaceNormal = null;
+        LastGroundPosition = null;
     }
 
     private void Update()
@@ -117,6 +122,7 @@ public class GroundChecker : MonoBehaviour
                     SurfaceType = SurfaceTypes.WALKABLE_SLOPE;
                 }
             }
+            LastGroundPosition = transform.position;
         }
         else
         {
