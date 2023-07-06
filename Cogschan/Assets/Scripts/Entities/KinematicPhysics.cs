@@ -14,6 +14,10 @@ public abstract class KinematicPhysics : MonoBehaviour
     /// The vector that represents Cogschan's attempted movement.
     /// </summary>
     [HideInInspector] public Vector3 DesiredVelocity;
+    /// <summary>
+    /// The velocity of the object last frame.
+    /// </summary>
+    public Vector3 PreviousVelocity => _previousVelocity;
 
     private void LateUpdate()
     {

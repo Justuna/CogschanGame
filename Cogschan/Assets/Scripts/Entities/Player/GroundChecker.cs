@@ -29,6 +29,19 @@ public class GroundChecker : MonoBehaviour
     [Header("Cast Attributes")]
     [SerializeField] private float _castDistance = 0.1f;
 
+    [Header("Entity Services")]
+    [SerializeField]
+    [Tooltip("The Entity Service Locator this script is a part of.")]
+    private EntityServiceLocator _services;
+
+    [Header("Fall Damage Attributes")]
+    [SerializeField]
+    [Tooltip("The maximum velocity at which no fall damage is taken. Should be positive.")]
+    private float _maxNoHarm;
+    [SerializeField]
+    [Tooltip("The change in falling speed it takes for the object to take one more unit of damage. Should be positive.")]
+    private float _speedPerDamage;
+
     [Header("Debug Attributes")]
     [SerializeField] private Color _notGroundColor;
     [SerializeField] private Color _steepSlopeColor;
@@ -117,6 +130,8 @@ public class GroundChecker : MonoBehaviour
                     SurfaceType = SurfaceTypes.WALKABLE_SLOPE;
                 }
             }
+            if (SurfaceType != SurfaceTypes.STEEP_SLOPE && SurfaceType != SurfaceTypes.NOT_GROUND)
+                _services.HealthTracker?.Damage(GetFallDamage());
         }
         else
         {
@@ -158,5 +173,17 @@ public class GroundChecker : MonoBehaviour
             Gizmos.DrawLine(transform.position, transform.position + GradientDirection.Value);
         }
 
+    }
+
+    private int GetFallDamage()
+    {
+        float velocityDown = -_services.KinematicPhysics.PreviousVelocity.y - _maxNoHarm;
+        int damage = 0;
+        while (velocityDown > 0)
+        {
+            damage++;
+            velocityDown -= _speedPerDamage;
+        }
+        return damage;
     }
 }
