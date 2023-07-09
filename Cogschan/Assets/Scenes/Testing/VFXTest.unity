@@ -385,6 +385,9 @@ VisualEffect:
       - m_Value: 0.1
         m_Name: Height
         m_Overridden: 1
+      - m_Value: -20
+        m_Name: Speed
+        m_Overridden: 1
     m_Vector2f:
       m_Array: []
     m_Vector3f:
@@ -397,7 +400,7 @@ VisualEffect:
         m_Overridden: 1
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 1, y: 0.1273585, z: 0.17094705, w: 0}
+      - m_Value: {x: 0.21041116, y: 0.12549019, z: 1, w: 0}
         m_Name: Color
         m_Overridden: 1
     m_Uint:
