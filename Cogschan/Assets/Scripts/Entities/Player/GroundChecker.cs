@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection.Emit;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -19,6 +20,9 @@ public class GroundChecker : MonoBehaviour
 
     [Header("Ground Attributes")]
     [SerializeField] private LayerMask _ground;
+    [SerializeField]
+    [Tooltip("The time it takes for the last ground position to update.")]
+    private float _groundPosUpdate;
     [SerializeField] private float _steepAngle = 45f;
     [SerializeField] private float _wallAngle = 90f;
 
@@ -68,6 +72,13 @@ public class GroundChecker : MonoBehaviour
     /// The normal of the surface at the point of contact. IF there is no ground, returns null.
     /// </summary>
     public Vector3? SurfaceNormal { get; private set; }
+    /// <summary>
+    /// The last grounded position of Cogschan.
+    /// </summary>
+    public Vector3? LastGroundPosition => _groundPosList.Count == 0 ? null : _groundPosList[0];
+
+    private readonly List<Vector3> _groundPosList = new();
+    private float _groundPosTimer;
 
     private void Start()
     {
@@ -76,10 +87,13 @@ public class GroundChecker : MonoBehaviour
         ZeroDirection = null;
         GradientDirection = null;
         SurfaceNormal = null;
+
+        _groundPosTimer = _groundPosUpdate;
     }
 
     private void Update()
     {
+        _groundPosTimer += Time.deltaTime;
         Ray sphereRay = new Ray(transform.position + new Vector3(0, _yOffset, 0), Vector3.down);
         if (Physics.SphereCast(sphereRay, _radius, out RaycastHit sphereHit, _castDistance, _ground))
         {
@@ -116,6 +130,13 @@ public class GroundChecker : MonoBehaviour
                 {
                     SurfaceType = SurfaceTypes.WALKABLE_SLOPE;
                 }
+            }
+            if (_groundPosTimer > _groundPosUpdate)
+            {
+                _groundPosList.Add(transform.position);
+                if (_groundPosList.Count > 2)
+                    _groundPosList.RemoveAt(0);
+                _groundPosTimer = 0;
             }
         }
         else

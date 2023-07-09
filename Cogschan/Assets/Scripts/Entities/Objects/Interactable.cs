@@ -5,6 +5,9 @@ using UnityEngine;
 /// <summary>
 /// A script that holds information about every interactive object.
 /// </summary>
+/// <remarks>
+/// To use this script on a GameObject, make sure the GameObject is in the Interaction layer
+/// </remarks>
 [RequireComponent (typeof(Rigidbody))]
 [RequireComponent (typeof(Collider))]
 public abstract class Interactable : MonoBehaviour
