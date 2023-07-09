@@ -1161,7 +1161,7 @@ MonoBehaviour:
   CameraController: {fileID: 0}
   MovementController: {fileID: 0}
   WeaponCache: {fileID: 0}
-  LOSChecker: {fileID: 0}
+  LOSChecker: {fileID: 8140787581193884795}
   NavMeshAgent: {fileID: 4028257471934700783}
   GroundedAI: {fileID: 4028257470974038894}
   PointGraph: {fileID: 0}

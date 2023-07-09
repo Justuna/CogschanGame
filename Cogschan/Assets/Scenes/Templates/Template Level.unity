@@ -108,7 +108,7 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.5
+    agentRadius: 0.05
     agentHeight: 2
     agentSlope: 45
     agentClimb: 0.4
@@ -116,7 +116,7 @@ NavMeshSettings:
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.16666667
+    cellSize: 0.016666668
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -124,7 +124,19 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 27e43cbfb44b2a7489a20a3855da1d14, type: 2}
+--- !u!114 &129911158 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4272273028038293639, guid: 4a22479a2ceafa047b3a347092e074f7,
+    type: 3}
+  m_PrefabInstance: {fileID: 6121576236867354882}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6afe38eeaab213c48b25635c79491860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &130236951
 GameObject:
   m_ObjectHideFlags: 0
@@ -279,7 +291,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &806742316
 Transform:
@@ -580,7 +592,8 @@ MonoBehaviour:
     Cost: 3
     Weight: 1
     Category: 0
-  _spawnManagers: []
+  _spawnManagers:
+  - {fileID: 129911158}
   _minimumRadius: 5
   _maximumRadius: 10
   _height: 3
@@ -603,7 +616,8 @@ MonoBehaviour:
     Cost: 2
     Weight: 1
     Category: 0
-  _spawnManagers: []
+  _spawnManagers:
+  - {fileID: 129911158}
   _minimumRadius: 5
   _maximumRadius: 10
   _height: 0
