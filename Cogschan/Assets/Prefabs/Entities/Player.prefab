@@ -259,6 +259,7 @@ MonoBehaviour:
   _ground:
     serializedVersion: 2
     m_Bits: 8
+  _groundPosUpdate: 0.5
   _steepAngle: 45
   _wallAngle: 90
   _yOffset: 0.5
