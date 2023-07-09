@@ -341,6 +341,7 @@ MonoBehaviour:
   InteractionChecker: {fileID: 3305946930540189395}
   KinematicPhysics: {fileID: 723379264614938595}
   Model: {fileID: 723379263735601430}
+  Animator: {fileID: 0}
   ActionController: {fileID: 0}
   CameraController: {fileID: 0}
   MovementController: {fileID: 0}
@@ -348,6 +349,9 @@ MonoBehaviour:
   LOSChecker: {fileID: 723379264093828479}
   NavMeshAgent: {fileID: 0}
   GroundedAI: {fileID: 0}
+  PointGraph: {fileID: 0}
+  Jangling: {fileID: 0}
+  JanglingAI: {fileID: 0}
   FlyingAI: {fileID: 7258594435129910290}
 --- !u!1 &723379263735601430
 GameObject:
@@ -484,11 +488,16 @@ MonoBehaviour:
   _ground:
     serializedVersion: 2
     m_Bits: 4104
+  _groundPosUpdate: 0
   _steepAngle: 45
   _wallAngle: 90
   _yOffset: 0
   _radius: 0.45
   _castDistance: 0.15
+  _services: {fileID: 0}
+  _takesFallDamage: 1
+  _maxNoHarm: 0
+  _speedToDamageFactor: 0
   _notGroundColor: {r: 1, g: 0, b: 0, a: 0.7529412}
   _steepSlopeColor: {r: 1, g: 0.53792745, b: 0, a: 0.7529412}
   _walkableSlopeColor: {r: 1, g: 0.86463225, b: 0, a: 0.7529412}
@@ -568,17 +577,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 723379264093828477}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 536dc52433b0dd14e91d6f2b8e13dfb1, type: 3}
+  m_Script: {fileID: 11500000, guid: b5c4bb2265e757a43972d8e761c413fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _solidMask:
     serializedVersion: 2
     m_Bits: 4104
-  _playerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  _sightRange: 20
+  _sightRange: 50
   _interruptThreshold: 1
+  _targetPlayer: 1
+  Target: {fileID: 0}
 --- !u!1 &723379264215203917
 GameObject:
   m_ObjectHideFlags: 0
