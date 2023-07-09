@@ -19,37 +19,45 @@ public class GroundChecker : MonoBehaviour
     public enum SurfaceTypes { FLAT_GROUND, WALKABLE_SLOPE, STEEP_SLOPE, NOT_GROUND }
 
     [Header("Ground Attributes")]
+    [Tooltip("The layer(s) considered to be ground.")]
     [SerializeField] private LayerMask _ground;
-    [SerializeField]
     [Tooltip("The time it takes for the last ground position to update.")]
-    private float _groundPosUpdate;
+    [SerializeField] private float _groundPosUpdate;
+    [Tooltip("The angle above which ground is no longer considered stable. Entities will begin sliding off slopes at this angle.")]
     [SerializeField] private float _steepAngle = 45f;
+    [Tooltip("The angle above which ground is no longer considered ground.")]
     [SerializeField] private float _wallAngle = 90f;
 
     [Header("Sphere Attributes")]
+    [Tooltip("How far above/below Cogschan's feet the center of the ground checker sphere will be.")]
     [SerializeField] private float _yOffset = 0.1f;
+    [Tooltip("The radius of the ground checker sphere.")]
     [SerializeField] private float _radius = 1f;
 
     [Header("Cast Attributes")]
+    [Tooltip("How far the ground checker sphere will travel downward before giving up on finding ground.")]
     [SerializeField] private float _castDistance = 0.1f;
 
     [Header("Entity Services")]
-    [SerializeField]
     [Tooltip("The Entity Service Locator this script is a part of.")]
-    private EntityServiceLocator _services;
+    [SerializeField] private EntityServiceLocator _services;
 
     [Header("Fall Damage Attributes")]
-    [SerializeField]
+    [Tooltip("Whether or not the entity this ground checker is attached to should take fall damage. Requires a HealthTracker and KinematicPhysics component on the entity.")]
+    [SerializeField] private bool _takesFallDamage = true;
     [Tooltip("The maximum velocity at which no fall damage is taken. Should be positive.")]
-    private float _maxNoHarm;
-    [SerializeField]
-    [Tooltip("The change in falling speed it takes for the object to take one more unit of damage. Should be positive.")]
-    private float _speedPerDamage;
+    [SerializeField] private float _maxNoHarm;
+    [Tooltip("The amount of the Y velocity component converted to damage. Only applies to the portion of the velocity above the minimum fall speed.")]
+    [SerializeField] private float _speedToDamageFactor;
 
     [Header("Debug Attributes")]
+    [Tooltip("The color the ground checker sphere will be when not on the ground.")]
     [SerializeField] private Color _notGroundColor;
+    [Tooltip("The color the ground checker sphere will be when sliding off a steep slope.")]
     [SerializeField] private Color _steepSlopeColor;
+    [Tooltip("The color the ground checker sphere will be when on a walkable slope.")]
     [SerializeField] private Color _walkableSlopeColor;
+    [Tooltip("The color the ground checker sphere will be when on flat ground.")]
     [SerializeField] private Color _flatGroundColor;
 
     /// <summary>
@@ -144,8 +152,12 @@ public class GroundChecker : MonoBehaviour
                     SurfaceType = SurfaceTypes.WALKABLE_SLOPE;
                 }
             }
-            if (SurfaceType != SurfaceTypes.STEEP_SLOPE && SurfaceType != SurfaceTypes.NOT_GROUND)
+
+            if (_takesFallDamage && SurfaceType != SurfaceTypes.STEEP_SLOPE && SurfaceType != SurfaceTypes.NOT_GROUND)
+            {
                 _services.HealthTracker?.Damage(GetFallDamage());
+            }
+                
             if (_groundPosTimer > _groundPosUpdate)
             {
                 _groundPosList.Add(transform.position);
@@ -198,13 +210,11 @@ public class GroundChecker : MonoBehaviour
 
     private int GetFallDamage()
     {
+        if (!_services.KinematicPhysics) return 0;
+
         float velocityDown = -_services.KinematicPhysics.PreviousVelocity.y - _maxNoHarm;
-        int damage = 0;
-        while (velocityDown > 0)
-        {
-            damage++;
-            velocityDown -= _speedPerDamage;
-        }
+        int damage = (int) Mathf.Max(0, velocityDown * _speedToDamageFactor);
+        
         return damage;
     }
 }
