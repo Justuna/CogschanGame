@@ -784,6 +784,9 @@ MonoBehaviour:
   _yOffset: 0
   _radius: 0.45
   _castDistance: 0.15
+  _services: {fileID: 4028257471934700786}
+  _maxNoHarm: 20
+  _speedPerDamage: 10
   _notGroundColor: {r: 1, g: 0, b: 0, a: 0.7529412}
   _steepSlopeColor: {r: 1, g: 0.53792745, b: 0, a: 0.7529412}
   _walkableSlopeColor: {r: 1, g: 0.86463225, b: 0, a: 0.7529412}
@@ -1152,6 +1155,7 @@ MonoBehaviour:
   InteractionChecker: {fileID: 1157388269746570737}
   KinematicPhysics: {fileID: 4028257470837646529}
   Model: {fileID: 4028257471432673844}
+  Animator: {fileID: 0}
   ActionController: {fileID: 0}
   CameraController: {fileID: 0}
   MovementController: {fileID: 0}
