@@ -80,7 +80,7 @@ public abstract class KinematicPhysics : MonoBehaviour
     /// </param>
     /// <param name="cancelOverride">Whether or not the new impulse should cancel any velocity overrides.</param>
     /// <param name="maintainedMomentum">How much of the previous velocity should be maintained by momentum. Only meaningful if <c>cancelOverride</c> is true.</param>
-    public virtual void AddImpulse(Vector3 impulse, bool cancelOverride, float maintainedMomentum)
+    public virtual void AddImpulse(Vector3 impulse, bool cancelOverride = false, float maintainedMomentum = 0f)
     {
         if (cancelOverride || _velocityOverride == null)
         {
