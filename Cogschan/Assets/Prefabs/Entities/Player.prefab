@@ -259,11 +259,15 @@ MonoBehaviour:
   _ground:
     serializedVersion: 2
     m_Bits: 8
+  _groundPosUpdate: 0.5
   _steepAngle: 45
   _wallAngle: 90
   _yOffset: 0.5
   _radius: 0.5
   _castDistance: 0.1
+  _services: {fileID: 4272273026959324190}
+  _maxNoHarm: 20
+  _speedPerDamage: 10
   _notGroundColor: {r: 1, g: 0, b: 0, a: 0.7529412}
   _steepSlopeColor: {r: 1, g: 0.4358647, b: 0, a: 0.7529412}
   _walkableSlopeColor: {r: 1, g: 0.8518007, b: 0, a: 0.7529412}
