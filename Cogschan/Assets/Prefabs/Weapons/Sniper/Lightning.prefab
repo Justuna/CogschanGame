@@ -51,7 +51,7 @@ VisualEffect:
   m_PropertySheet:
     m_Float:
       m_Array:
-      - m_Value: 0.3
+      - m_Value: 0.4
         m_Name: Duration
         m_Overridden: 1
       - m_Value: 5
@@ -102,7 +102,7 @@ VisualEffect:
         m_Overridden: 1
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 0.89844155, y: 0.70987976, z: 2.1185474, w: 0}
+      - m_Value: {x: 0.44922078, y: 0.35493988, z: 1.0592737, w: 0}
         m_Name: Color
         m_Overridden: 1
     m_Uint:
