@@ -6367,7 +6367,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh29366
+  m_Name: pb_Mesh32588
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -8788,6 +8788,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1642967969}
   m_CullTransparentMesh: 1
+--- !u!4 &1696210073 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4272273026823039877, guid: 4a22479a2ceafa047b3a347092e074f7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1874902033}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1711756119
 GameObject:
   m_ObjectHideFlags: 0
@@ -9501,6 +9507,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4272273027406177975, guid: 4a22479a2ceafa047b3a347092e074f7,
+        type: 3}
+      propertyPath: _weaponParent
+      value: 
+      objectReference: {fileID: 1696210073}
     - target: {fileID: 4272273027406177975, guid: 4a22479a2ceafa047b3a347092e074f7,
         type: 3}
       propertyPath: _defaultWeaponPrefabs.Array.data[0]
