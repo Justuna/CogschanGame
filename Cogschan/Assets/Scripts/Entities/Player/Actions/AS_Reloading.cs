@@ -12,6 +12,7 @@ public class AS_Reloading : MonoBehaviour, IActionState
 
     public void Init(float timer)
     {
+        _services.Animator.SetTrigger("Test");
         _timer = timer;
     }
 

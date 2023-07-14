@@ -1,34 +1,33 @@
 using UnityEngine;
+using UnityEngine.VFX;
 
 /// <summary>
 /// A gun that fires raycasts with zero travel time.
 /// </summary>
 public class RaycastGun : Gun
 {
-    [Header("Projectile Attributes")]
-    [Tooltip("The prefab of the projectile that this gun shoots. Should only serve a visual purpose")]
-    [SerializeField] private Projectile _projectilePrefab;
+    [Header("Raycast Gun Attributes")]
+    [SerializeField] private GameObject _beamEffectPrefab;
+    [SerializeField] private LayerMask _layerMask;
+    [SerializeField] private int _damage;
+    [SerializeField] private bool _canCrit;
 
     protected override void Fire(Vector3 targetPosition) => FireRaycast(targetPosition, _spreadEvent);
 
     protected override void FireAccurate(Vector3 targetPosition) => FireRaycast(targetPosition, _spreadEventAccurate);
 
-    // Create the raycast given the paramaeters.
+    // Create the raycast given the parameters.
     private void FireRaycast(Vector3 targetPosition, SpreadEvent spread)
     {
         Vector3 dir = (targetPosition - _muzzle.transform.position).normalized;
-
-        if(Time.timeScale != 0){
-            for (int i = 0; i < _count; i++)
+        for (int i = 0; i < _count; i++)
+        {
+            Vector3 spreadDir = spread is not null ? spread.ApplySpread(dir) : dir;
+            if (Physics.Raycast(_muzzle.position, spreadDir, out RaycastHit hitInfo, Mathf.Infinity, _layerMask))
             {
-                Vector3 spreadDir = spread is not null ? spread.ApplySpread(dir) : dir;
-                if (Physics.Raycast(_muzzle.position, spreadDir, out RaycastHit hitInfo))
-                    HitObject(hitInfo.collider.gameObject);
-                if (_projectilePrefab is not null)
-                {
-                Projectile proj = Instantiate(_projectilePrefab, _muzzle.position, Quaternion.identity);
-                proj.SetDirection(spreadDir);
-                }
+                HitObject(hitInfo.collider.gameObject);
+                IBeamEffectPlayer beamEffect = Instantiate(_beamEffectPrefab).GetComponent<IBeamEffectPlayer>();
+                beamEffect?.Fire(_muzzle.position, hitInfo.point);
             }
         }
         
@@ -36,6 +35,12 @@ public class RaycastGun : Gun
 
     private void HitObject(GameObject gameObject)
     {
-        Debug.Log($"Raycast has collided with {gameObject.name}.");
+        Hurtbox hurtbox = gameObject.GetComponent<Hurtbox>();
+        if (hurtbox != null)
+        {
+            int damage = _damage;
+            if (_canCrit) damage = (int) (damage * hurtbox.CritMultiplier);
+            hurtbox.Services.HealthTracker.Damage(damage);
+        }
     }
 }
