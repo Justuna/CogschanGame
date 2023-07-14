@@ -85,19 +85,19 @@ public class CogschanInputSingleton : MonoBehaviour
         _inputMapping = new CogschanMapping();
         _inputMapping.Enable();
 
-        _inputMapping.Movement.Jump.performed += _ => { OnJumpButtonPressed?.Invoke(); };
-        _inputMapping.Movement.BurstDash.performed += _ => { OnDashButtonPressed?.Invoke(); };
-        _inputMapping.Movement.Sprint.performed += _ => { IsHoldingSprint = true; };
+        _inputMapping.Movement.Jump.performed += _ => { if (Time.timeScale > 0) OnJumpButtonPressed?.Invoke(); };
+        _inputMapping.Movement.BurstDash.performed += _ => { if (Time.timeScale > 0) OnDashButtonPressed?.Invoke(); };
+        _inputMapping.Movement.Sprint.performed += _ => { if (Time.timeScale > 0) IsHoldingSprint = true; };
         _inputMapping.Movement.Sprint.canceled += _ => { IsHoldingSprint = false; };
-        _inputMapping.Movement.Interact.performed += _ => { OnInteractButtonPressed?.Invoke(); };
+        _inputMapping.Movement.Interact.performed += _ => { if (Time.timeScale > 0) OnInteractButtonPressed?.Invoke(); };
 
-        _inputMapping.Camera.Aim.performed += _ => { IsHoldingAim = true; };
+        _inputMapping.Camera.Aim.performed += _ => { if (Time.timeScale > 0) IsHoldingAim = true; };
         _inputMapping.Camera.Aim.canceled += _ => { IsHoldingAim = false; };
 
-        _inputMapping.Weapon.Fire.performed += _ => { IsHoldingFire = true; };
+        _inputMapping.Weapon.Fire.performed += _ => { if (Time.timeScale > 0) IsHoldingFire = true; };
         _inputMapping.Weapon.Fire.canceled += _ => { IsHoldingFire = false; };
-        _inputMapping.Weapon.Reload.performed += _ => { OnReloadButtonPressed?.Invoke(); };
-        _inputMapping.Weapon.NextWeapon.performed += _ => { OnSwitchNextWeapon?.Invoke(); };
+        _inputMapping.Weapon.Reload.performed += _ => { if (Time.timeScale > 0) OnReloadButtonPressed?.Invoke(); };
+        _inputMapping.Weapon.NextWeapon.performed += _ => { if (Time.timeScale > 0) OnSwitchNextWeapon?.Invoke(); };
 
         _inputMapping.Menus.Pause.performed += _ => { OnPauseButtonPressed?.Invoke(); };
 
