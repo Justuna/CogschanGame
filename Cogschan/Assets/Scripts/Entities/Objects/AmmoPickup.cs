@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class AmmoPickup : Interactable
 {
+    [Tooltip("The EntityServiceLocator for this entity.")]
+    [SerializeField] private EntityServiceLocator _services;
     [Tooltip("The number of clips of ammo this pickup has.")]
     [SerializeField] private int _clipCount;
     [Tooltip("The type of ammo this pickup contains.")]
@@ -22,7 +24,7 @@ public class AmmoPickup : Interactable
         {
             if (weaponCache.AddAmmo(_clipCount, _ammoType)) {
                 _deleted = true;
-                Destroy(gameObject);
+                Destroy(_services.gameObject);
             }
         }
     }
