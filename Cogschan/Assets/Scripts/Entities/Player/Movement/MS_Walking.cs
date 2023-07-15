@@ -19,6 +19,15 @@ public class MS_Walking : MonoBehaviour, IMovementState
         Vector3 movement = new Vector3(CogschanInputSingleton.Instance.MovementDirection.x, 0, CogschanInputSingleton.Instance.MovementDirection.y);
         Vector3 movementDir = dir * movement;
 
+        if (movement == Vector3.zero)
+        {
+            _services.Animator.SetBool("IsStill", true);
+        }
+        else
+        {
+            _services.Animator.SetBool("IsStill", false);
+        }
+
         if (movementDir != Vector3.zero && !_services.ActionController.IsFiring)
         {
             Quaternion movementDirQ = Quaternion.LookRotation(movementDir);
@@ -53,6 +62,7 @@ public class MS_Walking : MonoBehaviour, IMovementState
         if (_services.GroundChecker.IsGrounded)
         {
             _services.KinematicPhysics.AddImpulse(Vector3.up * _services.MovementController.JumpImpulse, false, 0);
+            _services.Animator.SetTrigger("Jump");
         }
     }
 

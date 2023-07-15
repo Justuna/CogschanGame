@@ -93,14 +93,18 @@ public class PlayerMovementController : MonoBehaviour
         ms_Dashing.DashingIntoProne += DashIntoProne;
         ms_Prone.ProneEnded += ProneEnded;
 
-        _runSoundInstance = AudioSingleton.Instance.PlayInstance(_runningSound);
-        _runSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        //_runSoundInstance = AudioSingleton.Instance.PlayInstance(_runningSound);
+        //_runSoundInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
 
     private void Update()
     {
-        _currentState.Behavior();
         if (_dashTimer > 0) _dashTimer -= Time.deltaTime;
+
+        if (_services.GroundChecker.IsGrounded) _services.Animator.SetBool("IsAirborne", false);
+        else _services.Animator.SetBool("IsAirborne", true);
+
+        _currentState.Behavior();
     }
 
     public void ResetDashCooldown()
@@ -117,54 +121,65 @@ public class PlayerMovementController : MonoBehaviour
 
     private void WalkingIntoAiming()
     {
+        _services.Animator.SetBool("IsAiming", true);
         _currentState = ms_Aiming;
     }
 
     private void WalkingIntoSprinting()
     {
-        _runSoundInstance.start();
+        //_runSoundInstance.start();
+        _services.Animator.SetBool("IsSprinting", true);
         _currentState = ms_Sprinting;
     }
 
     private void SprintingIntoAiming()
     {
-        _runSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        _services.Animator.SetBool("IsSprinting", false);
+        _services.Animator.SetBool("IsAiming", true);
+        //_runSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         _currentState = ms_Aiming;
     }
 
     private void SprintingIntoWalking()
     {
-        _runSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        _services.Animator.SetBool("IsSprinting", false);
+        //_runSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         _currentState = ms_Walking;
     }
 
     private void AimingIntoSprinting()
     {
-        _runSoundInstance.start();
+        //_runSoundInstance.start();
+        _services.Animator.SetBool("IsAiming", false);
+        _services.Animator.SetBool("IsSprinting", true);
         _currentState = ms_Sprinting;
     }
 
     private void AimingIntoWalking()
     {
+        _services.Animator.SetBool("IsAiming", false);
         _currentState = ms_Walking;
     }
 
     private void XIntoDashing()
     {
-        _runSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        _services.Animator.SetTrigger("Dash");
+        //_runSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         ms_Dashing.Initialize();
         _currentState = ms_Dashing;
     }
 
     private void XIntoProne(float duration)
     {
-        _runSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        _services.Animator.SetBool("IsStill", true);
+        //_runSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         ms_Prone.Initialize(duration);
         _currentState = ms_Prone;
     }
 
     private void DashIntoProne(float duration)
     {
+        _services.Animator.SetBool("IsStill", true);
         ms_Prone.Initialize(duration);
         _currentState = ms_Prone;
         _dashTimer = _dashCooldown;

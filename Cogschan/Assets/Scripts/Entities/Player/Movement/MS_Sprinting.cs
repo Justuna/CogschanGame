@@ -32,6 +32,12 @@ public class MS_Sprinting : MonoBehaviour, IMovementState
             {
                 audible = true;
             }
+
+            _services.Animator.SetBool("IsStill", false);
+        }
+        else
+        {
+            _services.Animator.SetBool("IsStill", true);
         }
 
         movementDir *= _sprintSpeed;
@@ -70,6 +76,7 @@ public class MS_Sprinting : MonoBehaviour, IMovementState
         if (_services.GroundChecker.IsGrounded)
         {
             _services.KinematicPhysics.AddImpulse(Vector3.up * _services.MovementController.JumpImpulse, false, 0);
+            _services.Animator.SetTrigger("Jump");
         }
     }
 

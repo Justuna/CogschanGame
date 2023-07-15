@@ -17,6 +17,15 @@ public class MS_Aiming : MonoBehaviour, IMovementState
         Vector3 movement = new Vector3(CogschanInputSingleton.Instance.MovementDirection.x, 0, CogschanInputSingleton.Instance.MovementDirection.y);
         Vector3 movementDir = dir * movement;
 
+        if (movement == Vector3.zero)
+        {
+            _services.Animator.SetBool("IsStill", true);
+        }
+        else
+        {
+            _services.Animator.SetBool("IsStill", false);
+        }
+
         // When aiming, always look forward, not in the direction of movement
         _cogschanModel.transform.rotation = Quaternion.Lerp(_cogschanModel.transform.rotation, dir, _turnSpeed * Time.deltaTime);
 
