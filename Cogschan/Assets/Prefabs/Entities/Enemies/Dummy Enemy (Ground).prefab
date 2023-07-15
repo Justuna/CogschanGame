@@ -1218,6 +1218,7 @@ MonoBehaviour:
   _minTimeUntilRangedAttack: 5
   _maxTimeUntilRangedAttack: 10
   _recalculateTime: 0.1
+  _maxNevMeshDistance: 10
 --- !u!1 &4498697738049471356
 GameObject:
   m_ObjectHideFlags: 0

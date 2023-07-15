@@ -10,6 +10,7 @@ public class ES_ChaseGround : MonoBehaviour, IEnemyState
     [SerializeField] private float _minTimeUntilRangedAttack;
     [SerializeField] private float _maxTimeUntilRangedAttack;
     [SerializeField] private float _recalculateTime;
+    [SerializeField] private float _maxNevMeshDistance;
 
     public CogschanSimpleEvent LostPlayer;
     public CogschanSimpleEvent RangedAttack;
@@ -19,6 +20,7 @@ public class ES_ChaseGround : MonoBehaviour, IEnemyState
     private int _currentCorner;
     private float _rangedAttackTimer;
     private float _recalculateTimer;
+    private bool _doneWithPath;
 
     private void Start()
     {
@@ -29,10 +31,21 @@ public class ES_ChaseGround : MonoBehaviour, IEnemyState
     public void Init()
     {
         _rangedAttackTimer = UnityEngine.Random.Range(_minTimeUntilRangedAttack, _maxTimeUntilRangedAttack);
+        _doneWithPath = false;
     }
 
     public void Behavior()
     {
+        // If we're done with the path and we still aren't near the player, the player is unreachable.
+        // If we can't attack, we might as well stop the search.
+        if (_doneWithPath && 
+            (!_services.LOSChecker.CanSee ||
+            (RangedAttack is null && Vector3.Distance(transform.position, _services.LOSChecker.LastSeenPosition) <= _meleeAttackRange)))
+        {
+            LostPlayer?.Invoke();
+            return;
+        }   
+
         // Every once in a while, try to make a ranged attack
         // Only if you can actually see the target, though
         _rangedAttackTimer -= Time.deltaTime;
@@ -69,6 +82,8 @@ public class ES_ChaseGround : MonoBehaviour, IEnemyState
             NavMesh.SamplePosition(_services.LOSChecker.LastSeenPosition, out NavMeshHit hit2, Mathf.Infinity, NavMesh.AllAreas);
             NavMesh.CalculatePath(hit.position, hit2.position, NavMesh.AllAreas, _path);
             _recalculateTimer = _recalculateTime;
+            if ((hit2.position - _services.LOSChecker.LastSeenPosition).magnitude > _maxNevMeshDistance)
+                LostPlayer?.Invoke();
             _currentCorner = 0;
         }
 
@@ -76,7 +91,10 @@ public class ES_ChaseGround : MonoBehaviour, IEnemyState
 
         if (Vector3.Distance(targetPosition, transform.position) <= _cornerDistance && _currentCorner < _path.corners.Length - 1)
         {
-            _currentCorner += 1;
+            if (_currentCorner < _path.corners.Length - 1)
+                _currentCorner += 1;
+            else
+                _doneWithPath = true;
         }
         else if (Vector3.Distance(targetPosition, transform.position) > _cornerDistance)
         {
