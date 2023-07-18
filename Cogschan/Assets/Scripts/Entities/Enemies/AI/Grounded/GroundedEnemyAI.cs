@@ -37,6 +37,7 @@ public abstract class GroundedEnemyAI : MonoBehaviour
         if (_hasMeleeAttack)
         {
             es_Chase.MeleeAttack += ChaseToMeleeAttack;
+            es_MeleeAttack.OutOfRange += MeleeAttackToChase;
         }
         else
         {
@@ -46,6 +47,7 @@ public abstract class GroundedEnemyAI : MonoBehaviour
         if (_hasRangedAttack)
         {
             es_Chase.RangedAttack += ChaseToRangedAttack;
+            // TODO: enable way to get out of ranged state.
         }
         else
         {
@@ -97,11 +99,22 @@ public abstract class GroundedEnemyAI : MonoBehaviour
         _state = es_MeleeAttack;
     }
 
+    protected virtual void MeleeAttackToChase()
+    {
+        _state = es_Chase;
+        EndMeleeAttack();
+    }
+
     protected virtual void ChaseToRangedAttack()
     {
-        
         BeginRangedAttack();
         _state = es_RangedAttack;
+    }
+
+    protected virtual void RangedAttackToChase()
+    {
+        EndRangedAttack();
+        _state = es_Chase;
     }
 
     protected virtual void SkipMeleeAttack()
@@ -126,9 +139,9 @@ public abstract class GroundedEnemyAI : MonoBehaviour
         _state = es_Chase;
     }
 
-    protected abstract void BeginMeleeAttack();
+    public abstract void BeginMeleeAttack();
     public abstract void EndMeleeAttack();
 
-    protected abstract void BeginRangedAttack();
+    public abstract void BeginRangedAttack();
     public abstract void EndRangedAttack();
 }
