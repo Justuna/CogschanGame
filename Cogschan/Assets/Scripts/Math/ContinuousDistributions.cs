@@ -12,12 +12,11 @@ public static class ContinuousDistributions
     /// Returns a random point in the annulus perpendicular to the y axis.
     /// </summary>
     /// <remarks>
-    /// The radius and the angle for this distrubition are distributed uniformly. However, the joint distribution is not uniform, rather: <br/>
-    /// <c>PDF(r, theta) = 1/(2*pi*r*(outerRadius - innerRadius))</c>. 
+    /// The radius is distributed such that the joint distribution is uniform. 
     /// </remarks>
     public static Vector3 GetRandomPointInAnnulus(float innerRadius, float outerRadius, Vector3 center)
     {
-        float radius = Random.Range(innerRadius, outerRadius);
+        float radius = Mathf.Sqrt(Random.Range(Mathf.Pow(innerRadius, 2), Mathf.Pow(outerRadius, 2)));
         float theta = Random.Range(0, 2 * Mathf.PI);
         return new Vector3(radius, theta).CylindricalToCartesian() + center;
     }
