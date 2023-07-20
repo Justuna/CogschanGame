@@ -47,7 +47,7 @@ public abstract class GroundedEnemyAI : MonoBehaviour
         if (_hasRangedAttack)
         {
             es_Chase.RangedAttack += ChaseToRangedAttack;
-            // TODO: enable way to get out of ranged state.
+            es_RangedAttack.AttackTerminated += RangedAttackToChase;
         }
         else
         {
@@ -101,6 +101,7 @@ public abstract class GroundedEnemyAI : MonoBehaviour
 
     protected virtual void MeleeAttackToChase()
     {
+        es_Chase.Init();
         _state = es_Chase;
         EndMeleeAttack();
     }
@@ -113,8 +114,9 @@ public abstract class GroundedEnemyAI : MonoBehaviour
 
     protected virtual void RangedAttackToChase()
     {
-        EndRangedAttack();
+        es_Chase.Init();
         _state = es_Chase;
+        EndRangedAttack();
     }
 
     protected virtual void SkipMeleeAttack()

@@ -657,6 +657,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f431c80ad3555754fa2ede8745efb98c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _projectilePrefab: {fileID: 5008855238984291348, guid: 68398d2015138ae4695099dadcb88cb0,
+    type: 3}
+  _services: {fileID: 4028257471934700786}
+  _launchVector: {x: 5, y: 10}
 --- !u!1 &4028257470631880238
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,7 +821,7 @@ MonoBehaviour:
       Data4: -1412316770
     Path: event:/Test/TestOneShot
   _hasMeleeAttack: 1
-  _hasRangedAttack: 0
+  _hasRangedAttack: 1
   _speed: 5
   _turnSpeed: 90
   _hitbox: {fileID: 933659176997692898}

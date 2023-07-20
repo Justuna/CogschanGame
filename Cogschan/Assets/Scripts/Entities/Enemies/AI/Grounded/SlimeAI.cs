@@ -17,7 +17,6 @@ public class SlimeAI : GroundedEnemyAI
 
     public override void EndRangedAttack()
     {
-        throw new System.NotImplementedException();
     }
 
     public override void BeginMeleeAttack()
@@ -28,6 +27,5 @@ public class SlimeAI : GroundedEnemyAI
 
     public override void BeginRangedAttack()
     {
-        throw new System.NotImplementedException();
     }
 }
