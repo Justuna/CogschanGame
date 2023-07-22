@@ -30,6 +30,7 @@ public class RaycastGun : Gun
                 beamEffect?.Fire(_muzzle.position, hitInfo.point);
             }
         }
+        
     }
 
     private void HitObject(GameObject gameObject)
