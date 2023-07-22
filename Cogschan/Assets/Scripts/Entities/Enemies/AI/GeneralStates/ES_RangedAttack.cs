@@ -42,6 +42,7 @@ public class ES_RangedAttack : MonoBehaviour, IEnemyState
         }
     }
 
+    // Calculates the angle of the trajectory based on the relative position of the target.
     private float? GetAngle(Vector2 relPos)
     {
         float epsilon = 1e-3f;

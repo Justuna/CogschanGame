@@ -55,6 +55,13 @@ public static class PolynomialSolver
         return roots;
     }
 
+    /// <summary>
+    /// Find the 3 roots of the equation ax^3 + bx^2 + cx + d = 0.
+    /// </summary>
+    /// <remarks>
+    /// The formula used here can be found on Wikipedia: <br/>
+    /// <see href=https://en.wikipedia.org/wiki/Cubic_equation#General_cubic_formula"/>
+    /// </remarks>
     public static Complex[] CubicSolver(float a, float b, float c, float d)
     {
         Complex[] roots = new Complex[3];
