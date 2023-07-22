@@ -659,8 +659,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _projectilePrefab: {fileID: 5008855238984291348, guid: 68398d2015138ae4695099dadcb88cb0,
     type: 3}
+  _launchSpeed: 30
   _services: {fileID: 4028257471934700786}
-  _launchVector: {x: 5, y: 10}
 --- !u!1 &4028257470631880238
 GameObject:
   m_ObjectHideFlags: 0
