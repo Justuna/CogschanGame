@@ -1780,7 +1780,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39c08a89b3e78de4cb0fca79c5008008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _forcedInteraction: 0
+  _forcedInteraction: 1
   _playerOnly: 0
   _optInMessage: Press E to interact.
   _impulse: {x: 0, y: 300, z: 0}
