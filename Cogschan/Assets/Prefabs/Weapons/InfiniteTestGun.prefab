@@ -80,8 +80,9 @@ MonoBehaviour:
   _muzzleFlash: {fileID: 0}
   _recoilPattern: {fileID: 11400000, guid: a17d57b45e1bf1349aed3be497d6e408, type: 2}
   _spreadPattern: {fileID: 0}
-  _spreadPatternAccutate: {fileID: 0}
-  _fireRate: 0.2
+  _spreadPatternAccutate: {fileID: 11400000, guid: 8a3ed0364bf66e048a1e70c664bf2ae0,
+    type: 2}
+  _fireRate: 0.001
   _name: TestGun
   _muzzle: {fileID: 6515244221760789771}
   _requiresAmmo: 0
@@ -89,6 +90,8 @@ MonoBehaviour:
   _clipSize: 0
   _maxClips: 0
   _count: 1
+  _countAccurate: 0
+  _reloadTime: 0
   _projectilePrefab: {fileID: 521982211236534687, guid: 1771c52a6935b447db7e7b3745743a50,
     type: 3}
 --- !u!1 &7554969327838763247
