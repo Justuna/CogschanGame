@@ -495,7 +495,7 @@ MonoBehaviour:
   _yOffset: 0
   _radius: 0.45
   _castDistance: 0.15
-  _services: {fileID: 0}
+  _services: {fileID: 723379263556669392}
   _takesFallDamage: 1
   _maxNoHarm: 0
   _speedToDamageFactor: 0

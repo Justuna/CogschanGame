@@ -155,7 +155,7 @@ public class GroundChecker : MonoBehaviour
 
             if (_takesFallDamage && SurfaceType != SurfaceTypes.STEEP_SLOPE && SurfaceType != SurfaceTypes.NOT_GROUND)
             {
-                if (_services.HealthTracker != null) { _services.HealthTracker.Damage(GetFallDamage()); }
+                _services.HealthTracker?.Damage(GetFallDamage());
             }
                 
             if (_groundPosTimer > _groundPosUpdate)
