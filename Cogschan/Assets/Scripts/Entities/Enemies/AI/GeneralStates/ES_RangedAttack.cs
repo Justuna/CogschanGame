@@ -1,43 +1,67 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using Numerics = System.Numerics;
 
 public class ES_RangedAttack : MonoBehaviour, IEnemyState
 {
     [SerializeField]
-    [Tooltip("The projectile fired by the object.")]
-    private GameObject _projectilePrefab;
+    [Tooltip("The type of attack this enemy uses.")]
+    private AttackType _attackType;
     [SerializeField]
-    [Tooltip("The speed at which the projectile is fired.")]
+    [Tooltip("The GameObject fired by the object.")]
+    private GameObject _gameObject;
+    [SerializeField]
+    [Tooltip("The speed at which the projectile is fired. Ignored if the attack is a raycast.")]
     private float _launchSpeed;
+    [SerializeField]
+    [Tooltip("The amount of damage the player takes on hit. Ignored unless the attack is a raycast.")]
+    private int _damage;
     [SerializeField]
     [Tooltip("The service locator for the enemy.")]
     private EntityServiceLocator _services;
 
     public CogschanSimpleEvent AttackTerminated;
+    private bool _hasAttacked = false;
 
     public void Behavior()
     {
+        if (_hasAttacked) return;
         Vector3 playerDisplacement = _services.LOSChecker.LastSeenPosition - transform.position;
         Vector3 playerDir = playerDisplacement;
         playerDir.y = 0;
+        Vector3 rotationVal = _services.FlyingAI == null ? playerDir : playerDisplacement;
+        float turnSpeed = _services.FlyingAI == null ? _services.GroundedAI.TurnSpeed : _services.FlyingAI.TurnSpeed;
         _services.Model.transform.rotation = Quaternion.RotateTowards(_services.Model.transform.rotation,
-            Quaternion.LookRotation(playerDir), Time.deltaTime * _services.GroundedAI.TurnSpeed);
-        if (Vector3.Angle(_services.Model.transform.forward, playerDir) < _services.GroundedAI.TurnSpeed * Time.deltaTime)
+            Quaternion.LookRotation(rotationVal), Time.deltaTime * turnSpeed);
+        if (Vector3.Angle(_services.Model.transform.forward, rotationVal) < turnSpeed * Time.deltaTime)
         {
-            float? angleNullable = GetAngle(new(playerDir.magnitude, playerDir.y));
-            if (angleNullable is not null)
+            switch (_attackType)
             {
-                float angle = angleNullable.Value;
-                Vector3 launchVel = _services.Model.transform.forward * Mathf.Cos(angle)
-                    + Vector3.up * Mathf.Sin(angle);
-                launchVel *= _launchSpeed;
-                GameObject proj = Instantiate(_projectilePrefab, transform.position + launchVel.normalized,
-                    Quaternion.identity);
-                proj.GetComponent<Rigidbody>().velocity = launchVel;
+                case AttackType.ProjectileGravity:
+                    float? angleNullable = GetAngle(new(playerDir.magnitude, playerDir.y));
+                    if (angleNullable is not null)
+                    {
+                        float angle = angleNullable.Value;
+                        Vector3 launchVel = _services.Model.transform.forward * Mathf.Cos(angle)
+                            + Vector3.up * Mathf.Sin(angle);
+                        launchVel *= _launchSpeed;
+                        GameObject proj = Instantiate(_gameObject, transform.position + launchVel.normalized,
+                            Quaternion.identity);
+                        proj.GetComponent<Rigidbody>().velocity = launchVel;
+                    }
+                    break;
+                case AttackType.RayCast:
+                    print("attack!!");
+                    Physics.Raycast(transform.position, _services.Model.transform.forward, out RaycastHit hitInfo, Mathf.Infinity,
+                        LayerMask.GetMask("Level", "Skybox", "Player Hurtbox"));
+                    print(hitInfo.collider.gameObject);
+                    Hurtbox hurt = hitInfo.collider.gameObject.GetComponent<Hurtbox>();
+                    if (hurt != null)
+                        hurt.Services.HealthTracker.Damage(_damage);
+                    break;
             }
+            _hasAttacked = true;
             AttackTerminated?.Invoke();
         }
     }
@@ -98,5 +122,11 @@ public class ES_RangedAttack : MonoBehaviour, IEnemyState
             - relPos.x * Mathf.Sin(x) * Mathf.Cos(x) + C,
             validRoots[0], tolerance, epsilon);
         return angle.IsAccurate ? angle : null;
+    }
+
+    private enum AttackType
+    {
+        ProjectileGravity,
+        RayCast
     }
 }

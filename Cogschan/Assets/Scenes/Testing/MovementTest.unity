@@ -9973,7 +9973,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnPoint: {fileID: 626228429}
-  _spawnable: {fileID: 4028257471934700776, guid: f3e6c8af41cd0f84a84256a99c2e3e05,
+  _spawnable: {fileID: 723379263556669386, guid: 4bd37852d3d594d41bfc9b57f821d37f,
     type: 3}
   _minSpawnTime: 5
   _maxSpawnTime: 10
