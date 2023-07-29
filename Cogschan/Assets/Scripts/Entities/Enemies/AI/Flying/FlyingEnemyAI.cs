@@ -98,6 +98,7 @@ public abstract class FlyingEnemyAI : MonoBehaviour
 
     protected virtual void MeleeAttackToChase()
     {
+        es_Chase.Init();
         _state = es_Chase;
         EndMeleeAttack();
     }
@@ -105,7 +106,7 @@ public abstract class FlyingEnemyAI : MonoBehaviour
     protected virtual void ChaseToRangedAttack()
     {
         BeginRangedAttack();
-        _state = es_RangedAttack;
+        _state = es_RangedAttack.Init();
     }
 
     protected virtual void RangedAttackToChase()

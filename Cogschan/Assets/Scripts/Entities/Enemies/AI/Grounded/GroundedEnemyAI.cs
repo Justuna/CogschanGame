@@ -109,7 +109,7 @@ public abstract class GroundedEnemyAI : MonoBehaviour
     protected virtual void ChaseToRangedAttack()
     {
         BeginRangedAttack();
-        _state = es_RangedAttack;
+        _state = es_RangedAttack.Init();
     }
 
     protected virtual void RangedAttackToChase()

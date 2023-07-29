@@ -39,6 +39,12 @@ public class ES_RangedAttack : MonoBehaviour, IEnemyState
     public CogschanSimpleEvent AttackTerminated;
     private bool _hasAttacked = false;
 
+    public ES_RangedAttack Init()
+    {
+        _hasAttacked = false;
+        return this;
+    }
+
     public void Behavior()
     {
         if (_hasAttacked) return;
