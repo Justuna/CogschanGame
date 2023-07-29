@@ -657,8 +657,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f431c80ad3555754fa2ede8745efb98c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _windUpTime: 0
+  _windUpPrefab: {fileID: 0}
+  _windUpParent: {fileID: 0}
   _attackType: 0
-  _gameObject: {fileID: 5008855238984291348, guid: 68398d2015138ae4695099dadcb88cb0,
+  _attackPrefab: {fileID: 5008855238984291348, guid: 68398d2015138ae4695099dadcb88cb0,
     type: 3}
   _launchSpeed: 30
   _damage: 0

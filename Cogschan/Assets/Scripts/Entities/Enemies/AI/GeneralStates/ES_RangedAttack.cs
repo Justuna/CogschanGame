@@ -1,16 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Numerics = System.Numerics;
 
 public class ES_RangedAttack : MonoBehaviour, IEnemyState
 {
+    [Header("Wind Up")]
+    [SerializeField]
+    [Tooltip("The amount of time it takes for the attack to wind up.")]
+    private float _windUpTime;
+    [SerializeField]
+    [Tooltip("The GameObject created when the attack starts winding up. \n Must have a MeshRenderer. Should be transparent.")]
+    private GameObject _windUpPrefab;
+    [SerializeField]
+    [Tooltip("The Transform of the parent of the wind up object.")]
+    private Transform _windUpParent;
+
+    [Header("Attack")]
     [SerializeField]
     [Tooltip("The type of attack this enemy uses.")]
     private AttackType _attackType;
     [SerializeField]
     [Tooltip("The GameObject fired by the object.")]
-    private GameObject _gameObject;
+    private GameObject _attackPrefab;
     [SerializeField]
     [Tooltip("The speed at which the projectile is fired. Ignored if the attack is a raycast.")]
     private float _launchSpeed;
@@ -18,6 +31,8 @@ public class ES_RangedAttack : MonoBehaviour, IEnemyState
     [Tooltip("The amount of damage the player takes on hit. Ignored unless the attack is a raycast.")]
     private int _damage;
     [SerializeField]
+
+    [Header("")]
     [Tooltip("The service locator for the enemy.")]
     private EntityServiceLocator _services;
 
@@ -36,34 +51,42 @@ public class ES_RangedAttack : MonoBehaviour, IEnemyState
             Quaternion.LookRotation(rotationVal), Time.deltaTime * turnSpeed);
         if (Vector3.Angle(_services.Model.transform.forward, rotationVal) < turnSpeed * Time.deltaTime)
         {
-            switch (_attackType)
+            if (_windUpTime != 0 && _windUpPrefab != null)
             {
-                case AttackType.ProjectileGravity:
-                    float? angleNullable = GetAngle(new(playerDir.magnitude, playerDir.y));
-                    if (angleNullable is not null)
-                    {
-                        float angle = angleNullable.Value;
-                        Vector3 launchVel = _services.Model.transform.forward * Mathf.Cos(angle)
-                            + Vector3.up * Mathf.Sin(angle);
-                        launchVel *= _launchSpeed;
-                        GameObject proj = Instantiate(_gameObject, transform.position + launchVel.normalized,
-                            Quaternion.identity);
-                        proj.GetComponent<Rigidbody>().velocity = launchVel;
-                    }
-                    break;
-                case AttackType.RayCast:
-                    print("attack!!");
-                    Physics.Raycast(transform.position, _services.Model.transform.forward, out RaycastHit hitInfo, Mathf.Infinity,
-                        LayerMask.GetMask("Level", "Skybox", "Player Hurtbox"));
-                    print(hitInfo.collider.gameObject);
-                    Hurtbox hurt = hitInfo.collider.gameObject.GetComponent<Hurtbox>();
-                    if (hurt != null)
-                        hurt.Services.HealthTracker.Damage(_damage);
-                    break;
+                FadeComponent.Create(_windUpPrefab, _windUpParent, _windUpTime);
             }
+            StartCoroutine(Attack(playerDir));
             _hasAttacked = true;
-            AttackTerminated?.Invoke();
         }
+    }
+
+    private IEnumerator Attack(Vector3 playerDir)
+    {
+        yield return new WaitForSeconds(_windUpTime);
+        switch (_attackType)
+        {
+            case AttackType.ProjectileGravity:
+                float? angleNullable = GetAngle(new(playerDir.magnitude, playerDir.y));
+                if (angleNullable is not null)
+                {
+                    float angle = angleNullable.Value;
+                    Vector3 launchVel = _services.Model.transform.forward * Mathf.Cos(angle)
+                        + Vector3.up * Mathf.Sin(angle);
+                    launchVel *= _launchSpeed;
+                    GameObject proj = Instantiate(_attackPrefab, transform.position + launchVel.normalized,
+                        Quaternion.identity);
+                    proj.GetComponent<Rigidbody>().velocity = launchVel;
+                }
+                break;
+            case AttackType.RayCast:
+                Physics.Raycast(transform.position, _services.Model.transform.forward, out RaycastHit hitInfo, Mathf.Infinity,
+                    LayerMask.GetMask("Level", "Skybox", "Player Hurtbox"));
+                Hurtbox hurt = hitInfo.collider.gameObject.GetComponent<Hurtbox>();
+                if (hurt != null)
+                    hurt.Services.HealthTracker.Damage(_damage);
+                break;
+        }
+        AttackTerminated?.Invoke();
     }
 
     // Calculates the angle of the trajectory based on the relative position of the target.

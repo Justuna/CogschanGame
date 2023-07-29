@@ -110,6 +110,7 @@ public abstract class FlyingEnemyAI : MonoBehaviour
 
     protected virtual void RangedAttackToChase()
     {
+        es_Chase.Init();
         _state = es_Chase;
         EndRangedAttack();
     }
