@@ -30,9 +30,9 @@ public class ES_RangedAttack : MonoBehaviour, IEnemyState
     [SerializeField]
     [Tooltip("The amount of damage the player takes on hit. Ignored unless the attack is a raycast.")]
     private int _damage;
-    [SerializeField]
 
     [Header("")]
+    [SerializeField]
     [Tooltip("The service locator for the enemy.")]
     private EntityServiceLocator _services;
 
@@ -90,6 +90,8 @@ public class ES_RangedAttack : MonoBehaviour, IEnemyState
                 Hurtbox hurt = hitInfo.collider.gameObject.GetComponent<Hurtbox>();
                 if (hurt != null)
                     hurt.Services.HealthTracker.Damage(_damage);
+                IBeamEffectPlayer beamEffect = Instantiate(_attackPrefab).GetComponent<IBeamEffectPlayer>();
+                beamEffect?.Fire(_windUpPrefab.transform.position, hitInfo.point);
                 break;
         }
         AttackTerminated?.Invoke();

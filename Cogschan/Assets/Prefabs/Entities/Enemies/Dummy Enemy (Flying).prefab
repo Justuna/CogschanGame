@@ -1152,7 +1152,8 @@ MonoBehaviour:
     type: 3}
   _windUpParent: {fileID: 6325396960597620156}
   _attackType: 1
-  _attackPrefab: {fileID: 0}
+  _attackPrefab: {fileID: 5772970684945050815, guid: 2f067cbc389678f4c9f8b074b5570684,
+    type: 3}
   _launchSpeed: 0
   _damage: 10
   _services: {fileID: 723379263556669392}
