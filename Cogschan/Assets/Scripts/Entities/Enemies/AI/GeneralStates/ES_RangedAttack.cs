@@ -13,9 +13,6 @@ public class ES_RangedAttack : MonoBehaviour, IEnemyState
     [SerializeField]
     [Tooltip("The GameObject created when the attack starts winding up. \n Must have a MeshRenderer. Should be transparent.")]
     private GameObject _windUpPrefab;
-    [SerializeField]
-    [Tooltip("The Transform of the parent of the wind up object.")]
-    private Transform _windUpParent;
 
     [Header("Attack")]
     [SerializeField]
@@ -24,6 +21,9 @@ public class ES_RangedAttack : MonoBehaviour, IEnemyState
     [SerializeField]
     [Tooltip("The GameObject fired by the object.")]
     private GameObject _attackPrefab;
+    [SerializeField]
+    [Tooltip("The Transform of the parent of the attack.")]
+    private Transform _attackTransform;
     [SerializeField]
     [Tooltip("The speed at which the projectile is fired. Ignored if the attack is a raycast.")]
     private float _launchSpeed;
@@ -59,7 +59,7 @@ public class ES_RangedAttack : MonoBehaviour, IEnemyState
         {
             if (_windUpTime != 0 && _windUpPrefab != null)
             {
-                FadeComponent.Create(_windUpPrefab, _windUpParent, _windUpTime);
+                FadeComponent.Create(_windUpPrefab, _attackTransform, _windUpTime);
             }
             StartCoroutine(Attack(playerDir));
             _hasAttacked = true;
@@ -79,7 +79,7 @@ public class ES_RangedAttack : MonoBehaviour, IEnemyState
                     Vector3 launchVel = _services.Model.transform.forward * Mathf.Cos(angle)
                         + Vector3.up * Mathf.Sin(angle);
                     launchVel *= _launchSpeed;
-                    GameObject proj = Instantiate(_attackPrefab, transform.position + launchVel.normalized,
+                    GameObject proj = Instantiate(_attackPrefab, _attackTransform.position + launchVel.normalized,
                         Quaternion.identity);
                     proj.GetComponent<Rigidbody>().velocity = launchVel;
                 }
@@ -91,7 +91,7 @@ public class ES_RangedAttack : MonoBehaviour, IEnemyState
                 if (hurt != null)
                     hurt.Services.HealthTracker.Damage(_damage);
                 IBeamEffectPlayer beamEffect = Instantiate(_attackPrefab).GetComponent<IBeamEffectPlayer>();
-                beamEffect?.Fire(_windUpPrefab.transform.position, hitInfo.point);
+                beamEffect?.Fire(_attackTransform.transform.position, hitInfo.point);
                 break;
         }
         AttackTerminated?.Invoke();
