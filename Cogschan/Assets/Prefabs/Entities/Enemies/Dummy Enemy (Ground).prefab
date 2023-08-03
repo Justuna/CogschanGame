@@ -221,6 +221,7 @@ GameObject:
   - component: {fileID: 7141802876199917094}
   - component: {fileID: 1095272810402876813}
   - component: {fileID: 8822921928947837377}
+  - component: {fileID: 594245405079816859}
   m_Layer: 6
   m_Name: Health Tracker
   m_TagString: Untagged
@@ -268,7 +269,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bee0c96d733b0b4dac77621221141d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AfterDeathAnimation:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 594245405079816859}
+        m_TargetAssemblyTypeName: DropPickups, Assembly-CSharp
+        m_MethodName: Drop
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _services: {fileID: 4028257471934700786}
+--- !u!114 &594245405079816859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754363548816795228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 552d4226cde91bc4caff393b87ced8c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dropTable:
+  - Drop: {fileID: 3977001642723400976, guid: bf0be4013732f0b4e9076d0c9e3b0a5b, type: 3}
+    Weight: 1
+  _minLateralVelocity: 5
+  _maxLateralVelocity: 10
+  _minUpwardVelocity: 10
+  _maxUpwardVelocity: 15
+  _offset: {x: 0, y: 0.2, z: 0}
 --- !u!1 &2898720146758116805
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,7 +863,7 @@ MonoBehaviour:
     Path: event:/Test/TestOneShot
   _hasMeleeAttack: 1
   _hasRangedAttack: 1
-  _speed: 5
+  _speed: 8
   _turnSpeed: 90
   _hitbox: {fileID: 933659176997692898}
 --- !u!1 &4028257471150577326
@@ -1256,10 +1292,10 @@ NavMeshAgent:
   m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 25
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 360
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1

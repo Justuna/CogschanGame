@@ -337,7 +337,7 @@ MonoBehaviour:
   IsPlayer: 0
   CharacterController: {fileID: 723379263556669393}
   GroundChecker: {fileID: 0}
-  HealthTracker: {fileID: 3665362306707218095}
+  HealthTracker: {fileID: 3853426495976685588}
   InteractionChecker: {fileID: 3305946930540189395}
   KinematicPhysics: {fileID: 723379264614938595}
   Model: {fileID: 723379263735601430}
@@ -532,7 +532,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 723379264215203919}
-  - {fileID: 6841544703776949508}
+  - {fileID: 4526050464410438256}
   - {fileID: 723379264614938592}
   m_Father: {fileID: 723379263556669388}
   m_RootOrder: 1
@@ -645,8 +645,8 @@ MonoBehaviour:
   es_RangedAttack: {fileID: 2871798098994609624}
   _hasMeleeAttack: 0
   _hasRangedAttack: 1
-  _speed: 5
-  _turnSpeed: 10
+  _speed: 8
+  _turnSpeed: 15
 --- !u!1 &723379264614938526
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,8 +694,8 @@ MonoBehaviour:
   _services: {fileID: 723379263556669392}
   _mass: 10
   DesiredVelocity: {x: 0, y: 0, z: 0}
-  _acceleration: 0.5
-  _maxSpeed: 1
+  _acceleration: 20
+  _maxSpeed: 20
   _dragMultiplier: 0.787
 --- !u!1 &723379265238921473
 GameObject:
@@ -951,51 +951,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _services: {fileID: 723379263556669392}
   _alertTime: 1.5
---- !u!1 &2717371597945615742
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6841544703776949508}
-  - component: {fileID: 3665362306707218095}
-  m_Layer: 6
-  m_Name: Health Tracker
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6841544703776949508
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2717371597945615742}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 723379264089316148}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3665362306707218095
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2717371597945615742}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d957d27430f5fb049a7a76cae1876114, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxHealth: 20
 --- !u!1 &3033654975161565800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1591,6 +1546,65 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isFlipped: 1
+--- !u!1 &9179350773448912855
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4526050464410438256}
+  - component: {fileID: 3853426495976685588}
+  - component: {fileID: 1503218161810204309}
+  m_Layer: 6
+  m_Name: Health Tracker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4526050464410438256
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9179350773448912855}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 723379264089316148}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3853426495976685588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9179350773448912855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d957d27430f5fb049a7a76cae1876114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 20
+--- !u!114 &1503218161810204309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9179350773448912855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bee0c96d733b0b4dac77621221141d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _services: {fileID: 723379263556669392}
 --- !u!1 &9218369362790995099
 GameObject:
   m_ObjectHideFlags: 0

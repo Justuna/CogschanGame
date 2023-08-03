@@ -34,6 +34,15 @@ public class InteractionChecker : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        Interactable interactable = other.GetComponent<Interactable>();
+        if (interactable != null)
+        {
+            if (interactable.ForceInteraction && interactable.StayLive) interactable.Interact(_services);
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
         Interactable interactable = other.GetComponent<Interactable>();
