@@ -695,11 +695,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _windUpTime: 0
   _windUpPrefab: {fileID: 0}
-  _windUpParent: {fileID: 0}
   _attackType: 0
   _attackPrefab: {fileID: 5008855238984291348, guid: 68398d2015138ae4695099dadcb88cb0,
     type: 3}
-  _launchSpeed: 30
+  _attackTransform: {fileID: 7479142615769603461}
+  _launchSpeed: 50
   _damage: 0
   _services: {fileID: 4028257471934700786}
 --- !u!1 &4028257470631880238
@@ -1142,6 +1142,7 @@ Transform:
   - {fileID: 4071242290183973367}
   - {fileID: 6729045948943650377}
   - {fileID: 8877331042272259309}
+  - {fileID: 7479142615769603461}
   m_Father: {fileID: 4028257471934700782}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1904,3 +1905,34 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &7783541050921865994
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7479142615769603461}
+  m_Layer: 6
+  m_Name: FireTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7479142615769603461
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7783541050921865994}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.25, z: 0.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4028257471432673851}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
