@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 285787dee042f485992d306950ad2bb8, type: 3}
-  m_Name: SpreadPattern
+  m_Name: AccurateShotgunSpreadPattern
   m_EditorClassIdentifier: 
   Spread:
     serializedVersion: 2
@@ -37,5 +37,5 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   Duration: 1
-  Increase: 1
-  Magnitude: 10
+  Increase: 0
+  Magnitude: 12

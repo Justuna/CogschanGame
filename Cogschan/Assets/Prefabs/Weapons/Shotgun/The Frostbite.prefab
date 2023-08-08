@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 7554969326682805840}
   - component: {fileID: 7554969326682805843}
   m_Layer: 0
-  m_Name: InfiniteTestGun
+  m_Name: The Frostbite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,21 +78,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _muzzleFlash: {fileID: 0}
-  _recoilPattern: {fileID: 11400000, guid: a17d57b45e1bf1349aed3be497d6e408, type: 2}
-  _spreadPattern: {fileID: 0}
-  _spreadPatternAccutate: {fileID: 11400000, guid: 8a3ed0364bf66e048a1e70c664bf2ae0,
+  _recoilPattern: {fileID: 11400000, guid: f9064558a77e7db4fae6aefb19152ea5, type: 2}
+  _spreadPattern: {fileID: 11400000, guid: 86169eeb913fa4443a275d1e208afd5a, type: 2}
+  _spreadPatternAccutate: {fileID: 11400000, guid: 7f16723eb6a2f684db5283943acfb303,
     type: 2}
-  _fireRate: 0.001
-  _name: TestGun
+  _fireRate: 1
+  _name: Shotgun
   _muzzle: {fileID: 6515244221760789771}
-  _requiresAmmo: 0
-  _ammoType: {fileID: 0}
-  _clipSize: 0
-  _maxClips: 0
-  _count: 1
-  _countAccurate: 0
-  _reloadTime: 0
-  _projectilePrefab: {fileID: 521982211236534687, guid: 1771c52a6935b447db7e7b3745743a50,
+  _requiresAmmo: 1
+  _ammoType: {fileID: 11400000, guid: ab095c8fac5360941b09f51016c6acdd, type: 2}
+  _clipSize: 8
+  _maxClips: 4
+  _count: 20
+  _countAccurate: 20
+  _reloadTime: 1
+  _projectilePrefab: {fileID: 521982211236534687, guid: 819850cc9295622478e3378ffd7a4cda,
     type: 3}
 --- !u!1 &7554969327838763247
 GameObject:
@@ -156,7 +156,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 7498b2e7ad3a76c4f8c31a51fa18513d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
