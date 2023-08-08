@@ -266,8 +266,9 @@ MonoBehaviour:
   _radius: 0.5
   _castDistance: 0.1
   _services: {fileID: 4272273026959324190}
+  _takesFallDamage: 1
   _maxNoHarm: 20
-  _speedPerDamage: 10
+  _speedToDamageFactor: 0
   _notGroundColor: {r: 1, g: 0, b: 0, a: 0.7529412}
   _steepSlopeColor: {r: 1, g: 0.4358647, b: 0, a: 0.7529412}
   _walkableSlopeColor: {r: 1, g: 0.8518007, b: 0, a: 0.7529412}
@@ -696,7 +697,7 @@ MonoBehaviour:
   _targetableMask:
     serializedVersion: 2
     m_Bits: 5128
-  _mouseHorizontalSensitivity: 0.5
+  _mouseHorizontalSensitivity: 0.1
   _mouseVerticalSensitivity: 0.1
   _maxYaw: 70
   _minYawWithRecoil: -80
@@ -1390,7 +1391,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4272273027785079341}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 2.172, z: -4.22}
+  m_LocalPosition: {x: 2, y: 2.172, z: -4.2199993}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

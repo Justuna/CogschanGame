@@ -1,5 +1,5 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class KeyDisplay : MonoBehaviour
 {
@@ -7,6 +7,6 @@ public class KeyDisplay : MonoBehaviour
 
     private void Update()
     {
-        _keyDisplay.text = "" + GameStateSingleton.Instance.KeyCount;
+        _keyDisplay.text = GameStateSingleton.Instance.KeyCount.ToString();
     }
 }

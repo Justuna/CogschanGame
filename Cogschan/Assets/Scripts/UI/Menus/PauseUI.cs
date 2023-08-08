@@ -1,27 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameUIController : MonoBehaviour
+public class PauseUI : MonoBehaviour
 {
-    [SerializeField] private GameObject PauseMenu;
-    [SerializeField] private Button UnpauseButton;
+    [SerializeField] private GameObject _pauseMenu;
+    [SerializeField] private Button _unpauseButton;
+    [SerializeField] private Button _quitButton;
 
     private bool _paused;
 
     private void Start()
     {
         CogschanInputSingleton.Instance.OnPauseButtonPressed += () => { if (_paused) Unpause(); else Pause(); };
-        UnpauseButton.onClick.AddListener(Unpause);
+        _unpauseButton.onClick.AddListener(Unpause);
+        _quitButton.onClick.AddListener(Quit);
         Unpause();
     }
 
     private void Pause()
     {
-        PauseMenu.gameObject.SetActive(true);
+        _pauseMenu.gameObject.SetActive(true);
         Time.timeScale = 0;
-        
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
@@ -30,7 +30,7 @@ public class GameUIController : MonoBehaviour
 
     private void Unpause()
     {
-        PauseMenu.gameObject.SetActive(false);
+        _pauseMenu.gameObject.SetActive(false);
         Time.timeScale = 1;
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -39,13 +39,8 @@ public class GameUIController : MonoBehaviour
         _paused = false;
     }
 
-    private void ReturnToMenu()
+    private void Quit()
     {
-        // Fill
-    }
-
-    private void QuitToDesktop()
-    {
-        // Fill
+        Application.Quit();
     }
 }

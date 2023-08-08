@@ -1,10 +1,7 @@
-using System.Collections;
+using Cinemachine;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using Cinemachine;
-using Unity.VisualScripting;
-using System;
 
 /// <summary>
 /// Script responsible for translating player input into camera movement.
@@ -39,6 +36,11 @@ public class PlayerCameraController : MonoBehaviour
     /// The y-rotation of the camera, which corresponds to the cardinal direction in which the player is looking.
     /// </summary>
     public Vector3 CameraLateralDirection { get; private set; }
+
+    public void Construct(Transform targetReticle)
+    {
+        _targetReticle = targetReticle;
+    }
 
     private void Start()
     {
@@ -144,12 +146,12 @@ public class PlayerCameraController : MonoBehaviour
             if (Physics.Raycast(cogschanView, out RaycastHit cogschanViewHit, Mathf.Infinity, _targetableMask, QueryTriggerInteraction.Collide))
             {
                 Vector3 target = Camera.main.WorldToScreenPoint(cogschanViewHit.point);
-                
+
                 // If you're looking at something really far away, the Z will be very big, which basically means the UI will be super far away, too
                 // So set the Z to zero to bring the reticle back to a visible distance.
                 target.z = 0;
                 _targetReticle.position = target;
-                
+
                 TargetPosition = cogschanViewHit.point;
             }
         }

@@ -10,8 +10,10 @@ public class Healthbar : MonoBehaviour
     [SerializeField] private Image _fill;
     [Tooltip("The image being used for the background.")]
     [SerializeField] private Image _background;
-    [Tooltip("An optional text label that displays the health as a number.")]
-    [SerializeField] private TextMeshProUGUI _numericalDisplay;
+    [Tooltip("An optional text label that displays the current health as a number.")]
+    [SerializeField] private TextMeshProUGUI _healthText;
+    [Tooltip("An optional text label that displays the max health as a number.")]
+    [SerializeField] private TextMeshProUGUI _maxHealthText;
     [Tooltip("The color of the healthbar depending on the current health. Left is dead, right is full health.")]
     [SerializeField] private Gradient _fillColor;
     [Tooltip("Whether or not the healthbar updates immediately. If this is off, the healthbar will try to smoothly glide between values instead.")]
@@ -20,6 +22,11 @@ public class Healthbar : MonoBehaviour
     [SerializeField] private float _barVelocity;
 
     private float _percentage = 1;
+
+    public void Construct(EntityServiceLocator services)
+    {
+        _services = services;
+    }
 
     private void Update()
     {
@@ -35,13 +42,14 @@ public class Healthbar : MonoBehaviour
             _percentage += sign * Mathf.Min(_barVelocity * Time.deltaTime, Mathf.Abs(_percentage - truePercentage));
         }
 
-        _fill.GetComponent<RectTransform>().sizeDelta = 
+        _fill.GetComponent<RectTransform>().sizeDelta =
             new Vector2(_background.GetComponent<RectTransform>().rect.width * _percentage, _background.GetComponent<RectTransform>().rect.height);
         _fill.color = _fillColor.Evaluate(_percentage);
 
-        if (_numericalDisplay != null)
+        if (_healthText != null && _maxHealthText != null)
         {
-            _numericalDisplay.text = _services.HealthTracker.Health + " / " + _services.HealthTracker.MaxHealth;
+            _healthText.text = _services.HealthTracker.Health.ToString();
+            _maxHealthText.text = " / " + _services.HealthTracker.MaxHealth;
         }
     }
 }
