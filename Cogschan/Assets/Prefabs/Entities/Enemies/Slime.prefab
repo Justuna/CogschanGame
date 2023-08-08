@@ -298,7 +298,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dropTable:
-  - Drop: {fileID: 3977001642723400976, guid: bf0be4013732f0b4e9076d0c9e3b0a5b, type: 3}
+  - Drop: {fileID: 3977001642723400976, guid: eaeb79a311325624297d79fa0bd2e638, type: 3}
+    Weight: 4
+  - Drop: {fileID: 3977001642723400976, guid: cce04076f498b4b4883e77c30bf9f2c7, type: 3}
+    Weight: 3
+  - Drop: {fileID: 3977001642723400976, guid: d138cff5f7fcbe5488a5ad67cac18ed9, type: 3}
+    Weight: 2
+  - Drop: {fileID: 3977001642723400976, guid: 49d4ca07b1f98da42b7c9e0e0eb36ba9, type: 3}
     Weight: 1
   _minLateralVelocity: 5
   _maxLateralVelocity: 10

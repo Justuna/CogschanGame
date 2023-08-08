@@ -86,7 +86,7 @@ MonoBehaviour:
   _name: RocketLauncher
   _muzzle: {fileID: 6515244221760789771}
   _requiresAmmo: 1
-  _ammoType: {fileID: 11400000, guid: ab095c8fac5360941b09f51016c6acdd, type: 2}
+  _ammoType: {fileID: 11400000, guid: 483e4e9ca29418540adc50ffb9db64c8, type: 2}
   _clipSize: 6
   _maxClips: 4
   _count: 1
