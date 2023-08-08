@@ -429,8 +429,8 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  _isImmediate: 1
-  _barVelocity: 0
+  _isImmediate: 0
+  _barVelocity: 3
 --- !u!1 &2906671870866448212
 GameObject:
   m_ObjectHideFlags: 0
@@ -3100,6 +3100,11 @@ PrefabInstance:
       propertyPath: m_text
       value: QUIT
       objectReference: {fileID: 0}
+    - target: {fileID: 7948540042207647335, guid: 52b1fc6ef01e152478417562430f6151,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4279833032
+      objectReference: {fileID: 0}
     - target: {fileID: 7948540043622967202, guid: 52b1fc6ef01e152478417562430f6151,
         type: 3}
       propertyPath: m_Name
@@ -3241,6 +3246,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_text
       value: RESUME
+      objectReference: {fileID: 0}
+    - target: {fileID: 7948540042207647335, guid: 52b1fc6ef01e152478417562430f6151,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4279833032
       objectReference: {fileID: 0}
     - target: {fileID: 7948540043622967202, guid: 52b1fc6ef01e152478417562430f6151,
         type: 3}
