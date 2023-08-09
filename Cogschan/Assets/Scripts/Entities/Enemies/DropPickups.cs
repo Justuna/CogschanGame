@@ -39,6 +39,7 @@ public class DropPickups : MonoBehaviour
         for (int i = 0; i < amount; i++)
         {
             float index = UnityEngine.Random.value * sum;
+            Debug.Log("Picked " + index + " out of a maximum range of " + sum);
 
             float dropSum = 0;
             GameObject toBeDropped = null;
@@ -48,6 +49,7 @@ public class DropPickups : MonoBehaviour
                 if (index <= dropSum)
                 {
                     toBeDropped = drop.Drop;
+                    break;
                 }
             }
 
