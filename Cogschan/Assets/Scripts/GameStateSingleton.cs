@@ -28,6 +28,8 @@ public class GameStateSingleton : MonoBehaviour
     }
     #endregion
 
+    public int KeysNeeded => _keysNeeded;
+
     [SerializeField] private int _keysNeeded;
     [SerializeField] private EventReference _backgroundMusic;
 
@@ -46,6 +48,10 @@ public class GameStateSingleton : MonoBehaviour
     /// Does not use <c>CogschanSimpleEvent</c> because we want to be able to define the listeners in the inspector for this event.
     /// </remarks>
     public UnityEvent GotAllKeys = new UnityEvent();
+    /// <summary>
+    /// An event that fires when Cogschan collects a key
+    /// </summary>
+    public UnityEvent KeyCollected = new UnityEvent();
     /// <summary>
     /// An event that fires when Cogschan actually deposits all of the keys.
     /// </summary>
@@ -69,7 +75,8 @@ public class GameStateSingleton : MonoBehaviour
     public void AddKey()
     {
         KeyCount++;
-        if (KeyCount == _keysNeeded) GotAllKeys?.Invoke();
+        KeyCollected.Invoke();
+        if (KeyCount == _keysNeeded) GotAllKeys.Invoke();
     }
 
     /// <summary>
@@ -81,6 +88,6 @@ public class GameStateSingleton : MonoBehaviour
 
         Debug.Log("Victory!~");
         _levelCleared = true;
-        LevelClear?.Invoke();
+        LevelClear.Invoke();
     }
 }

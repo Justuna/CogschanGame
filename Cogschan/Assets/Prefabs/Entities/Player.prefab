@@ -1712,13 +1712,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6afe38eeaab213c48b25635c79491860, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minSpawnInterval: 10
-  _maxSpawnInterval: 20
+  _minSpawnInterval: 30
+  _maxSpawnInterval: 60
   _categoryWeights:
   - 1
   _credits: 0
-  _creditAddRate: 1
-  _creditAddRateRate: 0.05
+  _creditAddRate: 0.005
+  _creditAddRateRate: 0.0005
 --- !u!1001 &1892092367227129542
 PrefabInstance:
   m_ObjectHideFlags: 0

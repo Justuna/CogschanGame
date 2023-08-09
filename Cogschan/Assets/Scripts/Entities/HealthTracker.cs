@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -12,11 +11,11 @@ public class HealthTracker : MonoBehaviour
     /// <summary>
     /// An event that is triggered when this entity takes damage.
     /// </summary>
-    public CogschanSimpleEvent OnDamaged;
+    public event Action<float> OnDamaged;
     /// <summary>
     /// An event that is triggered when this entity is healed.
     /// </summary>
-    public CogschanSimpleEvent OnHealed;
+    public event Action<float> OnHealed;
     /// <summary>
     /// An event that is triggered when this entity reaches 0 health, but before it is set to be destroyed.
     /// </summary>
@@ -74,7 +73,7 @@ public class HealthTracker : MonoBehaviour
     public void Damage(int amount)
     {
         SetHealth(Health - amount);
-        OnDamaged?.Invoke();
+        OnDamaged?.Invoke(amount);
     }
 
     /// <summary>
@@ -84,6 +83,6 @@ public class HealthTracker : MonoBehaviour
     public void Heal(int amount)
     {
         SetHealth(Health + amount);
-        OnHealed?.Invoke();
+        OnHealed?.Invoke(amount);
     }
 }
