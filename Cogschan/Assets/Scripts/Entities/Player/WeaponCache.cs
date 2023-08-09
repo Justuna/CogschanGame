@@ -50,6 +50,10 @@ public class WeaponCache : MonoBehaviour
             {
                 PickWeapon(_cache.Count - 1);
             }
+            else
+            {
+                weaponObject.SetActive(false);
+            }
 
             return true;
         }

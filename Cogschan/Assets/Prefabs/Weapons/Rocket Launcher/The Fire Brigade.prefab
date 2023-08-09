@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 7554969326682805840}
   - component: {fileID: 7554969326682805843}
   m_Layer: 0
-  m_Name: TestGun
+  m_Name: The Fire Brigade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,21 +78,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _muzzleFlash: {fileID: 0}
-  _recoilPattern: {fileID: 11400000, guid: 0c711fe68f3a20141870c8b6ea4dd0a6, type: 2}
-  _spreadPattern: {fileID: 11400000, guid: fb62eb95c532041b8985b1aea0a58b8b, type: 2}
-  _spreadPatternAccutate: {fileID: 11400000, guid: fb62eb95c532041b8985b1aea0a58b8b,
+  _recoilPattern: {fileID: 11400000, guid: f9064558a77e7db4fae6aefb19152ea5, type: 2}
+  _spreadPattern: {fileID: 11400000, guid: e6d8bd9971a216e4ea02a00edc3d395a, type: 2}
+  _spreadPatternAccutate: {fileID: 11400000, guid: cc836db2ac7b7f64ca839bad25d041d8,
     type: 2}
-  _fireRate: 0.5
-  _name: TestGun
+  _fireRate: 1
+  _name: RocketLauncher
   _muzzle: {fileID: 6515244221760789771}
   _requiresAmmo: 1
-  _ammoType: {fileID: 11400000, guid: ab095c8fac5360941b09f51016c6acdd, type: 2}
-  _clipSize: 12
-  _maxClips: 1
-  _count: 3
-  _countAccurate: 2
-  _reloadTime: 0.5
-  _projectilePrefab: {fileID: 521982211236534687, guid: 1771c52a6935b447db7e7b3745743a50,
+  _ammoType: {fileID: 11400000, guid: 483e4e9ca29418540adc50ffb9db64c8, type: 2}
+  _clipSize: 6
+  _maxClips: 4
+  _count: 1
+  _countAccurate: 1
+  _reloadTime: 1
+  _projectilePrefab: {fileID: 521982211236534687, guid: d6668dd9a48bbe0448549e9458a97c1e,
     type: 3}
 --- !u!1 &7554969327838763247
 GameObject:
@@ -156,7 +156,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 987d470d3f03e134a91fcfdfaa4c88da, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
