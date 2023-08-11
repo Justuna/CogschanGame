@@ -33,7 +33,7 @@ public class HealthTracker : MonoBehaviour
     /// </summary>
     public int MaxHealth => _maxHealth;
 
-    private void Start()
+    private void Awake()
     {
         Health = _maxHealth;
     }

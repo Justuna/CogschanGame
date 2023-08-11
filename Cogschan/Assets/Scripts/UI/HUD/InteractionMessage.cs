@@ -6,7 +6,7 @@ public class InteractionMessage : MonoBehaviour
     [SerializeField] private EntityServiceLocator _services;
     [SerializeField] private TextMeshProUGUI _textbox;
 
-    public void Construct(EntityServiceLocator services)
+    public void Init(EntityServiceLocator services)
     {
         _services = services;
     }

@@ -8,15 +8,15 @@ public class GameUI : MonoBehaviour
 
     [Header("Local Dependencies")]
     [SerializeField] private HealthDisplay _healthDisplay;
-    [SerializeField] private AmmoCounterDisplay _ammoCounterDisplay;
+    [SerializeField] private WeaponDisplay _weaponDisplay;
     [SerializeField] private InteractionMessage _interactionMessage;
     [SerializeField] private Transform _targetReticle;
 
     private void Awake()
     {
-        _playerCameraController.Construct(_targetReticle);
-        _healthDisplay.Construct(_services);
-        _ammoCounterDisplay.Construct(_services);
-        _interactionMessage.Construct(_services);
+        _playerCameraController.Init(_targetReticle);
+        _healthDisplay.Init(_services);
+        _weaponDisplay.Init(_services);
+        _interactionMessage.Init(_services);
     }
 }

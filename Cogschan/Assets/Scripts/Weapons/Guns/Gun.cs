@@ -1,10 +1,10 @@
 using System;
-using UnityEditor;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public abstract class Gun : MonoBehaviour, IWeapon
 {
+    public event Action AmmoChanged;
+
     [Header("Gun Attributes")]
     [Tooltip("The particle system responsible for any effects that should be spawned when the gun fires.")]
     [SerializeField] protected ParticleSystem _muzzleFlash;
@@ -18,6 +18,8 @@ public abstract class Gun : MonoBehaviour, IWeapon
     [SerializeField] protected float _fireRate = 0.5f;
     [Tooltip("The unique name that identifies this gun prefab.")]
     [SerializeField] protected string _name;
+    [Tooltip("Icon for this weapon")]
+    [SerializeField] protected Sprite _icon;
     [Tooltip("The transform from which the bullet will originate.")]
     [SerializeField] protected Transform _muzzle;
 
@@ -86,6 +88,11 @@ public abstract class Gun : MonoBehaviour, IWeapon
     public string GetName()
     {
         return _name;
+    }
+
+    public Sprite GetIcon()
+    {
+        return _icon;
     }
 
     public GameObject GetGameObject()

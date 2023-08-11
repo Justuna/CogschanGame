@@ -37,7 +37,7 @@ public class PlayerCameraController : MonoBehaviour
     /// </summary>
     public Vector3 CameraLateralDirection { get; private set; }
 
-    public void Construct(Transform targetReticle)
+    public void Init(Transform targetReticle)
     {
         _targetReticle = targetReticle;
     }

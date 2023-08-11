@@ -105,7 +105,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_AnchoredPosition.x
-    path: Portrait Mask/Portrait
+    path: Portrait
     classID: 224
     script: {fileID: 0}
   m_PPtrCurves:
@@ -113,7 +113,7 @@ AnimationClip:
     - time: 0
       value: {fileID: 21300000, guid: ee4a0f7b817fc594eb81280ea73c5cd4, type: 3}
     attribute: m_Sprite
-    path: Portrait Mask/Portrait
+    path: Portrait
     classID: 114
     script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_SampleRate: 60
@@ -248,7 +248,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_AnchoredPosition.x
-    path: Portrait Mask/Portrait
+    path: Portrait
     classID: 224
     script: {fileID: 0}
   m_EulerEditorCurves: []

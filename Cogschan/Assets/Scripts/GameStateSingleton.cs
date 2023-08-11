@@ -1,7 +1,23 @@
 using FMOD.Studio;
 using FMODUnity;
+using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+
+[Serializable]
+public class KeyData
+{
+    public Jangling Jangling { get; set; }
+    [field: SerializeField]
+    public Color Color { get; set; }
+}
+
+public class RuntimeKeyData
+{
+    public KeyData KeyData { get; set; }
+    public bool Collected { get; set; }
+}
 
 /// <summary>
 /// Singleton holding all of the global game state.
@@ -28,11 +44,15 @@ public class GameStateSingleton : MonoBehaviour
     }
     #endregion
 
-    public int KeysNeeded => _keysNeeded;
+    public int KeysNeeded => Keys.Length;
 
-    [SerializeField] private int _keysNeeded;
+    [SerializeField] private Jangling[] _janglings;
     [SerializeField] private EventReference _backgroundMusic;
 
+    /// <summary>
+    /// Current keys in a level
+    /// </summary>
+    public RuntimeKeyData[] Keys { get; private set; }
     /// <summary>
     /// The current amount of keys the player has.
     /// </summary>
@@ -40,7 +60,7 @@ public class GameStateSingleton : MonoBehaviour
     /// Wasn't sure if this should be attached to the player or not, but I decided to make it global
     /// on the off-chance that this game is ever multiplayer :eyes:
     /// </remarks>
-    public int KeyCount { get; private set; }
+    public int KeyCount => Keys.Count(x => x.Collected);
     /// <summary>
     /// An event that fires when Cogschan acquires all of the keys necessary to progress.
     /// </summary>
@@ -65,18 +85,22 @@ public class GameStateSingleton : MonoBehaviour
 
     public void Start()
     {
+        Keys = _janglings.Select(x => new RuntimeKeyData()
+        {
+            KeyData = x.KeyData
+        }).ToArray();
+
         _bgmInstance = AudioSingleton.Instance.PlayInstance(_backgroundMusic);
         _bgmInstance.start();
     }
 
     /// <summary>
-    /// Increments the amount of keys that the player has in possession.
+    /// Collects a key.
     /// </summary>
-    public void AddKey()
+    public void CollectKey(KeyData instance)
     {
-        KeyCount++;
         KeyCollected.Invoke();
-        if (KeyCount == _keysNeeded) GotAllKeys.Invoke();
+        if (KeyCount == KeysNeeded) GotAllKeys.Invoke();
     }
 
     /// <summary>

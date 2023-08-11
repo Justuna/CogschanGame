@@ -1,10 +1,8 @@
-using TMPro;
 using UnityEngine;
 
 // TODO LATER: Make prefab for KeyDisplay
 public class KeyDisplay : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _keyDisplay;
     [SerializeField] private GameObject _keySlotPrefab;
     [SerializeField] private RectTransform _keySlotsHolder;
 
@@ -25,10 +23,8 @@ public class KeyDisplay : MonoBehaviour
             _keySlotDisplays[_nextCollectableKeyIndex].Unlock();
             _nextCollectableKeyIndex++;
         });
-    }
 
-    private void Update()
-    {
-        _keyDisplay.text = GameStateSingleton.Instance.KeyCount.ToString();
+        foreach (Transform child in _keySlotsHolder.transform)
+            Destroy(child.gameObject);
     }
 }
