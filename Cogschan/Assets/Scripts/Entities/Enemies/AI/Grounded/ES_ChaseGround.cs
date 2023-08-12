@@ -38,6 +38,7 @@ public class ES_ChaseGround : MonoBehaviour, IEnemyState
         _rangedAttackTimer -= Time.deltaTime;
         if (_rangedAttackTimer <= 0 && _services.LOSChecker.CanSee)
         {
+            _rangedAttackTimer = 0;
             RangedAttack?.Invoke();
             return;
         }

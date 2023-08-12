@@ -19,7 +19,7 @@ public class SpreadEvent
     public Vector2 GetSpread()
     {
         float t = _counter / _spreadPattern.Duration;
-        float magnitude = _spreadPattern.Magnitude * _spreadPattern.Spread.Evaluate(t);
+        float magnitude = Random.Range(0f, 1f) * _spreadPattern.Magnitude * _spreadPattern.Spread.Evaluate(t);
         float angle = Random.Range(0, 2 * Mathf.PI);
         return new(magnitude * Mathf.Sin(angle), magnitude * Mathf.Cos(angle));
     }

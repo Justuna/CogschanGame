@@ -1108,7 +1108,10 @@ MonoBehaviour:
   _services: {fileID: 4272273026959324190}
   _defaultWeaponPrefabs:
   - {fileID: 7554969326682805842, guid: ace8bbc8f257b3547b05cce9d96cabce, type: 3}
+  - {fileID: 6758714540400352426, guid: 406617b2629b64d9ea8ae84b6b7fef56, type: 3}
   - {fileID: 7554969326682805842, guid: e2855ffa2252f6146a6a28ee7dce0e0d, type: 3}
+  - {fileID: 7554969326682805842, guid: 0054de914d7ae5f4293baf06414f47a3, type: 3}
+  - {fileID: 7554969326682805842, guid: bfe793123c4ab1544a21fa4ecfde03cc, type: 3}
   _weaponParent: {fileID: 4272273026823039877}
   _maxSize: 9
   _currentWeaponIndex: 0

@@ -251,6 +251,7 @@ Transform:
   - {fileID: 723379263992688518}
   - {fileID: 401170022549977813}
   - {fileID: 6957099261624819051}
+  - {fileID: 6325396960597620156}
   m_Father: {fileID: 723379263556669388}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -357,7 +358,7 @@ MonoBehaviour:
   _yOffset: 0
   _radius: 0.45
   _castDistance: 0.15
-  _services: {fileID: 0}
+  _services: {fileID: 723379263556669392}
   _takesFallDamage: 1
   _maxNoHarm: 0
   _speedToDamageFactor: 0
@@ -483,7 +484,6 @@ Transform:
   - {fileID: 8010215670950256011}
   - {fileID: 1469564481422067350}
   - {fileID: 2145879779017696077}
-  - {fileID: 2680932597428454329}
   - {fileID: 8153310816084202370}
   m_Father: {fileID: 723379264089316148}
   m_RootOrder: 0
@@ -504,10 +504,10 @@ MonoBehaviour:
   es_Alerted: {fileID: 3428771098245774555}
   es_Patrol: {fileID: 3382370753655997813}
   es_Chase: {fileID: 5873731226926995151}
-  es_MeleeAttack: {fileID: 2902182885657257557}
+  es_MeleeAttack: {fileID: 0}
   es_RangedAttack: {fileID: 2871798098994609624}
   _hasMeleeAttack: 0
-  _hasRangedAttack: 0
+  _hasRangedAttack: 1
   _speed: 8
   _turnSpeed: 15
 --- !u!1 &723379264614938526
@@ -688,6 +688,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _services: {fileID: 723379263556669392}
+  _minTimeUntilRangedAttack: 1
+  _maxTimeUntilRangedAttack: 2
   _attackRange: 5
 --- !u!1 &1573051314238125799
 GameObject:
@@ -766,50 +768,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _services: {fileID: 723379263556669392}
   _critMultiplier: 1
---- !u!1 &1688822941170581359
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2680932597428454329}
-  - component: {fileID: 2902182885657257557}
-  m_Layer: 6
-  m_Name: Melee Attack State
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2680932597428454329
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1688822941170581359}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 723379264215203919}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2902182885657257557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1688822941170581359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1e88c50ee889be49b8b5e8713a8b392, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2118238717108766017
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,6 +890,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _services: {fileID: 723379263556669392}
+--- !u!1 &4179240073801143306
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6325396960597620156}
+  m_Layer: 6
+  m_Name: FireTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6325396960597620156
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4179240073801143306}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.25, z: 0.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 723379263735601433}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4993172937562649487
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,7 +951,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 723379264215203919}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2871798098994609624
 MonoBehaviour:
@@ -976,6 +965,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f431c80ad3555754fa2ede8745efb98c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _windUpTime: 1
+  _windUpPrefab: {fileID: 1974606335146546416, guid: 0e701bff2432d8643a47728df9133c52,
+    type: 3}
+  _attackType: 1
+  _attackPrefab: {fileID: 5772970684945050815, guid: 2f067cbc389678f4c9f8b074b5570684,
+    type: 3}
+  _attackTransform: {fileID: 6325396960597620156}
+  _launchSpeed: 0
+  _damage: 10
+  _services: {fileID: 723379263556669392}
 --- !u!1 &5289596792092134119
 GameObject:
   m_ObjectHideFlags: 0

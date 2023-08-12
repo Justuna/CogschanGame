@@ -30,7 +30,16 @@ public abstract class FlyingEnemyAI : MonoBehaviour
         es_Patrol.LOSMade += PatrolToAlerted;
         es_Patrol.Bored += PatrolToConfused;
         es_Chase.LostPlayer += ChaseToConfused;
-        es_Chase.InAttackRange += ChaseToAttack;
+
+        if (_hasRangedAttack)
+        {
+            es_Chase.InAttackRange += ChaseToRangedAttack;
+            es_RangedAttack.AttackTerminated += RangedAttackToChase;
+        }
+        else
+        {
+            es_Chase.InAttackRange += SkipRangedAttack;
+        }
 
         _state = es_Confused;
     }
@@ -81,19 +90,45 @@ public abstract class FlyingEnemyAI : MonoBehaviour
         _state = es_Confused;
     }
 
-#pragma warning disable CS0162 // Unreachable code detected
-    protected virtual void ChaseToAttack()
+    protected virtual void ChaseToMeleeAttack()
     {
-        if (!_hasMeleeAttack && !_hasRangedAttack)
-            throw new InvalidOperationException("The enemy has no attacks and can not enter the attack state.");
-        throw new NotImplementedException("Entering the attack state would cause the enemy to get stuck, so lets not do that right now.");
-        _state = _hasMeleeAttack ? es_MeleeAttack : es_RangedAttack;
+        BeginMeleeAttack();
+        _state = es_MeleeAttack;
     }
-#pragma warning restore CS0162 // Unreachable code detected
 
-    protected abstract void BeginMeleeAttack();
+    protected virtual void MeleeAttackToChase()
+    {
+        es_Chase.Init();
+        _state = es_Chase;
+        EndMeleeAttack();
+    }
+
+    protected virtual void ChaseToRangedAttack()
+    {
+        BeginRangedAttack();
+        _state = es_RangedAttack.Init();
+    }
+
+    protected virtual void RangedAttackToChase()
+    {
+        es_Chase.Init();
+        _state = es_Chase;
+        EndRangedAttack();
+    }
+
+    protected virtual void SkipMeleeAttack()
+    {
+        _state = es_Chase;
+    }
+
+    protected virtual void SkipRangedAttack()
+    {
+        _state = es_Chase;
+    }
+
+    public abstract void BeginMeleeAttack();
     public abstract void EndMeleeAttack();
 
-    protected abstract void BeginRangedAttack();
+    public abstract void BeginRangedAttack();
     public abstract void EndRangedAttack();
 }
