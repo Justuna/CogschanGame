@@ -5,23 +5,30 @@ public class KeySlotDisplay : MonoBehaviour
 {
     [SerializeField] private Image _keyOutlineImage;
     [SerializeField] private Image _keyFillImage;
-    [SerializeField] private Color _defaultKeyColor = new Color32(92, 87, 100, 255);
 
-    public void Lock()
+    public KeyData KeyData { get; private set; }
+
+    public void Init(KeyData keyData)
     {
-        var color = Color.white;
-        color.a = 0.5f;
-        _keyOutlineImage.color = color;
-        _keyFillImage.enabled = false;
+        KeyData = keyData;
+        _keyOutlineImage.color = KeyData.Color;
+
+        Clear();
     }
 
-    public void Unlock()
-        => Unlock(_defaultKeyColor);
+    public void Clear()
+    {
+        var outlineColor = Color.white;
+        outlineColor.a = 0.5f;
+        _keyOutlineImage.color = outlineColor;
+        var fillColor = KeyData.Color;
+        fillColor.a = 0.5f;
+        _keyFillImage.color = fillColor;
+    }
 
-    public void Unlock(Color color)
+    public void Collect()
     {
         _keyOutlineImage.color = Color.white;
-        _keyFillImage.enabled = true;
-        _keyOutlineImage.color = color;
+        _keyFillImage.color = KeyData.Color;
     }
 }

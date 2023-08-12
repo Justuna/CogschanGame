@@ -32,13 +32,21 @@ public class HealthDisplay : MonoBehaviour
     [Tooltip("Animator for the portrait")]
     [SerializeField] private Animator _portraitAnimator;
 
-    private bool _isHurting;
+    private enum HealthChangeReason
+    {
+        Damaged,
+        Healed,
+        Reset,
+    }
+
+    private HealthChangeReason _healthChangeReason;
     private OneShotTask _animateHealthBarTask;
     private float _prevPercentage = 1f;
 
     public void Init(EntityServiceLocator services)
     {
         _services = services;
+        _services.HealthTracker.OnHealthReset += OnHealthReset;
         _services.HealthTracker.OnHealed += OnHealed;
         _services.HealthTracker.OnDamaged += OnDamaged;
         _services.HealthTracker.OnDefeat += OnDefeat;
@@ -58,39 +66,54 @@ public class HealthDisplay : MonoBehaviour
 
     public void SetGradientFillColor(Gradient gradient) => FillColor = gradient;
 
+    private void OnHealthReset()
+    {
+        _healthChangeReason = HealthChangeReason.Reset;
+        _animateHealthBarTask.Run();
+    }
+
     private void OnHealed(float amount)
     {
         if (amount == 0) return;
-        _isHurting = false;
+        _healthChangeReason = HealthChangeReason.Healed;
         _animateHealthBarTask.Run();
     }
 
     private void OnDamaged(float amount)
     {
         if (amount == 0) return;
-        _isHurting = true;
+        _healthChangeReason = HealthChangeReason.Damaged;
         _animateHealthBarTask.Run();
     }
 
     private void OnDefeat()
     {
-        _portraitAnimator?.SetBool("dead", true);
+        if (_portraitAnimator != null)
+            _portraitAnimator.SetBool("dead", true);
     }
 
     private void Start()
     {
-        if (Application.isEditor) return;
+        if (!Application.isPlaying) return;
+
+        if (_services != null)
+            Init(_services);
 
         _animateHealthBarTask = new OneShotTask(async (token) =>
         {
             var targetPercentage = (float)_services.HealthTracker.Health / _services.HealthTracker.MaxHealth;
 
-            _portraitAnimator?.SetBool("damaged", targetPercentage <= _damagedPortraitCutoff);
-            if (_isHurting)
-                _portraitAnimator?.SetTrigger("wince");
+            if (_portraitAnimator != null)
+            {
+                _portraitAnimator?.SetBool("damaged", targetPercentage <= _damagedPortraitCutoff);
+                if (_healthChangeReason == HealthChangeReason.Damaged)
+                    _portraitAnimator?.SetTrigger("wince");
+            }
 
-            _healthText.text = _services.HealthTracker.Health.ToString();
-            _maxHealthText.text = " / " + _services.HealthTracker.MaxHealth;
+            if (_healthText != null)
+                _healthText.text = _services.HealthTracker.Health.ToString();
+            if (_maxHealthText != null)
+                _maxHealthText.text = " / " + _services.HealthTracker.MaxHealth;
 
             await DOVirtual.Float(_prevPercentage, targetPercentage, _healthbarTweenDuration, UpdateBar).SetEase(Ease.OutQuad).WithCancellation(token);
 

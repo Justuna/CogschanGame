@@ -15,11 +15,14 @@ public class Jangling : MonoBehaviour
     [SerializeField]
     private MeshRenderer[] _colorMeshRenderers;
     private MaterialPropertyBlock _propertyBlock;
+    [SerializeField]
+    private JanglingKeyGrab _janglingKeyGrab;
 
     public void Awake()
     {
         KeyData.Jangling = this;
         UpdateKeyDataVisuals();
+        _janglingKeyGrab.Init(KeyData);
     }
 
     public void Update()

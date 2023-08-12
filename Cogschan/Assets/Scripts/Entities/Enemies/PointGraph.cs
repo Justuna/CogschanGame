@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using NaughtyAttributes;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -40,6 +41,8 @@ public class PointGraph : MonoBehaviour
     [SerializeField] private Vector3[] _nodes;
     [SerializeField] private Edge[] _edges;
     [SerializeField] private AutoEdgeModeType _autoEdgeMode = AutoEdgeModeType.None;
+    [ShowIf("_autoEdgeMode", AutoEdgeModeType.LineOfSight)]
+    [SerializeField] private LayerMask _solidMask = 1 << 3;
     [Header("Debug Only")]
     [SerializeField] private Color _nodeColor;
     [SerializeField] private float _nodeRadius;
@@ -116,7 +119,7 @@ public class PointGraph : MonoBehaviour
                     for (int j = 0; j < i; j++)
                     {
                         if (i == j) continue;
-                        if (!Physics.Raycast(GetNode(i), GetNode(j) - GetNode(i), out RaycastHit hit, Vector3.Distance(GetNode(i), GetNode(j)), LayerMask.GetMask("Level")))
+                        if (!Physics.Raycast(GetNode(i), GetNode(j) - GetNode(i), out RaycastHit hit, Vector3.Distance(GetNode(i), GetNode(j)), _solidMask))
                             edges.Add(new Edge(i, j));
                     }
                 }
@@ -128,6 +131,8 @@ public class PointGraph : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (_edges == null || _nodes == null) return;
+
         Gizmos.color = DebugEdgeColor;
         foreach (Edge edge in _edges)
         {

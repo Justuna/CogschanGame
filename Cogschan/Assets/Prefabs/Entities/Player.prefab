@@ -1102,8 +1102,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fed79bd5a6fa0044bd0f6e70ef59227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <WeaponChanged>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
   _services: {fileID: 4272273026959324190}
   _defaultWeaponPrefabs:
+  - {fileID: 7554969326682805842, guid: ace8bbc8f257b3547b05cce9d96cabce, type: 3}
   - {fileID: 7554969326682805842, guid: e2855ffa2252f6146a6a28ee7dce0e0d, type: 3}
   _weaponParent: {fileID: 4272273026823039877}
   _maxSize: 9
@@ -1155,14 +1159,14 @@ MonoBehaviour:
   _services: {fileID: 4272273026959324190}
   _runningSound:
     Guid:
-      Data1: -175090093
-      Data2: 1327883159
-      Data3: -2075472494
-      Data4: -1103079613
+      Data1: 1166310263
+      Data2: 1178892120
+      Data3: -1470764376
+      Data4: 491561962
     Path: event:/Test/TestInstance
   _cogschanModel: {fileID: 4272273027718369486}
-  _sprintSpeed: 8
-  _turnSpeed: 10
+  _sprintSpeed: 15
+  _turnSpeed: 20
 --- !u!1 &4272273027505916435
 GameObject:
   m_ObjectHideFlags: 0
@@ -1391,7 +1395,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4272273027785079341}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 2.172, z: -4.2199993}
+  m_LocalPosition: {x: 2, y: 2.172, z: -4.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1615,8 +1619,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _services: {fileID: 4272273026959324190}
   _cogschanModel: {fileID: 4272273027718369486}
-  _walkSpeed: 4
-  _turnSpeed: 10
+  _walkSpeed: 10
+  _turnSpeed: 20
   _turnSpeedFiring: 50
 --- !u!1 &4272273027980844597
 GameObject:

@@ -6,8 +6,6 @@ using UnityEngine;
 /// </summary>
 public interface IWeapon
 {
-    public event Action AmmoChanged;
-
     /// <summary>
     /// An initialization method to pass to the weapon all of the dependencies it might have through the <c>EntityServiceLocator</c>.
     /// </summary>

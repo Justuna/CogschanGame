@@ -3,8 +3,6 @@ using UnityEngine;
 
 public abstract class Gun : MonoBehaviour, IWeapon
 {
-    public event Action AmmoChanged;
-
     [Header("Gun Attributes")]
     [Tooltip("The particle system responsible for any effects that should be spawned when the gun fires.")]
     [SerializeField] protected ParticleSystem _muzzleFlash;

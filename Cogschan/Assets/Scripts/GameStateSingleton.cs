@@ -1,9 +1,14 @@
 using FMOD.Studio;
 using FMODUnity;
+using NaughtyAttributes;
 using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 [Serializable]
 public class KeyData
@@ -27,22 +32,10 @@ public class RuntimeKeyData
 /// </remarks>
 public class GameStateSingleton : MonoBehaviour
 {
-    #region Singleton Stuff
     /// <summary>
     /// The only instance of this class that is allowed to exist.
     /// </summary>
     public static GameStateSingleton Instance { get; private set; }
-
-    void Awake()
-    {
-        if (Instance != null)
-        {
-            Destroy(this);
-        }
-
-        Instance = this;
-    }
-    #endregion
 
     public int KeysNeeded => Keys.Length;
 
@@ -67,11 +60,11 @@ public class GameStateSingleton : MonoBehaviour
     /// <remarks>
     /// Does not use <c>CogschanSimpleEvent</c> because we want to be able to define the listeners in the inspector for this event.
     /// </remarks>
-    public UnityEvent GotAllKeys = new UnityEvent();
+    public UnityEvent GotAllKeys;
     /// <summary>
     /// An event that fires when Cogschan collects a key
     /// </summary>
-    public UnityEvent KeyCollected = new UnityEvent();
+    public UnityEvent<KeyData> KeyCollected;
     /// <summary>
     /// An event that fires when Cogschan actually deposits all of the keys.
     /// </summary>
@@ -83,12 +76,26 @@ public class GameStateSingleton : MonoBehaviour
     private bool _levelCleared = false;
     private EventInstance _bgmInstance;
 
-    public void Start()
+    private void Awake()
     {
+        if (!Application.isPlaying) return;
+
+        if (Instance != null)
+        {
+            Destroy(this);
+            return;
+        }
+
+        Instance = this;
         Keys = _janglings.Select(x => new RuntimeKeyData()
         {
             KeyData = x.KeyData
         }).ToArray();
+    }
+
+    private void Start()
+    {
+        if (!Application.isPlaying) return;
 
         _bgmInstance = AudioSingleton.Instance.PlayInstance(_backgroundMusic);
         _bgmInstance.start();
@@ -99,7 +106,7 @@ public class GameStateSingleton : MonoBehaviour
     /// </summary>
     public void CollectKey(KeyData instance)
     {
-        KeyCollected.Invoke();
+        KeyCollected.Invoke(instance);
         if (KeyCount == KeysNeeded) GotAllKeys.Invoke();
     }
 
@@ -114,4 +121,13 @@ public class GameStateSingleton : MonoBehaviour
         _levelCleared = true;
         LevelClear.Invoke();
     }
+
+#if UNITY_EDITOR
+    [Button("Autofetch Janglings")]
+    private void AutofetchJanglings()
+    {
+        Undo.RecordObject(this, "Autofetch Janglings");
+        _janglings = FindObjectsOfType<Jangling>();
+    }
+#endif
 }

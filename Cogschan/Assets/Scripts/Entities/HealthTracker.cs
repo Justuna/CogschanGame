@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class HealthTracker : MonoBehaviour
 {
     [SerializeField] private int _maxHealth;
 
+    public event Action OnHealthReset;
     /// <summary>
     /// An event that is triggered when this entity takes damage.
     /// </summary>
@@ -24,6 +26,8 @@ public class HealthTracker : MonoBehaviour
     /// An event that is triggered when this entity has been set to be destroyed following its health reaching 0.
     /// </summary>
     public CogschanSimpleEvent OnDefeat;
+    [field: ReadOnly]
+    [field: SerializeField]
     /// <summary>
     /// The current health of this entity.
     /// </summary>
@@ -35,12 +39,13 @@ public class HealthTracker : MonoBehaviour
 
     private void Awake()
     {
-        Health = _maxHealth;
+        ResetHealth();
     }
 
     public void ResetHealth()
     {
         Health = _maxHealth;
+        OnHealthReset?.Invoke();
     }
 
     /// <summary>

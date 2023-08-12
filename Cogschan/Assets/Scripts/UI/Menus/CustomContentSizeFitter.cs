@@ -10,7 +10,7 @@ public class CustomContentSizeFitter : MonoBehaviour
 
     private void Update()
     {
-        if (_autoUpdate || Application.isEditor)
+        if (_autoUpdate || !Application.isPlaying)
             UpdateSize();
     }
 
