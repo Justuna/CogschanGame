@@ -537,6 +537,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 478929575}
     m_Modifications:
+    - target: {fileID: 3100725914979876854, guid: 474b51ca8c50917499ddbc69c02ed2d4,
+        type: 3}
+      propertyPath: spawnManagers.Array.data[0]
+      value: 
+      objectReference: {fileID: 1398770602}
     - target: {fileID: 4494694939598722728, guid: 474b51ca8c50917499ddbc69c02ed2d4,
         type: 3}
       propertyPath: m_RootOrder

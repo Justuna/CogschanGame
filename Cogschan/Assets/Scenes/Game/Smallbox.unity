@@ -2063,6 +2063,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 478929575}
     m_Modifications:
+    - target: {fileID: 3100725914979876854, guid: 474b51ca8c50917499ddbc69c02ed2d4,
+        type: 3}
+      propertyPath: spawnManagers.Array.data[0]
+      value: 
+      objectReference: {fileID: 1398770602}
     - target: {fileID: 4494694939598722728, guid: 474b51ca8c50917499ddbc69c02ed2d4,
         type: 3}
       propertyPath: m_RootOrder
@@ -2120,9 +2125,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4494694939598722729, guid: 474b51ca8c50917499ddbc69c02ed2d4,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4494694939598722729, guid: 474b51ca8c50917499ddbc69c02ed2d4,
+        type: 3}
+      propertyPath: _spawnManagers.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4494694939598722729, guid: 474b51ca8c50917499ddbc69c02ed2d4,
+        type: 3}
       propertyPath: _spawnManagers.Array.data[0]
       value: 
-      objectReference: {fileID: 1398770602}
+      objectReference: {fileID: 0}
     - target: {fileID: 4494694939598722731, guid: 474b51ca8c50917499ddbc69c02ed2d4,
         type: 3}
       propertyPath: m_Name
@@ -2130,9 +2145,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4494694939598722734, guid: 474b51ca8c50917499ddbc69c02ed2d4,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4494694939598722734, guid: 474b51ca8c50917499ddbc69c02ed2d4,
+        type: 3}
+      propertyPath: _spawnManagers.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4494694939598722734, guid: 474b51ca8c50917499ddbc69c02ed2d4,
+        type: 3}
       propertyPath: _spawnManagers.Array.data[0]
       value: 
-      objectReference: {fileID: 1398770602}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 474b51ca8c50917499ddbc69c02ed2d4, type: 3}
 --- !u!4 &1978665595 stripped
@@ -2147,18 +2172,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1978665594}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1978665597 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4494694939598722734, guid: 474b51ca8c50917499ddbc69c02ed2d4,
-    type: 3}
-  m_PrefabInstance: {fileID: 1978665594}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1978665596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1910f4536123d9a499cdaf9da159c7fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1978665598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2173,8 +2186,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 4028257471934700776, guid: 52d91b2108694f945840ed460da2f487, type: 3}
   _spawnInfo:
-    Spawner: {fileID: 1978665597}
-    Cost: 5
+    Spawner: {fileID: 0}
+    Cost: 2
     Weight: 1
     Category: 0
   _spawnManagers:
