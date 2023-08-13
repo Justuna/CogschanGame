@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+using NaughtyAttributes;
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -9,14 +9,15 @@ public class HealthTracker : MonoBehaviour
 {
     [SerializeField] private int _maxHealth;
 
+    public event Action OnHealthReset;
     /// <summary>
     /// An event that is triggered when this entity takes damage.
     /// </summary>
-    public CogschanSimpleEvent OnDamaged;
+    public event Action<float> OnDamaged;
     /// <summary>
     /// An event that is triggered when this entity is healed.
     /// </summary>
-    public CogschanSimpleEvent OnHealed;
+    public event Action<float> OnHealed;
     /// <summary>
     /// An event that is triggered when this entity reaches 0 health, but before it is set to be destroyed.
     /// </summary>
@@ -25,6 +26,8 @@ public class HealthTracker : MonoBehaviour
     /// An event that is triggered when this entity has been set to be destroyed following its health reaching 0.
     /// </summary>
     public CogschanSimpleEvent OnDefeat;
+    [field: ReadOnly]
+    [field: SerializeField]
     /// <summary>
     /// The current health of this entity.
     /// </summary>
@@ -34,14 +37,15 @@ public class HealthTracker : MonoBehaviour
     /// </summary>
     public int MaxHealth => _maxHealth;
 
-    private void Start()
+    private void Awake()
     {
-        Health = _maxHealth;
+        ResetHealth();
     }
 
     public void ResetHealth()
     {
         Health = _maxHealth;
+        OnHealthReset?.Invoke();
     }
 
     /// <summary>
@@ -74,7 +78,7 @@ public class HealthTracker : MonoBehaviour
     public void Damage(int amount)
     {
         SetHealth(Health - amount);
-        OnDamaged?.Invoke();
+        OnDamaged?.Invoke(amount);
     }
 
     /// <summary>
@@ -84,6 +88,6 @@ public class HealthTracker : MonoBehaviour
     public void Heal(int amount)
     {
         SetHealth(Health + amount);
-        OnHealed?.Invoke();
+        OnHealed?.Invoke(amount);
     }
 }

@@ -6,10 +6,15 @@ public class InteractionMessage : MonoBehaviour
     [SerializeField] private EntityServiceLocator _services;
     [SerializeField] private TextMeshProUGUI _textbox;
 
+    public void Init(EntityServiceLocator services)
+    {
+        _services = services;
+    }
+
     private void Update()
     {
         Interactable optIn = _services.InteractionChecker.OptIn;
-        if (optIn != null )
+        if (optIn != null)
         {
             _textbox.enabled = true;
             _textbox.text = optIn.OptInMessage;

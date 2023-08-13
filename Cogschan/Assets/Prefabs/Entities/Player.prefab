@@ -697,7 +697,7 @@ MonoBehaviour:
   _targetableMask:
     serializedVersion: 2
     m_Bits: 5128
-  _mouseHorizontalSensitivity: 0.5
+  _mouseHorizontalSensitivity: 0.1
   _mouseVerticalSensitivity: 0.1
   _maxYaw: 70
   _minYawWithRecoil: -80
@@ -1102,6 +1102,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fed79bd5a6fa0044bd0f6e70ef59227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <WeaponChanged>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
   _services: {fileID: 4272273026959324190}
   _defaultWeaponPrefabs:
   - {fileID: 7554969326682805842, guid: ace8bbc8f257b3547b05cce9d96cabce, type: 3}
@@ -1159,14 +1162,14 @@ MonoBehaviour:
   _services: {fileID: 4272273026959324190}
   _runningSound:
     Guid:
-      Data1: -175090093
-      Data2: 1327883159
-      Data3: -2075472494
-      Data4: -1103079613
+      Data1: 1166310263
+      Data2: 1178892120
+      Data3: -1470764376
+      Data4: 491561962
     Path: event:/Test/TestInstance
   _cogschanModel: {fileID: 4272273027718369486}
-  _sprintSpeed: 8
-  _turnSpeed: 10
+  _sprintSpeed: 15
+  _turnSpeed: 20
 --- !u!1 &4272273027505916435
 GameObject:
   m_ObjectHideFlags: 0
@@ -1243,6 +1246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 100
+  <Health>k__BackingField: 0
 --- !u!1 &4272273027671968918
 GameObject:
   m_ObjectHideFlags: 0
@@ -1619,8 +1623,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _services: {fileID: 4272273026959324190}
   _cogschanModel: {fileID: 4272273027718369486}
-  _walkSpeed: 4
-  _turnSpeed: 10
+  _walkSpeed: 10
+  _turnSpeed: 20
   _turnSpeedFiring: 50
 --- !u!1 &4272273027980844597
 GameObject:
@@ -1717,12 +1721,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _minSpawnInterval: 10
-  _maxSpawnInterval: 20
+  _maxSpawnInterval: 30
   _categoryWeights:
   - 1
   _credits: 0
-  _creditAddRate: 1
-  _creditAddRateRate: 0.05
+  _creditAddRate: 0.1
+  _creditAddRateRate: 0.005
 --- !u!1001 &1892092367227129542
 PrefabInstance:
   m_ObjectHideFlags: 0

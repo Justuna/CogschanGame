@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using UnityEditor.UI;
 using UnityEngine;
 
 public class JanglingAI : MonoBehaviour
@@ -36,7 +35,7 @@ public class JanglingAI : MonoBehaviour
         _adjacentNodes = _services.PointGraph.GetAdjacent(_startNode);
 
         _services.HealthTracker.OnDefeat += () => { _state.OnStun(); };
-        _services.HealthTracker.OnDamaged += () => { _state.OnDamaged(); };
+        _services.HealthTracker.OnDamaged += (amount) => { _state.OnDamaged(); };
 
         es_Idle.IdleToWatching += IdleToWatching;
         es_Idle.IdleToStartled += IdleToStartled;
@@ -100,7 +99,7 @@ public class JanglingAI : MonoBehaviour
         _adjacentNodes = new int[] { DestinationNode.Value, CurrentNode.Value };
 
         CurrentNode = null;
-        
+
         _state = es_Running;
     }
 
@@ -138,7 +137,8 @@ public class JanglingAI : MonoBehaviour
         else
         {
             // In the case that they were travelling, there should only be two neighbors
-            if (NodeViability(_adjacentNodes[0]) > NodeViability(_adjacentNodes[1])) {
+            if (NodeViability(_adjacentNodes[0]) > NodeViability(_adjacentNodes[1]))
+            {
                 DestinationNode = _adjacentNodes[0];
             }
             else

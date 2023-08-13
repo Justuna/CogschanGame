@@ -40,11 +40,11 @@ public class MS_Sprinting : MonoBehaviour, IMovementState
 
         if (audible)
         {
-            _services.MovementController.RunningSoundInstance.setVolume(100);
+            _services.MovementController.RunningSoundInstance.start();
         }
         else
         {
-            _services.MovementController.RunningSoundInstance.setVolume(0f);
+            _services.MovementController.RunningSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
 
         if (!CogschanInputSingleton.Instance.IsHoldingSprint)

@@ -1,9 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Reflection.Emit;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -155,9 +150,11 @@ public class GroundChecker : MonoBehaviour
 
             if (_takesFallDamage && SurfaceType != SurfaceTypes.STEEP_SLOPE && SurfaceType != SurfaceTypes.NOT_GROUND)
             {
-                _services.HealthTracker?.Damage(GetFallDamage());
+                var fallDamage = GetFallDamage();
+                if (fallDamage > 0)
+                    _services.HealthTracker?.Damage(fallDamage);
             }
-                
+
             if (_groundPosTimer > _groundPosUpdate)
             {
                 _groundPosList.Add(transform.position);
@@ -213,8 +210,8 @@ public class GroundChecker : MonoBehaviour
         if (!_services.KinematicPhysics) return 0;
 
         float velocityDown = -_services.KinematicPhysics.PreviousVelocity.y - _maxNoHarm;
-        int damage = (int) Mathf.Max(0, velocityDown * _speedToDamageFactor);
-        
+        int damage = (int)Mathf.Max(0, velocityDown * _speedToDamageFactor);
+
         return damage;
     }
 }

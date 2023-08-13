@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: f4b26cbc402a3cd48ade7c0f195801f3
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Urbanist
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 32fcdfcb3889ae6458a8d783895fb8d0, type: 3}
+  - {fileID: 12800000, guid: 521509aa675b8d34a93a699fb728c5f1, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
