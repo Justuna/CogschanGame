@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
-using static Constants;
 using static SpawnInfo;
 
 /// <summary>
@@ -11,6 +9,21 @@ using static SpawnInfo;
 /// </summary>
 public class SpawnManager : MonoBehaviour
 {
+    [Serializable]
+    public class CategoryWeight
+    {
+        public CategoryWeight(SpawnCategory spawnCategory, float weight)
+        {
+            SpawnCategory = spawnCategory;
+            Weight = weight;
+        }
+
+        [field: SerializeField]
+        public SpawnCategory SpawnCategory { get; set; }
+        [field: SerializeField]
+        public float Weight { get; set; }
+    }
+
     /// <summary>
     /// The set of <see cref="SpawnInfo"/>s the manager chooses from.
     /// </summary>
@@ -25,7 +38,7 @@ public class SpawnManager : MonoBehaviour
     private float _maxSpawnInterval;
     [SerializeField]
     [Tooltip("The weighting of the categories. Must contain at least one non-zero value and no negative values.")]
-    private float[] _categoryWeights;
+    private CategoryWeight[] _categoryWeights = new CategoryWeight[] { new CategoryWeight(SpawnCategory.Enemy, 1) };
 
     [Header("Credit parameters")]
     [SerializeField]
@@ -46,7 +59,16 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
-        _categoryDist = new((SpawnCategory[])Enum.GetValues(typeof(SpawnCategory)), _categoryWeights);
+        var spawnCategoryWeightDict = new Dictionary<SpawnCategory, float>();
+        foreach (SpawnCategory category in Enum.GetValues(typeof(SpawnCategory)))
+        {
+            var categoryWeight = _categoryWeights.FirstOrDefault(x => x.SpawnCategory == category);
+            if (categoryWeight != null)
+                spawnCategoryWeightDict[category] = categoryWeight.Weight;
+            else
+                spawnCategoryWeightDict[category] = 0;
+        }
+        _categoryDist = new FiniteDistribution<SpawnCategory>(spawnCategoryWeightDict);
         ResetSpawnInterval();
     }
 
@@ -90,7 +112,7 @@ public class SpawnManager : MonoBehaviour
             _isFirstSpawn = false;
             return FirstSpawn();
         }
-        
+
         // Select a random category and verify that there are valid spawns.
         FiniteDistribution<SpawnCategory> dist = _categoryDist;
         List<SpawnInfo> spawnsInCat = new();
@@ -99,8 +121,8 @@ public class SpawnManager : MonoBehaviour
         {
             SpawnCategory category = dist.GetRandomValue();
             spawnsInCat = (from spawn in Spawns
-                          where spawn.IsPurchasable(_credits) && spawn.Category == category
-                          select spawn).ToList();
+                           where spawn.IsPurchasable(_credits) && spawn.Category == category
+                           select spawn).ToList();
             foreach (SpawnInfo spawn in spawnsInCat)
             {
                 spawnWeights.Add(spawn.Weight);

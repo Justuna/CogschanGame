@@ -21,6 +21,21 @@ public readonly struct FiniteDistribution<T>
     /// <summary>
     /// Constructor for <see cref="FiniteDistribution{T}"/>
     /// </summary>
+    /// <param name="sampleSpaceAndWeights">Dictionary that maps categories to weight values.</param>
+    public FiniteDistribution(IDictionary<T, float> sampleSpaceAndWeights)
+    {
+        _sampleSpace = new(sampleSpaceAndWeights.Keys.ToArray());
+        _weights = new(sampleSpaceAndWeights.Values.ToArray());
+        foreach (float weight in _weights)
+        {
+            if (weight <= 0)
+                throw new ArgumentException("All weights must be positive.", nameof(sampleSpaceAndWeights));
+        }
+    }
+
+    /// <summary>
+    /// Constructor for <see cref="FiniteDistribution{T}"/>
+    /// </summary>
     /// <param name="sampleSpace"> The sample space of the distribution.</param>
     /// <param name="weights"> The weight of the corresponding sample. </param>
     /// <exception cref="ArgumentException">Thrown if the lists aren't of the same size.</exception>

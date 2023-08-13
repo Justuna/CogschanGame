@@ -19,10 +19,10 @@ public class KeySlotDisplay : MonoBehaviour
     public void Clear()
     {
         var outlineColor = Color.white;
-        outlineColor.a = 0.5f;
+        outlineColor.a = 0.25f;
         _keyOutlineImage.color = outlineColor;
         var fillColor = KeyData.Color;
-        fillColor.a = 0.5f;
+        fillColor.a = 0.25f;
         _keyFillImage.color = fillColor;
     }
 

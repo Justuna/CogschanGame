@@ -134,4 +134,9 @@ public class HealthDisplay : MonoBehaviour
             _fill.color = _fillColor.Evaluate(1f);
     }
 #endif
+
+    private void OnDestroy()
+    {
+        _animateHealthBarTask.Stop();
+    }
 }

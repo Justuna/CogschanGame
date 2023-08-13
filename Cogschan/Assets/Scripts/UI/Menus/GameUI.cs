@@ -11,6 +11,7 @@ public class GameUI : MonoBehaviour
     [SerializeField] private WeaponDisplay _weaponDisplay;
     [SerializeField] private InteractionMessage _interactionMessage;
     [SerializeField] private Transform _targetReticle;
+    [SerializeField] private PauseUI _pauseUI;
 
     private void Awake()
     {
@@ -18,5 +19,6 @@ public class GameUI : MonoBehaviour
         _healthDisplay.Init(_services);
         _weaponDisplay.Init(_services);
         _interactionMessage.Init(_services);
+        _pauseUI.Init(_services);
     }
 }
