@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class AS_Firing : MonoBehaviour, IActionState, IMachineStateBehave
 {
+    public Action Used;
+
     [SerializeField] private EntityServiceLocator _services;
 
     public CogschanSimpleEvent FiringIntoIdle;
@@ -18,7 +20,7 @@ public class AS_Firing : MonoBehaviour, IActionState, IMachineStateBehave
         {
             FiringIntoIdle?.Invoke();
         }
-
+        Used?.Invoke();
         _services.WeaponCache.CurrentWeapon.Use();
     }
 

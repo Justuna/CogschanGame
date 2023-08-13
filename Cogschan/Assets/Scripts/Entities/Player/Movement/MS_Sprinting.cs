@@ -1,6 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
-using DG.Tweening;
-using FMODUnity;
+﻿using FMODUnity;
 using UnityEngine;
 
 public class MS_Sprinting : MonoBehaviour, IMovementState, IMachineStateLateBehave
@@ -9,16 +7,12 @@ public class MS_Sprinting : MonoBehaviour, IMovementState, IMachineStateLateBeha
     [SerializeField] private EventReference _runningSound;
     [SerializeField] private GameObject _cogschanModel;
     [SerializeField] private float _sprintSpeed = 8;
-    [SerializeField] private float _turnLerpDuration = 0.25f;
-    [SerializeField] private AnimationCurve _turnLerpCurve;
-    [SerializeField] private float _turnAngleDeadzone = 10;
+    [SerializeField] private float _turnSpeed = 10;
 
     public CogschanSimpleEvent SprintingIntoAiming;
     public CogschanSimpleEvent SprintingIntoWalking;
     public CogschanSimpleEvent SprintingIntoDashing;
     public CogschanFloatEvent SprintingIntoProne;
-
-    private OneShotTask _turnLerpTask;
 
     private Vector3 MovementDirection
     {
@@ -31,18 +25,6 @@ public class MS_Sprinting : MonoBehaviour, IMovementState, IMachineStateLateBeha
         }
     }
 
-    private void Awake()
-    {
-        _turnLerpTask = new OneShotTask(async (token) =>
-        {
-            var startRotation = _cogschanModel.transform.rotation;
-            await DOVirtual.Float(0, 1, _turnLerpDuration, (value) =>
-            {
-                _cogschanModel.transform.rotation = Quaternion.Lerp(startRotation, Quaternion.LookRotation(MovementDirection), _turnLerpCurve.Evaluate(value));
-            }).SetEase(Ease.Linear).WithCancellation(token);
-        });
-    }
-
     public void OnLateBehave()
     {
         bool audible = false;
@@ -51,13 +33,7 @@ public class MS_Sprinting : MonoBehaviour, IMovementState, IMachineStateLateBeha
         if (movementDir != Vector3.zero)
         {
             Quaternion movementDirQuat = Quaternion.LookRotation(movementDir);
-            if (!_turnLerpTask.IsRunning)
-            {
-                if (Mathf.Abs(Mathf.DeltaAngle(_cogschanModel.transform.eulerAngles.y, movementDirQuat.eulerAngles.y)) >= _turnAngleDeadzone)
-                    _turnLerpTask.Run();
-                else
-                    _cogschanModel.transform.rotation = movementDirQuat;
-            }
+            _cogschanModel.transform.rotation = Quaternion.Lerp(_cogschanModel.transform.rotation, movementDirQuat, _turnSpeed * Time.deltaTime);
 
             if (_services.GroundChecker.IsGrounded)
             {

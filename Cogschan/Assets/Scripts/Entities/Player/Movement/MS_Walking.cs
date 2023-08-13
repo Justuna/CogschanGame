@@ -1,54 +1,47 @@
-﻿using Cysharp.Threading.Tasks;
-using DG.Tweening;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MS_Walking : MonoBehaviour, IMovementState, IMachineStateLateBehave
 {
     [SerializeField] private EntityServiceLocator _services;
     [SerializeField] private GameObject _cogschanModel;
     [SerializeField] private float _walkSpeed = 4;
-    //[SerializeField] private float _turnSpeed = 50;
-    [SerializeField] private float _turnLerpDuration = 0.25f;
-    [SerializeField] private AnimationCurve _turnLerpCurve;
-    [SerializeField] private float _turnAngleDeadzone = 10;
+    [SerializeField] private float _turnSpeed = 50;
     [Tooltip("Amount of time before Cogschan switches from always pointing in the camera direction to pointing only in the movement direction.")]
     [SerializeField] private float _combatMovementCooldown = 1.5f;
+    [SerializeField] private AS_Firing _firingState;
 
     public CogschanSimpleEvent WalkingIntoAiming;
     public CogschanSimpleEvent WalkingIntoSprinting;
     public CogschanSimpleEvent WalkingIntoDashing;
     public CogschanFloatEvent WalkingIntoProne;
 
-    private OneShotTask _turnLerpTask;
+    private float _combatMovementCooldownTime = 0f;
     private Quaternion CameraDirectionQuat => Quaternion.Euler(_services.CameraController.CameraLateralDirection);
 
-    private void Awake()
+    private void Start()
     {
-        _turnLerpTask = new OneShotTask(async (token) =>
-        {
-            var startRotation = _cogschanModel.transform.rotation;
-            await DOVirtual.Float(0, 1, _turnLerpDuration, (value) =>
-            {
-                _cogschanModel.transform.rotation = Quaternion.Lerp(startRotation, CameraDirectionQuat, _turnLerpCurve.Evaluate(value));
-            }).SetEase(Ease.Linear).WithCancellation(token);
-        });
+        _firingState.Used += OnCombatAction;
+    }
+
+    public void OnCombatAction()
+    {
+        _combatMovementCooldownTime = _combatMovementCooldown;
     }
 
     public void OnLateBehave()
     {
         Quaternion camDir = CameraDirectionQuat;
-
-        if (!_turnLerpTask.IsRunning)
-        {
-            if (Mathf.Abs(Mathf.DeltaAngle(_cogschanModel.transform.eulerAngles.y, camDir.eulerAngles.y)) >= _turnAngleDeadzone)
-                _turnLerpTask.Run();
-            else
-                _cogschanModel.transform.rotation = camDir;
-        }
-
         Vector3 movement = new Vector3(CogschanInputSingleton.Instance.MovementDirection.x, 0, CogschanInputSingleton.Instance.MovementDirection.y);
         Vector3 movementDir = camDir * movement;    // Movement direction is relative to the camera direction
         movementDir *= _walkSpeed;
+
+        if (_combatMovementCooldownTime > 0)
+        {
+            _combatMovementCooldownTime -= Time.deltaTime;
+            _cogschanModel.transform.rotation = Quaternion.Lerp(_cogschanModel.transform.rotation, camDir, _turnSpeed * Time.deltaTime);
+        }
+        else if (movementDir != Vector3.zero)
+            _cogschanModel.transform.rotation = Quaternion.Lerp(_cogschanModel.transform.rotation, Quaternion.LookRotation(movementDir), _turnSpeed * Time.deltaTime);
 
         _services.KinematicPhysics.DesiredVelocity = movementDir;
 
