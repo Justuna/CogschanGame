@@ -1,9 +1,5 @@
 using FMOD.Studio;
 using FMODUnity;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 /// <summary>
@@ -75,8 +71,8 @@ public class PlayerMovementController : MonoBehaviour
         // Cannot just bind the events to "_movementState.OnDash" etc.
         // because that binds it to the initial state, NOT the current state.
         // This lambda function will force it to reevaluate every time instead.
-        CogschanInputSingleton.Instance.OnDashButtonPressed += () => { _currentState.OnDash(); };
-        CogschanInputSingleton.Instance.OnJumpButtonPressed += () => { _currentState.OnJump(); };
+        CogschanInputSingleton.Instance.OnDashButtonPressed += () => { if (gameObject.activeSelf) _currentState.OnDash(); };
+        CogschanInputSingleton.Instance.OnJumpButtonPressed += () => { if (gameObject.activeSelf) _currentState.OnJump(); };
 
         ms_Walking.WalkingIntoAiming += WalkingIntoAiming;
         ms_Walking.WalkingIntoSprinting += WalkingIntoSprinting;

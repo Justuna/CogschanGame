@@ -1,5 +1,4 @@
 ﻿using System;
-using TMPro;
 using UnityEngine;
 
 /// <summary>
@@ -41,10 +40,10 @@ public class PlayerActionController : MonoBehaviour
     {
         _currentState = as_Idle;
 
-        CogschanInputSingleton.Instance.OnReloadButtonPressed += () => { _currentState.OnReload(); };
-        CogschanInputSingleton.Instance.OnSwitchNextWeapon += () => { _currentState.OnNextWeapon(); };
-        CogschanInputSingleton.Instance.OnSwitchPrevWeapon += () => { _currentState.OnPrevWeapon(); };
-        CogschanInputSingleton.Instance.OnInteractButtonPressed += () => { _currentState.OnInteract(); };
+        CogschanInputSingleton.Instance.OnReloadButtonPressed += () => { if (gameObject.activeSelf) _currentState.OnReload(); };
+        CogschanInputSingleton.Instance.OnSwitchNextWeapon += () => { if (gameObject.activeSelf) _currentState.OnNextWeapon(); };
+        CogschanInputSingleton.Instance.OnSwitchPrevWeapon += () => { if (gameObject.activeSelf) _currentState.OnPrevWeapon(); };
+        CogschanInputSingleton.Instance.OnInteractButtonPressed += () => { if (gameObject.activeSelf) _currentState.OnInteract(); };
 
         as_Idle.IdleIntoFiring += IdleIntoFiring;
         as_Idle.IdleIntoReloading += IdleIntoReloading;

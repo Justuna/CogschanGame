@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,7 +9,7 @@ public class DestroyOnDeath : MonoBehaviour
 
     void Start()
     {
-        _services.HealthTracker.OnDefeat += DeathThroes;
+        _services.HealthTracker.OnDefeat.AddListener(DeathThroes);
     }
 
     private void DeathThroes()

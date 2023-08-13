@@ -40,6 +40,7 @@ public class GameStateSingleton : MonoBehaviour
     public int KeysNeeded => Keys.Length;
 
     [SerializeField] private Jangling[] _janglings;
+    [SerializeField] private KeyDeposit _keyDeposit;
     [SerializeField] private EventReference _backgroundMusic;
 
     /// <summary>
@@ -91,6 +92,8 @@ public class GameStateSingleton : MonoBehaviour
         {
             KeyData = x.KeyData
         }).ToArray();
+
+        _keyDeposit.gameObject.SetActive(false);
     }
 
     private void Start()
@@ -107,7 +110,18 @@ public class GameStateSingleton : MonoBehaviour
     public void CollectKey(KeyData instance)
     {
         KeyCollected.Invoke(instance);
-        if (KeyCount == KeysNeeded) GotAllKeys.Invoke();
+        var runtimeKeyData = Keys.FirstOrDefault(x => x.KeyData == instance);
+        if (runtimeKeyData == null)
+        {
+            Debug.LogError("Could not collect key because it does not exist! Is the jangling registered to the GameStateSingleton?");
+            return;
+        }
+        runtimeKeyData.Collected = true;
+        if (KeyCount == KeysNeeded)
+        {
+            _keyDeposit.gameObject.SetActive(true);
+            GotAllKeys.Invoke();
+        }
     }
 
     /// <summary>
@@ -123,11 +137,12 @@ public class GameStateSingleton : MonoBehaviour
     }
 
 #if UNITY_EDITOR
-    [Button("Autofetch Janglings")]
+    [Button("Autofetch Janglings and Key Deposit")]
     private void AutofetchJanglings()
     {
-        Undo.RecordObject(this, "Autofetch Janglings");
+        Undo.RecordObject(this, "Autofetch Janglings and Key Deposit");
         _janglings = FindObjectsOfType<Jangling>();
+        _keyDeposit = FindObjectOfType<KeyDeposit>();
     }
 #endif
 }

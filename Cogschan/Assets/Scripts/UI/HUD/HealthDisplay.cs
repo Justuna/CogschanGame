@@ -46,10 +46,10 @@ public class HealthDisplay : MonoBehaviour
     public void Init(EntityServiceLocator services)
     {
         _services = services;
-        _services.HealthTracker.OnHealthReset += OnHealthReset;
-        _services.HealthTracker.OnHealed += OnHealed;
-        _services.HealthTracker.OnDamaged += OnDamaged;
-        _services.HealthTracker.OnDefeat += OnDefeat;
+        _services.HealthTracker.OnHealthReset.AddListener(OnHealthReset);
+        _services.HealthTracker.OnHealed.AddListener(OnHealed);
+        _services.HealthTracker.OnDamaged.AddListener(OnDamaged);
+        _services.HealthTracker.OnDefeat.AddListener(OnDefeat);
         _prevPercentage = (float)_services.HealthTracker.Health / _services.HealthTracker.MaxHealth;
         UpdateBar(_prevPercentage);
     }

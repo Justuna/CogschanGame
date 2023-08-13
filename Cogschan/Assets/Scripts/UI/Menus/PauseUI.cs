@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using Eflatun.SceneReference;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -6,17 +8,22 @@ public class PauseUI : MonoBehaviour
 {
     [Header("Dependencies")]
     [SerializeField] private EntityServiceLocator _playerServices;
+    [SerializeField] private SceneReference _mainMenuScene;
 
     [Header("Pause Menu")]
     [SerializeField] private GameObject _pauseMenu;
     [SerializeField] private Button _unpauseButton;
-    [SerializeField] private Button _quitToDesktopButton;
+    [SerializeField] private Button _pauseMainMenuButton;
 
     [Header("Lose Menu")]
+    [SerializeField] private float _waitBeforeGameOverMenuDuration = 5f;
     [SerializeField] private GameObject _gameOverMenu;
     [SerializeField] private Button _retryButton;
-    [SerializeField] private Button _returnToMenuButton;
-    [SerializeField] private int _mainMenuScene;
+    [SerializeField] private Button _loseMainMenuButton;
+
+    [Header("Win Menu")]
+    [SerializeField] private GameObject _winMenu;
+    [SerializeField] private Button _winMainMenuButton;
 
     private bool _paused;
 
@@ -27,14 +34,26 @@ public class PauseUI : MonoBehaviour
 
     private void Start()
     {
-        CogschanInputSingleton.Instance.OnPauseButtonPressed += () => { if (_paused) ClosePauseMenu(); else OpenPauseMenu(); };
+        CogschanInputSingleton.Instance.OnPauseButtonPressed += () =>
+        {
+            if (_paused)
+                ClosePauseMenu();
+            else OpenPauseMenu();
+        };
         _unpauseButton.onClick.AddListener(ClosePauseMenu);
-        _playerServices.HealthTracker.OnDefeat += OnDefeat;
-        ClosePauseMenu();
+        _playerServices.HealthTracker.OnDefeat.AddListener(OnDefeat);
 
         _retryButton.onClick.AddListener(Reload);
-        _returnToMenuButton.onClick.AddListener(ReturnToMenu);
-        _quitToDesktopButton.onClick.AddListener(QuitToDesktop);
+        _pauseMainMenuButton.onClick.AddListener(ReturnToMenu);
+        _loseMainMenuButton.onClick.AddListener(ReturnToMenu);
+        _winMainMenuButton.onClick.AddListener(ReturnToMenu);
+
+        _pauseMenu.SetActive(false);
+        _gameOverMenu.SetActive(false);
+        _winMenu.SetActive(false);
+        Pause(false);
+
+        GameStateSingleton.Instance.LevelClear.AddListener(OnWin);
     }
 
     private void Pause(bool paused = true)
@@ -56,20 +75,28 @@ public class PauseUI : MonoBehaviour
 
     private void OpenPauseMenu()
     {
-        _pauseMenu.gameObject.SetActive(true);
+        _pauseMenu.SetActive(true);
         Pause(true);
     }
 
     private void ClosePauseMenu()
     {
-        _pauseMenu.gameObject.SetActive(false);
+        _pauseMenu.SetActive(false);
         Pause(false);
     }
 
-    private void OnDefeat()
+    private async void OnDefeat()
     {
-        _pauseMenu.gameObject.SetActive(false);
-        _gameOverMenu.gameObject.SetActive(true);
+        await UniTask.WaitForSeconds(_waitBeforeGameOverMenuDuration);
+        _pauseMenu.SetActive(false);
+        _gameOverMenu.SetActive(true);
+        Pause(true);
+    }
+
+    private void OnWin()
+    {
+        _pauseMenu.SetActive(false);
+        _winMenu.SetActive(true);
         Pause(true);
     }
 
@@ -81,12 +108,10 @@ public class PauseUI : MonoBehaviour
 
     private void ReturnToMenu()
     {
-        Pause(false);
-        SceneManager.LoadScene(_mainMenuScene);
-    }
+        Time.timeScale = 1;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
 
-    private void QuitToDesktop()
-    {
-        Application.Quit();
+        SceneManager.LoadScene(_mainMenuScene.BuildIndex);
     }
 }

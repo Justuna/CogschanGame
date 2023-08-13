@@ -53,6 +53,7 @@ MonoBehaviour:
     type: 2}
   _fireRate: 1.2
   _name: Sniper
+  _icon: {fileID: 21300000, guid: 9f275869cea2ccd4cbe78b4f6ad33009, type: 3}
   _muzzle: {fileID: 8032644486851319795}
   _requiresAmmo: 1
   _ammoType: {fileID: 11400000, guid: f5ba096d5b65fa34c9d580081343db88, type: 2}
