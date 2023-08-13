@@ -34,8 +34,14 @@ public class JanglingAI : MonoBehaviour
         CurrentNode = _startNode;
         _adjacentNodes = _services.PointGraph.GetAdjacent(_startNode);
 
-        _services.HealthTracker.OnDefeat += () => { _state.OnStun(); };
-        _services.HealthTracker.OnDamaged += (amount) => { _state.OnDamaged(); };
+        _services.HealthTracker.OnDefeat.AddListener(() =>
+        {
+            _state.OnStun();
+        });
+        _services.HealthTracker.OnDamaged.AddListener((amount) =>
+        {
+            _state.OnDamaged();
+        });
 
         es_Idle.IdleToWatching += IdleToWatching;
         es_Idle.IdleToStartled += IdleToStartled;
