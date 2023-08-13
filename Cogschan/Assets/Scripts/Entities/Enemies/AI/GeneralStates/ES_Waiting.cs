@@ -10,7 +10,7 @@ public class ES_Waiting : MonoBehaviour, IEnemyState
 
     public CogschanSimpleEvent OutOfRange;
 
-    public void Behavior()
+    public void OnBehave()
     {
         if (_services.LOSChecker.CanSee || Vector3.Distance(transform.position, _services.LOSChecker.LastSeenPosition) > _waitRange)
         {

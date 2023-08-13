@@ -51,6 +51,28 @@ public class HealthDisplay : MonoBehaviour
         _services.HealthTracker.OnDamaged.AddListener(OnDamaged);
         _services.HealthTracker.OnDefeat.AddListener(OnDefeat);
         _prevPercentage = (float)_services.HealthTracker.Health / _services.HealthTracker.MaxHealth;
+
+        _animateHealthBarTask = new OneShotTask(async (token) =>
+        {
+            var targetPercentage = (float)_services.HealthTracker.Health / _services.HealthTracker.MaxHealth;
+
+            if (_portraitAnimator != null)
+            {
+                _portraitAnimator?.SetBool("damaged", targetPercentage <= _damagedPortraitCutoff);
+                if (_healthChangeReason == HealthChangeReason.Damaged)
+                    _portraitAnimator?.SetTrigger("wince");
+            }
+
+            if (_healthText != null)
+                _healthText.text = _services.HealthTracker.Health.ToString();
+            if (_maxHealthText != null)
+                _maxHealthText.text = " / " + _services.HealthTracker.MaxHealth;
+
+            await DOVirtual.Float(_prevPercentage, targetPercentage, _healthbarTweenDuration, UpdateBar).SetEase(Ease.OutQuad).WithCancellation(token);
+
+            _prevPercentage = targetPercentage;
+        });
+
         UpdateBar(_prevPercentage);
     }
 
@@ -98,27 +120,6 @@ public class HealthDisplay : MonoBehaviour
 
         if (_services != null)
             Init(_services);
-
-        _animateHealthBarTask = new OneShotTask(async (token) =>
-        {
-            var targetPercentage = (float)_services.HealthTracker.Health / _services.HealthTracker.MaxHealth;
-
-            if (_portraitAnimator != null)
-            {
-                _portraitAnimator?.SetBool("damaged", targetPercentage <= _damagedPortraitCutoff);
-                if (_healthChangeReason == HealthChangeReason.Damaged)
-                    _portraitAnimator?.SetTrigger("wince");
-            }
-
-            if (_healthText != null)
-                _healthText.text = _services.HealthTracker.Health.ToString();
-            if (_maxHealthText != null)
-                _maxHealthText.text = " / " + _services.HealthTracker.MaxHealth;
-
-            await DOVirtual.Float(_prevPercentage, targetPercentage, _healthbarTweenDuration, UpdateBar).SetEase(Ease.OutQuad).WithCancellation(token);
-
-            _prevPercentage = targetPercentage;
-        });
     }
 
     private void UpdateBar(float percentage)
@@ -137,6 +138,6 @@ public class HealthDisplay : MonoBehaviour
 
     private void OnDestroy()
     {
-        _animateHealthBarTask.Stop();
+        _animateHealthBarTask?.Stop();
     }
 }

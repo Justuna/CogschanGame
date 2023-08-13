@@ -19,7 +19,7 @@ public class ES_MeleeAttack : MonoBehaviour, IEnemyState
     private bool _active = false;
     private float _timer = float.PositiveInfinity;
 
-    public void Behavior()
+    public void OnBehave()
     {
         Vector3 playerDir = _services.LOSChecker.LastSeenPosition - transform.position;
         if (!_services.LOSChecker.CanSee || playerDir.magnitude > _distance)

@@ -1,8 +1,7 @@
-﻿using FMOD.Studio;
-using FMODUnity;
+﻿using FMODUnity;
 using UnityEngine;
 
-public class MS_Sprinting : MonoBehaviour, IMovementState
+public class MS_Sprinting : MonoBehaviour, IMovementState, IMachineStateLateBehave
 {
     [SerializeField] private EntityServiceLocator _services;
     [SerializeField] private EventReference _runningSound;
@@ -15,18 +14,26 @@ public class MS_Sprinting : MonoBehaviour, IMovementState
     public CogschanSimpleEvent SprintingIntoDashing;
     public CogschanFloatEvent SprintingIntoProne;
 
-    public void Behavior()
+    private Vector3 MovementDirection
+    {
+        get
+        {
+            Quaternion camDir = Quaternion.Euler(_services.CameraController.CameraLateralDirection);
+            Vector3 movement = new Vector3(CogschanInputSingleton.Instance.MovementDirection.x, 0, CogschanInputSingleton.Instance.MovementDirection.y);
+            Vector3 movementDir = camDir * movement;    // Movement direction is relative to the camera direction
+            return movementDir;
+        }
+    }
+
+    public void OnLateBehave()
     {
         bool audible = false;
-
-        Quaternion dir = Quaternion.Euler(_services.CameraController.CameraLateralDirection);
-        Vector3 movement = new Vector3(CogschanInputSingleton.Instance.MovementDirection.x, 0, CogschanInputSingleton.Instance.MovementDirection.y);
-        Vector3 movementDir = dir * movement;
+        var movementDir = MovementDirection;
 
         if (movementDir != Vector3.zero)
         {
-            Quaternion movementDirQ = Quaternion.LookRotation(movementDir);
-            _cogschanModel.transform.rotation = Quaternion.Lerp(_cogschanModel.transform.rotation, movementDirQ, _turnSpeed * Time.deltaTime);
+            Quaternion movementDirQuat = Quaternion.LookRotation(movementDir);
+            _cogschanModel.transform.rotation = Quaternion.Lerp(_cogschanModel.transform.rotation, movementDirQuat, _turnSpeed * Time.deltaTime);
 
             if (_services.GroundChecker.IsGrounded)
             {
@@ -35,7 +42,6 @@ public class MS_Sprinting : MonoBehaviour, IMovementState
         }
 
         movementDir *= _sprintSpeed;
-
         _services.KinematicPhysics.DesiredVelocity = movementDir;
 
         if (audible)

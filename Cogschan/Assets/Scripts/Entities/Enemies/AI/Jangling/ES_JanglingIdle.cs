@@ -12,7 +12,7 @@ public class ES_JanglingIdle : MonoBehaviour, IJanglingState
     public CogschanSimpleEvent IdleToStartled;
     public CogschanSimpleEvent IdleToStunned;
 
-    public void Behavior()
+    public void OnBehave()
     {
         if (_services.LOSChecker.CanSee)
         {

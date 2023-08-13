@@ -12,7 +12,7 @@ public class ES_Alerted : MonoBehaviour, IEnemyState
 
     private float _alertTimer = 0;
 
-    public void Behavior()
+    public void OnBehave()
     {
         if (!_services.LOSChecker.CanSee)
         {

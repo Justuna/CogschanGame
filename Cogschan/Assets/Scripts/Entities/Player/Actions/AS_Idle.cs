@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class AS_Idle : MonoBehaviour, IActionState
+public class AS_Idle : MonoBehaviour, IActionState, IMachineStateBehave
 {
     [SerializeField] private EntityServiceLocator _services;
 
@@ -11,7 +11,7 @@ public class AS_Idle : MonoBehaviour, IActionState
     public CogschanSimpleEvent IdleIntoReloading;
     public CogschanConditionEvent IdleIntoLocked;
 
-    public void Behavior()
+    public void OnBehave()
     {
         if (_services.MovementController.CannotAct)
         {

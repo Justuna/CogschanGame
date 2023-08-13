@@ -60,7 +60,7 @@ public class JanglingAI : MonoBehaviour
 
     private void Update()
     {
-        _state.Behavior();
+        _state.OnBehave();
     }
 
     #region Glue Methods

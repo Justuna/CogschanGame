@@ -9,7 +9,7 @@ public class ES_JanglingWatching : MonoBehaviour, IJanglingState
     public CogschanSimpleEvent WatchingToIdle;
     public CogschanSimpleEvent WatchingToStunned;
 
-    public void Behavior()
+    public void OnBehave()
     {
         if (_services.LOSChecker.CanSee)
         {

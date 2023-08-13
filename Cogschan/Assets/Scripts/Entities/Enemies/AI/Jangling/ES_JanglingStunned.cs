@@ -18,7 +18,7 @@ public class ES_JanglingStunned : MonoBehaviour, IJanglingState
         _stunFX.Play();
     }
 
-    public void Behavior()
+    public void OnBehave()
     {
         _stunTimer -= Time.deltaTime;
         if (_stunTimer <= 0)
