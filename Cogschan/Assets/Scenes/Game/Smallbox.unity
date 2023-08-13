@@ -2141,6 +2141,48 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1978665594}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1978665596 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4494694939598722731, guid: 474b51ca8c50917499ddbc69c02ed2d4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1978665594}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1978665597 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4494694939598722734, guid: 474b51ca8c50917499ddbc69c02ed2d4,
+    type: 3}
+  m_PrefabInstance: {fileID: 1978665594}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978665596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1910f4536123d9a499cdaf9da159c7fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1978665598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978665596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1910f4536123d9a499cdaf9da159c7fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 4028257471934700776, guid: 52d91b2108694f945840ed460da2f487, type: 3}
+  _spawnInfo:
+    Spawner: {fileID: 1978665597}
+    Cost: 5
+    Weight: 1
+    Category: 0
+  _spawnManagers:
+  - {fileID: 1398770602}
+  _minimumRadius: 5
+  _maximumRadius: 10
+  _height: 0
+  _isNavMeshAgent: 1
 --- !u!1 &2022004075
 GameObject:
   m_ObjectHideFlags: 0
