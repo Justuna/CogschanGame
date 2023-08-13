@@ -22,7 +22,7 @@ public abstract class ES_Patrol : MonoBehaviour, IEnemyState
         _hasSetPatrolPoint = false;
     }
 
-    public virtual void Behavior()
+    public virtual void OnBehave()
     {
         if (_services.LOSChecker.CanSee)
         {

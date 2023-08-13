@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class MS_Aiming : MonoBehaviour, IMovementState
+public class MS_Aiming : MonoBehaviour, IMovementState, IMachineStateBehave
 {
     [SerializeField] private EntityServiceLocator _services;
     [SerializeField] private GameObject _cogschanModel;
@@ -11,7 +11,7 @@ public class MS_Aiming : MonoBehaviour, IMovementState
     public CogschanSimpleEvent AimingIntoWalking;
     public CogschanFloatEvent AimingIntoProne;
 
-    public void Behavior()
+    public void OnBehave()
     {
         Quaternion dir = Quaternion.Euler(_services.CameraController.CameraLateralDirection);
         Vector3 movement = new Vector3(CogschanInputSingleton.Instance.MovementDirection.x, 0, CogschanInputSingleton.Instance.MovementDirection.y);

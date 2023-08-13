@@ -1169,7 +1169,32 @@ MonoBehaviour:
     Path: event:/Test/TestInstance
   _cogschanModel: {fileID: 4272273027718369486}
   _sprintSpeed: 15
-  _turnSpeed: 20
+  _turnLerpDuration: 0.25
+  _turnLerpCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _turnAngleDeadzone: 20
 --- !u!1 &4272273027505916435
 GameObject:
   m_ObjectHideFlags: 0
@@ -1663,8 +1688,33 @@ MonoBehaviour:
   _services: {fileID: 4272273026959324190}
   _cogschanModel: {fileID: 4272273027718369486}
   _walkSpeed: 10
-  _turnSpeed: 20
-  _turnSpeedFiring: 50
+  _turnLerpDuration: 0.5
+  _turnLerpCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _turnAngleDeadzone: 20
+  _combatMovementCooldown: 1.5
 --- !u!1 &4272273027980844597
 GameObject:
   m_ObjectHideFlags: 0

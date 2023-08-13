@@ -59,7 +59,7 @@ public abstract class GroundedEnemyAI : MonoBehaviour
 
     protected virtual void Update()
     {
-        _state.Behavior();
+        _state.OnBehave();
     }
 
     protected virtual void XToAlerted()

@@ -17,7 +17,7 @@ public class ES_JanglingStartled : MonoBehaviour, IJanglingState
         _timer = _startleTime;
     }
 
-    public void Behavior()
+    public void OnBehave()
     {
         Vector3 dir = _services.LOSChecker.LastSeenPosition - _services.Jangling.position;
 

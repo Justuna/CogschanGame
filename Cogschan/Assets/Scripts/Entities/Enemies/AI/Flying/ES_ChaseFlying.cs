@@ -19,7 +19,7 @@ public class ES_ChaseFlying : MonoBehaviour, IEnemyState
         _rangedAttackTimer = Random.Range(_minTimeUntilRangedAttack, _maxTimeUntilRangedAttack);
     }
 
-    public void Behavior()
+    public void OnBehave()
     {
         _rangedAttackTimer -= Time.deltaTime;
 

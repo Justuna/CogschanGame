@@ -34,12 +34,7 @@ public class PauseUI : MonoBehaviour
 
     private void Start()
     {
-        CogschanInputSingleton.Instance.OnPauseButtonPressed += () =>
-        {
-            if (_paused)
-                ClosePauseMenu();
-            else OpenPauseMenu();
-        };
+        CogschanInputSingleton.Instance.OnPauseButtonPressed += OnPauseButtonPressed;
         _unpauseButton.onClick.AddListener(ClosePauseMenu);
         _playerServices.HealthTracker.OnDefeat.AddListener(OnDefeat);
 
@@ -54,6 +49,21 @@ public class PauseUI : MonoBehaviour
         Pause(false);
 
         GameStateSingleton.Instance.LevelClear.AddListener(OnWin);
+    }
+
+    private void OnDestroy()
+    {
+        if (CogschanInputSingleton.Instance != null)
+        {
+            CogschanInputSingleton.Instance.OnPauseButtonPressed -= OnPauseButtonPressed;
+        }
+    }
+
+    private void OnPauseButtonPressed()
+    {
+        if (_paused)
+            ClosePauseMenu();
+        else OpenPauseMenu();
     }
 
     private void Pause(bool paused = true)

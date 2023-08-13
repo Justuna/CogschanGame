@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MS_Prone : MonoBehaviour, IMovementState
+public class MS_Prone : MonoBehaviour, IMovementState, IMachineStateBehave
 {
     private float _timer;
 
@@ -13,9 +11,9 @@ public class MS_Prone : MonoBehaviour, IMovementState
         _timer = duration;
     }
 
-    public void Behavior()
+    public void OnBehave()
     {
-        if (_timer > 0 )
+        if (_timer > 0)
         {
             _timer -= Time.deltaTime;
         }

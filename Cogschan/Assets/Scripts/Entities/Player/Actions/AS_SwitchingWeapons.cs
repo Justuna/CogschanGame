@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class AS_SwitchingWeapons : MonoBehaviour, IActionState
+public class AS_SwitchingWeapons : MonoBehaviour, IActionState, IMachineStateBehave
 {
     [SerializeField] private EntityServiceLocator _services;
     [SerializeField] private float _switchTime;
@@ -19,7 +19,7 @@ public class AS_SwitchingWeapons : MonoBehaviour, IActionState
         else _services.WeaponCache.PrevWeapon();
     }
 
-    public void Behavior()
+    public void OnBehave()
     {
         if (_services.MovementController.CannotAct)
         {

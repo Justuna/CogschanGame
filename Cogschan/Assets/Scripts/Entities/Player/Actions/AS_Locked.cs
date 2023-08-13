@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AS_Locked : MonoBehaviour, IActionState
+public class AS_Locked : MonoBehaviour, IActionState, IMachineStateBehave
 {
     private List<Func<bool>> _unlockConditions = new List<Func<bool>>();
 
@@ -13,10 +13,10 @@ public class AS_Locked : MonoBehaviour, IActionState
         _unlockConditions.Add(unlockCondition);
     }
 
-    public void Behavior()
+    public void OnBehave()
     {
         _unlockConditions.RemoveAll(condition => condition());
-        if (_unlockConditions.Count == 0 )
+        if (_unlockConditions.Count == 0)
         {
             ActionsUnlocked?.Invoke();
         }

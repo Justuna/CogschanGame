@@ -45,7 +45,7 @@ public class ES_RangedAttack : MonoBehaviour, IEnemyState
         return this;
     }
 
-    public void Behavior()
+    public void OnBehave()
     {
         if (_hasAttacked) return;
         Vector3 playerDisplacement = _services.LOSChecker.LastSeenPosition - transform.position;

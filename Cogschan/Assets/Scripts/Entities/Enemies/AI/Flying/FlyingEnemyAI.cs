@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public abstract class FlyingEnemyAI : MonoBehaviour
@@ -46,7 +45,7 @@ public abstract class FlyingEnemyAI : MonoBehaviour
 
     protected virtual void Update()
     {
-        _state.Behavior();
+        _state.OnBehave();
     }
 
     protected virtual void ConfusedToAlerted()

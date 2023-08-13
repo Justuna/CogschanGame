@@ -2,7 +2,7 @@
 /// <summary>
 /// An interface that defines a state to be used by the action state machine. Provides additional hooks for handling the reloading and weapon-switching inputs.
 /// </summary>
-public interface IActionState : IMachineState
+public interface IActionState
 {
     /// <summary>
     /// What this state should do in response to the reload button.

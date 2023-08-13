@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MS_Dashing : MonoBehaviour, IMovementState
+public class MS_Dashing : MonoBehaviour, IMovementState, IMachineStateBehave
 {
     [SerializeField] private EntityServiceLocator _services;
     [SerializeField] private GameObject _cogschanModel;
@@ -32,13 +30,13 @@ public class MS_Dashing : MonoBehaviour, IMovementState
         _movementDirQ = Quaternion.LookRotation(movementDir);
     }
 
-    public void Behavior()
+    public void OnBehave()
     {
         _timer -= Time.deltaTime;
 
         _cogschanModel.transform.rotation = Quaternion.Lerp(_cogschanModel.transform.rotation, _movementDirQ, _turnSpeed * Time.deltaTime);
 
-        if (_timer <= 0 )
+        if (_timer <= 0)
         {
             DashEnded?.Invoke();
         }
