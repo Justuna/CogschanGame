@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UIElements;
 
 public class EnemySpawner : Spawner
 {
@@ -30,9 +29,11 @@ public class EnemySpawner : Spawner
     private bool _isNavMeshAgent;
 
     public override SpawnInfo SpawnInfo => _spawnInfo;
+    public SpawnManager[] SpawnManagers { get => _spawnManagers; set => _spawnManagers = value; }
 
     private void Start()
     {
+        _spawnInfo.Spawner = this;
         foreach (SpawnManager manager in _spawnManagers)
             _spawnInfo.AddToManager(manager);
     }

@@ -10,6 +10,7 @@ public struct SpawnInfo
     /// <summary>
     /// The <see cref="global::Spawner"/> used to spawn the associated object.
     /// </summary>
+    [HideInInspector]
     [SerializeField]
     public Spawner Spawner;
     /// <summary>
