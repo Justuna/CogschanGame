@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: Urbanist-SemiBold SDF
+  m_Name: Urbanist-SemiBold-Shadow SDF
   m_EditorClassIdentifier: 
-  hashCode: 923403183
+  hashCode: -561051196
   material: {fileID: 8940288843621778124}
-  materialHashCode: 1393091375
+  materialHashCode: 2122029668
   m_Version: 1.1.0
   m_SourceFontFileGUID: f4b26cbc402a3cd48ade7c0f195801f3
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: f4b26cbc402a3cd48ade7c0f195801f3,
@@ -1388,7 +1388,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Urbanist-SemiBold Atlas Material
   m_Shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - UNDERLAY_ON
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -1451,7 +1452,7 @@ Material:
     - _Reflectivity: 10
     - _ScaleRatioA: 0.9
     - _ScaleRatioB: 0.73125
-    - _ScaleRatioC: 0.73125
+    - _ScaleRatioC: 0.365625
     - _ScaleX: 1
     - _ScaleY: 1
     - _ShaderFlags: 0
@@ -1466,7 +1467,7 @@ Material:
     - _TextureWidth: 1024
     - _UnderlayDilate: 1
     - _UnderlayOffsetX: 0
-    - _UnderlayOffsetY: 0
+    - _UnderlayOffsetY: -1
     - _UnderlaySoftness: 0
     - _VertexOffsetX: 0
     - _VertexOffsetY: 0
