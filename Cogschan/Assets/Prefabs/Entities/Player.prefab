@@ -263,7 +263,7 @@ MonoBehaviour:
   _steepAngle: 45
   _wallAngle: 90
   _yOffset: 0.5
-  _radius: 0.5
+  _radius: 0.55
   _castDistance: 0.1
   _services: {fileID: 4272273026959324190}
   _takesFallDamage: 1
@@ -753,7 +753,7 @@ CharacterController:
   m_Height: 2
   m_Radius: 0.5
   m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_StepOffset: 0.5
   m_SkinWidth: 0.05
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 1, z: 0}
@@ -1438,7 +1438,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4272273027785079341}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 2.172, z: -4.22}
+  m_LocalPosition: {x: 0, y: 2.602, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

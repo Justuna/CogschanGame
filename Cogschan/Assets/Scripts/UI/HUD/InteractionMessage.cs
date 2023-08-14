@@ -14,6 +14,8 @@ public class InteractionMessage : MonoBehaviour
 
     private void Update()
     {
+        if (_textbox == null || _interactionPanel == null) return;
+
         Interactable optIn = _services.InteractionChecker.OptIn;
         if (optIn != null && optIn.OptInMessage != "")
         {

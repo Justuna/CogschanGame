@@ -32,7 +32,7 @@ public class FXController : MonoBehaviour
 
         if (IsStandalone)
         {
-            await UniTask.WaitForSeconds(Lifetime);
+            await UniTask.WaitForSeconds(Lifetime, cancellationToken: gameObject.GetCancellationTokenOnDestroy());
             if (gameObject != null)
                 Destroy(gameObject);
         }

@@ -1992,7 +1992,6 @@ GameObject:
   - component: {fileID: 5178282674384284994}
   - component: {fileID: 1594556584299564049}
   - component: {fileID: 9022498546818494073}
-  - component: {fileID: 1954862478950074720}
   m_Layer: 5
   m_Name: Interaction Panel
   m_TagString: Untagged
@@ -2099,21 +2098,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &1954862478950074720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3196504846493048678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01fab984d5779ff458efe345e7431259, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _services: {fileID: 0}
-  _textbox: {fileID: 5334617167080052688}
-  _interactionPanel: {fileID: 3196504846493048678}
 --- !u!1 &3741117734657256796
 GameObject:
   m_ObjectHideFlags: 0
@@ -2707,7 +2691,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 143.99994, y: 36.000034}
+  m_SizeDelta: {x: 144.0001, y: 35.999966}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8356021557405699744
 MonoBehaviour:
@@ -4317,7 +4301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _services: {fileID: 0}
-  _textbox: {fileID: 0}
+  _textbox: {fileID: 5334617167080052688}
   _interactionPanel: {fileID: 3196504846493048678}
 --- !u!1 &9001246773204825662
 GameObject:
@@ -4557,7 +4541,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 76.540054, y: 0}
+  m_SizeDelta: {x: 76.540016, y: 0}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &8664158897733681348
 MonoBehaviour:

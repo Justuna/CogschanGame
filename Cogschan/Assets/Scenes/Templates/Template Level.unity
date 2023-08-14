@@ -227,7 +227,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: a6560a915ef98420e9faacc1c7438823, type: 2}
+  sharedProfile: {fileID: 11400000, guid: cf4099f6f2c96654e87f08e9026c0794, type: 2}
 --- !u!1 &478929574
 GameObject:
   m_ObjectHideFlags: 0
@@ -705,7 +705,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3600, y: 1, z: 3600}
+  m_Size: {x: 3600, y: 100, z: 3600}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1175347136
 GameObject:
@@ -832,7 +832,7 @@ PrefabInstance:
     - target: {fileID: 283272163725196233, guid: 657b7a62b5375ea42b6ef4d79d806159,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 76.540054
+      value: 76.540016
       objectReference: {fileID: 0}
     - target: {fileID: 283272163725196233, guid: 657b7a62b5375ea42b6ef4d79d806159,
         type: 3}
@@ -1052,7 +1052,7 @@ PrefabInstance:
     - target: {fileID: 3187115544803773358, guid: 657b7a62b5375ea42b6ef4d79d806159,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 144.00012
+      value: 143.99994
       objectReference: {fileID: 0}
     - target: {fileID: 3187115544803773358, guid: 657b7a62b5375ea42b6ef4d79d806159,
         type: 3}
