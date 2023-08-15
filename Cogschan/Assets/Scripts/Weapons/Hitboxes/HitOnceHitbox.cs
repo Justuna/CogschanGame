@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
@@ -7,6 +8,16 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Collider))]
 public class HitOnceHitbox : Hitbox
 {
+    [Serializable]
+    public class GameObjectAction
+    {
+        public GameObject gameObject;
+        public bool instantiate;
+        public bool rotateToImpactNormal;
+    }
+
+    public UnityEvent Impacted;
+
     [Tooltip("The damage that this hitbox should deal.")]
     [SerializeField] protected int _damage;
     [Tooltip("The impulse to be delivered to the owner of the hurtbox upon receiving damage. Does not trigger if the vector is zero.")]
@@ -15,12 +26,35 @@ public class HitOnceHitbox : Hitbox
     [SerializeField] private bool _canCancelOverride = false;
     [Tooltip("How much of the momentum is maintained if this hitbox cancels the velocity override on a hurtbox.")]
     [SerializeField] private float _maintainedMomentum = 1f;
-    [Tooltip("Prefabs to be spawned on impact (additional hitboxes, visual effects, etc).")]
-    [SerializeField] private GameObject[] _spawnedOnImpact;
+    [Tooltip("Actions on gameobjects to be performed on impact (additional hitboxes, visual effects, etc).")]
+    [SerializeField] private GameObjectAction[] _impactGameObjectActions;
 
     private bool _hit = false;
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        var contactPoint = Vector3.zero;
+        var contactNormal = Vector3.zero;
+        foreach (var contact in collision.contacts)
+        {
+            contactPoint += contact.point;
+            contactNormal += contact.normal;
+        }
+        contactPoint /= collision.contactCount;
+        contactNormal.Normalize();
+
+        ProcessHit(collision.gameObject, contactPoint, contactNormal);
+    }
+
     private void OnTriggerEnter(Collider other)
+    {
+        if (!(GetComponent<Rigidbody>()?.isKinematic ?? false)) return;
+        var hitPoint = other.ClosestPointOnBounds(transform.position);
+        var hitNormal = (transform.position - hitPoint).normalized;
+        ProcessHit(other.gameObject, hitPoint, hitNormal);
+    }
+
+    private void ProcessHit(GameObject other, Vector3 hitPoint, Vector3 hitNormal)
     {
         if (_hit) return;
 
@@ -32,20 +66,26 @@ public class HitOnceHitbox : Hitbox
 
             // There is a nonzero possibility that we will have enemies with no physics, so the kinematic physics component might be null
 
-            if (_impulseMagnitude != 0 && hurtbox.Services.KinematicPhysics != null) 
+            if (_impulseMagnitude != 0 && hurtbox.Services.KinematicPhysics != null)
                 hurtbox.Services.KinematicPhysics?.AddImpulse(_impulseMagnitude * GetComponent<Rigidbody>().velocity.normalized, _canCancelOverride, _maintainedMomentum);
         }
 
-        foreach (GameObject o in _spawnedOnImpact)
-        {
-            if (o != null)
+        foreach (var action in _impactGameObjectActions)
+            if (action != null && action.gameObject != null)
             {
-                Instantiate(o, transform.position, Quaternion.identity);
+                var gameObject = action.gameObject;
+                if (action.instantiate)
+                    gameObject = Instantiate(action.gameObject, transform.position, Quaternion.identity);
+                if (action.rotateToImpactNormal)
+                {
+                    transform.position = hitPoint;
+                    gameObject.transform.LookAt(gameObject.transform.position + hitNormal);
+                }
             }
-        }
 
         // Since destroy does not necessarily fire immediately, we have to make sure manually that this will only run once.
         _hit = true;
+        Impacted.Invoke();
 
         Destroy(gameObject);
     }

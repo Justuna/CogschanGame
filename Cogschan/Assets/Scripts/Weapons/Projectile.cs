@@ -13,8 +13,10 @@ public class Projectile : MonoBehaviour
     [SerializeField] private Rigidbody _rigidBody;
     [Tooltip("The speed of the projectile.")]
     [SerializeField] private float _speed;
-    [Tooltip("How long the project lasts before destroying itself")]
+    [Tooltip("How long the projectile lasts before destroying itself")]
     [SerializeField] private float _lifetime = 10f;
+    [Tooltip("Makes the projectile face the direction it's moving")]
+    [SerializeField] private bool _rotateToVelocity;
 
     private Vector3 _velocity = Vector3.zero;
     private float _time;
@@ -25,6 +27,10 @@ public class Projectile : MonoBehaviour
     public void SetDirection(Vector3 direction)
     {
         _velocity = _speed * direction.normalized;
+        if (_rotateToVelocity)
+            transform.LookAt(transform.position + direction);
+        if (!_rigidBody.isKinematic)
+            _rigidBody.velocity = _velocity;
     }
 
     private void Update()
@@ -32,7 +38,6 @@ public class Projectile : MonoBehaviour
         _time += Time.deltaTime;
         if (_time > _lifetime)
         {
-            Destroyed.Invoke();
             Destroy(gameObject);
         }
     }
@@ -42,7 +47,13 @@ public class Projectile : MonoBehaviour
     // We also don't have to check if timescale = 0, because physics inherently uses timescale
     private void FixedUpdate()
     {
-        _rigidBody.MovePosition(_rigidBody.position + _velocity * Time.fixedDeltaTime);
+        if (_rigidBody.isKinematic)
+            _rigidBody.MovePosition(_rigidBody.position + _velocity * Time.fixedDeltaTime);
+    }
+
+    private void OnDestroy()
+    {
+        Destroyed.Invoke();
     }
 }
 

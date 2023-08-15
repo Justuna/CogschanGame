@@ -21,6 +21,9 @@ public class AS_Idle : MonoBehaviour, IActionState, IMachineStateBehave
         {
             IdleIntoFiring?.Invoke();
         }
+
+        var targetPos = _services.CameraController.TargetPosition ?? transform.forward;
+        _services.WeaponCache.CurrentWeapon.GetGameObject().transform.LookAt(targetPos);
     }
 
     public void OnNextWeapon()
