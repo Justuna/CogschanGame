@@ -1658,7 +1658,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -2691,7 +2691,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 144.0001, y: 35.999966}
+  m_SizeDelta: {x: 144.00003, y: 36.000008}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8356021557405699744
 MonoBehaviour:
@@ -4541,7 +4541,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 76.540016, y: 0}
+  m_SizeDelta: {x: 76.54002, y: 0}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &8664158897733681348
 MonoBehaviour:
