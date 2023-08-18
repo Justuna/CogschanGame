@@ -5,6 +5,7 @@ public class InteractionMessage : MonoBehaviour
 {
     [SerializeField] private EntityServiceLocator _services;
     [SerializeField] private TextMeshProUGUI _textbox;
+    [SerializeField] private GameObject _interactionPanel;
 
     public void Init(EntityServiceLocator services)
     {
@@ -13,15 +14,17 @@ public class InteractionMessage : MonoBehaviour
 
     private void Update()
     {
+        if (_textbox == null || _interactionPanel == null) return;
+
         Interactable optIn = _services.InteractionChecker.OptIn;
-        if (optIn != null)
+        if (optIn != null && optIn.OptInMessage != "")
         {
-            _textbox.enabled = true;
+            _interactionPanel.SetActive(true);
             _textbox.text = optIn.OptInMessage;
         }
         else
         {
-            _textbox.enabled = false;
+            _interactionPanel.SetActive(false);
             _textbox.text = "";
         }
     }

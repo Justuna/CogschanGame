@@ -42,9 +42,9 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5772970684945050815}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: eee1ff451e7c0e445862f1268783fce1, type: 3}
-  m_InitialEventName: OnPlay
-  m_InitialEventNameOverriden: 0
+  m_Asset: {fileID: 8926484042661614526, guid: 1069f6f2ba79be742a259ad1d6b32f93, type: 3}
+  m_InitialEventName: 
+  m_InitialEventNameOverriden: 1
   m_StartSeed: 0
   m_ResetSeedOnPlay: 1
   m_ResourceVersion: 1
@@ -53,22 +53,22 @@ VisualEffect:
       m_Array:
       - m_Value: 0.4
         m_Name: Duration
-        m_Overridden: 1
+        m_Overridden: 0
       - m_Value: 5
         m_Name: MaxWidth
         m_Overridden: 1
       - m_Value: 0.1
         m_Name: Height
-        m_Overridden: 1
+        m_Overridden: 0
       - m_Value: -20
         m_Name: Speed
         m_Overridden: 1
       - m_Value: 5
         m_Name: Max Width
-        m_Overridden: 1
+        m_Overridden: 0
       - m_Value: -20
         m_Name: Ray Speed
-        m_Overridden: 1
+        m_Overridden: 0
       - m_Value: 0.01
         m_Name: Spark Size
         m_Overridden: 1
@@ -89,22 +89,22 @@ VisualEffect:
         m_Overridden: 1
       - m_Value: 0.7
         m_Name: Flash Size
-        m_Overridden: 1
+        m_Overridden: 0
     m_Vector2f:
       m_Array: []
     m_Vector3f:
       m_Array:
       - m_Value: {x: 1, y: 3, z: 1}
         m_Name: Start
-        m_Overridden: 1
+        m_Overridden: 0
       - m_Value: {x: -1, y: 0, z: -1}
         m_Name: End
-        m_Overridden: 1
+        m_Overridden: 0
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 0.44922078, y: 0.35493988, z: 1.0592737, w: 0}
+      - m_Value: {x: 0.7655751, y: 0.33114415, z: 3.7341807, w: 0}
         m_Name: Color
-        m_Overridden: 1
+        m_Overridden: 0
     m_Uint:
       m_Array: []
     m_Int:
@@ -152,16 +152,7 @@ VisualEffect:
           serializedVersion: 2
           m_Curve:
           - serializedVersion: 3
-            time: 0
-            value: 0
-            inSlope: 0
-            outSlope: 0
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          - serializedVersion: 3
-            time: 0.25
+            time: 0.03466797
             value: 0.25
             inSlope: 0
             outSlope: 0
@@ -170,10 +161,10 @@ VisualEffect:
             inWeight: 0
             outWeight: 0
           - serializedVersion: 3
-            time: 1
-            value: 0
-            inSlope: 0
-            outSlope: 0
+            time: 0.996521
+            value: 0.0062408447
+            inSlope: -0.68308055
+            outSlope: -0.68308055
             tangentMode: 0
             weightedMode: 0
             inWeight: 0
@@ -182,7 +173,7 @@ VisualEffect:
           m_PostInfinity: 2
           m_RotationOrder: 4
         m_Name: Shrink Grow Pattern
-        m_Overridden: 1
+        m_Overridden: 0
     m_Gradient:
       m_Array: []
     m_NamedObject:

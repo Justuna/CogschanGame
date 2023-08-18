@@ -1,9 +1,10 @@
 ﻿using System;
 using UnityEngine;
 
-public class AS_Idle : MonoBehaviour, IActionState, IMachineStateBehave
+public class AS_Idle : MonoBehaviour, IActionState, IMachineStateBehave, IMachineStateLateBehave
 {
     [SerializeField] private EntityServiceLocator _services;
+    [SerializeField] private float _weaponTurnSpeed = 50;
 
     public CogschanSimpleEvent IdleIntoFiring;
     public CogschanSimpleEvent IdleIntoNextWeapon;
@@ -21,6 +22,14 @@ public class AS_Idle : MonoBehaviour, IActionState, IMachineStateBehave
         {
             IdleIntoFiring?.Invoke();
         }
+    }
+
+    public void OnLateBehave()
+    {
+        var targetPos = _services.CameraController.TargetPosition ?? transform.forward;
+
+        var weaponTransform = _services.WeaponCache.CurrentWeapon.GetGameObject().transform;
+        weaponTransform.rotation = Quaternion.Lerp(weaponTransform.rotation, Quaternion.LookRotation(targetPos - weaponTransform.position), _weaponTurnSpeed * Time.deltaTime);
     }
 
     public void OnNextWeapon()
