@@ -263,8 +263,11 @@ MonoBehaviour:
   _steepAngle: 45
   _wallAngle: 90
   _yOffset: 0.5
-  _radius: 0.55
+  _radius: 0.5
   _castDistance: 0.1
+  _midYOffset: 0.5
+  _midRadius: 0.55
+  _midCastDistance: 0.2
   _services: {fileID: 4272273026959324190}
   _takesFallDamage: 1
   _maxNoHarm: 20
@@ -1331,6 +1334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _services: {fileID: 4272273026959324190}
+  _weaponTurnSpeed: 50
 --- !u!1 &4272273027718369486
 GameObject:
   m_ObjectHideFlags: 0

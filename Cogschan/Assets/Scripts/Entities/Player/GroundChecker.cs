@@ -23,15 +23,21 @@ public class GroundChecker : MonoBehaviour
     [Tooltip("The angle above which ground is no longer considered ground.")]
     [SerializeField] private float _wallAngle = 90f;
 
-    [Header("Sphere Attributes")]
+    [Header("Ground Cast Attributes")]
     [Tooltip("How far above/below Cogschan's feet the center of the ground checker sphere will be.")]
     [SerializeField] private float _yOffset = 0.1f;
     [Tooltip("The radius of the ground checker sphere.")]
     [SerializeField] private float _radius = 1f;
-
-    [Header("Cast Attributes")]
     [Tooltip("How far the ground checker sphere will travel downward before giving up on finding ground.")]
     [SerializeField] private float _castDistance = 0.1f;
+
+    [Header("Mid Ground Cast Attributes")]
+    [Tooltip("How far above/below Cogschan's feet the center of the ground checker sphere will be.")]
+    [SerializeField] private float _midYOffset = 0.1f;
+    [Tooltip("The radius of the ground checker sphere.")]
+    [SerializeField] private float _midRadius = 1f;
+    [Tooltip("How far the ground checker sphere will travel downward before giving up on finding ground.")]
+    [SerializeField] private float _midCastDistance = 0.1f;
 
     [Header("Entity Services")]
     [Tooltip("The Entity Service Locator this script is a part of.")]
@@ -155,6 +161,15 @@ public class GroundChecker : MonoBehaviour
                 }
             }
 
+            if (SurfaceType == SurfaceTypes.NOT_GROUND || SurfaceType == SurfaceTypes.STEEP_SLOPE)
+            {
+                // Perform mid cast to detect if we were miscalculating a walkable gap
+
+                hitCount = Physics.SphereCastNonAlloc(transform.position + new Vector3(0, _midYOffset, 0), _midRadius, Vector3.down, _sphereCastHits, _midCastDistance, _ground);
+                if (hitCount == 0)
+                    SurfaceType = SurfaceTypes.WALKABLE_SLOPE;
+            }
+
             if (_takesFallDamage && SurfaceType != SurfaceTypes.STEEP_SLOPE && SurfaceType != SurfaceTypes.NOT_GROUND)
             {
                 var fallDamage = GetFallDamage();
@@ -203,6 +218,14 @@ public class GroundChecker : MonoBehaviour
         Vector3 finalSphere = new Vector3(0, _yOffset - _castDistance, 0);
         Gizmos.DrawSphere(transform.position + initialSphere, _radius);
         Gizmos.DrawSphere(transform.position + finalSphere, _radius);
+
+        var color = Gizmos.color;
+        color.a = 0.25f;
+        Gizmos.color = color;
+        initialSphere = new Vector3(0, _midYOffset, 0);
+        finalSphere = new Vector3(0, _midYOffset - _midCastDistance, 0);
+        Gizmos.DrawSphere(transform.position + initialSphere, _midRadius);
+        Gizmos.DrawSphere(transform.position + finalSphere, _midRadius);
 
         if (GradientDirection.HasValue)
         {
