@@ -32,12 +32,6 @@ public class MS_Sprinting : MonoBehaviour, IMovementState
             {
                 audible = true;
             }
-
-            _services.Animator.SetBool("IsStill", false);
-        }
-        else
-        {
-            _services.Animator.SetBool("IsStill", true);
         }
 
         movementDir *= _sprintSpeed;

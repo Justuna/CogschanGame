@@ -1,0 +1,22 @@
+{
+  "c227f157df13b418c8ebb9e0b483e121": "Assets/Plugins/AllSkyFree/Cartoon Base BlueSky/Day_BlueSky_Nothing.unity",
+  "c4ac93a9f488344c29ac272cddb55dda": "Assets/Plugins/AllSkyFree/Cartoon Base NightSky/Cartoon Base NightSky.unity",
+  "8c6f0d7d2a576443a92d35db4d83c4da": "Assets/Plugins/AllSkyFree/Cold Night/Cold Night.unity",
+  "f87b863005c8d4abcb743cad9f6566a7": "Assets/Plugins/AllSkyFree/Cold Sunset/Cold Sunset.unity",
+  "c8a48d1a6bbea47e981602e288f19742": "Assets/Plugins/AllSkyFree/Deep Dusk/Deep Dusk.unity",
+  "28673ec8420b8493e9588ddb0b4ed7b5": "Assets/Plugins/AllSkyFree/Epic_BlueSunset/Epic_BlueSunset.unity",
+  "a6ac75420f93c4fa99b35113a21e4eff": "Assets/Plugins/AllSkyFree/Epic_GloriousPink/Epic_GloriousPink.unity",
+  "40af7173f2b2d4f9283c3832d0ebcb31": "Assets/Plugins/AllSkyFree/Night MoonBurst/Night Moon Burst.unity",
+  "5d6a31542c4b5409faf229e819f55341": "Assets/Plugins/AllSkyFree/Overcast Low/AllSky_Overcast4_Low.unity",
+  "32897540bc73941088749c21da202563": "Assets/Plugins/AllSkyFree/Space_AnotherPlanet/AllSky_Space_AnotherPlanet.unity",
+  "293f669db087006429888902f211db4f": "Assets/Scenes/Game/Graybox.unity",
+  "357cd790c3e8f1544b1815da6a775ab0": "Assets/Scenes/Game/Smallbox.unity",
+  "6a7358fbf2cce474bb6af63da0fcb99e": "Assets/Scenes/MainMenu.unity",
+  "4801710b3ee93274a9c2a11701bb4162": "Assets/Scenes/Templates/Template Level.unity",
+  "e954de0d5f4607446934c3055b424d56": "Assets/Scenes/Testing/GunVFXTest.unity",
+  "e9440f63883e50a40abfa66c7c1ec1f6": "Assets/Scenes/Testing/MovementTest.unity",
+  "a10ed45325aed1f41b5a3ed01797121d": "Assets/Scenes/Testing/VFXTest.unity",
+  "07845a5477be2b149a6f1cb32b5a3a5b": "Packages/com.dbrizov.naughtyattributes/Samples/DemoScene/DemoScene.unity",
+  "e026d555eae824f65922633f37a14385": "Packages/com.unity.render-pipelines.universal/Editor/SceneTemplates/Basic.unity",
+  "5cae0d87369a2405eaa962b8d920b947": "Packages/com.unity.render-pipelines.universal/Editor/SceneTemplates/Standard.unity"
+}

@@ -12,7 +12,6 @@ public class EntityServiceLocator : MonoBehaviour
     public InteractionChecker InteractionChecker;
     public KinematicPhysics KinematicPhysics;
     public GameObject Model;
-    public Animator Animator;
 
     [Header("Player Only")]
     public PlayerActionController ActionController;
