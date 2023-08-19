@@ -1,5 +1,4 @@
 ﻿using System;
-using TMPro;
 using UnityEngine;
 
 /// <summary>
@@ -19,32 +18,48 @@ public class PlayerActionController : MonoBehaviour
     /// <summary>
     /// Whether or not Cogschan is currently idle.
     /// </summary>
-    public bool IsIdle { get { return _currentState.Equals(as_Idle); } }
+    public bool IsIdle { get { return CurrentState.Equals(as_Idle); } }
     /// <summary>
     /// Whether or not Cogschan is currently locked out of performing actions.
     /// </summary>
-    public bool IsLocked { get { return _currentState.Equals(as_Locked); } }
+    public bool IsLocked { get { return CurrentState.Equals(as_Locked); } }
     /// <summary>
     /// Whether or not Cogschan is currently firing a weapon.
     /// </summary>
-    public bool IsFiring { get { return _currentState.Equals(as_Firing); } }
+    public bool IsFiring { get { return CurrentState.Equals(as_Firing); } }
     /// <summary>
     /// Whether or not Cogschan is currently reloading her weapon.
     /// </summary>
-    public bool IsReloading { get { return _currentState.Equals(as_Reloading); } }
+    public bool IsReloading { get { return CurrentState.Equals(as_Reloading); } }
     /// <summary>
     /// Whether or not Cogschan is currently switching weapons.
     /// </summary>
-    public bool IsSwitchingWeapons { get { return _currentState.Equals(as_SwitchingWeapons); } }
+    public bool IsSwitchingWeapons { get { return CurrentState.Equals(as_SwitchingWeapons); } }
+
+    public IActionState CurrentState
+    {
+        get => _currentState;
+        set
+        {
+            if (value != _currentState)
+            {
+                if (_currentState is IMachineStateExit exitableState)
+                    exitableState.OnExit();
+                _currentState = value;
+                if (_currentState is IMachineStateEnter enterableState)
+                    enterableState.OnEnter();
+            }
+        }
+    }
 
     private void Start()
     {
-        _currentState = as_Idle;
+        CurrentState = as_Idle;
 
-        CogschanInputSingleton.Instance.OnReloadButtonPressed += () => { _currentState.OnReload(); };
-        CogschanInputSingleton.Instance.OnSwitchNextWeapon += () => { _currentState.OnNextWeapon(); };
-        CogschanInputSingleton.Instance.OnSwitchPrevWeapon += () => { _currentState.OnPrevWeapon(); };
-        CogschanInputSingleton.Instance.OnInteractButtonPressed += () => { _currentState.OnInteract(); };
+        CogschanInputSingleton.Instance.OnReloadButtonPressed += OnReloadPressed;
+        CogschanInputSingleton.Instance.OnSwitchNextWeapon += OnSwitchNextWeapon;
+        CogschanInputSingleton.Instance.OnSwitchPrevWeapon += OnSwitchPrevWeapon;
+        CogschanInputSingleton.Instance.OnInteractButtonPressed += OnInteractPressed;
 
         as_Idle.IdleIntoFiring += IdleIntoFiring;
         as_Idle.IdleIntoReloading += IdleIntoReloading;
@@ -62,19 +77,63 @@ public class PlayerActionController : MonoBehaviour
 
     private void Update()
     {
-        _currentState.Behavior();
+        if (CurrentState is IMachineStateBehave behaveState)
+            behaveState.OnBehave();
+    }
+
+    private void LateUpdate()
+    {
+        if (CurrentState is IMachineStateLateBehave lateBehaveState)
+            lateBehaveState.OnLateBehave();
+    }
+
+    private void FixedUpdate()
+    {
+        if (CurrentState is IMachineStateFixedBehave fixedBehaveState)
+            fixedBehaveState.OnFixedBehave();
+    }
+
+    private void OnDestroy()
+    {
+        if (CogschanInputSingleton.Instance != null)
+        {
+            CogschanInputSingleton.Instance.OnReloadButtonPressed -= OnReloadPressed;
+            CogschanInputSingleton.Instance.OnSwitchNextWeapon -= OnSwitchNextWeapon;
+            CogschanInputSingleton.Instance.OnSwitchPrevWeapon -= OnSwitchPrevWeapon;
+            CogschanInputSingleton.Instance.OnInteractButtonPressed -= OnInteractPressed;
+        }
+    }
+
+    private void OnReloadPressed()
+    {
+        if (gameObject.activeSelf) CurrentState.OnReload();
+    }
+
+    private void OnSwitchNextWeapon()
+    {
+        if (gameObject.activeSelf) CurrentState.OnNextWeapon();
+    }
+
+    private void OnSwitchPrevWeapon()
+    {
+        if (gameObject.activeSelf) CurrentState.OnPrevWeapon();
+    }
+
+    private void OnInteractPressed()
+    {
+        if (gameObject.activeSelf) CurrentState.OnInteract();
     }
 
     public void LockActions(Func<bool> unlockCondition)
     {
-        _currentState.OnLock(unlockCondition);
+        CurrentState.OnLock(unlockCondition);
     }
 
     #region Glue Methods
 
     private void IdleIntoFiring()
     {
-        _currentState = as_Firing;
+        CurrentState = as_Firing;
     }
 
     private void IdleIntoReloading()
@@ -82,46 +141,46 @@ public class PlayerActionController : MonoBehaviour
         if (_services.WeaponCache.CurrentWeapon.CanReload())
         {
             as_Reloading.Init(_services.WeaponCache.CurrentWeapon.GetReloadTime());
-            _currentState = as_Reloading;
+            CurrentState = as_Reloading;
         }
     }
 
     private void IdleIntoNextWeapon()
     {
         as_SwitchingWeapons.Init(true);
-        _currentState = as_SwitchingWeapons;
+        CurrentState = as_SwitchingWeapons;
     }
 
     private void IdleIntoPrevWeapon()
     {
         as_SwitchingWeapons.Init(false);
-        _currentState = as_SwitchingWeapons;
+        CurrentState = as_SwitchingWeapons;
     }
 
     private void FiringIntoIdle()
     {
-        _currentState = as_Idle;
+        CurrentState = as_Idle;
     }
 
     private void ReloadingIntoIdle()
     {
-        _currentState = as_Idle;
+        CurrentState = as_Idle;
     }
 
     private void SwitchingIntoIdle()
     {
-        _currentState = as_Idle;
+        CurrentState = as_Idle;
     }
 
     private void XIntoLocked(Func<bool> unlockCondition)
     {
         as_Locked.Initialize(unlockCondition);
-        _currentState = as_Locked;
+        CurrentState = as_Locked;
     }
 
     private void ActionsUnlocked()
     {
-        _currentState = as_Idle;
+        CurrentState = as_Idle;
     }
 
     #endregion

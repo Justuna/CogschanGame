@@ -1,8 +1,7 @@
-using System.Collections;
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections.Generic;
 using UnityEngine;
-using FMODUnity;
-using FMOD.Studio;
 
 /// <summary>
 /// A class that wraps FMOD functionality and keeps track of sound event references, if necessary. See https://youtu.be/rcBHIOjZDpk
@@ -33,7 +32,7 @@ public class AudioSingleton : MonoBehaviour
     /// </summary>
     /// <param name="fmodEvent">The FMOD sound event to play.</param>
     /// <param name="worldPos">The point in space to play the sound at.</param>
-    public void PlayOneShot(EventReference fmodEvent, Vector3 worldPos)
+    public void PlayOneShot(EventReference fmodEvent, Vector3 worldPos = default)
     {
         RuntimeManager.PlayOneShot(fmodEvent, worldPos);
     }

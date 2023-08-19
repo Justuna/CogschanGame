@@ -19,7 +19,7 @@ public class ES_Confused : MonoBehaviour, IEnemyState
         _confusionTimer = UnityEngine.Random.Range(_minConfusionTime, _maxConfusionTime);
     }
 
-    public void Behavior()
+    public void OnBehave()
     {
         /*if (_services.LOSChecker.CanSee)
         {

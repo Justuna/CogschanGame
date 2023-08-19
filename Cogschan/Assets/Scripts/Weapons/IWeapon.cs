@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 /// <summary>
 /// An interface providing functions that a weapon would need.
@@ -21,6 +22,11 @@ public interface IWeapon
     /// Returns the weapon's unique name.
     /// </returns>
     public string GetName();
+
+    /// <returns>
+    /// Returns the icon for this weapon
+    /// </returns>
+    public Sprite GetIcon();
 
     /// <returns>
     /// Returns the <c>GameObject</c> that the weapon is attached to.

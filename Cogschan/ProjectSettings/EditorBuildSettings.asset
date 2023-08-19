@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Menus/Title Screen.unity
+    path: Assets/Scenes/MainMenu.unity
     guid: 6a7358fbf2cce474bb6af63da0fcb99e
   - enabled: 1
-    path: Assets/Scenes/Testing/CogschanOnly.unity
-    guid: adc4b863f06dd3049845292f76dc4176
+    path: Assets/Scenes/Game/Smallbox.unity
+    guid: 357cd790c3e8f1544b1815da6a775ab0
   m_configObjects: {}

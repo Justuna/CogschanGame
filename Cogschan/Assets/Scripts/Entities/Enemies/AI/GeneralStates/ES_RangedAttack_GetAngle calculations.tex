@@ -1,0 +1,28 @@
+\documentclass{report}
+\usepackage{amssymb}
+\usepackage[letterpaper, portrait, margin=1in]{geometry}
+
+\begin{document}.
+	\section*{Solving Kinematic Equations for $\theta$}
+	
+	We are trying to aim a projectile at a target. Assume we are in 2 dimensional space (higher dimensional cases can be simplified to the 2 dimensional one.) Then let $\langle 0, 0\rangle$ be the initial position of the projectile and let $\mathbf x_t = \langle x_t, y_t\rangle\in\mathbb [0, \infty)^2$ be the position of the target. The projectile has a launch speed of $v_i\in\mathbb R^{>0}$, and the acceleration due to gravity is $a\in\mathbb R^{> 0}$. The projectile is launched at some angle $\theta \in \left[0, \frac \pi 2\right]$. Let $\mathbf x_\theta(t): [0, \infty) \to \mathbb R^2$ be the path of the projectile. We want the largest theta such that there exists a $t: \mathbf x_\theta(t) = \mathbf x_t$.
+	
+	The equation for $\mathbf x_\theta(t)$ is below:
+	$$\mathbf x_\theta(t) =  \left\langle v_it \cos\theta,-\frac a 2 t^2 + v_i t \sin\theta\right\rangle$$
+	Letting $\mathbf x_\theta(t) = \mathbf x_t$:
+	$$\langle x_t, y_t\rangle =  \left\langle v_it \cos\theta,-\frac a 2 t^2 + v_i t \sin\theta\right\rangle$$
+	This gives us two equations. Our two unknowns are $t$ and $\theta$, but we only care about $\theta$. So, let's write $t$ in terms of $\theta$ using the first equation:
+	$$t = \frac {x_t}{v_i \cos\theta}$$
+	Therefore, 
+	$$y_t = -\frac a 2 \left(\frac {x_t} {v_i \cos \theta}\right)^2 + x_t \tan\theta$$
+	$$y_t \cos^2\theta= -\frac a 2 \left(\frac {x_t ^2} {v_i ^2}\right) + x_t \sin\theta\cos\theta$$
+	$$y_t\cos^2\theta - x_t\sin\theta\cos\theta + \frac {ax_t^2}{2v_i^2} = 0$$
+	Let $C = \frac{ax_t^2}{2v_i^2}$. Then the desired value of $\theta$ is a root of $f$, where 
+	$$f(\theta) = y_t\cos^2\theta-x_t\sin\theta\cos\theta + C$$
+	
+	\section*{Finding a root}
+	We can approximate the above equation using Taylor polynomials:
+	$$f(\theta) \approx y_t\left(1-\frac {\theta^2}2\right)^2 - x_t\theta\left(1-\frac{\theta^2}2\right)+C$$
+	$$=\frac{y_t} 4 \theta^4 + \frac{x_t}{2}\theta^3 - y_t\theta^2 - x_t\theta+(y_t+C)$$
+	This is a quartic equation, which has calculatable roots. We can then use the largest root in $\left[0, \frac\pi 2\right]$ as a guess for the root of $f$ and use Newton's method to find an approximation within the requested tolerance. If a root is found, we have our angle. If no root is found, the target must be out of range. Either way, we are done.
+\end{document}

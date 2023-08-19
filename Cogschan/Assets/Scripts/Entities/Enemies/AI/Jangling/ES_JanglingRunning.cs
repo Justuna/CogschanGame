@@ -9,7 +9,7 @@ public class ES_JanglingRunning : MonoBehaviour, IJanglingState
     [SerializeField] private float _speed;
     [SerializeField] private float _turnSpeed;
 
-    public void Behavior()
+    public void OnBehave()
     {
         Vector3 dest = _services.PointGraph.GetNode(_services.JanglingAI.DestinationNode.Value);
         Vector3 curr = _services.Jangling.position;

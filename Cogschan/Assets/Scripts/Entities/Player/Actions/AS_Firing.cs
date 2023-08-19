@@ -1,14 +1,16 @@
 ﻿using System;
 using UnityEngine;
 
-public class AS_Firing : MonoBehaviour, IActionState
+public class AS_Firing : MonoBehaviour, IActionState, IMachineStateBehave
 {
+    public Action Used;
+
     [SerializeField] private EntityServiceLocator _services;
 
     public CogschanSimpleEvent FiringIntoIdle;
     public CogschanConditionEvent FiringIntoLocked;
 
-    public void Behavior()
+    public void OnBehave()
     {
         if (_services.MovementController.CannotAct)
         {
@@ -18,7 +20,7 @@ public class AS_Firing : MonoBehaviour, IActionState
         {
             FiringIntoIdle?.Invoke();
         }
-        
+        Used?.Invoke();
         _services.WeaponCache.CurrentWeapon.Use();
     }
 

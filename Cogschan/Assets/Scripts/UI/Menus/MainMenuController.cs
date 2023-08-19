@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+using Eflatun.SceneReference;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
-    [SerializeField] private string _startSceneName;
+    [SerializeField] private SceneReference _startScene;
     [SerializeField] private Button _playButton;
     [SerializeField] private Button _quitButton;
 
@@ -18,7 +17,7 @@ public class MainMenuController : MonoBehaviour
 
     private void PlayGame()
     {
-        SceneManager.LoadScene(_startSceneName);
+        SceneManager.LoadScene(_startScene.BuildIndex);
     }
 
     private void QuitGame()

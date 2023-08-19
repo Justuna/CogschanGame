@@ -17,7 +17,6 @@ public class PlayerKinematicPhysics : KinematicPhysics
             {
                 actualVelocity = Quaternion.AngleAxis(_services.GroundChecker.SurfaceAngle.Value, _services.GroundChecker.ZeroDirection.Value) * actualVelocity;
             }
-            _previousVelocity = actualVelocity;
         }
         // Either you're being knocked into the air, or you already were in the air
         // Use previous velocity to calculate momentum, and add new impulses

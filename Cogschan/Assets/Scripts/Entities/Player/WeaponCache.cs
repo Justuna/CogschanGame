@@ -1,12 +1,15 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// A script dedicated to retrieving the current weapon, and keeping track of all held weapons.
 /// </summary>
 public class WeaponCache : MonoBehaviour
 {
+    [field: SerializeField]
+    public UnityEvent<IWeapon> WeaponChanged { get; private set; }
+
     [SerializeField] private EntityServiceLocator _services;
     [SerializeField] private GameObject[] _defaultWeaponPrefabs;
     [SerializeField] private Transform _weaponParent;
@@ -49,6 +52,10 @@ public class WeaponCache : MonoBehaviour
             if (activeImmediately)
             {
                 PickWeapon(_cache.Count - 1);
+            }
+            else
+            {
+                weaponObject.SetActive(false);
             }
 
             return true;
@@ -98,6 +105,7 @@ public class WeaponCache : MonoBehaviour
 
         _currentWeaponIndex = index;
         CurrentWeapon.GetGameObject().SetActive(true);
+        WeaponChanged.Invoke(CurrentWeapon);
     }
 
     /// <summary>

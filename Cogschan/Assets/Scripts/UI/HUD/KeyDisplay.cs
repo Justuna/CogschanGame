@@ -1,12 +1,35 @@
+using System.Linq;
 using UnityEngine;
-using TMPro;
 
+// TODO LATER: Make prefab for KeyDisplay
 public class KeyDisplay : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _keyDisplay;
+    [SerializeField] private GameObject _keySlotPrefab;
+    [SerializeField] private RectTransform _keySlotsHolder;
 
-    private void Update()
+    private KeySlotDisplay[] _keySlotDisplays;
+
+    private void Start()
     {
-        _keyDisplay.text = "" + GameStateSingleton.Instance.KeyCount;
+        foreach (Transform child in _keySlotsHolder.transform)
+            Destroy(child.gameObject);
+
+        _keySlotDisplays = new KeySlotDisplay[GameStateSingleton.Instance.KeysNeeded];
+        for (int i = 0; i < GameStateSingleton.Instance.Keys.Length; i++)
+        {
+            _keySlotDisplays[i] = Instantiate(_keySlotPrefab, _keySlotsHolder).GetComponent<KeySlotDisplay>();
+            _keySlotDisplays[i].Init(GameStateSingleton.Instance.Keys[i].KeyData);
+        }
+
+        GameStateSingleton.Instance.KeyCollected.AddListener((keyData) =>
+        {
+            var display = _keySlotDisplays.FirstOrDefault(x => x.KeyData == keyData);
+            if (display == null)
+            {
+                Debug.LogError("Collected Jangling could not be found! Is the Jangling registered to the GameStateSingleton?");
+                return;
+            }
+            display.Collect();
+        });
     }
 }

@@ -7,16 +7,14 @@ public class FlyingSlimeAI : FlyingEnemyAI
 
     public override void EndRangedAttack()
     {
-        throw new System.NotImplementedException();
     }
 
-    protected override void BeginMeleeAttack()
+    public override void BeginMeleeAttack()
     {
         throw new System.NotImplementedException();
     }
 
-    protected override void BeginRangedAttack()
+    public override void BeginRangedAttack()
     {
-        throw new System.NotImplementedException();
     }
 }

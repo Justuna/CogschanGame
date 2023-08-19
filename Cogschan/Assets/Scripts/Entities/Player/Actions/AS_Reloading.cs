@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class AS_Reloading : MonoBehaviour, IActionState
+public class AS_Reloading : MonoBehaviour, IActionState, IMachineStateBehave
 {
     [SerializeField] private EntityServiceLocator _services;
 
@@ -15,7 +15,7 @@ public class AS_Reloading : MonoBehaviour, IActionState
         _timer = timer;
     }
 
-    public void Behavior()
+    public void OnBehave()
     {
         if (_services.MovementController.CannotAct)
         {
@@ -23,7 +23,7 @@ public class AS_Reloading : MonoBehaviour, IActionState
         }
 
         _timer -= Time.deltaTime;
-        if (_timer <= 0) 
+        if (_timer <= 0)
         {
             IWeapon currentWeapon = _services.WeaponCache.CurrentWeapon;
 

@@ -1,9 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Reflection.Emit;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -100,6 +95,7 @@ public class GroundChecker : MonoBehaviour
 
     private readonly List<Vector3> _groundPosList = new();
     private float _groundPosTimer;
+    private RaycastHit[] _sphereCastHits = new RaycastHit[10];
 
     private void Start()
     {
@@ -115,11 +111,17 @@ public class GroundChecker : MonoBehaviour
     private void Update()
     {
         _groundPosTimer += Time.deltaTime;
-        Ray sphereRay = new Ray(transform.position + new Vector3(0, _yOffset, 0), Vector3.down);
-        if (Physics.SphereCast(sphereRay, _radius, out RaycastHit sphereHit, _castDistance, _ground))
+        int hitCount = Physics.SphereCastNonAlloc(transform.position + new Vector3(0, _yOffset, 0), _radius, Vector3.down, _sphereCastHits, _castDistance, _ground);
+        if (hitCount > 0)
         {
-            SurfaceNormal = sphereHit.normal;
-            if (sphereHit.normal == Vector3.up)
+            var surfaceNormal = Vector3.zero;
+
+            for (int i = 0; i < hitCount; i++)
+                surfaceNormal += _sphereCastHits[i].normal;
+            surfaceNormal = surfaceNormal.normalized;
+
+            SurfaceNormal = surfaceNormal;
+            if (surfaceNormal == Vector3.up)
             {
                 SurfaceType = SurfaceTypes.FLAT_GROUND;
                 SurfaceAngle = 0;
@@ -130,10 +132,10 @@ public class GroundChecker : MonoBehaviour
             {
                 // An angle perpendicular to both the normal vector and the y axis.
                 // Since it's perpendicular to the y-axis, it has a y component of zero.
-                Vector3 temp = Vector3.Cross(sphereHit.normal, Vector3.down).normalized;
+                Vector3 temp = Vector3.Cross(surfaceNormal, Vector3.down).normalized;
                 // An angle that is perpendicular to both the above vector and the normal vector.
                 // Always the direction of greatest descent.
-                Vector3 surfaceGradient = Vector3.Cross(temp, sphereHit.normal).normalized;
+                Vector3 surfaceGradient = Vector3.Cross(temp, surfaceNormal).normalized;
                 Vector3 surfaceGradientFlat = new Vector3(surfaceGradient.x, 0, surfaceGradient.z);
                 SurfaceAngle = Vector3.Angle(surfaceGradient, surfaceGradientFlat);
                 ZeroDirection = temp;
@@ -155,9 +157,11 @@ public class GroundChecker : MonoBehaviour
 
             if (_takesFallDamage && SurfaceType != SurfaceTypes.STEEP_SLOPE && SurfaceType != SurfaceTypes.NOT_GROUND)
             {
-                _services.HealthTracker?.Damage(GetFallDamage());
+                var fallDamage = GetFallDamage();
+                if (fallDamage > 0)
+                    _services.HealthTracker?.Damage(fallDamage);
             }
-                
+
             if (_groundPosTimer > _groundPosUpdate)
             {
                 _groundPosList.Add(transform.position);
@@ -213,8 +217,8 @@ public class GroundChecker : MonoBehaviour
         if (!_services.KinematicPhysics) return 0;
 
         float velocityDown = -_services.KinematicPhysics.PreviousVelocity.y - _maxNoHarm;
-        int damage = (int) Mathf.Max(0, velocityDown * _speedToDamageFactor);
-        
+        int damage = (int)Mathf.Max(0, velocityDown * _speedToDamageFactor);
+
         return damage;
     }
 }

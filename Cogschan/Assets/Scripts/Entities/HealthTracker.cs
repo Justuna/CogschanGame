@@ -1,6 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// A script for keeping track of an entity's health.
@@ -9,22 +9,25 @@ public class HealthTracker : MonoBehaviour
 {
     [SerializeField] private int _maxHealth;
 
+    public UnityEvent OnHealthReset;
     /// <summary>
     /// An event that is triggered when this entity takes damage.
     /// </summary>
-    public CogschanSimpleEvent OnDamaged;
+    public UnityEvent<float> OnDamaged;
     /// <summary>
     /// An event that is triggered when this entity is healed.
     /// </summary>
-    public CogschanSimpleEvent OnHealed;
+    public UnityEvent<float> OnHealed;
     /// <summary>
     /// An event that is triggered when this entity reaches 0 health, but before it is set to be destroyed.
     /// </summary>
-    public CogschanSimpleEvent BeforeDefeat;
+    public UnityEvent BeforeDefeat;
     /// <summary>
     /// An event that is triggered when this entity has been set to be destroyed following its health reaching 0.
     /// </summary>
-    public CogschanSimpleEvent OnDefeat;
+    public UnityEvent OnDefeat;
+    [field: ReadOnly]
+    [field: SerializeField]
     /// <summary>
     /// The current health of this entity.
     /// </summary>
@@ -34,14 +37,15 @@ public class HealthTracker : MonoBehaviour
     /// </summary>
     public int MaxHealth => _maxHealth;
 
-    private void Start()
+    private void Awake()
     {
-        Health = _maxHealth;
+        ResetHealth();
     }
 
     public void ResetHealth()
     {
         Health = _maxHealth;
+        OnHealthReset?.Invoke();
     }
 
     /// <summary>
@@ -73,8 +77,9 @@ public class HealthTracker : MonoBehaviour
     /// <param name="amount">The amount to decrease health by.</param>
     public void Damage(int amount)
     {
+        if (Health == 0) return;
         SetHealth(Health - amount);
-        OnDamaged?.Invoke();
+        OnDamaged?.Invoke(amount);
     }
 
     /// <summary>
@@ -83,7 +88,8 @@ public class HealthTracker : MonoBehaviour
     /// <param name="amount">The amount to increase health by.</param>
     public void Heal(int amount)
     {
+        if (Health == MaxHealth) return;
         SetHealth(Health + amount);
-        OnHealed?.Invoke();
+        OnHealed?.Invoke(amount);
     }
 }

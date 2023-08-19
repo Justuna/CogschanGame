@@ -1,44 +1,47 @@
-﻿using UnityEngine;
+using UnityEngine;
 
-public class MS_Walking : MonoBehaviour, IMovementState
+public class MS_Walking : MonoBehaviour, IMovementState, IMachineStateLateBehave
 {
     [SerializeField] private EntityServiceLocator _services;
     [SerializeField] private GameObject _cogschanModel;
     [SerializeField] private float _walkSpeed = 4;
-    [SerializeField] private float _turnSpeed = 10;
-    [SerializeField] private float _turnSpeedFiring = 50;
+    [SerializeField] private float _turnSpeed = 50;
+    [Tooltip("Amount of time before Cogschan switches from always pointing in the camera direction to pointing only in the movement direction.")]
+    [SerializeField] private float _combatMovementCooldown = 1.5f;
+    [SerializeField] private AS_Firing _firingState;
 
     public CogschanSimpleEvent WalkingIntoAiming;
     public CogschanSimpleEvent WalkingIntoSprinting;
     public CogschanSimpleEvent WalkingIntoDashing;
     public CogschanFloatEvent WalkingIntoProne;
 
-    public void Behavior()
+    private float _combatMovementCooldownTime = 0f;
+    private Quaternion CameraDirectionQuat => Quaternion.Euler(_services.CameraController.CameraLateralDirection);
+
+    private void Start()
     {
-        Quaternion dir = Quaternion.Euler(_services.CameraController.CameraLateralDirection);
+        _firingState.Used += OnCombatAction;
+    }
+
+    public void OnCombatAction()
+    {
+        _combatMovementCooldownTime = _combatMovementCooldown;
+    }
+
+    public void OnLateBehave()
+    {
+        Quaternion camDir = CameraDirectionQuat;
         Vector3 movement = new Vector3(CogschanInputSingleton.Instance.MovementDirection.x, 0, CogschanInputSingleton.Instance.MovementDirection.y);
-        Vector3 movementDir = dir * movement;
-
-        if (movement == Vector3.zero)
-        {
-            _services.Animator.SetBool("IsStill", true);
-        }
-        else
-        {
-            _services.Animator.SetBool("IsStill", false);
-        }
-
-        if (movementDir != Vector3.zero && !_services.ActionController.IsFiring)
-        {
-            Quaternion movementDirQ = Quaternion.LookRotation(movementDir);
-            _cogschanModel.transform.rotation = Quaternion.Lerp(_cogschanModel.transform.rotation, movementDirQ, _turnSpeed * Time.deltaTime);
-        }
-        else if (_services.ActionController.IsFiring)
-        {
-            _cogschanModel.transform.rotation = Quaternion.Lerp(_cogschanModel.transform.rotation, dir, _turnSpeedFiring * Time.deltaTime);
-        }
-
+        Vector3 movementDir = camDir * movement;    // Movement direction is relative to the camera direction
         movementDir *= _walkSpeed;
+
+        if (_combatMovementCooldownTime > 0)
+        {
+            _combatMovementCooldownTime -= Time.deltaTime;
+            _cogschanModel.transform.rotation = Quaternion.Lerp(_cogschanModel.transform.rotation, camDir, _turnSpeed * Time.deltaTime);
+        }
+        else if (movementDir != Vector3.zero)
+            _cogschanModel.transform.rotation = Quaternion.Lerp(_cogschanModel.transform.rotation, Quaternion.LookRotation(movementDir), _turnSpeed * Time.deltaTime);
 
         _services.KinematicPhysics.DesiredVelocity = movementDir;
 

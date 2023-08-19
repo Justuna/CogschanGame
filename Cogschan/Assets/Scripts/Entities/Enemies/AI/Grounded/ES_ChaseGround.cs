@@ -31,13 +31,14 @@ public class ES_ChaseGround : MonoBehaviour, IEnemyState
         _rangedAttackTimer = UnityEngine.Random.Range(_minTimeUntilRangedAttack, _maxTimeUntilRangedAttack);
     }
 
-    public void Behavior()
+    public void OnBehave()
     {
         // Every once in a while, try to make a ranged attack
         // Only if you can actually see the target, though
         _rangedAttackTimer -= Time.deltaTime;
         if (_rangedAttackTimer <= 0 && _services.LOSChecker.CanSee)
         {
+            _rangedAttackTimer = 0;
             RangedAttack?.Invoke();
             return;
         }
