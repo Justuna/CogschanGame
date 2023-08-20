@@ -73,10 +73,7 @@ public class MS_Sprinting : MonoBehaviour, IMovementState, IMachineStateLateBeha
 
     public void OnJump()
     {
-        if (_services.GroundChecker.IsGrounded)
-        {
-            _services.KinematicPhysics.AddImpulse(Vector3.up * _services.MovementController.JumpImpulse, false, 0);
-        }
+        _services.MovementController.DoJump();
     }
 
     public float GetBaseSpeed()

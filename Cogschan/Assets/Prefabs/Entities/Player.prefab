@@ -63,6 +63,7 @@ MonoBehaviour:
       Data4: 491561962
     Path: event:/Test/TestInstance
   _dashCooldown: 5
+  MaxJumps: 2
   JumpImpulse: 200
 --- !u!1 &4272273026407550820
 GameObject:
