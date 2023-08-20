@@ -16,12 +16,6 @@ public class EnemySpawner : Spawner
 
     [Header("Spawn position parameters")]
     [SerializeField]
-    [Tooltip("The minimum distance from the spawn point the object can spawn.")]
-    private float _minimumRadius;
-    [SerializeField]
-    [Tooltip("The maximum distance from the spawn point the object can spawn.")]
-    private float _maximumRadius;
-    [SerializeField]
     [Tooltip("The height at which the object is spawned.")]
     private float _height;
     [SerializeField]
@@ -40,7 +34,6 @@ public class EnemySpawner : Spawner
 
     public override void Spawn(Vector3 position)
     {
-        position = ContinuousDistributions.GetRandomPointInAnnulus(_minimumRadius, _maximumRadius, position);
         position.y = GroundFinder.HeightOfGround(position) + _height;
         if (_isNavMeshAgent
             && NavMesh.SamplePosition(position, out NavMeshHit hit, Mathf.Infinity, NavMesh.AllAreas))
