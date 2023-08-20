@@ -62,7 +62,7 @@ MonoBehaviour:
       Data3: -1470764376
       Data4: 491561962
     Path: event:/Test/TestInstance
-  _dashCooldown: 1
+  _dashCooldown: 5
   JumpImpulse: 200
 --- !u!1 &4272273026407550820
 GameObject:
@@ -1168,7 +1168,7 @@ MonoBehaviour:
       Data4: 491561962
     Path: event:/Test/TestInstance
   _cogschanModel: {fileID: 4272273027718369486}
-  _sprintSpeed: 15
+  _sprintSpeed: 12
   _turnSpeed: 10
 --- !u!1 &4272273027505916435
 GameObject:
@@ -1331,6 +1331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _services: {fileID: 4272273026959324190}
+  _weaponTurnSpeed: 50
 --- !u!1 &4272273027718369486
 GameObject:
   m_ObjectHideFlags: 0
@@ -1662,7 +1663,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _services: {fileID: 4272273026959324190}
   _cogschanModel: {fileID: 4272273027718369486}
-  _walkSpeed: 10
+  _walkSpeed: 6
   _turnSpeed: 15
   _combatMovementCooldown: 1.5
   _firingState: {fileID: 4272273027070788971}
@@ -1712,9 +1713,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _services: {fileID: 4272273026959324190}
   _cogschanModel: {fileID: 4272273027718369486}
-  _dashSpeed: 30
+  _dashSpeed: 45
   _turnSpeed: 20
-  _duration: 0.3
+  _duration: 0.2
   _momentumFactor: 0.5
 --- !u!1 &4272273028038293641
 GameObject:
@@ -1760,13 +1761,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6afe38eeaab213c48b25635c79491860, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minSpawnInterval: 10
-  _maxSpawnInterval: 30
+  _minSpawnInterval: 5
+  _maxSpawnInterval: 15
   _categoryWeights:
   - <SpawnCategory>k__BackingField: 0
     <Weight>k__BackingField: 1
   _credits: 0
-  _creditAddRate: 0.1
+  _creditAddRate: 0.5
   _creditAddRateRate: 0.005
 --- !u!1001 &1892092367227129542
 PrefabInstance:
