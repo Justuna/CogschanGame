@@ -17,7 +17,7 @@ public class LightningBeam : MonoBehaviour, IBeamEffectPlayer
     {
         _lightningEffect.SetVector3("Start", start);
         _lightningEffect.SetVector3("End", end);
-        _lightningEffect.SendEvent("Fire");
+        _lightningEffect.Play();
     }
 
     private void Update()

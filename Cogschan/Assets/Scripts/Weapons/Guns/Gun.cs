@@ -1,8 +1,12 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class Gun : MonoBehaviour, IWeapon
 {
+    [field: SerializeField]
+    public UnityEvent Fired { get; private set; }
+
     [Header("Gun Attributes")]
     [Tooltip("The particle system responsible for any effects that should be spawned when the gun fires.")]
     [SerializeField] protected ParticleSystem _muzzleFlash;
@@ -142,6 +146,8 @@ public abstract class Gun : MonoBehaviour, IWeapon
             }
         }
         _spreadEvent?.IncrementSpread();
+
+        Fired.Invoke();
         _spreadEventAccurate?.IncrementSpread();
     }
 

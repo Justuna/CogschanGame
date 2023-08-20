@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using NaughtyAttributes;
 using System;
 using TMPro;
 using UnityEngine;
@@ -8,23 +9,28 @@ using UnityEngine.UI;
 [ExecuteAlways]
 public class HealthDisplay : MonoBehaviour
 {
-    public Gradient FillColor { get => _fillColor; set => _fillColor = value; }
-
     [Header("Health Bar")]
     [Tooltip("The EntityServiceLocator of the entity to display health for.")]
     [SerializeField] private EntityServiceLocator _services;
-    [Tooltip("The image being used for the fill.")]
-    [SerializeField] private Image _fill;
+    [Tooltip("The image being used for the fill that animates between values.")]
+    [SerializeField] private Image _changeFill;
+    [Tooltip("The image being used for the immediate fill. This fill is not animated.")]
+    [SerializeField] private Image _immediateFill;
     [Tooltip("The image being used for the background.")]
     [SerializeField] private Image _background;
     [Tooltip("An optional text label that displays the current health as a number.")]
     [SerializeField] private TextMeshProUGUI _healthText;
     [Tooltip("An optional text label that displays the max health as a number.")]
     [SerializeField] private TextMeshProUGUI _maxHealthText;
-    [Tooltip("The color of the healthbar depending on the current health. Left is dead, right is full health.")]
-    [SerializeField] private Gradient _fillColor;
+    [Tooltip("The color of the healthbar that animated between values.")]
+    [SerializeField] private Color _changeFillColor;
+    [Tooltip("The color of the healthbar used for the immediate fill. This fill is not animated.")]
+    [SerializeField] private Color _immediateFillColor;
     [Tooltip("Duration of health bar tween animation")]
     [SerializeField] private float _healthbarTweenDuration = 0.1f;
+    [SerializeField] private bool _hideWhenNoChange = false;
+    [ShowIf(nameof(_hideWhenNoChange))]
+    [SerializeField] private float _hideAfterNoChangeDuration = 5f;
     [Header("Portrait")]
     [Tooltip("Cutoff to show damaged portrait")]
     [Range(0, 1f)]
@@ -42,6 +48,11 @@ public class HealthDisplay : MonoBehaviour
     private HealthChangeReason _healthChangeReason;
     private OneShotTask _animateHealthBarTask;
     private float _prevPercentage = 1f;
+    private OneShotTask _hideAfterNoChangeTask;
+    private RectTransform _fillBarParent;
+
+    public Color ChangeFillColor { get => _changeFillColor; set => _changeFillColor = value; }
+    public Color ImmediateFillColor { get => _immediateFillColor; set => _immediateFillColor = value; }
 
     public void Init(EntityServiceLocator services)
     {
@@ -68,35 +79,52 @@ public class HealthDisplay : MonoBehaviour
             if (_maxHealthText != null)
                 _maxHealthText.text = " / " + _services.HealthTracker.MaxHealth;
 
-            await DOVirtual.Float(_prevPercentage, targetPercentage, _healthbarTweenDuration, UpdateBar).SetEase(Ease.OutQuad).WithCancellation(token);
+            UpdateImmediateFillBar(targetPercentage);
+            if (_changeFill != null)
+                await DOVirtual.Float(_prevPercentage, targetPercentage, _healthbarTweenDuration, UpdateChangeFillBar).SetEase(Ease.OutQuad).WithCancellation(token);
 
             _prevPercentage = targetPercentage;
         });
-
-        UpdateBar(_prevPercentage);
-    }
-
-    public void SetSingleFillColor(Color color)
-    {
-        SetGradientFillColor(new Gradient()
+        _hideAfterNoChangeTask = new OneShotTask(async (token) =>
         {
-            alphaKeys = new GradientAlphaKey[] { new GradientAlphaKey(color.a, 0) },
-            colorKeys = new GradientColorKey[] { new GradientColorKey(color, 0) },
-            mode = GradientMode.Fixed
+            await UniTask.WaitForSeconds(_hideAfterNoChangeDuration, cancellationToken: token);
+            _background.gameObject.SetActive(false);
         });
+
+        if (_hideWhenNoChange)
+            Hide();
+
+        if (_changeFill != null)
+            _fillBarParent = _changeFill.rectTransform.parent.GetComponent<RectTransform>();
+        else if (_immediateFill != null)
+            _fillBarParent = _immediateFill.rectTransform.parent.GetComponent<RectTransform>();
+        UpdateImmediateFillBar(_prevPercentage);
+        UpdateChangeFillBar(_prevPercentage);
     }
 
-    public void SetGradientFillColor(Gradient gradient) => FillColor = gradient;
+    private void Hide()
+    {
+        _background.gameObject.SetActive(false);
+    }
+
+    private void Show()
+    {
+        _background.gameObject.SetActive(true);
+    }
 
     private void OnHealthReset()
     {
         _healthChangeReason = HealthChangeReason.Reset;
+        _hideAfterNoChangeTask.Run();
+        Show();
         _animateHealthBarTask.Run();
     }
 
     private void OnHealed(float amount)
     {
         if (amount == 0) return;
+        _hideAfterNoChangeTask.Run();
+        Show();
         _healthChangeReason = HealthChangeReason.Healed;
         _animateHealthBarTask.Run();
     }
@@ -104,6 +132,8 @@ public class HealthDisplay : MonoBehaviour
     private void OnDamaged(float amount)
     {
         if (amount == 0) return;
+        _hideAfterNoChangeTask.Run();
+        Show();
         _healthChangeReason = HealthChangeReason.Damaged;
         _animateHealthBarTask.Run();
     }
@@ -122,22 +152,36 @@ public class HealthDisplay : MonoBehaviour
             Init(_services);
     }
 
-    private void UpdateBar(float percentage)
+    private void UpdateImmediateFillBar(float percentage)
     {
-        _fill.color = FillColor.Evaluate(percentage);
-        _fill.rectTransform.sizeDelta = new Vector2(percentage * _background.rectTransform.sizeDelta.x, _fill.rectTransform.sizeDelta.y);
+        if (_immediateFill == null) return;
+        _immediateFill.color = _immediateFillColor;
+        _immediateFill.rectTransform.sizeDelta = new Vector2(percentage * _fillBarParent.rect.size.x, 0);
+    }
+
+    private void UpdateChangeFillBar(float percentage)
+    {
+        if (_changeFill == null) return;
+        _changeFill.color = _changeFillColor;
+        _changeFill.rectTransform.sizeDelta = new Vector2(percentage * _fillBarParent.rect.size.x, 0);
     }
 
 #if UNITY_EDITOR
     private void Update()
     {
         if (Application.isEditor)
-            _fill.color = _fillColor.Evaluate(1f);
-    }
+        {
+            if (_immediateFill != null)
+                _immediateFill.color = _immediateFillColor;
+            if (_changeFill != null)
+                _changeFill.color = _changeFillColor;
+        }
 #endif
+    }
 
     private void OnDestroy()
     {
         _animateHealthBarTask?.Stop();
+        _hideAfterNoChangeTask?.Stop();
     }
 }

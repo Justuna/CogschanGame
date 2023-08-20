@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 [ExecuteAlways]
 public class Jangling : MonoBehaviour
@@ -11,9 +12,9 @@ public class Jangling : MonoBehaviour
     [field: SerializeField]
     public EntityServiceLocator ServiceLocator { get; private set; }
     [SerializeField]
-    private HealthDisplay _healthDisplay;
-    [SerializeField]
     private MeshRenderer[] _colorMeshRenderers;
+    [SerializeField]
+    private Image[] _colorImages;
     private MaterialPropertyBlock _propertyBlock;
     [SerializeField]
     private JanglingKeyGrab _janglingKeyGrab;
@@ -39,13 +40,18 @@ public class Jangling : MonoBehaviour
             _propertyBlock = new MaterialPropertyBlock();
         _propertyBlock.SetColor("_BaseColor", KeyData.Color);
 
-        if (_healthDisplay != null)
-            _healthDisplay.SetSingleFillColor(KeyData.Color);
         foreach (var meshRenderer in _colorMeshRenderers)
-        {
             if (meshRenderer != null)
                 meshRenderer.SetPropertyBlock(_propertyBlock);
-        }
+
+        foreach (var colorImage in _colorImages)
+            if (colorImage != null)
+            {
+                // Preserve intiial alpha
+                var color = KeyData.Color;
+                color.a = colorImage.color.a;
+                colorImage.color = color;
+            }
 
         if (ServiceLocator.PointGraph != null)
         {

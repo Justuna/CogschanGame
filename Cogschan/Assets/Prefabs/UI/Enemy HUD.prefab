@@ -300,7 +300,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &8971336337773038884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -497,7 +497,8 @@ MonoBehaviour:
   _services: {fileID: 0}
   _fill: {fileID: 2781569406600031174}
   _background: {fileID: 1833509390541778037}
-  _numericalDisplay: {fileID: 0}
+  _healthText: {fileID: 0}
+  _maxHealthText: {fileID: 0}
   _fillColor:
     serializedVersion: 2
     key0: {r: 1, g: 0.16489445, b: 0.10849059, a: 1}
@@ -527,5 +528,6 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
-  _isImmediate: 1
-  _barVelocity: 5
+  _healthbarTweenDuration: 0.1
+  _damagedPortraitCutoff: 0.5
+  _portraitAnimator: {fileID: 0}
