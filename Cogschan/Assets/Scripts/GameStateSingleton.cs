@@ -42,6 +42,7 @@ public class GameStateSingleton : MonoBehaviour
     [SerializeField] private Jangling[] _janglings;
     [SerializeField] private KeyDeposit _keyDeposit;
     [SerializeField] private EventReference _backgroundMusic;
+    [SerializeField] private int _maxEnemies;
 
     /// <summary>
     /// Current keys in a level
@@ -73,6 +74,10 @@ public class GameStateSingleton : MonoBehaviour
     /// Does not use <c>CogschanSimpleEvent</c> because we want to be able to define the listeners in the inspector for this event.
     /// </remarks>
     public UnityEvent LevelClear = new UnityEvent();
+    /// <summary>
+    /// The maximum number of enemies that can be spawned at one time under normal circumstances.
+    /// </summary>
+    public int MaxEnemies => _maxEnemies;
 
     private bool _levelCleared = false;
     private EventInstance _bgmInstance;

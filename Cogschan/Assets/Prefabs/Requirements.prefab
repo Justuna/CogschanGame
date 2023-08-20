@@ -368,6 +368,7 @@ MonoBehaviour:
       Data3: -1435603812
       Data4: -489526317
     Path: event:/Test/TestBGM
+  _maxEnemies: 40
   GotAllKeys:
     m_PersistentCalls:
       m_Calls:

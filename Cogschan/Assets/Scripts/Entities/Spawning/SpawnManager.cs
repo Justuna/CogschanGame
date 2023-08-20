@@ -106,6 +106,7 @@ public class SpawnManager : MonoBehaviour
     // Tries to spawn an object at the location of the manager.
     private bool Spawn()
     {
+        print("spawn start");
         // If the first spawn event, run that method instead.
         if (_isFirstSpawn)
         {
@@ -139,6 +140,7 @@ public class SpawnManager : MonoBehaviour
         SpawnInfo selectedSpawn = new FiniteDistribution<SpawnInfo>(spawnsInCat, spawnWeights).GetRandomValue();
         _credits -= selectedSpawn.Cost;
         selectedSpawn.Spawner.Spawn(transform.position);
+
         return true;
     }
 }
