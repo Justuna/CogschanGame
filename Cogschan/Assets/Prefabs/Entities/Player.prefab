@@ -1247,6 +1247,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 100
+  _regenResetDuration: 3
+  _regenTickRate: 0.5
+  _regenAmount: 1
   OnHealthReset:
     m_PersistentCalls:
       m_Calls: []
