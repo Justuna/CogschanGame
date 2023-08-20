@@ -63,11 +63,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isHealing: 0
   _radius: 4
-  _minDamage: 20
-  _maxDamage: 120
+  _minDamage: 10
+  _maxDamage: 80
   _hasImpulse: 1
-  _minImpulse: 100
-  _maxImpulse: 300
+  _minImpulse: 60
+  _maxImpulse: 200
   _alwaysUpwards: 1
   _bonusLift: 0
   _canCancelOverride: 1

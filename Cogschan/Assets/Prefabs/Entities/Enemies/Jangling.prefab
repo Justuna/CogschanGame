@@ -562,9 +562,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _solidMask:
     serializedVersion: 2
-    m_Bits: 0
-  _sightRange: 0
-  _interruptThreshold: 0
+    m_Bits: 8
+  _sightRange: 50
+  _interruptThreshold: 1
   _targetPlayer: 1
   Target: {fileID: 0}
 --- !u!1 &7286901740834133814
