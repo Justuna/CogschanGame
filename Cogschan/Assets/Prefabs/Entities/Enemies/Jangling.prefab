@@ -563,7 +563,7 @@ MonoBehaviour:
   _solidMask:
     serializedVersion: 2
     m_Bits: 8
-  _sightRange: 50
+  _sightRange: 75
   _interruptThreshold: 1
   _targetPlayer: 1
   Target: {fileID: 0}
@@ -1066,7 +1066,7 @@ MonoBehaviour:
   es_Stunned: {fileID: 7286901742321760032}
   es_Watching: {fileID: 7286901740834133812}
   _services: {fileID: 7286901742559879604}
-  _runDistance: 30
+  _runDistance: 25
   _startNode: 0
 --- !u!1 &7286901742559879605
 GameObject:
