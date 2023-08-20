@@ -44,12 +44,7 @@ public class EnemySpawner : Spawner
     {
         // If there are already a lot of enemies, don't spawn more.
         if (s_enemyCount >= GameStateSingleton.Instance.MaxEnemies)
-        {
-            print("too many enemies!!");
             return;
-        }
-
-        print("spawning!");
 
         position = ContinuousDistributions.GetRandomPointInAnnulus(_minimumRadius, _maximumRadius, position);
         position.y = GroundFinder.HeightOfGround(position) + _height;
