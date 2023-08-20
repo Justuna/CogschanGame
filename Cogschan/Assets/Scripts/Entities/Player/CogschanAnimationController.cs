@@ -18,4 +18,9 @@ public class CogschanAnimationController : MonoBehaviour
         _animator.SetBool("IsStill", _services.KinematicPhysics.DesiredVelocity == Vector3.zero);
         _animator.SetBool("IsFiring", _services.ActionController.IsFiring);
     }
+
+    public void Jump()
+    {
+        _animator.SetTrigger("Jump");
+    }
 }

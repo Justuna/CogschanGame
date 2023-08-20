@@ -42,7 +42,9 @@ public class WeaponCache : MonoBehaviour
     {
         if (_cache.Count == _maxSize) return false;
 
-        GameObject weaponObject = Instantiate(weaponPrefab, _weaponParent);
+        GameObject weaponObject = Instantiate(weaponPrefab);
+        weaponObject.transform.parent = _weaponParent;
+        weaponObject.transform.localPosition = Vector3.zero;
         IWeapon weapon = weaponObject.GetComponent<IWeapon>();
         if (weapon != null)
         {

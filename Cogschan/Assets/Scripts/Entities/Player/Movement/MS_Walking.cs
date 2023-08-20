@@ -65,7 +65,7 @@ public class MS_Walking : MonoBehaviour, IMovementState, IMachineStateLateBehave
         if (_services.GroundChecker.IsGrounded)
         {
             _services.KinematicPhysics.AddImpulse(Vector3.up * _services.MovementController.JumpImpulse, false, 0);
-            _services.Animator.SetTrigger("Jump");
+            _services.CogschanAnimationController.Jump();
         }
     }
 
