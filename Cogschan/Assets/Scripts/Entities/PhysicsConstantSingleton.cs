@@ -1,5 +1,10 @@
 using UnityEngine;
 
+public class KinematicCharacterController : MonoBehaviour, ICharacterController
+{
+
+}
+
 public class PhysicsConstantSingleton : MonoBehaviour
 {
     #region Singleton Stuff

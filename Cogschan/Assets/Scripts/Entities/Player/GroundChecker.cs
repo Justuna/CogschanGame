@@ -30,14 +30,8 @@ public class GroundChecker : MonoBehaviour
     [SerializeField] private float _radius = 1f;
     [Tooltip("How far the ground checker sphere will travel downward before giving up on finding ground.")]
     [SerializeField] private float _castDistance = 0.1f;
-
-    [Header("Mid Ground Cast Attributes")]
-    [Tooltip("How far above/below Cogschan's feet the center of the ground checker sphere will be.")]
-    [SerializeField] private float _midYOffset = 0.1f;
-    [Tooltip("The radius of the ground checker sphere.")]
-    [SerializeField] private float _midRadius = 1f;
-    [Tooltip("How far the ground checker sphere will travel downward before giving up on finding ground.")]
-    [SerializeField] private float _midCastDistance = 0.1f;
+    [Tooltip("Extra width added to the _radius for a secondary sphere cast")]
+    [SerializeField] private float _castSkinWidth = 0.05f;
 
     [Header("Entity Services")]
     [Tooltip("The Entity Service Locator this script is a part of.")]
@@ -60,6 +54,8 @@ public class GroundChecker : MonoBehaviour
     [SerializeField] private Color _walkableSlopeColor;
     [Tooltip("The color the ground checker sphere will be when on flat ground.")]
     [SerializeField] private Color _flatGroundColor;
+    [SerializeField] private Vector3 _normalArrowsOFfset = new Vector3(0, 3f, 0);
+    [SerializeField] private float _normalArrowsScale = 1f;
 
     /// <summary>
     /// The kind of surface detected by raycast. Differentiates between flat ground, a walkable slope, a steep slope, and not ground.
@@ -102,6 +98,9 @@ public class GroundChecker : MonoBehaviour
     private readonly List<Vector3> _groundPosList = new();
     private float _groundPosTimer;
     private RaycastHit[] _sphereCastHits = new RaycastHit[10];
+    private RaycastHit[] _secondarySphereCastHits = new RaycastHit[10];
+    private int _sphereCastHitsCount = 0;
+    private int _secondarySphereCastHitsCount = 0;
 
     private void Start()
     {
@@ -117,14 +116,14 @@ public class GroundChecker : MonoBehaviour
     private void Update()
     {
         _groundPosTimer += Time.deltaTime;
-        int hitCount = Physics.SphereCastNonAlloc(transform.position + new Vector3(0, _yOffset, 0), _radius, Vector3.down, _sphereCastHits, _castDistance, _ground);
-        if (hitCount > 0)
+        _sphereCastHitsCount = Physics.SphereCastNonAlloc(transform.position + new Vector3(0, _yOffset, 0), _radius, Vector3.down, _sphereCastHits, _castDistance, _ground);
+        if (_sphereCastHitsCount > 0)
         {
             var surfaceNormal = Vector3.zero;
 
-            for (int i = 0; i < hitCount; i++)
+            for (int i = 0; i < _sphereCastHitsCount; i++)
                 surfaceNormal += _sphereCastHits[i].normal;
-            surfaceNormal = surfaceNormal.normalized;
+            surfaceNormal.Normalize();
 
             SurfaceNormal = surfaceNormal;
             if (surfaceNormal == Vector3.up)
@@ -159,15 +158,6 @@ public class GroundChecker : MonoBehaviour
                 {
                     SurfaceType = SurfaceTypes.WALKABLE_SLOPE;
                 }
-            }
-
-            if (SurfaceType == SurfaceTypes.NOT_GROUND || SurfaceType == SurfaceTypes.STEEP_SLOPE)
-            {
-                // Perform mid cast to detect if we were miscalculating a walkable gap
-
-                hitCount = Physics.SphereCastNonAlloc(transform.position + new Vector3(0, _midYOffset, 0), _midRadius, Vector3.down, _sphereCastHits, _midCastDistance, _ground);
-                if (hitCount == 0)
-                    SurfaceType = SurfaceTypes.WALKABLE_SLOPE;
             }
 
             if (_takesFallDamage && SurfaceType != SurfaceTypes.STEEP_SLOPE && SurfaceType != SurfaceTypes.NOT_GROUND)
@@ -220,12 +210,11 @@ public class GroundChecker : MonoBehaviour
         Gizmos.DrawSphere(transform.position + finalSphere, _radius);
 
         var color = Gizmos.color;
-        color.a = 0.25f;
+        color.a = 0.1f;
         Gizmos.color = color;
-        initialSphere = new Vector3(0, _midYOffset, 0);
-        finalSphere = new Vector3(0, _midYOffset - _midCastDistance, 0);
-        Gizmos.DrawSphere(transform.position + initialSphere, _midRadius);
-        Gizmos.DrawSphere(transform.position + finalSphere, _midRadius);
+        Gizmos.DrawSphere(transform.position + initialSphere, _radius + _castSkinWidth);
+        Gizmos.DrawSphere(transform.position + finalSphere, _radius + _castSkinWidth);
+
 
         if (GradientDirection.HasValue)
         {
@@ -233,6 +222,16 @@ public class GroundChecker : MonoBehaviour
             Gizmos.DrawLine(transform.position, transform.position + GradientDirection.Value);
         }
 
+        if (SurfaceNormal.HasValue)
+        {
+            for (int i = 0; i < _sphereCastHitsCount; i++)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawLine(transform.position + _normalArrowsOFfset, transform.position + _normalArrowsOFfset + _sphereCastHits[i].normal * _normalArrowsScale);
+            }
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(transform.position + _normalArrowsOFfset, transform.position + _normalArrowsOFfset + SurfaceNormal.Value * _normalArrowsScale);
+        }
     }
 
     private int GetFallDamage()
