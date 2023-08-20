@@ -53,6 +53,8 @@ public class HealthTracker : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale == 0) return;
+
         _regenTimer -= Time.deltaTime;
         if (_regenTimer <= 0f)
         {
@@ -94,24 +96,30 @@ public class HealthTracker : MonoBehaviour
     /// Damages the entity by a certain amount of health points.
     /// </summary>
     /// <param name="amount">The amount to decrease health by.</param>
-    public void Damage(int amount)
+    /// <returns>Whether or not the entity was actually damaged at all.</returns>
+    public bool Damage(int amount)
     {
-        if (Health == 0) return;
+        if (Health == 0) return false;
 
         SetHealth(Health - amount);
 
         OnDamaged?.Invoke(amount);
         _regenTimer = _regenResetDuration;
+
+        return true;
     }
 
     /// <summary>
     /// Heals the entity by a certain amount of health points.
     /// </summary>
     /// <param name="amount">The amount to increase health by.</param>
-    public void Heal(int amount)
+    /// <returns>Whether or not the entity was actually healed at all.</returns>
+    public bool Heal(int amount)
     {
-        if (Health == MaxHealth) return;
+        if (Health == MaxHealth) return false;
         SetHealth(Health + amount);
         OnHealed?.Invoke(amount);
+
+        return true;
     }
 }

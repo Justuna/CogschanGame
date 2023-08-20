@@ -257,6 +257,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 150
+  _regenResetDuration: 0
+  _regenTickRate: 0
+  _regenAmount: 0
   OnHealthReset:
     m_PersistentCalls:
       m_Calls: []
@@ -273,6 +276,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   <Health>k__BackingField: 0
+  _regenTimer: 0
 --- !u!114 &8822921928947837377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,7 +299,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
+          m_IntArgument: 5
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -322,6 +326,10 @@ MonoBehaviour:
     Weight: 2
   - Drop: {fileID: 3977001642723400976, guid: eaeb79a311325624297d79fa0bd2e638, type: 3}
     Weight: 1
+  - Drop: {fileID: 3977001642723400976, guid: c3547e3dcfcdc2541bd3a01c1a88dff5, type: 3}
+    Weight: 10
+  - Drop: {fileID: 0}
+    Weight: 30
   _minLateralVelocity: 5
   _maxLateralVelocity: 10
   _minUpwardVelocity: 10
