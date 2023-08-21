@@ -18,7 +18,7 @@ public class AS_Idle : MonoBehaviour, IActionState, IMachineStateBehave, IMachin
         {
             OnLock(() => !_services.MovementController.CannotAct);
         }
-        else if (CogschanInputSingleton.Instance.IsHoldingFire && !_services.MovementController.IsSprinting)
+        else if (CogschanInputSingleton.Instance.IsHoldingFire)
         {
             IdleIntoFiring?.Invoke();
         }
