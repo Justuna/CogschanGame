@@ -46,6 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89e249f4493a5424f984a8eb4184d9be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Fired>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
   _muzzleFlash: {fileID: 0}
   _recoilPattern: {fileID: 11400000, guid: 7d20566735546e7438b6018edad1e659, type: 2}
   _spreadPattern: {fileID: 11400000, guid: fb62eb95c532041b8985b1aea0a58b8b, type: 2}
@@ -61,7 +64,7 @@ MonoBehaviour:
   _maxClips: 4
   _count: 1
   _countAccurate: 1
-  _reloadTime: 2
+  _reloadTime: 3
   _beamEffectPrefab: {fileID: 5772970684945050815, guid: 2f067cbc389678f4c9f8b074b5570684,
     type: 3}
   _layerMask:
