@@ -53,7 +53,7 @@ public class MS_Sprinting : MonoBehaviour, IMovementState, IMachineStateLateBeha
             _services.MovementController.RunningSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
 
-        if (!CogschanInputSingleton.Instance.IsHoldingSprint)
+        if (!CogschanInputSingleton.Instance.IsHoldingSprint || CogschanInputSingleton.Instance.IsHoldingFire)
         {
             if (CogschanInputSingleton.Instance.IsHoldingAim)
             {

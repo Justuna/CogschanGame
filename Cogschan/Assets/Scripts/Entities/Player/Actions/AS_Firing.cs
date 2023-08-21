@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class AS_Firing : MonoBehaviour, IActionState, IMachineStateBehave
@@ -8,20 +9,28 @@ public class AS_Firing : MonoBehaviour, IActionState, IMachineStateBehave
     [SerializeField] private EntityServiceLocator _services;
 
     public CogschanSimpleEvent FiringIntoIdle;
+    public CogschanSimpleEvent FiringIntoReload;
     public CogschanConditionEvent FiringIntoLocked;
 
     public void OnBehave()
     {
+        IWeapon weapon = _services.WeaponCache.CurrentWeapon;
+
+        Used?.Invoke();
+        weapon.Use();
+
         if (_services.MovementController.CannotAct)
         {
             OnLock(() => !_services.MovementController.CannotAct);
         }
-        else if (!CogschanInputSingleton.Instance.IsHoldingFire && !_services.WeaponCache.CurrentWeapon.InUse())
+        else if (!weapon.InUse() && !CogschanInputSingleton.Instance.IsHoldingFire)
         {
             FiringIntoIdle?.Invoke();
         }
-        Used?.Invoke();
-        _services.WeaponCache.CurrentWeapon.Use();
+        else if (!weapon.InUse() && weapon.GetLoadedAmmoCount().HasValue && weapon.GetLoadedAmmoCount().Value == 0)
+        {
+            FiringIntoReload?.Invoke();
+        }
     }
 
     public void OnNextWeapon()

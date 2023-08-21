@@ -95,7 +95,7 @@ MonoBehaviour:
   _maxClips: 4
   _count: 1
   _countAccurate: 1
-  _reloadTime: 1
+  _reloadTime: 2.5
   _projectilePrefab: {fileID: 521982211236534687, guid: d6668dd9a48bbe0448549e9458a97c1e,
     type: 3}
 --- !u!1 &7554969327838763247
