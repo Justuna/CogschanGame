@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="EncodableAsset" id="{7fc11c2f-7db3-4524-8e72-aff2c736fcd9}">
+		<property name="assetPath">
+			<value>SFX/Weapons/Sniper/</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{7385d327-e6ad-43bf-8305-c4c3dfc45949}</destination>
+		</relationship>
+	</object>
+</objects>
