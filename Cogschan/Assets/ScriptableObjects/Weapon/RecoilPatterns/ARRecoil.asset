@@ -198,8 +198,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   RampDownDuration: 0.5
-  VerticalPower: 10
-  HorizontalPower: 10
+  VerticalPower: 5
+  HorizontalPower: 5
   VerticalNoiseAmplitude: 2
   HorizontalNoiseAmplitude: 5
   VerticalNoiseScale: 0.1

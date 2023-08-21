@@ -493,7 +493,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6539261923342889236}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.89, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -562,9 +562,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _solidMask:
     serializedVersion: 2
-    m_Bits: 0
-  _sightRange: 0
-  _interruptThreshold: 0
+    m_Bits: 8
+  _sightRange: 75
+  _interruptThreshold: 1
   _targetPlayer: 1
   Target: {fileID: 0}
 --- !u!1 &7286901740834133814
@@ -914,7 +914,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _services: {fileID: 7286901742559879604}
-  _speed: 10
+  _speed: 20
   _turnSpeed: 20
 --- !u!1 &7286901742205693854
 GameObject:
@@ -961,7 +961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _services: {fileID: 7286901742559879604}
-  _startleTime: 1
+  _startleTime: 3
   _turnSpeed: 40
 --- !u!1 &7286901742321760034
 GameObject:
@@ -1009,7 +1009,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _services: {fileID: 7286901742559879604}
-  _stunTime: 5
+  _stunTime: 3
   _stunFX: {fileID: 5261879896316386967}
 --- !u!1 &7286901742536740616
 GameObject:
@@ -1066,7 +1066,7 @@ MonoBehaviour:
   es_Stunned: {fileID: 7286901742321760032}
   es_Watching: {fileID: 7286901740834133812}
   _services: {fileID: 7286901742559879604}
-  _runDistance: 9
+  _runDistance: 30
   _startNode: 0
 --- !u!1 &7286901742559879605
 GameObject:
@@ -1220,6 +1220,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 100
+  _regenResetDuration: 0
+  _regenTickRate: 0
+  _regenAmount: 0
   OnHealthReset:
     m_PersistentCalls:
       m_Calls: []
@@ -1236,6 +1239,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   <Health>k__BackingField: 0
+  _regenTimer: 0
 --- !u!1 &7286901742698862855
 GameObject:
   m_ObjectHideFlags: 0

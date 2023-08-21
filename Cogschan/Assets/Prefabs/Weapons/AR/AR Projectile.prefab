@@ -132,8 +132,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _rigidBody: {fileID: 5485438763088755224}
-  _speed: 50
+  _speed: 200
   _lifetime: 10
+  _rotateToVelocity: 0
 --- !u!114 &7248636268133523852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,8 +148,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isHealing: 0
-  _damage: 10
+  Impacted:
+    m_PersistentCalls:
+      m_Calls: []
+  _damage: 15
   _impulseMagnitude: 10
   _canCancelOverride: 0
   _maintainedMomentum: 1
-  _spawnedOnImpact: []
+  _impactGameObjectActions: []

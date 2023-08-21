@@ -77,6 +77,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 369ad6fa432685244801255967869565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Fired>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
   _muzzleFlash: {fileID: 0}
   _recoilPattern: {fileID: 11400000, guid: f9064558a77e7db4fae6aefb19152ea5, type: 2}
   _spreadPattern: {fileID: 11400000, guid: 86169eeb913fa4443a275d1e208afd5a, type: 2}
@@ -90,9 +93,9 @@ MonoBehaviour:
   _ammoType: {fileID: 11400000, guid: ab095c8fac5360941b09f51016c6acdd, type: 2}
   _clipSize: 8
   _maxClips: 4
-  _count: 20
-  _countAccurate: 20
-  _reloadTime: 1
+  _count: 30
+  _countAccurate: 30
+  _reloadTime: 2.5
   _projectilePrefab: {fileID: 521982211236534687, guid: 819850cc9295622478e3378ffd7a4cda,
     type: 3}
 --- !u!1 &7554969327838763247
