@@ -264,12 +264,12 @@ MonoBehaviour:
   _steepAngle: 45
   _wallAngle: 90
   _yOffset: 0.5
-  _radius: 0.55
+  _radius: 0.5
   _castDistance: 0.1
   _services: {fileID: 4272273026959324190}
   _takesFallDamage: 1
-  _maxNoHarm: 20
-  _speedToDamageFactor: 0
+  _maxNoHarm: 40
+  _speedToDamageFactor: 2
   _notGroundColor: {r: 1, g: 0, b: 0, a: 0.7529412}
   _steepSlopeColor: {r: 1, g: 0.4358647, b: 0, a: 0.7529412}
   _walkableSlopeColor: {r: 1, g: 0.8518007, b: 0, a: 0.7529412}
@@ -537,6 +537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _services: {fileID: 4272273026959324190}
+  _timer: 0
 --- !u!1 &4272273026823039876
 GameObject:
   m_ObjectHideFlags: 0
@@ -1290,6 +1291,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   <Health>k__BackingField: 0
+  _regenTimer: 0
 --- !u!1 &4272273027671968918
 GameObject:
   m_ObjectHideFlags: 0

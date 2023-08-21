@@ -3,6 +3,7 @@
 public class ES_JanglingRunning : MonoBehaviour, IJanglingState
 {
     public CogschanSimpleEvent RunningToIdle;
+    public CogschanSimpleEvent RunningToWatching;
     public CogschanSimpleEvent RunningToStunned;
 
     [SerializeField] private EntityServiceLocator _services;
@@ -24,7 +25,8 @@ public class ES_JanglingRunning : MonoBehaviour, IJanglingState
         if (delta <= _speed * Time.deltaTime)
         {
             _services.CharacterController.Move(dir * delta);
-            RunningToIdle?.Invoke();
+            if (_services.LOSChecker.CanSee) RunningToWatching?.Invoke();
+            else RunningToIdle?.Invoke();
         }
         else
         {
