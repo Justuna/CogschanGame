@@ -914,7 +914,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _services: {fileID: 7286901742559879604}
-  _speed: 16
+  _speed: 20
   _turnSpeed: 20
 --- !u!1 &7286901742205693854
 GameObject:
@@ -961,7 +961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _services: {fileID: 7286901742559879604}
-  _startleTime: 0.5
+  _startleTime: 3
   _turnSpeed: 40
 --- !u!1 &7286901742321760034
 GameObject:
@@ -1066,7 +1066,7 @@ MonoBehaviour:
   es_Stunned: {fileID: 7286901742321760032}
   es_Watching: {fileID: 7286901740834133812}
   _services: {fileID: 7286901742559879604}
-  _runDistance: 25
+  _runDistance: 30
   _startNode: 0
 --- !u!1 &7286901742559879605
 GameObject:
@@ -1220,6 +1220,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 100
+  _regenResetDuration: 0
+  _regenTickRate: 0
+  _regenAmount: 0
   OnHealthReset:
     m_PersistentCalls:
       m_Calls: []
@@ -1236,6 +1239,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   <Health>k__BackingField: 0
+  _regenTimer: 0
 --- !u!1 &7286901742698862855
 GameObject:
   m_ObjectHideFlags: 0

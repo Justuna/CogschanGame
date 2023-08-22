@@ -39,7 +39,6 @@ public class DropPickups : MonoBehaviour
         for (int i = 0; i < amount; i++)
         {
             float index = UnityEngine.Random.value * sum;
-            Debug.Log("Picked " + index + " out of a maximum range of " + sum);
 
             float dropSum = 0;
             GameObject toBeDropped = null;
@@ -49,22 +48,25 @@ public class DropPickups : MonoBehaviour
                 if (index <= dropSum)
                 {
                     toBeDropped = drop.Drop;
+                    if (toBeDropped == null) Debug.Log("Womp womp");
                     break;
                 }
             }
 
-            GameObject hasDropped = Instantiate(toBeDropped, transform.position + _offset, Quaternion.identity);
-
-            EntityServiceLocator services = hasDropped.GetComponent<EntityServiceLocator>();
-            if (services != null && services.KinematicPhysics != null)
+            if (toBeDropped != null)
             {
-                float forward = UnityEngine.Random.Range(_minLateralVelocity, _maxLateralVelocity);
-                float upward = UnityEngine.Random.Range(_minUpwardVelocity, _maxUpwardVelocity);
-                Quaternion rotation = Quaternion.AngleAxis(UnityEngine.Random.Range(0f, 360f), Vector3.up);
+                GameObject hasDropped = Instantiate(toBeDropped, transform.position + _offset, Quaternion.identity);
 
-                Vector3 impulse = rotation * (Vector3.forward * forward + Vector3.up * upward);
-                Debug.Log(impulse);
-                services.KinematicPhysics.AddImpulse(impulse);
+                EntityServiceLocator services = hasDropped.GetComponent<EntityServiceLocator>();
+                if (services != null && services.KinematicPhysics != null)
+                {
+                    float forward = UnityEngine.Random.Range(_minLateralVelocity, _maxLateralVelocity);
+                    float upward = UnityEngine.Random.Range(_minUpwardVelocity, _maxUpwardVelocity);
+                    Quaternion rotation = Quaternion.AngleAxis(UnityEngine.Random.Range(0f, 360f), Vector3.up);
+
+                    Vector3 impulse = rotation * (Vector3.forward * forward + Vector3.up * upward);
+                    services.KinematicPhysics.AddImpulse(impulse);
+                }
             }
         }
     }

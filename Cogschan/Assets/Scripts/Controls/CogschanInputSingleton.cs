@@ -25,7 +25,12 @@ public class CogschanInputSingleton : MonoBehaviour
     }
     #endregion
 
+    [Tooltip("How long after sensing a scroll before it will sense another scroll.")]
     [SerializeField] private float _inputScrollCooldown;
+    [Tooltip("Whether or not the sprint button is in toggle mode *like a dirty heathen would want*")]
+    public bool ToggleSprint = false;
+    [Tooltip("Whether or not the aim button is in toggle mode *like a dirty heathen would want*")]
+    public bool ToggleAim = false;
 
     private CogschanMapping _inputMapping;
     private float _inputScrollTimer;
@@ -87,12 +92,38 @@ public class CogschanInputSingleton : MonoBehaviour
 
         _inputMapping.Movement.Jump.performed += _ => { if (Time.timeScale > 0) OnJumpButtonPressed?.Invoke(); };
         _inputMapping.Movement.BurstDash.performed += _ => { if (Time.timeScale > 0) OnDashButtonPressed?.Invoke(); };
-        _inputMapping.Movement.Sprint.performed += _ => { if (Time.timeScale > 0) IsHoldingSprint = true; };
-        _inputMapping.Movement.Sprint.canceled += _ => { IsHoldingSprint = false; };
         _inputMapping.Movement.Interact.performed += _ => { if (Time.timeScale > 0) OnInteractButtonPressed?.Invoke(); };
 
-        _inputMapping.Camera.Aim.performed += _ => { if (Time.timeScale > 0) IsHoldingAim = true; };
-        _inputMapping.Camera.Aim.canceled += _ => { IsHoldingAim = false; };
+        _inputMapping.Movement.Sprint.performed += _ => 
+        {
+            if (Time.timeScale > 0)
+            {
+                if (ToggleSprint) IsHoldingSprint = !IsHoldingSprint;
+                else IsHoldingSprint = true;
+
+                if (ToggleAim) IsHoldingAim = false;
+            }
+        };
+        _inputMapping.Movement.Sprint.canceled += _ => 
+        { 
+            if (!ToggleSprint) IsHoldingSprint = false; 
+        };
+        
+
+        _inputMapping.Camera.Aim.performed += _ => 
+        {
+            if (Time.timeScale > 0)
+            {
+                if (ToggleAim) IsHoldingAim = !IsHoldingAim;
+                else IsHoldingAim = true;
+
+                if (ToggleSprint) IsHoldingSprint = false;
+            }
+        };
+        _inputMapping.Camera.Aim.canceled += _ => 
+        { 
+            if (!ToggleAim) IsHoldingAim = false; 
+        };
 
         _inputMapping.Weapon.Fire.performed += _ => { if (Time.timeScale > 0) IsHoldingFire = true; };
         _inputMapping.Weapon.Fire.canceled += _ => { IsHoldingFire = false; };

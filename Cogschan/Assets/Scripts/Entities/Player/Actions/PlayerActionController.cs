@@ -62,13 +62,14 @@ public class PlayerActionController : MonoBehaviour
         CogschanInputSingleton.Instance.OnInteractButtonPressed += OnInteractPressed;
 
         as_Idle.IdleIntoFiring += IdleIntoFiring;
-        as_Idle.IdleIntoReloading += IdleIntoReloading;
+        as_Idle.IdleIntoReloading += XIntoReloading;
         as_Idle.IdleIntoNextWeapon += IdleIntoNextWeapon;
         as_Idle.IdleIntoPrevWeapon += IdleIntoPrevWeapon;
         as_Idle.IdleIntoLocked += XIntoLocked;
         as_Locked.ActionsUnlocked += ActionsUnlocked;
         as_Firing.FiringIntoIdle += FiringIntoIdle;
         as_Firing.FiringIntoLocked += XIntoLocked;
+        as_Firing.FiringIntoReload += XIntoReloading;
         as_Reloading.ReloadingIntoIdle += ReloadingIntoIdle;
         as_Reloading.ReloadingIntoLocked += XIntoLocked;
         as_SwitchingWeapons.SwitchingIntoIdle += SwitchingIntoIdle;
@@ -136,7 +137,7 @@ public class PlayerActionController : MonoBehaviour
         CurrentState = as_Firing;
     }
 
-    private void IdleIntoReloading()
+    private void XIntoReloading()
     {
         if (_services.WeaponCache.CurrentWeapon.CanReload())
         {
