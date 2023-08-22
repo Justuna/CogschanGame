@@ -66,6 +66,11 @@ public class SpawnManager : MonoBehaviour
     private float _spawnInterval;
     private bool _isFirstSpawn = true;
 
+    /// <summary>
+    /// A random spawn location.
+    /// </summary>
+    protected virtual Vector3 GetSpawnLocation => ContinuousDistributions.GetRandomPointInAnnulus(_minimumRadius, _maximumRadius, transform.position);
+
     private void Start()
     {
         var spawnCategoryWeightDict = new Dictionary<SpawnCategory, float>();
@@ -147,8 +152,7 @@ public class SpawnManager : MonoBehaviour
         // Spawn an object at random.
         SpawnInfo selectedSpawn = new FiniteDistribution<SpawnInfo>(spawnsInCat, spawnWeights).GetRandomValue();
         _credits -= selectedSpawn.Cost;
-        selectedSpawn.Spawner.Spawn(
-            ContinuousDistributions.GetRandomPointInAnnulus(_minimumRadius, _maximumRadius, transform.position));
+        selectedSpawn.Spawner.Spawn(GetSpawnLocation);
         return true;
     }
 }

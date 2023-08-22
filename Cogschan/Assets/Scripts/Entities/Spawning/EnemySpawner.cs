@@ -18,9 +18,6 @@ public class EnemySpawner : Spawner
     [SerializeField]
     [Tooltip("The height at which the object is spawned.")]
     private float _height;
-    [SerializeField]
-    [Tooltip("Whether or not the object uses the nav mesh.")]
-    private bool _isNavMeshAgent;
 
     public override SpawnInfo SpawnInfo => _spawnInfo;
     public SpawnManager[] SpawnManagers { get => _spawnManagers; set => _spawnManagers = value; }
@@ -34,10 +31,10 @@ public class EnemySpawner : Spawner
 
     public override void Spawn(Vector3 position)
     {
-        position.y = GroundFinder.HeightOfGround(position) + _height;
-        if (_isNavMeshAgent
-            && NavMesh.SamplePosition(position, out NavMeshHit hit, Mathf.Infinity, NavMesh.AllAreas))
+        position.y = GroundFinder.HeightOfGround(position);
+        if (NavMesh.SamplePosition(position, out NavMeshHit hit, Mathf.Infinity, NavMesh.AllAreas))
             position = hit.position;
+        position += Vector3.up * _height;
 
         Instantiate(_prefab, position, Quaternion.identity);
     }
