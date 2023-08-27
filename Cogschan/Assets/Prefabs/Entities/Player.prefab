@@ -1775,6 +1775,8 @@ MonoBehaviour:
   _credits: 0
   _creditAddRate: 0.5
   _creditAddRateRate: 0.005
+  _minimumRadius: 5
+  _maximumRadius: 10
 --- !u!1001 &1892092367227129542
 PrefabInstance:
   m_ObjectHideFlags: 0

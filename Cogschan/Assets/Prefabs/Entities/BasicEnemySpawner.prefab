@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3100725914979876854}
   - component: {fileID: 4494694939598722734}
   - component: {fileID: 4494694939598722729}
+  - component: {fileID: 3761296936616686752}
   m_Layer: 6
   m_Name: BasicEnemySpawner
   m_TagString: Untagged
@@ -67,10 +68,7 @@ MonoBehaviour:
     Weight: 1
     Category: 0
   _spawnManagers: []
-  _minimumRadius: 5
-  _maximumRadius: 10
   _height: 0
-  _isNavMeshAgent: 1
 --- !u!114 &4494694939598722729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,7 +88,35 @@ MonoBehaviour:
     Weight: 1
     Category: 0
   _spawnManagers: []
-  _minimumRadius: 5
-  _maximumRadius: 10
   _height: 3
-  _isNavMeshAgent: 0
+--- !u!114 &3761296936616686752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4494694939598722731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 549982bb748be314db6510d6319a7084, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _minSpawnInterval: 10
+  _maxSpawnInterval: 20
+  _categoryWeights:
+  - <SpawnCategory>k__BackingField: 0
+    <Weight>k__BackingField: 1
+  _credits: 0
+  _creditAddRate: 0.4
+  _creditAddRateRate: 0.004
+  _minimumRadius: 0
+  _maximumRadius: 0
+  _minX: -100
+  _maxX: 100
+  _minY: -10
+  _maxY: 90
+  _minZ: -150
+  _maxZ: 150
+  _minGroupSize: 3
+  _maxGroupSize: 4
+  _radius: 10

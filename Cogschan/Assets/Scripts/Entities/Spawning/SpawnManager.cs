@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static SpawnInfo;
 
 /// <summary>
@@ -52,10 +53,23 @@ public class SpawnManager : MonoBehaviour
     [Tooltip("The rate at which the rate at which credits are added to the Spawn Manager increases. Essentially the second derivative of credits. Must be nonnegative.")]
     private float _creditAddRateRate;
 
+    [Header("Spawn position parameters")]
+    [SerializeField]
+    [Tooltip("The minimum distance from the spawn point the object can spawn.")]
+    private float _minimumRadius;
+    [SerializeField]
+    [Tooltip("The maximum distance from the spawn point the object can spawn.")]
+    private float _maximumRadius;
+
     private FiniteDistribution<SpawnCategory> _categoryDist;
     private float _spawnTimer = 0;
     private float _spawnInterval;
     private bool _isFirstSpawn = true;
+
+    /// <summary>
+    /// A random spawn location.
+    /// </summary>
+    protected virtual Vector3 GetSpawnLocation => ContinuousDistributions.GetRandomPointInAnnulus(_minimumRadius, _maximumRadius, transform.position);
 
     private void Start()
     {
@@ -138,8 +152,7 @@ public class SpawnManager : MonoBehaviour
         // Spawn an object at random.
         SpawnInfo selectedSpawn = new FiniteDistribution<SpawnInfo>(spawnsInCat, spawnWeights).GetRandomValue();
         _credits -= selectedSpawn.Cost;
-        selectedSpawn.Spawner.Spawn(transform.position);
-
+        selectedSpawn.Spawner.Spawn(GetSpawnLocation);
         return true;
     }
 }

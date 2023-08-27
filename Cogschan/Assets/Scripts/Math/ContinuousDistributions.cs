@@ -22,9 +22,9 @@ public static class ContinuousDistributions
     }
 
     /// <summary>
-    /// Returns a random point in the square perpendicular to the y axis.
+    /// Returns a random point in the box.
     /// </summary>
     /// <remarks> The distribution of points is unifrom. </remarks>
-    public static Vector3 GetRandomPointInSquare(float minX, float maxX, float minZ, float maxZ, Vector3 center)
-        => new Vector3(Random.Range(minX, maxX), 0, Random.Range(minZ, maxZ)) + center;
+    public static Vector3 GetRandomPointInBox(float minX, float maxX, float minY, float maxY, float minZ, float maxZ)
+        => new Vector3(Random.Range(minX, maxX), Random.Range(minY, maxY), Random.Range(minZ, maxZ));
 }

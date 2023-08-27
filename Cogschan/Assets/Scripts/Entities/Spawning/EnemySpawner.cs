@@ -16,17 +16,8 @@ public class EnemySpawner : Spawner
 
     [Header("Spawn position parameters")]
     [SerializeField]
-    [Tooltip("The minimum distance from the spawn point the object can spawn.")]
-    private float _minimumRadius;
-    [SerializeField]
-    [Tooltip("The maximum distance from the spawn point the object can spawn.")]
-    private float _maximumRadius;
-    [SerializeField]
     [Tooltip("The height at which the object is spawned.")]
     private float _height;
-    [SerializeField]
-    [Tooltip("Whether or not the object uses the nav mesh.")]
-    private bool _isNavMeshAgent;
 
     private static int s_enemyCount = 0;
 
@@ -46,11 +37,10 @@ public class EnemySpawner : Spawner
         if (s_enemyCount >= GameStateSingleton.Instance.MaxEnemies)
             return;
 
-        position = ContinuousDistributions.GetRandomPointInAnnulus(_minimumRadius, _maximumRadius, position);
-        position.y = GroundFinder.HeightOfGround(position) + _height;
-        if (_isNavMeshAgent
-            && NavMesh.SamplePosition(position, out NavMeshHit hit, Mathf.Infinity, NavMesh.AllAreas))
+        position.y = GroundFinder.HeightOfGround(position);
+        if (NavMesh.SamplePosition(position, out NavMeshHit hit, Mathf.Infinity, NavMesh.AllAreas))
             position = hit.position;
+        position += Vector3.up * _height;
 
         GameObject enemy = Instantiate(_prefab, position, Quaternion.identity);
         s_enemyCount++;
