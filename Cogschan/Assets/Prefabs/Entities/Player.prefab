@@ -62,7 +62,8 @@ MonoBehaviour:
       Data3: -1470764376
       Data4: 491561962
     Path: event:/Test/TestInstance
-  _dashCooldown: 1
+  _dashCooldown: 5
+  MaxJumps: 2
   JumpImpulse: 200
 --- !u!1 &4272273026407550820
 GameObject:
@@ -267,8 +268,8 @@ MonoBehaviour:
   _castDistance: 0.1
   _services: {fileID: 4272273026959324190}
   _takesFallDamage: 1
-  _maxNoHarm: 20
-  _speedToDamageFactor: 0
+  _maxNoHarm: 40
+  _speedToDamageFactor: 2
   _notGroundColor: {r: 1, g: 0, b: 0, a: 0.7529412}
   _steepSlopeColor: {r: 1, g: 0.4358647, b: 0, a: 0.7529412}
   _walkableSlopeColor: {r: 1, g: 0.8518007, b: 0, a: 0.7529412}
@@ -536,6 +537,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _services: {fileID: 4272273026959324190}
+  _timer: 0
+--- !u!1 &4272273026823039876
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4272273026823039877}
+  m_Layer: 6
+  m_Name: Hand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4272273026823039877
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4272273026823039876}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.79, y: 1.07, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4272273027718369487}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4272273026867365166
 GameObject:
   m_ObjectHideFlags: 0
@@ -1137,7 +1170,7 @@ MonoBehaviour:
       Data4: 491561962
     Path: event:/Test/TestInstance
   _cogschanModel: {fileID: 4272273027718369486}
-  _sprintSpeed: 15
+  _sprintSpeed: 12
   _turnSpeed: 10
 --- !u!1 &4272273027505916435
 GameObject:
@@ -1215,6 +1248,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 100
+  _regenResetDuration: 3
+  _regenTickRate: 0.5
+  _regenAmount: 1
   OnHealthReset:
     m_PersistentCalls:
       m_Calls: []
@@ -1255,6 +1291,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   <Health>k__BackingField: 0
+  _regenTimer: 0
 --- !u!1 &4272273027671968918
 GameObject:
   m_ObjectHideFlags: 0
@@ -1631,7 +1668,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _services: {fileID: 4272273026959324190}
   _cogschanModel: {fileID: 4272273027718369486}
-  _walkSpeed: 10
+  _walkSpeed: 6
   _turnSpeed: 15
   _combatMovementCooldown: 1.5
   _firingState: {fileID: 4272273027070788971}
@@ -1681,9 +1718,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _services: {fileID: 4272273026959324190}
   _cogschanModel: {fileID: 4272273027718369486}
-  _dashSpeed: 30
+  _dashSpeed: 45
   _turnSpeed: 20
-  _duration: 0.3
+  _duration: 0.2
   _momentumFactor: 0.5
 --- !u!1 &4272273028038293641
 GameObject:
@@ -1729,13 +1766,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6afe38eeaab213c48b25635c79491860, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minSpawnInterval: 10
-  _maxSpawnInterval: 30
+  _minSpawnInterval: 5
+  _maxSpawnInterval: 15
   _categoryWeights:
   - <SpawnCategory>k__BackingField: 0
     <Weight>k__BackingField: 1
   _credits: 0
-  _creditAddRate: 0.1
+  _creditAddRate: 0.5
   _creditAddRateRate: 0.005
 --- !u!1001 &1892092367227129542
 PrefabInstance:

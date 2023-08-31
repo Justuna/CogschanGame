@@ -8,7 +8,7 @@ public class AS_Reloading : MonoBehaviour, IActionState, IMachineStateBehave
     public CogschanSimpleEvent ReloadingIntoIdle;
     public CogschanConditionEvent ReloadingIntoLocked;
 
-    private float _timer;
+    [SerializeField] private float _timer;
 
     public void Init(float timer)
     {

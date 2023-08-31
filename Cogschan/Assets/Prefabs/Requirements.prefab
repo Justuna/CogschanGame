@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6121576235258274848}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.602, z: -7}
+  m_LocalPosition: {x: 0, y: 3.602, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -332,6 +332,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputScrollCooldown: 0.3
+  ToggleSprint: 0
+  ToggleAim: 0
 --- !u!114 &6121576237263177673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,6 +370,7 @@ MonoBehaviour:
       Data3: -1435603812
       Data4: -489526317
     Path: event:/Test/TestBGM
+  _maxEnemies: 40
   GotAllKeys:
     m_PersistentCalls:
       m_Calls:
@@ -519,7 +522,7 @@ PrefabInstance:
     - target: {fileID: 656966227828963327, guid: 62790c676b414b74b96caa569b7a8fd2,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 76.54007
+      value: 76.54
       objectReference: {fileID: 0}
     - target: {fileID: 656966227828963327, guid: 62790c676b414b74b96caa569b7a8fd2,
         type: 3}
@@ -629,12 +632,12 @@ PrefabInstance:
     - target: {fileID: 2795197659316701080, guid: 62790c676b414b74b96caa569b7a8fd2,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 144.0001
+      value: 144.00009
       objectReference: {fileID: 0}
     - target: {fileID: 2795197659316701080, guid: 62790c676b414b74b96caa569b7a8fd2,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 35.999947
+      value: 36.000023
       objectReference: {fileID: 0}
     - target: {fileID: 2795197659316701080, guid: 62790c676b414b74b96caa569b7a8fd2,
         type: 3}
@@ -1091,31 +1094,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6121576236166244537}
     m_Modifications:
-    - target: {fileID: 4272273026489263649, guid: 4a22479a2ceafa047b3a347092e074f7,
-        type: 3}
-      propertyPath: _maxNoHarm
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 4272273026489263649, guid: 4a22479a2ceafa047b3a347092e074f7,
-        type: 3}
-      propertyPath: _speedPerDamage
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4272273026489263649, guid: 4a22479a2ceafa047b3a347092e074f7,
-        type: 3}
-      propertyPath: _groundPosUpdate
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4272273026489263649, guid: 4a22479a2ceafa047b3a347092e074f7,
-        type: 3}
-      propertyPath: _takesFallDamage
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4272273026489263649, guid: 4a22479a2ceafa047b3a347092e074f7,
-        type: 3}
-      propertyPath: _speedToDamageFactor
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4272273026959324161, guid: 4a22479a2ceafa047b3a347092e074f7,
         type: 3}
       propertyPath: m_RootOrder

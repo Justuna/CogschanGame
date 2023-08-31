@@ -132,7 +132,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _rigidBody: {fileID: 5485438763088755224}
-  _speed: 25
+  _speed: 50
   _lifetime: 10
   _rotateToVelocity: 0
 --- !u!114 &7248636268133523852

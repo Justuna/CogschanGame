@@ -128,8 +128,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b55e79b4561574bb6b1ab7fcfcfb5625, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Destroyed:
+    m_PersistentCalls:
+      m_Calls: []
   _rigidBody: {fileID: 5485438763088755224}
-  _speed: 50
+  _speed: 200
+  _lifetime: 10
+  _rotateToVelocity: 0
 --- !u!114 &7248636268133523852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,8 +148,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isHealing: 0
-  _damage: 3
-  _impulseMagnitude: 10
+  Impacted:
+    m_PersistentCalls:
+      m_Calls: []
+  _damage: 4
+  _impulseMagnitude: 4
   _canCancelOverride: 0
   _maintainedMomentum: 1
-  _spawnedOnImpact: []
+  _impactGameObjectActions: []

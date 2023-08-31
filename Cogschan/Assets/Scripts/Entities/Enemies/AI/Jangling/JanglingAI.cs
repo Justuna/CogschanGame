@@ -53,6 +53,7 @@ public class JanglingAI : MonoBehaviour
         es_Watching.WatchingToStunned += XToStunned;
         es_Running.RunningToIdle += RunningToIdle;
         es_Running.RunningToStunned += XToStunned;
+        es_Running.RunningToWatching += RunningToWatching;
         es_Stunned.StunEnded += StunEnded;
 
         _state = es_Idle;
@@ -77,6 +78,14 @@ public class JanglingAI : MonoBehaviour
         DestinationNode = null;
         _adjacentNodes = _services.PointGraph.GetAdjacent(CurrentNode.Value);
         _state = es_Idle;
+    }
+
+    public void RunningToWatching()
+    {
+        CurrentNode = DestinationNode;
+        DestinationNode = null;
+        _adjacentNodes = _services.PointGraph.GetAdjacent(CurrentNode.Value);
+        _state = es_Watching;
     }
 
     public void IdleToStartled()

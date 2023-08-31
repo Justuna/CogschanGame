@@ -329,6 +329,7 @@ MonoBehaviour:
   _playerOnly: 1
   _optInMessage: Press E to interact.
   _services: {fileID: 3977001642723400981}
+  _timeBeforeLive: 1
   _clipCount: 1
   _ammoType: {fileID: 11400000, guid: 39566ab1726a7854ea0ca10416c3d625, type: 2}
 --- !u!1 &8654708758623310538

@@ -139,6 +139,7 @@ public class SpawnManager : MonoBehaviour
         SpawnInfo selectedSpawn = new FiniteDistribution<SpawnInfo>(spawnsInCat, spawnWeights).GetRandomValue();
         _credits -= selectedSpawn.Cost;
         selectedSpawn.Spawner.Spawn(transform.position);
+
         return true;
     }
 }

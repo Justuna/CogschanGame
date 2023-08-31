@@ -77,10 +77,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 369ad6fa432685244801255967869565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Fired>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
   _muzzleFlash: {fileID: 0}
   _recoilPattern: {fileID: 11400000, guid: f9064558a77e7db4fae6aefb19152ea5, type: 2}
-  _spreadPattern: {fileID: 11400000, guid: e6d8bd9971a216e4ea02a00edc3d395a, type: 2}
-  _spreadPatternAccutate: {fileID: 11400000, guid: cc836db2ac7b7f64ca839bad25d041d8,
+  _spreadPattern: {fileID: 11400000, guid: 1a821786aa551eb4b9b5d051c9dec372, type: 2}
+  _spreadPatternAccutate: {fileID: 11400000, guid: f7a48c80d40466a488863238683860a7,
     type: 2}
   _fireRate: 1
   _name: RocketLauncher
@@ -92,7 +95,7 @@ MonoBehaviour:
   _maxClips: 4
   _count: 1
   _countAccurate: 1
-  _reloadTime: 1
+  _reloadTime: 2.5
   _projectilePrefab: {fileID: 521982211236534687, guid: d6668dd9a48bbe0448549e9458a97c1e,
     type: 3}
 --- !u!1 &7554969327838763247

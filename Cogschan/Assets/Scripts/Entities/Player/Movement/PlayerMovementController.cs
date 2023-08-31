@@ -20,6 +20,7 @@ public class PlayerMovementController : MonoBehaviour
     [SerializeField] private MS_Prone ms_Prone;
     [SerializeField] private EventReference _runningSound;
     [SerializeField] private float _dashCooldown;
+    public int MaxJumps = 1;
     public float JumpImpulse;
 
     /// <summary>
@@ -28,6 +29,8 @@ public class PlayerMovementController : MonoBehaviour
     private IMovementState _currentState;
     private EventInstance _runSoundInstance;
     private float _dashTimer;
+    private bool _wasGrounded = false;
+    private int _jumps = 0;
 
     /// <summary>
     /// Whether or not Cogschan is mid-dash.
@@ -113,6 +116,22 @@ public class PlayerMovementController : MonoBehaviour
         if (CurrentState is IMachineStateBehave behaveState)
             behaveState.OnBehave();
         if (_dashTimer > 0) _dashTimer -= Time.deltaTime;
+
+        if (_services.GroundChecker.IsGrounded)
+        {
+            if (!_wasGrounded)
+            {
+                _jumps = 0;
+                _wasGrounded = true;
+            }
+        }
+        else
+        {
+            if (_wasGrounded)
+            {
+                _wasGrounded = false;
+            }
+        }
     }
 
     private void LateUpdate()
@@ -144,6 +163,15 @@ public class PlayerMovementController : MonoBehaviour
     private void OnJumpPressed()
     {
         if (gameObject.activeSelf) CurrentState.OnJump();
+    }
+
+    public void DoJump()
+    {
+        if (_jumps >= MaxJumps) return;
+
+        _services.KinematicPhysics.RemoveComponent(Vector3.down);
+        _services.KinematicPhysics.AddImpulse(Vector3.up * _services.MovementController.JumpImpulse, false, 0);
+        _jumps += 1;
     }
 
     public void ResetDashCooldown()

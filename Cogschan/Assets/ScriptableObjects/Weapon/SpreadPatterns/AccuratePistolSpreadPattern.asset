@@ -38,4 +38,4 @@ MonoBehaviour:
     m_RotationOrder: 4
   Duration: 1.5
   Increase: 0.3
-  Magnitude: 4
+  Magnitude: 2

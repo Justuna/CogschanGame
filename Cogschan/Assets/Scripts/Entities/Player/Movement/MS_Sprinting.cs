@@ -1,4 +1,4 @@
-﻿using FMODUnity;
+using FMODUnity;
 using UnityEngine;
 
 public class MS_Sprinting : MonoBehaviour, IMovementState, IMachineStateLateBehave
@@ -53,7 +53,7 @@ public class MS_Sprinting : MonoBehaviour, IMovementState, IMachineStateLateBeha
             _services.MovementController.RunningSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
 
-        if (!CogschanInputSingleton.Instance.IsHoldingSprint)
+        if (!CogschanInputSingleton.Instance.IsHoldingSprint || CogschanInputSingleton.Instance.IsHoldingFire)
         {
             if (CogschanInputSingleton.Instance.IsHoldingAim)
             {
@@ -73,11 +73,7 @@ public class MS_Sprinting : MonoBehaviour, IMovementState, IMachineStateLateBeha
 
     public void OnJump()
     {
-        if (_services.GroundChecker.IsGrounded)
-        {
-            _services.KinematicPhysics.AddImpulse(Vector3.up * _services.MovementController.JumpImpulse, false, 0);
-            _services.CogschanAnimationController.Jump();
-        }
+        _services.MovementController.DoJump();
     }
 
     public float GetBaseSpeed()
