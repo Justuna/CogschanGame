@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -37,10 +38,13 @@ public class EnemySpawner : Spawner
         if (s_enemyCount >= GameStateSingleton.Instance.MaxEnemies)
             return;
 
-        position.y = GroundFinder.HeightOfGround(position);
-        if (NavMesh.SamplePosition(position, out NavMeshHit hit, Mathf.Infinity, NavMesh.AllAreas))
-            position = hit.position;
-        position += Vector3.up * _height;
+        do
+        {
+            position.y = GroundFinder.HeightOfGround(position);
+            if (NavMesh.SamplePosition(position, out NavMeshHit hit, Mathf.Infinity, NavMesh.AllAreas))
+                position = hit.position;
+            position += Vector3.up * _height;
+        } while (Physics.SphereCastNonAlloc(position, 1, Vector3.up, null, 0) != 0);
 
         GameObject enemy = Instantiate(_prefab, position, Quaternion.identity);
         s_enemyCount++;
