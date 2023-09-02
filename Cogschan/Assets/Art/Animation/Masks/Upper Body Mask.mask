@@ -7,5 +7,251 @@ AvatarMask:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Upper Body Mask
-  m_Mask: 00000000010000000100000000000000000000000100000001000000010000000100000000000000000000000100000001000000
-  m_Elements: []
+  m_Mask: 00000000000000000000000000000000000000000100000001000000010000000100000000000000000000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: BodyMesh
+    m_Weight: 0
+  - m_Path: Deform Rig
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Bust
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Headphones
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Hood
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Ahoge.000
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Ahoge.000/Ahoge.001
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Ahoge.000/Ahoge.001/Ahoge.002
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Bangs.Main.000_P
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Bangs.Main.000_P/Bangs.Main.001_P
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Bangs.Main.000_P/Bangs.Main.001_P/Bangs.Main.002_P
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Bangs.Main.000_P/Bangs.Main.001_P/Bangs.Main.002_P/Bangs.Main.003_P
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Bangs.Main.000_P/Bangs.Split.000_P
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Bangs.Main.000_P/Bangs.Split.000_P/Bangs.Split.001_P
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Bangs.Main.000_P/Bangs.Split.000_P/Bangs.Split.001_P/Bangs.Split.002_P
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Bangs.Main.000_S
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Bangs.Main.000_S/Bangs.Main.001_S
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Bangs.Main.000_S/Bangs.Main.001_S/Bangs.FrontSplit.000_S
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Bangs.Main.000_S/Bangs.Main.001_S/Bangs.FrontSplit.000_S/Bangs.FrontSplit.001_S
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Bangs.Main.000_S/Bangs.Main.001_S/Bangs.Main.002_S
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Bangs.Main.000_S/Bangs.Main.001_S/Bangs.Main.002_S/Bangs.Main.003_S
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Bangs.Main.000_S/Bangs.Main.001_S/Bangs.Main.002_S/Bangs.Main.003_S/Bangs.Main.004_S
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Bangs.Main.000_S/Bangs.Main.001_S/Bangs.Main.002_S/Bangs.Main.003_S/Bangs.Main.004_S/Bangs.Main.005_S
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Bangs.Main.000_S/Bangs.Main.001_S/Bangs.SideSplit.000_S
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Bangs.Main.000_S/Bangs.Main.001_S/Bangs.SideSplit.000_S/Bangs.SideSplit.001_S
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Bangs.Main.000_S/Bangs.Main.001_S/Bangs.SideSplit.000_S/Bangs.SideSplit.001_S/Bangs.SideSplit.002_S
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Bangs.Main.000_S/Bangs.Main.001_S/Bangs.SideSplit.000_S/Bangs.SideSplit.003_S
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Bangs.Main.000_S/Bangs.Main.001_S/Bangs.SideSplit.000_S/Bangs.SideSplit.003_S/Bangs.SideSplit.004_S
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Bangs.Main.000_S/Bangs.Main.001_S/Bangs.SideSplit.000_S/Bangs.SideSplit.003_S/Bangs.SideSplit.005_S
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Part.000
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Part.000/Part.001
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Ponytail.Main.000
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Ponytail.Main.000/Ponytail.Main.001
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Ponytail.Main.000/Ponytail.Main.001/Ponytail.Main.002
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Ponytail.Main.000/Ponytail.Main.001/Ponytail.Main.002/Ponytail.Main.003
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Ponytail.Main.000/Ponytail.Main.001/Ponytail.Main.002/Ponytail.Main.003/Ponytail.Main.004
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Ponytail.Main.000/Ponytail.Main.001/Ponytail.Main.002/Ponytail.Main.003/Ponytail.Main.004/Ponytail.Main.005
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Ponytail.Main.000/Ponytail.Main.001/Ponytail.Main.002/Ponytail.Main.003/Ponytail.Main.004/Ponytail.Main.005/Ponytail.Main.006
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Ponytail.Main.000/Ponytail.Main.001/Ponytail.Main.002/Ponytail.Main.003/Ponytail.Main.004/Ponytail.Main.005/Ponytail.Main.006/Ponytail.EndSplit
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Ponytail.Main.000/Ponytail.Main.001/Ponytail.Main.002/Ponytail.Main.003/Ponytail.Main.004/Ponytail.Main.005/Ponytail.Main.006/Ponytail.Main.007
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Ponytail.Main.000/Ponytail.Main.001/Ponytail.Main.002/Ponytail.Main.003/Ponytail.Main.004/Ponytail.Main.005/Ponytail.Main.006/Ponytail.Main.007/Ponytail.Main.008
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Ponytail.Main.000/Ponytail.Main.001/Ponytail.Main.002/Ponytail.Main.003/Ponytail.Main.004/Ponytail.Split.000_P
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Ponytail.Main.000/Ponytail.Main.001/Ponytail.Main.002/Ponytail.Main.003/Ponytail.Main.004/Ponytail.Split.000_P/Ponytail.Split.001_P
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Ponytail.Main.000/Ponytail.Main.001/Ponytail.Main.002/Ponytail.Main.003/Ponytail.Main.004/Ponytail.Split.000_P/Ponytail.Split.001_P/Ponytail.Split.002_P
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Ponytail.Main.000/Ponytail.Main.001/Ponytail.Main.002/Ponytail.Main.003/Ponytail.Split.000_S
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Ponytail.Main.000/Ponytail.Main.001/Ponytail.Main.002/Ponytail.Main.003/Ponytail.Split.000_S/Ponytail.Split.001_S
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Ponytail.Main.000/Ponytail.Main.001/Ponytail.Main.002/Ponytail.Main.003/Ponytail.Split.000_S/Ponytail.Split.001_S/Ponytail.Split.002_S
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Sideburns.000_L
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Sideburns.000_L/Sideburns.001_L
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Sideburns.000_L/Sideburns.001_L/Sideburns.002_L
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Sideburns.000_L/Sideburns.001_L/Sideburns.002_L/Sideburns.003_L
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Sideburns.000_L/Sideburns.001_L/Sideburns.002_L/Sideburns.003_L/Sideburns.004_L
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Sideburns.000_R
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Sideburns.000_R/Sideburns.001_R
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Sideburns.000_R/Sideburns.001_R/Sideburns.002_R
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Sideburns.000_R/Sideburns.001_R/Sideburns.002_R/Sideburns.003_R
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Neck/Head/Sideburns.000_R/Sideburns.001_R/Sideburns.002_R/Sideburns.003_R/Sideburns.004_R
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_L
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_L/Arm_L
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_L/Arm_L/Forearm_L
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_L/Arm_L/Forearm_L/Forearm.Twist_L
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_L/Arm_L/Forearm_L/Hand_L
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_L/Arm_L/Forearm_L/Hand_L/Index.000_L
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_L/Arm_L/Forearm_L/Hand_L/Index.000_L/Index.001_L
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_L/Arm_L/Forearm_L/Hand_L/Index.000_L/Index.001_L/Index.002_L
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_L/Arm_L/Forearm_L/Hand_L/Middle.000_L
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_L/Arm_L/Forearm_L/Hand_L/Middle.000_L/Middle.001_L
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_L/Arm_L/Forearm_L/Hand_L/Middle.000_L/Middle.001_L/Middle.002_L
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_L/Arm_L/Forearm_L/Hand_L/Pinky.000_L
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_L/Arm_L/Forearm_L/Hand_L/Pinky.000_L/Pinky.001_L
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_L/Arm_L/Forearm_L/Hand_L/Pinky.000_L/Pinky.001_L/Pinky.002_L
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_L/Arm_L/Forearm_L/Hand_L/Ring.000_L
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_L/Arm_L/Forearm_L/Hand_L/Ring.000_L/Ring.001_L
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_L/Arm_L/Forearm_L/Hand_L/Ring.000_L/Ring.001_L/Ring.002_L
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_L/Arm_L/Forearm_L/Hand_L/Thumb.000_L
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_L/Arm_L/Forearm_L/Hand_L/Thumb.000_L/Thumb.001_L
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_L/Arm_L/Forearm_L/Hand_L/Thumb.000_L/Thumb.001_L/Thumb.002_L
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_R
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_R/Arm_R
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_R/Arm_R/Forearm_R
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_R/Arm_R/Forearm_R/Forearm.Twist_R
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_R/Arm_R/Forearm_R/Hand_R
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_R/Arm_R/Forearm_R/Hand_R/Index.000_R
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_R/Arm_R/Forearm_R/Hand_R/Index.000_R/Index.001_R
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_R/Arm_R/Forearm_R/Hand_R/Index.000_R/Index.001_R/Index.002_R
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_R/Arm_R/Forearm_R/Hand_R/Middle.000_R
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_R/Arm_R/Forearm_R/Hand_R/Middle.000_R/Middle.001_R
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_R/Arm_R/Forearm_R/Hand_R/Middle.000_R/Middle.001_R/Middle.002_R
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_R/Arm_R/Forearm_R/Hand_R/Pinky.000_R
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_R/Arm_R/Forearm_R/Hand_R/Pinky.000_R/Pinky.001_R
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_R/Arm_R/Forearm_R/Hand_R/Pinky.000_R/Pinky.001_R/Pinky.002_R
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_R/Arm_R/Forearm_R/Hand_R/Ring.000_R
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_R/Arm_R/Forearm_R/Hand_R/Ring.000_R/Ring.001_R
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_R/Arm_R/Forearm_R/Hand_R/Ring.000_R/Ring.001_R/Ring.002_R
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_R/Arm_R/Forearm_R/Hand_R/Thumb.000_R
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_R/Arm_R/Forearm_R/Hand_R/Thumb.000_R/Thumb.001_R
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Abdomen/Chest/Shoulder_R/Arm_R/Forearm_R/Hand_R/Thumb.000_R/Thumb.001_R/Thumb.002_R
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Belt.Back
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Belt.Front
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Belt.Side
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Object_L
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Object_R
+    m_Weight: 1
+  - m_Path: Deform Rig/Hip/Staple
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Staple/BackSleeve
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Staple/FrontSleeve
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Thigh_L
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Thigh_L/Shin_L
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Thigh_L/Shin_L/Foot_L
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Thigh_L/Shin_L/Foot_L/Toe_L
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Thigh_R
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Thigh_R/Shin_R
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Thigh_R/Shin_R/Foot_R
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Thigh_R/Shin_R/Foot_R/Toe_R
+    m_Weight: 0
+  - m_Path: Deform Rig/Hip/Wrap
+    m_Weight: 0
+  - m_Path: HairMesh
+    m_Weight: 0
+  - m_Path: HeadMesh
+    m_Weight: 0
+  - m_Path: LegsMesh
+    m_Weight: 0

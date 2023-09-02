@@ -26,10 +26,10 @@ public class AS_Idle : MonoBehaviour, IActionState, IMachineStateBehave, IMachin
 
     public void OnLateBehave()
     {
-        var targetPos = _services.CameraController.TargetPosition ?? transform.forward;
+        /*var targetPos = _services.CameraController.TargetPosition ?? transform.forward;
 
         var weaponTransform = _services.WeaponCache.CurrentWeapon.GetGameObject().transform;
-        weaponTransform.rotation = Quaternion.Lerp(weaponTransform.rotation, Quaternion.LookRotation(targetPos - weaponTransform.position), _weaponTurnSpeed * Time.deltaTime);
+        weaponTransform.rotation = Quaternion.Lerp(weaponTransform.rotation, Quaternion.LookRotation(targetPos - weaponTransform.position), _weaponTurnSpeed * Time.deltaTime);*/
     }
 
     public void OnNextWeapon()
