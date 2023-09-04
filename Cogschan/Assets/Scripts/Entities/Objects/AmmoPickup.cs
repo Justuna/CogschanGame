@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using static Codice.Client.BaseCommands.Import.Commit;
 
 public class AmmoPickup : Pickup
 {

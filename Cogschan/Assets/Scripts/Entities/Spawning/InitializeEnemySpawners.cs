@@ -13,6 +13,7 @@ public class InitializeEnemySpawners : MonoBehaviour
     {
         if (Application.isPlaying) return;
 
+#if  UNITY_EDITOR
         Undo.RecordObjects(GetComponentsInChildren<EnemySpawner>(), "Update spawners' managers");
         foreach (var spawner in GetComponentsInChildren<EnemySpawner>())
         {
@@ -27,5 +28,6 @@ public class InitializeEnemySpawners : MonoBehaviour
             if (newSpawnManagerList.Count > spawner.SpawnManagers.Length)
                 spawner.SpawnManagers = newSpawnManagerList.ToArray();
         }
+#endif
     }
 }

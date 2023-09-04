@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 6a7358fbf2cce474bb6af63da0fcb99e
   - enabled: 1
+    path: Assets/Scenes/Game/Graybox.unity
+    guid: 293f669db087006429888902f211db4f
+  - enabled: 0
     path: Assets/Scenes/Game/Smallbox.unity
     guid: 357cd790c3e8f1544b1815da6a775ab0
   m_configObjects: {}

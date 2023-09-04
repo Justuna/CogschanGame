@@ -513,8 +513,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startScene:
-    asset: {fileID: 102900000, guid: 357cd790c3e8f1544b1815da6a775ab0, type: 3}
-    guid: 357cd790c3e8f1544b1815da6a775ab0
+    asset: {fileID: 102900000, guid: 293f669db087006429888902f211db4f, type: 3}
+    guid: 293f669db087006429888902f211db4f
   _playButton: {fileID: 988323071}
   _quitButton: {fileID: 1610210193}
 --- !u!1 &812800703
