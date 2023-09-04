@@ -112,7 +112,7 @@ public class PlayerCameraController : MonoBehaviour
     {
         // Pick which camera to use
         // Aim camera has higher priority, so it will automatically take hold if it's active
-        if (_services.MovementController.IsAiming)
+        if (_services.Animator.GetBool("IsAiming"))
         {
             _aimCamera.gameObject.SetActive(true);
         }
