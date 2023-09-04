@@ -16,10 +16,10 @@ public abstract class Gun : MonoBehaviour, IWeapon
     [SerializeField] protected SpreadPattern _spreadPattern;
     [Tooltip("The spread pattern to call when this gun fires accurately.")]
     [SerializeField] protected SpreadPattern _spreadPatternAccutate;
-    [Tooltip("How long is required to wait after firing the gun to fire it again.")]
-    [SerializeField] protected float _fireRate = 0.5f;
     [Tooltip("The unique name that identifies this gun prefab.")]
     [SerializeField] protected string _name;
+    [Tooltip("The animation type of the weapon.")]
+    [SerializeField] protected WeaponAnimationType _animationType;
     [Tooltip("Icon for this weapon")]
     [SerializeField] protected Sprite _icon;
     [Tooltip("The transform from which the bullet will originate.")]
@@ -44,7 +44,6 @@ public abstract class Gun : MonoBehaviour, IWeapon
 
 
     protected EntityServiceLocator _services;
-    protected float _fireRateTimer = 0;
     protected int _loadedAmmo = 0;
     protected int _reserveAmmo = 0;
     /// <summary>
@@ -78,11 +77,6 @@ public abstract class Gun : MonoBehaviour, IWeapon
 
     protected void Update()
     {
-        if (_fireRateTimer > 0)
-        {
-            _fireRateTimer -= Time.deltaTime;
-        }
-
         _spreadEvent?.StepTime();
         _spreadEventAccurate?.StepTime();
     }
@@ -90,6 +84,11 @@ public abstract class Gun : MonoBehaviour, IWeapon
     public string GetName()
     {
         return _name;
+    }
+
+    public WeaponAnimationType GetAnimationType() 
+    {
+        return _animationType;
     }
 
     public Sprite GetIcon()
@@ -104,14 +103,14 @@ public abstract class Gun : MonoBehaviour, IWeapon
 
     public void Use()
     {
-        if (_fireRateTimer > 0 || InUse() || !SufficientAmmo()) return;
+        if (!SufficientAmmo()) return;
 
         // TODO: Wait for animation to play before doing all fire setup.
         // TODO: Move next part to a delayed function callback for when animation finishes.
 
         PreFireSetup();
 
-        if (_services.MovementController.IsAiming) FireAccurate(_services.CameraController.TargetPosition.Value);
+        if (_services.Animator.GetBool("IsAiming")) FireAccurate(_services.CameraController.TargetPosition.Value);
         else Fire(_services.CameraController.TargetPosition.Value);
     }
 
@@ -120,7 +119,6 @@ public abstract class Gun : MonoBehaviour, IWeapon
     /// </summary>
     private void PreFireSetup()
     {
-        _fireRateTimer = _fireRate;
         _loadedAmmo--;
 
         if (_muzzleFlash != null) _muzzleFlash.Play();
@@ -136,7 +134,7 @@ public abstract class Gun : MonoBehaviour, IWeapon
                     {
                         Func<bool> endCondition = () =>
                         {
-                            bool condition = !_services.ActionController.IsFiring || !SufficientAmmo();
+                            bool condition = _services.Animator.GetBool("WeaponBusy") || !SufficientAmmo();
                             _contRecoilActive = !condition;
                             return condition;
                         };
@@ -162,29 +160,6 @@ public abstract class Gun : MonoBehaviour, IWeapon
     /// </summary>
     /// <param name="targetPosition">The world position to be firing at.</param>
     protected abstract void FireAccurate(Vector3 targetPosition);
-
-
-
-    /// <summary>
-    /// Whether or not Cogschan is in a firing animation.
-    /// </summary>
-    /// <returns>
-    /// Returns true if the Cogschan is still in the middle of the firing animation. Returns false otherwise.
-    /// </returns>
-    public bool InUse()
-    {
-        // TODO: Implement animation stuff.
-
-        return false;
-    }
-
-    /// <summary>
-    /// Cancels the fire animation.
-    /// </summary>
-    public void CancelUse()
-    {
-        // TODO: Implement animation stuff.
-    }
 
     public bool SufficientAmmo()
     {

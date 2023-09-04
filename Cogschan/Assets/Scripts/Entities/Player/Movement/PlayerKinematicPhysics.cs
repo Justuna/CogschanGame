@@ -58,7 +58,7 @@ public class PlayerKinematicPhysics : KinematicPhysics
         }
 
         actualVelocityHorizontal += desiredMovementHorizontal * maxDelta;
-        if (actualVelocityHorizontal.magnitude > _services.MovementController.CurrentBaseSpeed)
+        if (actualVelocityHorizontal.magnitude > _services.Animator.GetFloat("BaseSpeed"))
         {
             actualVelocityHorizontal = Vector2.ClampMagnitude(actualVelocityHorizontal, previousVelocityHorizontal.magnitude);
         }

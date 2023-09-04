@@ -138,4 +138,9 @@ public class WeaponCache : MonoBehaviour
 
         return didLoad;
     }
+
+    public void UseWeapon()
+    {
+        CurrentWeapon.Use();
+    }
 }

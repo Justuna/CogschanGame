@@ -1,6 +1,12 @@
 ﻿using System;
 using UnityEngine;
 
+public enum WeaponAnimationType
+{
+    FINGER_PISTOL,
+    ASSAULT_RIFLE,
+}
+
 /// <summary>
 /// An interface providing functions that a weapon would need.
 /// </summary>
@@ -23,6 +29,12 @@ public interface IWeapon
     /// </returns>
     public string GetName();
 
+    /// <summary>
+    /// Returns the <c>WeaponAnimationType</c> that this weapon uses.
+    /// </summary>
+    /// <returns></returns>
+    public WeaponAnimationType GetAnimationType();
+
     /// <returns>
     /// Returns the icon for this weapon
     /// </returns>
@@ -37,19 +49,6 @@ public interface IWeapon
     /// Attempts to use the weapon.
     /// </summary>
     public void Use();
-
-    /// <summary>
-    /// Whether or not the weapon is currently active.
-    /// </summary>
-    /// <returns>
-    /// Returns <c>true</c> if the weapon is active. Returns <c>false</c> if the weapon is idle.
-    /// </returns>
-    public bool InUse();
-
-    /// <summary>
-    /// Cancels activity for this weapon if there currently is any.
-    /// </summary>
-    public void CancelUse();
 
     /// <summary>
     /// Whether or not the weapon has enough ammo to be used.
