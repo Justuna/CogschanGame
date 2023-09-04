@@ -1,7 +1,7 @@
 ﻿#if UNITY_EDITOR
 using UnityEditor;
-using UnityEngine;
 #endif
+using UnityEngine;
 
 public static class EditorUtils
 {
@@ -26,6 +26,7 @@ public static class EditorUtils
 
     public static void DrawTextPretty(Vector3 worldPos, string text, Color color = default, int fontSize = 24, string fontPath = Urbanist.Medium, Color backgroundColor = default, int padding = 4, Vector2 anchor = default)
     {
+#if UNITY_EDITOR    
         GUIStyle style = new GUIStyle(GUI.skin.label)
         {
             font = AssetDatabase.LoadAssetAtPath<Font>(fontPath),
@@ -34,6 +35,7 @@ public static class EditorUtils
             normal = new GUIStyleState() { textColor = color, background = MakeColorTexture(1, 1, backgroundColor) },
         };
         DrawText(worldPos, text, style, anchor);
+#endif
     }
 
     public static void DrawText(Vector3 worldPos, string text, GUIStyle guiStyle, Vector2 anchor = default)

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem.WebGL;
 
 public class FlyingKinematicPhysics : KinematicPhysics
 {

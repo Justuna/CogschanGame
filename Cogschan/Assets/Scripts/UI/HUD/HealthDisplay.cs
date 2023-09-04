@@ -176,8 +176,8 @@ public class HealthDisplay : MonoBehaviour
             if (_changeFill != null)
                 _changeFill.color = _changeFillColor;
         }
-#endif
     }
+#endif
 
     private void OnDestroy()
     {
