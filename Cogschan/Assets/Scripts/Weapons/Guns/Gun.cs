@@ -134,7 +134,7 @@ public abstract class Gun : MonoBehaviour, IWeapon
                     {
                         Func<bool> endCondition = () =>
                         {
-                            bool condition = _services.Animator.GetBool("WeaponBusy") || !SufficientAmmo();
+                            bool condition = !_services.Animator.GetBool("WeaponBusy") || !SufficientAmmo();
                             _contRecoilActive = !condition;
                             return condition;
                         };

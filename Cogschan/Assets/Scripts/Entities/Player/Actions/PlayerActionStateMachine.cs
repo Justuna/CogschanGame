@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.Animations;
 
 public class PlayerActionStateMachine : StateMachineBehaviour
 {
@@ -20,8 +22,6 @@ public class PlayerActionStateMachine : StateMachineBehaviour
     {
         base.OnStateUpdate(animator, stateInfo, layerIndex);
 
-        _tryReloadTimer = _tryReloadTime;
-
         if (_services == null) _services = animator.GetComponentInParent<EntityServiceLocator>();
         if (_animator == null) _animator = animator;
         if (!_initialized && _services != null && CogschanInputSingleton.Instance != null)
@@ -42,10 +42,11 @@ public class PlayerActionStateMachine : StateMachineBehaviour
         animator.SetInteger("WeaponID", (int) weapon.GetAnimationType());
         animator.SetBool("IsFiring", CogschanInputSingleton.Instance.IsHoldingFire && _fireLocks == 0 && weapon.SufficientAmmo());
 
-        if (CogschanInputSingleton.Instance.IsHoldingFire && weapon.CanReload() && !weapon.SufficientAmmo())
+        if (CogschanInputSingleton.Instance.IsHoldingFire && weapon.CanReload() && !weapon.SufficientAmmo() && !animator.GetBool("WeaponReloading")
+            && !animator.GetBool("IsSprinting"))
         {
             _tryReloadTimer -= Time.deltaTime;
-            if (_tryReloadTimer == 0)
+            if (_tryReloadTimer <= 0)
             {
                 _tryReloadTimer = _tryReloadTime;
                 AttemptReload();
@@ -82,6 +83,11 @@ public class PlayerActionStateMachine : StateMachineBehaviour
         if (_reloadLocks > 0 || !_services.WeaponCache.CurrentWeapon.CanReload()) return;
 
         _animator.SetTrigger("Reload");
+    }
+
+    public void Reload()
+    {
+        _services.WeaponCache.CurrentWeapon.Reload();
     }
 
     public void AddSwitchLock()
