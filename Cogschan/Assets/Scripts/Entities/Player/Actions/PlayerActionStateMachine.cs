@@ -43,7 +43,7 @@ public class PlayerActionStateMachine : StateMachineBehaviour
         animator.SetBool("IsFiring", CogschanInputSingleton.Instance.IsHoldingFire && _fireLocks == 0 && weapon.SufficientAmmo());
 
         if (CogschanInputSingleton.Instance.IsHoldingFire && weapon.CanReload() && !weapon.SufficientAmmo() && !animator.GetBool("WeaponReloading")
-            && !animator.GetBool("IsSprinting"))
+            && !animator.GetBool("IsSprinting") && _reloadLocks == 0)
         {
             _tryReloadTimer -= Time.deltaTime;
             if (_tryReloadTimer <= 0)

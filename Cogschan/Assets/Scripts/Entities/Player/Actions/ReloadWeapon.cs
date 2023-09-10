@@ -7,6 +7,7 @@ public class ReloadWeapon : StateMachineBehaviour
         base.OnStateMachineEnter(animator, stateMachinePathHash);
 
         animator.SetBool("WeaponReloading", true);
+        animator.GetBehaviour<PlayerAirStateMachine>().AddDashLock();
     }
 
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -15,5 +16,6 @@ public class ReloadWeapon : StateMachineBehaviour
 
         animator.GetBehaviour<PlayerActionStateMachine>().Reload();
         animator.SetBool("WeaponReloading", false);
+        animator.GetBehaviour<PlayerAirStateMachine>().RemoveDashLock();
     }
 }

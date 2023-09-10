@@ -140,6 +140,8 @@ public class PlayerAirStateMachine : StateMachineBehaviour
 
         _animator.SetBool("IsDashing", true);
         _animator.GetBehaviour<PlayerActionStateMachine>().AddFireLock();
+        _animator.GetBehaviour<PlayerActionStateMachine>().AddReloadLock();
+        _animator.GetBehaviour<PlayerActionStateMachine>().AddSwitchLock();
 
         Quaternion camDir = Quaternion.Euler(_services.CameraController.CameraLateralDirection);
         Vector3 movement = new Vector3(CogschanInputSingleton.Instance.MovementDirection.x, 0, CogschanInputSingleton.Instance.MovementDirection.y);

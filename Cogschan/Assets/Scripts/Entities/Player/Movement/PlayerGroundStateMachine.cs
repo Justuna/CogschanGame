@@ -14,6 +14,6 @@ public class PlayerGroundStateMachine : StateMachineBehaviour
         if (_services == null) return;
 
         animator.SetBool("IsAiming", CogschanInputSingleton.Instance.IsHoldingAim && !animator.GetBool("IsSprinting"));
-        animator.SetBool("IsSprinting", CogschanInputSingleton.Instance.IsHoldingSprint && !animator.GetBool("IsAiming"));
+        animator.SetBool("IsSprinting", CogschanInputSingleton.Instance.IsHoldingSprint && !animator.GetBool("IsAiming") && !animator.GetBool("WeaponBusy"));
     }
 }

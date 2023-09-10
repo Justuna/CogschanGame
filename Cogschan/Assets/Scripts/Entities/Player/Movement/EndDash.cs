@@ -6,5 +6,7 @@ public class EndDash : StateMachineBehaviour
     {
         animator.SetBool("IsDashing", false);
         animator.GetBehaviour<PlayerActionStateMachine>().RemoveFireLock();
+        animator.GetBehaviour<PlayerActionStateMachine>().RemoveReloadLock();
+        animator.GetBehaviour<PlayerActionStateMachine>().RemoveSwitchLock();
     }
 }
