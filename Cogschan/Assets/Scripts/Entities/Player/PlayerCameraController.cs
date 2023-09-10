@@ -11,7 +11,8 @@ public class PlayerCameraController : MonoBehaviour
     [SerializeField] private EntityServiceLocator _services;
     [SerializeField] private CinemachineVirtualCamera _moveCamera;
     [SerializeField] private CinemachineVirtualCamera _aimCamera;
-    [SerializeField] private Transform _followTarget;
+    [SerializeField] private Transform _cameraFollowTarget;
+    [SerializeField] private Transform _rigFollowTarget;
     [SerializeField] private Transform _targetReticle;
     [SerializeField] private Transform _cogschanPOV;
     [SerializeField] private LayerMask _targetableMask;
@@ -102,7 +103,7 @@ public class PlayerCameraController : MonoBehaviour
         }
 
         // Now we actually set the new rotation
-        _followTarget.transform.localEulerAngles = angles;
+        _cameraFollowTarget.transform.localEulerAngles = angles;
     }
 
     /// <summary>
@@ -161,6 +162,8 @@ public class PlayerCameraController : MonoBehaviour
             _targetReticle.position = cameraCenter;
             TargetPosition = null;
         }
+
+        _rigFollowTarget.position = TargetPosition.HasValue ? TargetPosition.Value : _cogschanPOV.position + playerView.direction;
     }
 
     public void AddRecoil(SimpleRecoilPattern pattern)
