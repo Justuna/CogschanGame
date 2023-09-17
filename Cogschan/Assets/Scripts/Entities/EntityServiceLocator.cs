@@ -17,6 +17,7 @@ public class EntityServiceLocator : MonoBehaviour
     [Header("Player Only")]
     public PlayerCameraController CameraController;
     public WeaponCache WeaponCache;
+    public PlayerRigController RigController;
 
     [Header("Enemies Only")]
     public LOSChecker LOSChecker;

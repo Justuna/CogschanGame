@@ -24,6 +24,8 @@ public abstract class Gun : MonoBehaviour, IWeapon
     [SerializeField] protected Sprite _icon;
     [Tooltip("The transform from which the bullet will originate.")]
     [SerializeField] protected Transform _muzzle;
+    [Tooltip("The transform on which the left hand will rest when this gun uses the left hand IK functionality.")]
+    [SerializeField] protected Transform _leftHandPosition;
 
     [Header("Ammo Attributes")]
     [Tooltip("Whether or not this gun requires ammo to use.")]
@@ -225,5 +227,10 @@ public abstract class Gun : MonoBehaviour, IWeapon
     float IWeapon.GetReloadTime()
     {
         return _reloadTime;
+    }
+
+    public Transform GetLeftHandTransform()
+    {
+        return _leftHandPosition;
     }
 }

@@ -7,7 +7,7 @@ public class SetWeaponBusy : StateMachineBehaviour
         base.OnStateMachineEnter(animator, stateMachinePathHash);
 
         animator.SetBool("WeaponBusy", true);
-        Debug.Log("firing is now true");
+        animator.GetComponentInParent<EntityServiceLocator>().RigController.AddGeneralAimLock();
     }
 
     public override void OnStateMachineExit(Animator animator, int stateMachinePathHash)
@@ -15,6 +15,6 @@ public class SetWeaponBusy : StateMachineBehaviour
         base.OnStateMachineExit(animator, stateMachinePathHash);
 
         animator.SetBool("WeaponBusy", false);
-        Debug.Log("firing is now false");
+        animator.GetComponentInParent<EntityServiceLocator>().RigController.RemoveGeneralAimLock();
     }
 }

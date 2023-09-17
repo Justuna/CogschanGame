@@ -13,7 +13,16 @@ public class PlayerGroundStateMachine : StateMachineBehaviour
         if (_services == null) _services = animator.GetComponentInParent<EntityServiceLocator>();
         if (_services == null) return;
 
-        animator.SetBool("IsAiming", CogschanInputSingleton.Instance.IsHoldingAim && !animator.GetBool("IsSprinting"));
+        bool wasAiming = animator.GetBool("IsAiming");
+        bool isAiming = CogschanInputSingleton.Instance.IsHoldingAim && !animator.GetBool("IsSprinting");
+
+        if (wasAiming != isAiming)
+        {
+            if (isAiming) animator.GetComponentInParent<EntityServiceLocator>().RigController.AddGeneralAimLock();
+            else animator.GetComponentInParent<EntityServiceLocator>().RigController.RemoveGeneralAimLock();
+        }
+
+        animator.SetBool("IsAiming", isAiming);
         animator.SetBool("IsSprinting", CogschanInputSingleton.Instance.IsHoldingSprint && !animator.GetBool("IsAiming") && !animator.GetBool("WeaponBusy"));
     }
 }

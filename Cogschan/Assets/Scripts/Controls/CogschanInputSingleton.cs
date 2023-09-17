@@ -32,6 +32,10 @@ public class CogschanInputSingleton : MonoBehaviour
     [Tooltip("Whether or not the aim button is in toggle mode *like a dirty heathen would want*")]
     public bool ToggleAim = false;
 
+    private bool _isHoldingAim = false;
+    private bool _isHoldingSprint = false;
+    private bool _isHoldingFire = false;
+
     private CogschanMapping _inputMapping;
     private float _inputScrollTimer;
 
@@ -96,37 +100,31 @@ public class CogschanInputSingleton : MonoBehaviour
 
         _inputMapping.Movement.Sprint.performed += _ => 
         {
-            if (Time.timeScale > 0)
-            {
-                if (ToggleSprint) IsHoldingSprint = !IsHoldingSprint;
-                else IsHoldingSprint = true;
+            if (ToggleSprint) _isHoldingSprint = !_isHoldingSprint;
+            else _isHoldingSprint = true;
 
-                if (ToggleAim) IsHoldingAim = false;
-            }
+            if (ToggleAim) _isHoldingAim = false;
         };
         _inputMapping.Movement.Sprint.canceled += _ => 
         { 
-            if (!ToggleSprint) IsHoldingSprint = false; 
+            if (!ToggleSprint) _isHoldingSprint = false; 
         };
         
 
         _inputMapping.Camera.Aim.performed += _ => 
         {
-            if (Time.timeScale > 0)
-            {
-                if (ToggleAim) IsHoldingAim = !IsHoldingAim;
-                else IsHoldingAim = true;
+            if (ToggleAim) _isHoldingAim = !_isHoldingAim;
+            else _isHoldingAim = true;
 
-                if (ToggleSprint) IsHoldingSprint = false;
-            }
+            if (ToggleSprint) _isHoldingSprint = false;
         };
         _inputMapping.Camera.Aim.canceled += _ => 
         { 
-            if (!ToggleAim) IsHoldingAim = false; 
+            if (!ToggleAim) _isHoldingAim = false; 
         };
 
-        _inputMapping.Weapon.Fire.performed += _ => { if (Time.timeScale > 0) IsHoldingFire = true; };
-        _inputMapping.Weapon.Fire.canceled += _ => { IsHoldingFire = false; };
+        _inputMapping.Weapon.Fire.performed += _ => { _isHoldingFire = true; };
+        _inputMapping.Weapon.Fire.canceled += _ => { _isHoldingFire = false; };
         _inputMapping.Weapon.Reload.performed += _ => { if (Time.timeScale > 0) OnReloadButtonPressed?.Invoke(); };
         _inputMapping.Weapon.NextWeapon.performed += _ => { if (Time.timeScale > 0) OnSwitchNextWeapon?.Invoke(); };
 
@@ -137,6 +135,12 @@ public class CogschanInputSingleton : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale == 0) return;
+
+        IsHoldingAim = _isHoldingAim;
+        IsHoldingSprint = _isHoldingSprint;
+        IsHoldingFire = _isHoldingFire;
+
         Vector2 mouseDelta = _inputMapping.Camera.LookAround.ReadValue<Vector2>();
         MouseDeltaHorizontal = mouseDelta.x;
         MouseDeltaVertical = mouseDelta.y;

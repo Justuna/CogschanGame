@@ -51,6 +51,14 @@ public interface IWeapon
     public void Use();
 
     /// <summary>
+    /// Gets the transform that the left hand should use while holding this weapon.
+    /// </summary>
+    /// <returns>
+    /// The correct transform of the left hand.
+    /// </returns>
+    public Transform GetLeftHandTransform();
+
+    /// <summary>
     /// Whether or not the weapon has enough ammo to be used.
     /// </summary>
     /// <returns>
