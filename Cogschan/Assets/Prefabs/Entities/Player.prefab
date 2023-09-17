@@ -134,6 +134,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Weight: 0
   m_Effectors: []
+--- !u!1 &2487537114592104113
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4046716744605876679}
+  - component: {fileID: 6933745251411592657}
+  m_Layer: 0
+  m_Name: Hair Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4046716744605876679
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2487537114592104113}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.836, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.86, z: 0.5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 49003148103345843}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &6933745251411592657
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2487537114592104113}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.2952118
+  m_Height: 0.9756651
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5789274, z: -0.08555603}
 --- !u!1 &2588351495780088283
 GameObject:
   m_ObjectHideFlags: 0
@@ -1797,6 +1843,102 @@ MonoBehaviour:
       x: 1
       y: 1
       z: 1
+--- !u!1 &6687165145966554657
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4335533048005124518}
+  - component: {fileID: 6405330764708533983}
+  m_Layer: 0
+  m_Name: Jiggle Rig
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4335533048005124518
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6687165145966554657}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 49003148103345843}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6405330764708533983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6687165145966554657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d76f24409a39604ca3986f91ce6d28a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interpolate: 1
+  jiggleRigs:
+  - rootTransform: {fileID: 3057151705939196275}
+    jiggleSettings: {fileID: 11400000, guid: f839be10dc2d7d94e84a85170aa91986, type: 2}
+    ignoredTransforms: []
+    colliders: []
+  - rootTransform: {fileID: 8748216172483336905}
+    jiggleSettings: {fileID: 11400000, guid: ff397f94c11d69442990e64163e6870f, type: 2}
+    ignoredTransforms: []
+    colliders: []
+  - rootTransform: {fileID: 5839402237846857828}
+    jiggleSettings: {fileID: 11400000, guid: ff397f94c11d69442990e64163e6870f, type: 2}
+    ignoredTransforms: []
+    colliders: []
+  - rootTransform: {fileID: 8504231531689800171}
+    jiggleSettings: {fileID: 11400000, guid: ff397f94c11d69442990e64163e6870f, type: 2}
+    ignoredTransforms: []
+    colliders: []
+  - rootTransform: {fileID: 6282790909318472015}
+    jiggleSettings: {fileID: 11400000, guid: ff397f94c11d69442990e64163e6870f, type: 2}
+    ignoredTransforms: []
+    colliders: []
+  - rootTransform: {fileID: 7791492315841732045}
+    jiggleSettings: {fileID: 11400000, guid: ff397f94c11d69442990e64163e6870f, type: 2}
+    ignoredTransforms: []
+    colliders: []
+  - rootTransform: {fileID: 2820575956663906729}
+    jiggleSettings: {fileID: 11400000, guid: ff397f94c11d69442990e64163e6870f, type: 2}
+    ignoredTransforms: []
+    colliders: []
+  - rootTransform: {fileID: 6038107142813590650}
+    jiggleSettings: {fileID: 11400000, guid: ff397f94c11d69442990e64163e6870f, type: 2}
+    ignoredTransforms: []
+    colliders: []
+  - rootTransform: {fileID: 7214892602586546840}
+    jiggleSettings: {fileID: 11400000, guid: 54530071be3135b4d93775279c74ed26, type: 2}
+    ignoredTransforms: []
+    colliders: []
+  - rootTransform: {fileID: 1684500330714428261}
+    jiggleSettings: {fileID: 11400000, guid: 54530071be3135b4d93775279c74ed26, type: 2}
+    ignoredTransforms: []
+    colliders: []
+  - rootTransform: {fileID: 748167827667347346}
+    jiggleSettings: {fileID: 11400000, guid: 54530071be3135b4d93775279c74ed26, type: 2}
+    ignoredTransforms: []
+    colliders: []
+  - rootTransform: {fileID: 8670928434213691307}
+    jiggleSettings: {fileID: 11400000, guid: 54530071be3135b4d93775279c74ed26, type: 2}
+    ignoredTransforms: []
+    colliders: []
+  wind: {x: 0, y: 0, z: 0}
+  debugDraw: 0
 --- !u!1 &6835523954523804669
 GameObject:
   m_ObjectHideFlags: 0

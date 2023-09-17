@@ -24,6 +24,13 @@
       },
       "hash": "c94f1c9902e06c45975982cc3ac448e9330cc96d"
     },
+    "com.naelstrof.jigglephysics": {
+      "version": "https://github.com/naelstrof/UnityJigglePhysics.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "d7e2fa4853ec540a213d1d9f5c357feec9efc083"
+    },
     "com.unify.unified-universal-blur": {
       "version": "https://github.com/lukakldiashvili/Unified-Universal-Blur.git",
       "depth": 0,
