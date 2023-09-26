@@ -780,7 +780,8 @@ PlayerSettings:
   webGLDecompressionFallback: 0
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Standalone: UNITASK_DOTWEEN_SUPPORT
+    Server: PROBUILDER_EXPERIMENTAL_FEATURES
+    Standalone: UNITASK_DOTWEEN_SUPPORT;PROBUILDER_EXPERIMENTAL_FEATURES
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
